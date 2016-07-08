@@ -1,0 +1,128 @@
+:root {
+  --blue: #15487F;
+  --white: #FFFFFF;
+  --pt-sans: 'PT Sans';
+  --pt-serif: 'PT Serif';
+
+  --switch-frame-width: 32px;
+  --switch-frame-height: 16px;
+  --switch-button-size: 16px;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: var(--pt-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+  background-color: var(--blue);
+}
+
+.main {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  position: relative;
+}
+
+.main__content {
+  margin: auto;
+}
+
+.main__switch {
+  position: absolute;
+  top: 30px;
+  width: 100%;
+  left: 0;
+  text-align: center;
+}
+
+.logo {
+  margin: auto;
+  width: 180px;
+  height: 180px;
+}
+
+.title-bar {
+  margin-top: 20px;
+  text-align: center;
+  color: var(--white);
+
+  & h1 {
+    margin: 0;
+    font-weight: 400;
+    letter-spacing: 1.5px;
+    font-size: 36px;
+  }
+
+  & p {
+    margin: 0;
+    font-size: 18px;
+    letter-spacing: .5px;
+  }
+}
+
+.main-links {
+  padding: 0 50px;
+  margin-top: 80px;
+  width: 100%;
+  text-align: center;
+  color: var(--white);
+
+  & a {
+    display: inline-block;
+    opacity: .6;
+    font-size: 14px;
+    margin: 0 8px;
+    padding: 6px 12px;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+.switch {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+}
+
+.switch__frame {
+  box-sizing: border-box;
+  width: var(--switch-frame-width);
+  height: var(--switch-frame-height);
+  border-radius: calc(var(--switch-frame-height) / 2);
+  border: 1px solid var(--white);
+}
+
+.switch__button {
+  width: var(--switch-button-size);
+  height: var(--switch-button-size);
+  border-radius: 100%;
+  background-color: var(--white);
+  position: absolute;
+  top: calc(var(--switch-frame-height) / 2 - var(--switch-button-size) / 2);
+  left: calc(var(--switch-frame-width) / 2 - var(--switch-button-size) / 2);
+  transform: translate3d(0, 0, 0);
+  transition: .3s transform;
+}
+
+.switch--right .switch__button {
+  transform: translate3d(calc(var(--switch-frame-width) / 2 - var(--switch-button-size) / 2), 0, 0);
+  transition: .3s transform;
+}
+
+.switch--left .switch__button {
+  transform: translate3d(calc(- var(--switch-frame-width) / 2 + var(--switch-button-size) / 2), 0, 0);
+  transition: .3s transform;
+}
