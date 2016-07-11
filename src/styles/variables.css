@@ -1,0 +1,19 @@
+:root {
+  --blue: #15487F;
+  --white: #FFFFFF;
+  --black: #000000;
+  --shadow-color: #33333333;
+  --pt-sans: 'PT Sans';
+  --pt-serif: 'PT Serif';
+
+  --switch-frame-width: 26px;
+  --switch-frame-height: 12px;
+  --switch-button-size: 12px;
+
+  --z-hidden: -1;
+  --z-text-box: 100;
+
+  --z-desktop-nav: 50;
+
+  --z-nav: 1000;
+}

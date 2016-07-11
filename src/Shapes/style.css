@@ -1,0 +1,11 @@
+@import '../styles/variables.css';
+
+.logo {
+  margin: auto;
+  width: 180px;
+  height: 180px;
+
+  svg {
+    stroke: var(--white);
+  }
+}

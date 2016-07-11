@@ -1,0 +1,45 @@
+@import '../styles/variables.css';
+
+.switch {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+
+  opacity: .6;
+  transition: opacity .3s;
+
+  &:hover {
+    opacity: 1;
+    transition: opacity .3s;
+  }
+}
+
+.switch__frame {
+  box-sizing: border-box;
+  width: var(--switch-frame-width);
+  height: var(--switch-frame-height);
+  border-radius: calc(var(--switch-frame-height) / 2);
+  border: 1px solid var(--blue);
+}
+
+.switch__button {
+  width: var(--switch-button-size);
+  height: var(--switch-button-size);
+  border-radius: 100%;
+  background-color: var(--blue);
+  position: absolute;
+  top: calc(var(--switch-frame-height) / 2 - var(--switch-button-size) / 2);
+  left: calc(var(--switch-frame-width) / 2 - var(--switch-button-size) / 2);
+  transform: translate3d(0, 0, 0);
+  transition: .3s transform;
+}
+
+.switch--right .switch__button {
+  transform: translate3d(calc(var(--switch-frame-width) / 2 - var(--switch-button-size) / 2), 0, 0);
+  transition: .3s transform;
+}
+
+.switch--left .switch__button {
+  transform: translate3d(calc(- var(--switch-frame-width) / 2 + var(--switch-button-size) / 2), 0, 0);
+  transition: .3s transform;
+}

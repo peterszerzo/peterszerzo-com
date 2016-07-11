@@ -1,3 +1,7 @@
 module Main.Messages exposing (..)
 
-type Msg = ToggleMode
+import Main.Models exposing (Route)
+
+type Msg =
+  ToggleMode |
+  ChangeRoute Route

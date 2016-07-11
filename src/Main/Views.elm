@@ -1,34 +1,42 @@
 module Main.Views exposing (..)
 
 import Html exposing (..)
-import Html.Attributes exposing (class, src)
+import Html.Attributes exposing (class, src, href)
+import Html.Events exposing (onClick)
 
-import Main.Models
-import Logo.Views
+import Main.Models exposing (Route(..), Mode(..))
+import Main.Messages exposing (..)
 import Switch.Views
 import Switch.Models
+import DesktopNav.Views
+import Nav.Views
+import TextBox.Views
+import TextBox.Models
+import Banner.Views
+
+import Data.Markdown
+
+viewTextBox model =
+  let
+    isPrimaryContentDisplayed = model.mode == Conventional
+    viewModel = case model.route of
+      Home -> TextBox.Models.Model Nothing Nothing False
+      Projects -> TextBox.Models.Model Nothing Nothing False
+      Archive -> TextBox.Models.Model Nothing Nothing False
+      Now -> TextBox.Models.Model (Just Data.Markdown.now) Nothing True
+      About -> TextBox.Models.Model (Just Data.Markdown.aboutConventional) (Just Data.Markdown.aboutReal) isPrimaryContentDisplayed
+  in
+    TextBox.Views.view viewModel
+
+viewMainContent model =
+  div [class "main__content"]
+    [ Banner.Views.view
+    ]
 
 view model =
-  let
-    switchModel = case model.mode of
-      Main.Models.Conventional -> Switch.Models.Left
-      Main.Models.Real -> Switch.Models.Right
-  in
-    div [class "main"]
-      [ div [class "main__switch"] [Switch.Views.view switchModel]
-      , div [class "main__content"]
-        [ Logo.Views.view
-        , div [class "title-bar"]
-          [ h1 [] [text "Peter Szerzo"]
-          , p [] [text "makes himself a website"]
-          ]
-        , div [class "main-links"]
-          [ a [] [text "Projects"]
-          , a [] [text "Blog"]
-          , a [] [text "Archive"]
-          , a [] [text "Now"]
-          , a [] [text "About"]
-          ]
-        , div [class "social-links"] []
-        ]
-      ]
+  div [class "main"]
+    [ viewMainContent model
+    , viewTextBox model
+    , DesktopNav.Views.view model
+    , Nav.Views.view model
+    ]

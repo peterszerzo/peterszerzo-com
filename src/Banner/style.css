@@ -1,0 +1,27 @@
+@import '../styles/variables.css';
+
+.banner {
+  margin-top: 20px;
+  text-align: center;
+  color: var(--white);
+
+  & h1 {
+    margin: 0;
+    font-weight: 400;
+    letter-spacing: 1.5px;
+    font-size: 36px;
+  }
+
+  & p {
+    margin: 0;
+    font-size: 18px;
+    letter-spacing: .5px;
+  }
+
+  & svg {
+    stroke: var(--white);
+    margin: auto;
+    width: 180px;
+    height: 180px;
+  }
+}

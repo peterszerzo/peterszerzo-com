@@ -1,0 +1,16 @@
+@import '../styles/variables.css';
+
+.desktop-nav {
+  width: 100%;
+  position: absolute;
+  bottom: 30px;
+  left: 0;
+  transform: translate3d(0, 0, 0);
+  transition: transform .3s;
+  z-index: var(--z-desktop-nav);
+}
+
+.desktop-nav--expanded {
+  transform: translate3d(0, -45px, 0);
+  transition: transform .3s;
+}
