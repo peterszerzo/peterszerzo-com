@@ -1,6 +1,6 @@
 module Main.Models exposing (..)
 
-type Route = Home | Projects | Now | About | Archive
+type Route = Home | Projects | Now | About | Talks | Archive
 
 type Mode = Conventional | Real
 

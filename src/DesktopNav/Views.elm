@@ -4,7 +4,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 
-import Data.Links exposing (projects, archives)
+import Data.Links exposing (projects, archives, talks)
 import Main.Models exposing (Route(..))
 import Main.Messages exposing (..)
 
@@ -29,6 +29,7 @@ viewMainLinks model =
     , viewMainLink "Blog" Home (Just "http://blog.peterszerzo.com") Now
     , viewMainLink "About" About Nothing model.route
     , viewMainLink "Now" Now Nothing model.route
+    , viewMainLink "Talks" Talks Nothing model.route
     , viewMainLink "Archive" Archive Nothing model.route
     ]
 
@@ -39,6 +40,7 @@ view model =
       Projects -> projects
       About -> []
       Now -> []
+      Talks -> talks
       Archive -> archives
     className = if (List.length subLinks) > 0 then "desktop-nav desktop-nav--expanded" else "desktop-nav"
   in
