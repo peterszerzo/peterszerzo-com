@@ -70,6 +70,8 @@
   width: 100%;
   max-width: 640px;
   margin: auto;
+  font-size: 22px;
+  color: var(--black);
   font-family: var(--pt-serif);
 
   & p {
@@ -88,25 +90,43 @@
     }
   }
 
-  blockquote {
-    font-style: italic;
-    margin: 40px 0;
-    border-left: 3px solid $black;
+  & li,
+  & ul {
+    font-size: inherit;
+    font-family: inherit;
+  }
+
+  & ul {
+    margin: 0;
+    list-style-position: inside;
+    padding: 0;
+  }
+
+  & li {
+    margin: 10px 0;
+  }
+
+  & blockquote {
+    font-family: inherit;
+    margin: 60px 0;
+    border-left: 1px solid var(--black);
     padding-left: 15px;
+    opacity: .8;
+
+    & p {
+      font-size: 16px;
+    }
   }
 
-  p,
-  a {
-    hyphens: auto;
-  }
-
-  a {
+  & a {
+    font-family: inherit;
+    text-decoration: none;
     color: var(--blue);
-    border-bottom: 1px solid var(--blue);
-    opacity: .7;
+    opacity: .8;
 
     &:hover {
       opacity: 1;
+      border-bottom: 1px solid var(--blue);
     }
   }
 }

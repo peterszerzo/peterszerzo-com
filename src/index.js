@@ -13,11 +13,16 @@ require('./Switch/style');
 require('./TextBox/style');
 
 require('./images/couchsurfing.svg');
+require('./images/ripple.gif');
 require('./images/github.svg');
 require('./images/linkedin.svg');
 require('./images/twitter.svg');
 require('./images/peter-szerzo-180-2x.jpg');
 
 domReady(function() {
-  var elmApp = Elm.Main.embed(document.getElementById('app'));
+  var node = document.getElementById('app');
+  setTimeout(function() {
+    node.innerHTML = '';
+    var elmApp = Elm.Main.embed(document.getElementById('app'));
+  }, 0);
 });

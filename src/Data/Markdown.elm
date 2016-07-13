@@ -1,6 +1,8 @@
 module Data.Markdown exposing (..)
 
 aboutConventional = """
+## Hi
+
 This is Peter, programmer, designer, language enthusiast, yogi, cook. A friendly, straightforward fellow with eager-to-pedal feet, a green thumb and a curious mind.
 
 I make websites and web apps, spending most of my time on the front end. I work with and get very excited about Elm, React, Redux, PostCSS, Express, Meteor, Ghost, and Rails, and find my way around Heroku and AWS (though I do prefer surge.sh :) ). I much enjoy collaborating, giving talks and running workshops - I do my best to spark excitement both around and within me.
@@ -11,7 +13,9 @@ You can find me on my bike on the streets of Copenhagen, sitting around in a cof
 """
 
 aboutReal = """
-Oh good, you hit the magic switch. Let me balance out the conformist professionalism on the other page with some real Peter Szerzo.
+## Oh, good!
+
+You hit the magic switch. Let me balance out the conformist professionalism on the other page with some real Peter Szerzo.
 
 I'm a great guy: caring, fun, passionate. That said, when I'm wrapped up in excessive anxiety or self-judgement (which is often), then I can be a bit too much. Ramble ramble ramble.
 
@@ -27,11 +31,11 @@ It means a lot to me that you've read this.
 """
 
 now = """
-Peter's week:
+## Peter's week:
 
 * give a talk on Elm at Copenhagen Frontenders. Open-source slide generator.
 * read the New Yorker in the mornings. Take time to people-watch in the meantime.
 * get excited for a weekend in Amsterdam.
 
-> The /now page is Derek Sivers' brilliant idea. Cheers, Derek!
+> The /now page is Derek Sivers' [brilliant idea](https://sivers.org/nowff). Cheers, Derek!
 """
