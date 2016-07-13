@@ -32,7 +32,7 @@ const config = {
         loaders: ['elm-webpack']
       },
       {
-        test: /\.(html|svg)$/,
+        test: /\.(html|svg|jpg)$/,
         loader: 'file?name=[name].[ext]'
       }
     ]

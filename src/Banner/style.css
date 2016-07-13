@@ -1,7 +1,8 @@
 @import '../styles/variables.css';
 
 .banner {
-  margin-top: 20px;
+  position: relative;
+  top: -15px;
   text-align: center;
   color: var(--white);
 
@@ -17,11 +18,48 @@
     font-size: 18px;
     letter-spacing: .5px;
   }
+}
+
+.banner__logo {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  margin: auto auto 15px;
 
   & svg {
     stroke: var(--white);
-    margin: auto;
-    width: 180px;
-    height: 180px;
   }
+}
+
+.banner__image-container,
+.banner__image,
+.banner__overlay {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: absolute;
+  border-radius: 100%;
+}
+
+.banner__image-container {
+  opacity: 0;
+  transition: opacity .5s;
+
+  @nest .banner:hover & {
+    opacity: 1;
+    transition: opacity .5s;
+  }
+}
+
+.banner__image {
+
+  background-image: url('/peter-szerzo-180-2x.jpg');
+  background-size: cover;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+}
+
+.banner__overlay {
+  background-color: rgba(0, 0, 0, .4);
 }
