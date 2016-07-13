@@ -4,7 +4,6 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 
-import Data.Links exposing (projects, archives, talks)
 import Main.Models exposing (Route(..))
 import Main.Messages exposing (..)
 import Links.Views exposing (viewMainLinks, viewLinkBox)
