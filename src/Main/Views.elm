@@ -12,6 +12,7 @@ import Switch.Models
 import DesktopNav.Views
 import Nav.Views
 import TextBox.Views
+import Notification.Views
 import TextBox.Models
 import Banner.Views
 import Links.Models
@@ -44,4 +45,5 @@ view model =
     , viewTextBox model
     , DesktopNav.Views.view model
     , Nav.Views.view model
+    , Notification.Views.view model.notificationText model.isNotificationVisible (ToggleNotification)
     ]

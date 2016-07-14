@@ -2,9 +2,11 @@
   --blue: #15487F;
   --white: #FFFFFF;
   --black: #222222;
+  --red: #CC370A;
   --shadow-color: #33333333;
-  --pt-sans: 'PT Sans';
-  --pt-serif: 'PT Serif';
+
+  --pt-sans: 'PT Sans', sans-serif;
+  --pt-serif: 'PT Serif', serif;
 
   --switch-frame-width: 26px;
   --switch-frame-height: 12px;
@@ -12,6 +14,7 @@
 
   --z-hidden: -1;
   --z-text-box: 100;
+  --z-notification: 10000;
 
   --z-desktop-nav: 50;
 

@@ -12,6 +12,7 @@ require('./Nav/style');
 require('./Main/style');
 require('./Switch/style');
 require('./TextBox/style');
+require('./Notification/style');
 
 require('./images/couchsurfing.svg');
 require('./images/ripple.gif');

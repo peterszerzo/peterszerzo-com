@@ -11,6 +11,9 @@ update msg model =
     ToggleMode ->
       ({model | mode = if model.mode == Conventional then Real else Conventional}, Cmd.none)
 
+    ToggleNotification ->
+      ({model | isNotificationVisible = not model.isNotificationVisible}, Cmd.none)
+
     ChangeRoute newRoute ->
       let
         newUrl =

@@ -1,0 +1,30 @@
+@import '../styles/variables.css';
+
+.notification {
+  position: fixed;
+  background-color: var(--red);
+  box-shadow: 0 0 10px 0 var(--shadow-color);
+  top: 20px;
+  height: auto;
+  width: calc(100% - 40px);
+  left: 20px;
+  border-radius: 3px;
+  z-index: var(--z-hidden);
+  opacity: 0;
+  transition: all .3s;
+  display: flex;
+}
+
+.notification--visible {
+  z-index: var(--z-notification);
+  opacity: 1;
+  transition: all .3s;
+}
+
+.notification__text {
+  padding: 10px 30px;
+  text-align: center;
+  margin: auto;
+  color: var(--white);
+  font-size: 14px;
+}

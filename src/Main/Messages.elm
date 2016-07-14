@@ -4,4 +4,5 @@ import Routes.Models exposing (Route)
 
 type Msg =
   ToggleMode |
+  ToggleNotification |
   ChangeRoute Route
