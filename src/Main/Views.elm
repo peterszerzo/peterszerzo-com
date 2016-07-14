@@ -4,7 +4,8 @@ import Html exposing (..)
 import Html.Attributes exposing (class, src, href)
 import Html.Events exposing (onClick)
 
-import Main.Models exposing (Route(..), Mode(..))
+import Routes.Models exposing (Route(..))
+import Main.Models exposing (Mode(..))
 import Main.Messages exposing (..)
 import Switch.Views
 import Switch.Models
@@ -20,11 +21,13 @@ import Data.Markdown
 viewTextBox model =
   let
     isPrimaryContentDisplayed = model.mode == Conventional
+    defaultModel = TextBox.Models.Model Nothing Nothing False
     viewModel = case model.route of
-      Home -> TextBox.Models.Model Nothing Nothing False
-      Projects -> TextBox.Models.Model Nothing Nothing False
-      Talks -> TextBox.Models.Model Nothing Nothing False
-      Archive -> TextBox.Models.Model Nothing Nothing False
+      Home -> defaultModel
+      Projects -> defaultModel
+      Talks -> defaultModel
+      Archive -> defaultModel
+      NotFound -> defaultModel
       Now -> TextBox.Models.Model (Just Data.Markdown.now) Nothing True
       About -> TextBox.Models.Model (Just Data.Markdown.aboutConventional) (Just Data.Markdown.aboutReal) isPrimaryContentDisplayed
   in

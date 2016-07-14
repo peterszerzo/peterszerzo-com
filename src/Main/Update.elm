@@ -2,6 +2,7 @@ module Main.Update exposing (..)
 
 import Main.Messages exposing (..)
 import Main.Models exposing (..)
+import Routes.Models exposing (..)
 
 update msg model =
   case msg of

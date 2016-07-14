@@ -8,8 +8,8 @@
   position: fixed;
   top: -40px;
   left: -40px;
-  width: 200px;
-  height: 200px;
+  width: 160px;
+  height: 160px;
   opacity: .2;
   cursor: pointer;
   transition: opacity .3s;
@@ -48,4 +48,8 @@
   position: fixed;
   top: 24px;
   right: calc(50% - var(--switch-frame-width) / 2);
+}
+
+.nav__switch--hidden {
+  display: none;
 }

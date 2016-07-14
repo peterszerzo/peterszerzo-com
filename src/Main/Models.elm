@@ -1,6 +1,6 @@
 module Main.Models exposing (..)
 
-type Route = Home | Projects | Now | About | Talks | Archive
+import Routes.Models exposing (Route(..))
 
 type Mode = Conventional | Real
 
@@ -11,3 +11,6 @@ type alias Model =
 
 init =
   (Model Home Conventional, Cmd.none)
+
+initWithRouteResult route =
+  (Model route Conventional, Cmd.none)

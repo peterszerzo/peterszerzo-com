@@ -4,7 +4,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Markdown exposing (toHtml)
-import Main.Models exposing (Route(..))
+import Routes.Models exposing (Route(..))
 import Main.Messages exposing (..)
 
 viewContents model =

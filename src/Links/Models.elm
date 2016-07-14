@@ -1,6 +1,6 @@
 module Links.Models exposing (..)
 
-import Main.Models exposing (Route(..))
+import Routes.Models exposing (Route(..))
 
 type alias SubLink = (String, String)
 
