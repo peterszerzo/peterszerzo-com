@@ -4,6 +4,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 
+import Routes.Models exposing (Route(..))
 import Main.Messages exposing (Msg(..))
 import Links.Models exposing (Url(..), links, getActiveSubLinks)
 
@@ -21,7 +22,7 @@ viewLinkBox model =
 viewMainLink model {label, url, subLinks} =
   let
     (variableAttr, htmlTag, isActive) = case url of
-      Internal route -> ([onClick (ChangeRoute route)], div, model.route == route)
+      Internal route -> ([onClick (ChangeRoute (if model.route == route then Home else route))], div, model.route == route)
       External route -> ([href route], a, False)
     attr = (classList [("main-links__link", True), ("main-links__link--active", isActive)]) :: variableAttr
   in

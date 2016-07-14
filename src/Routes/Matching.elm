@@ -6,16 +6,20 @@ import UrlParser exposing (..)
 
 import Routes.Models exposing (Route(..))
 
+routeUrls =
+  [ (Home, "")
+  , (Projects, "projects")
+  , (Now, "now")
+  , (About, "about")
+  , (Talks, "talks")
+  , (Archive, "archive")
+  ]
+
 matchers : Parser (Route -> a) a
 matchers =
-  oneOf
-  [ format Home (s "")
-  , format Projects (s "projects")
-  , format Now (s "now")
-  , format About (s "about")
-  , format Talks (s "talks")
-  , format Archive (s "archive")
-  ]
+  routeUrls
+    |> List.map (\(rt, url) -> (format rt (s url))) 
+    |> oneOf
 
 pathnameParser location =
   location.pathname
