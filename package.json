@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "NODE_ENV=development webpack-dev-server --hot --history-api-fallback --inline --open --content-base build/ --port 3000",
-    "build": "./node_modules/.bin/webpack --config webpack.config.js"
+    "build": "./node_modules/.bin/webpack --config webpack.config.js",
+    "deploy": "rm -rf build && npm run build && surge ./build www.peterszerzo.com"
   },
   "author": "",
   "license": "ISC",
