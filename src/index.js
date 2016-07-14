@@ -1,5 +1,6 @@
 var Elm = require('./Main');
 var domReady = require('domready');
+var attachFastClick = require('fastclick');
 
 require('./index.html');
 require('./styles/app');
@@ -20,6 +21,7 @@ require('./images/twitter.svg');
 require('./images/peter-szerzo-180-2x.jpg');
 
 domReady(function() {
+  attachFastClick.attach(document.body);
   var node = document.getElementById('app');
   setTimeout(function() {
     node.innerHTML = '';

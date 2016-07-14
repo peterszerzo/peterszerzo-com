@@ -10,7 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "domready": "^1.0.8"
+    "domready": "^1.0.8",
+    "fastclick": "^1.0.6"
   },
   "devDependencies": {
     "css-loader": "^0.23.1",
