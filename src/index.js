@@ -22,6 +22,7 @@ require('./images/twitter.svg');
 require('./images/peter-szerzo-180-2x.jpg');
 
 domReady(function() {
+  console.log('Hi, Mom!');
   attachFastClick.attach(document.body);
   var node = document.getElementById('app');
   setTimeout(function() {
