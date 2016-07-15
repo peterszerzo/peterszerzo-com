@@ -10,6 +10,7 @@ import Main.Messages exposing (Msg(..))
 
 import Shapes.Logo as Logo
 import Shapes.Falafel as Falafel
+import Shapes.Arrow as Arrow
 import Switch.Views
 import Switch.Models
 
@@ -20,7 +21,7 @@ view model =
   in
     div [class "nav"]
       [ div [class "nav__home-link", onClick (ChangeRoute Home)]
-        [ Logo.view
+        [ Arrow.view
         ]
       , div [classList [("nav__switch", True), ("nav__switch--hidden", isSwitchHidden)]]
         [ Switch.Views.view switchModel ToggleMode

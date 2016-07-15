@@ -1,7 +1,7 @@
 module Data.Markdown exposing (..)
 
 aboutConventional = """
-## Hi
+## Hello
 
 This is Peter, programmer, designer, language enthusiast, yogi, cook. A friendly, straightforward fellow with eager-to-pedal feet, a green thumb and a curious mind.
 
@@ -21,9 +21,7 @@ I'm a great guy: caring, fun, passionate. That said, when I'm wrapped up in exce
 
 I judge myself for spending money and I am afraid of gaining weight. I have a fear that one day, due to say world politics, I will have to return to my native Romania, a place I haven't made peace with yet. German society freaks me out.
 
-For each web project I launch, I write ‘Hi, Mom!’ in the console. Because my mother rocks!
-
-When I was 6, I hit my brother on the back with my fist so hard I felt his entire ribcage resonate through mine. I regret it to this day. Thing is, while my adult brother can forgive me, his child version never will.
+When I was 6, I hit my brother on the back with my fist so hard I felt his entire ribcage resonate through mine. I regret it to this day. Thing is, while my adult brother can forgive me, his child version is just not around. And while we're at my family: for each web project I launch, I write ‘Hi, Mom!’ in the console. Because my mother rocks!
 
 I am often in a reflective mood. When I feel really bad, I ask myself: ‘What is wrong with this moment?’ Eventually, the answer is always nothing, and the moment of realizing that is genuine happiness to me. The amazing circus of physical sensations in my body are always available to me, and they're incredibly powerful. They are the channel to a sense of belonging. I read all of that in a book, and wonder sometimes if I truly believe these things or just lie to myself about them.
 
@@ -37,5 +35,7 @@ now = """
 * read the New Yorker in the mornings. Take time to people-watch in the meantime.
 * get excited for a weekend in Amsterdam.
 
-> The /now page is Derek Sivers' [brilliant idea](https://sivers.org/nowff). Cheers, Derek!
+<div class="static__footer">
+  The /now page is Derek Sivers' [brilliant idea](https://sivers.org/nowff). Cheers, Derek!
+</div>
 """
