@@ -24,3 +24,6 @@ update msg model =
             |> snd
       in
         (model, Navigation.modifyUrl ("/" ++ newUrl))
+
+    Tick time ->
+      ({model | time = model.time + 1}, Cmd.none)
