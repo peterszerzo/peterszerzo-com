@@ -11,6 +11,7 @@ import Main.Messages exposing (..)
 import Switch.Views
 import Switch.Models
 import DesktopNav.Views
+import MobileNav.Views
 import Nav.Views
 import TextBox.Views
 import Notification.Views
@@ -45,6 +46,7 @@ view model =
     [ viewMainContent model
     , viewTextBox model
     , DesktopNav.Views.view model
+    , MobileNav.Views.view
     , Nav.Views.view model
     , map Notification (Notification.Views.view model.notification)
     ]

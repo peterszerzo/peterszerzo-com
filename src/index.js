@@ -6,6 +6,7 @@ require('./DesktopNav/style');
 require('./Links/style');
 require('./Nav/style');
 require('./Main/style');
+require('./MobileNav/style');
 require('./Switch/style');
 require('./TextBox/style');
 require('./Notification/style');

@@ -9,12 +9,13 @@ type Mode = Conventional | Real
 type alias Model =
   { route : Route
   , mode : Mode
-  , notification : Notification.Models.Model
   , time : Float
+  , isMobileNavDisplayed : Bool
+  , notification : Notification.Models.Model
   }
 
 init =
-  (Model Home Conventional (Notification.Models.init) 0, Cmd.none)
+  (Model Home Conventional 0 False (Notification.Models.init), Cmd.none)
 
 initWithRouteResult route =
-  (Model route Conventional (Notification.Models.init) 0, Cmd.none)
+  (Model route Conventional 0 False (Notification.Models.init), Cmd.none)
