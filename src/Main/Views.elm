@@ -3,6 +3,7 @@ module Main.Views exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (class, src, href)
 import Html.Events exposing (onClick)
+import Html.App exposing (map)
 
 import Routes.Models exposing (Route(..))
 import Main.Models exposing (Mode(..))
@@ -45,5 +46,5 @@ view model =
     , viewTextBox model
     , DesktopNav.Views.view model
     , Nav.Views.view model
-    , Notification.Views.view model.notificationText model.isNotificationVisible (ToggleNotification)
+    , map Notification (Notification.Views.view model.notification)
     ]

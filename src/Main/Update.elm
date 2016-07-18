@@ -2,6 +2,8 @@ module Main.Update exposing (..)
 
 import Main.Messages exposing (..)
 import Main.Models exposing (..)
+import Notification.Update
+import Notification.Messages
 import Routes.Models exposing (..)
 import Routes.Matching exposing (routeUrls)
 import Navigation exposing (..)
@@ -11,8 +13,8 @@ update msg model =
     ToggleMode ->
       ({model | mode = if model.mode == Conventional then Real else Conventional}, Cmd.none)
 
-    ToggleNotification ->
-      ({model | isNotificationVisible = not model.isNotificationVisible}, Cmd.none)
+    Notification msg ->
+      ({model | notification = Notification.Update.update msg model.notification}, Cmd.none)
 
     ChangeRoute newRoute ->
       let
@@ -26,4 +28,4 @@ update msg model =
         (model, Navigation.modifyUrl ("/" ++ newUrl))
 
     Tick time ->
-      ({model | time = model.time + 1}, Cmd.none)
+      ({model | time = model.time + 1, notification = Notification.Update.update Notification.Messages.Tick model.notification}, Cmd.none)

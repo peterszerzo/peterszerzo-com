@@ -21,10 +21,28 @@
   transition: all .3s;
 }
 
-.notification__text {
+.notification__body {
   padding: 10px 30px;
   text-align: center;
   margin: auto;
   color: var(--white);
   font-size: 14px;
+}
+
+.notification__body p {
+  margin: 0;
+  padding: 0;
+}
+
+.notification__close {
+  display: inline-block;
+  position: absolute;
+  top: 4px;
+  padding: 8px;
+  cursor: pointer;
+  right: 6px;
+  margin: 0;
+  line-height: .9;
+  color: var(--white);
+  font-weight: 700;
 }

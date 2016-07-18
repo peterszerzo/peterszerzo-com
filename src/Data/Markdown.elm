@@ -39,3 +39,7 @@ now = """
   The /now page is Derek Sivers' [brilliant idea](https://sivers.org/nowff). Cheers, Derek!
 </div>
 """
+
+notificationText = """
+Hey :) please bear with me while I'm being built! &hearts;
+"""
