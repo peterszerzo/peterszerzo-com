@@ -1,7 +1,3 @@
-var Elm = require('./Main');
-var domReady = require('domready');
-var attachFastClick = require('fastclick');
-
 require('./index.html');
 require('./styles/app');
 
@@ -21,12 +17,13 @@ require('./images/linkedin.svg');
 require('./images/twitter.svg');
 require('./images/peter-szerzo-180-2x.jpg');
 
+var Elm = require('./Main');
+var startApp = require('./start_app');
+var attachFastClick = require('fastclick');
+var domReady = require('domready');
+
 domReady(function() {
   console.log('Hi, Mom!');
   attachFastClick.attach(document.body);
-  var node = document.getElementById('app');
-  setTimeout(function() {
-    node.innerHTML = '';
-    var elmApp = Elm.Main.embed(document.getElementById('app'));
-  }, 0);
+  startApp(Elm);
 });
