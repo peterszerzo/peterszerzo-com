@@ -81,10 +81,12 @@
     margin: 0 0 1.1rem;
     font-size: 2rem;
     font-weight: 700;
+    text-align: center;
 
     @media (--desktop) {
       margin: 0 0 1.4rem;
       font-size: 4rem;
+      text-align: left;
     }
   }
 
