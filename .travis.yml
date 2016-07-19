@@ -5,12 +5,8 @@ branches:
   only:
   - master
 before_script:
-  - npm install --save-dev surge
   - npm install -g elm@0.17.1
 script:
-  - rm -rf ./build
-  - mkdir -p ./build
   - npm run build
-  - npm run generate-html
 after_success:
-  - surge --project ./build --domain www.peterszerzo.com
+  - npm run deploy
