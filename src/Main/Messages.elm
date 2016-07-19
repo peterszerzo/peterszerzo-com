@@ -6,6 +6,7 @@ import Routes.Models exposing (Route)
 
 type Msg =
   ToggleMode |
-  Notification Notification.Messages.Msg |
+  NotificationMsg Notification.Messages.Msg |
+  ToggleMobileNav |
   ChangeRoute Route |
   Tick Time

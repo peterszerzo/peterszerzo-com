@@ -11,22 +11,22 @@ import Links.Models exposing (Url(..), links, getActiveSubLinks)
 viewLinkBoxItems (name, url) =
   a [href url] [text name]
 
-viewLinkBox model =
+viewLinkBox currentRoute =
   let
-    activeSubLinks = getActiveSubLinks links model
+    activeSubLinks = getActiveSubLinks links currentRoute
     (isHidden, subLinks) = if (List.length activeSubLinks) == 0 then (True, []) else (False, activeSubLinks)
   in
     div [classList [("link-box", True), ("link-box--hidden", isHidden)]]
       (List.map viewLinkBoxItems subLinks)
 
-viewMainLink model {label, url, subLinks} =
+viewMainLink className currentRoute {label, url, subLinks} =
   let
     (variableAttr, htmlTag, isActive) = case url of
-      Internal route -> ([onClick (ChangeRoute (if model.route == route then Home else route))], div, model.route == route)
+      Internal route -> ([onClick (ChangeRoute (if currentRoute == route then Home else route))], div, currentRoute == route)
       External route -> ([href route], a, False)
-    attr = (classList [("main-links__link", True), ("main-links__link--active", isActive)]) :: variableAttr
+    attr = (classList [(className ++ "__link", True), (className ++ "__link--active", isActive)]) :: variableAttr
   in
     htmlTag attr [text label]
 
-viewMainLinks model =
-  div [class "main-links"] (List.map (viewMainLink model) links)
+viewMainLinks className currentRoute =
+  div [class className] (List.map (viewMainLink className currentRoute) links)

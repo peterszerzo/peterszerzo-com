@@ -18,7 +18,7 @@
     "max-empty-lines": 1,
     "number-leading-zero": "never",
     "number-no-trailing-zeros": true,
-    "number-zero-length-no-unit": true,
+    "length-zero-no-unit": true,
     "rule-nested-empty-line-before": ["always", {
       "except": ["first-nested"],
       "ignore": ["after-comment"]

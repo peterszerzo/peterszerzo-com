@@ -13,8 +13,15 @@ update msg model =
     ToggleMode ->
       ({model | mode = if model.mode == Conventional then Real else Conventional}, Cmd.none)
 
-    Notification msg ->
+    NotificationMsg msg ->
       ({model | notification = Notification.Update.update msg model.notification}, Cmd.none)
+
+    ToggleMobileNav ->
+      let
+        oldMobileNav = model.mobileNav
+        newMobileNav = {oldMobileNav | isActive = not oldMobileNav.isActive}
+      in
+        ({model | mobileNav = newMobileNav}, Cmd.none)
 
     ChangeRoute newRoute ->
       let
@@ -25,7 +32,7 @@ update msg model =
             |> Maybe.withDefault (Home, "")
             |> snd
       in
-        (model, Navigation.modifyUrl ("/" ++ newUrl))
+        ({model | mobileNav = {isActive = False}}, Navigation.modifyUrl ("/" ++ newUrl))
 
     Tick time ->
       ({model | time = model.time + 1, notification = Notification.Update.update Notification.Messages.Tick model.notification}, Cmd.none)

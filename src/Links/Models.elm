@@ -12,9 +12,9 @@ type alias Link =
   , subLinks : List SubLink
   }
 
-getActiveSubLinks links model =
+getActiveSubLinks links currentRoute =
   links
-  |> List.filter (\lnk -> lnk.url == Internal model.route)
+  |> List.filter (\lnk -> lnk.url == Internal currentRoute)
   |> List.head
   |> Maybe.map .subLinks
   |> Maybe.withDefault []

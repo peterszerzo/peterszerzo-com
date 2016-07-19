@@ -1,47 +1,5 @@
 @import '../styles/variables.css';
 
-.main-links {
-  padding: 0 50px;
-  width: 100%;
-  text-align: center;
-  color: var(--white);
-}
-
-.main-links__link {
-  text-decoration: none;
-  color: var(--white);
-  display: inline-block;
-  cursor: pointer;
-  position: relative;
-  opacity: .6;
-  height: 25px;
-  font-size: 16px;
-  margin: 0 20px;
-  padding: 6px 0 0;
-  transition: opacity .3s;
-}
-
-.main-links__link:hover,
-.main-links__link--active {
-  opacity: 1;
-  transition: opacity .3s;
-  border-bottom: 1px solid var(--white);
-}
-
-.main-links__link--active {
-  &:after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 0;
-    border-left: 4px solid transparent;
-    border-right: 4px solid transparent;
-    border-top: 4px solid var(--white);
-    left: calc(50% - 4px);
-    top: 25px;
-  }
-}
-
 .link-box {
   width: 460px;
   padding: 10px;

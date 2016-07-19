@@ -7,7 +7,7 @@ import Html.App exposing (map)
 
 import Routes.Models exposing (Route(..))
 import Main.Models exposing (Mode(..))
-import Main.Messages exposing (..)
+import Main.Messages exposing (Msg(..))
 import Switch.Views
 import Switch.Models
 import DesktopNav.Views
@@ -45,8 +45,8 @@ view model =
   div [class "main"]
     [ viewMainContent model
     , viewTextBox model
-    , DesktopNav.Views.view model
-    , MobileNav.Views.view
+    , DesktopNav.Views.view model.route
     , Nav.Views.view model
-    , map Notification (Notification.Views.view model.notification)
+    , map NotificationMsg (Notification.Views.view model.notification)
+    , MobileNav.Views.view model.mobileNav model.route ToggleMobileNav
     ]
