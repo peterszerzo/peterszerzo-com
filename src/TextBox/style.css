@@ -8,18 +8,12 @@
   position: fixed;
   left: 0;
   border-radius: 3px;
-  opacity: 1;
   z-index: var(--z-text-box);
-  transform: translate3d(0, 0, 0);
-  transition: all .3s;
 }
 
 .text-box--hidden {
-  background-color: color(var(--white) alpha(-100%));
   opacity: 0;
   z-index: var(--z-hidden);
-  transform: translate3d(-25px, 0, 0);
-  transition: all .3s;
 }
 
 .text-box--primary-displayed {
@@ -64,14 +58,14 @@
   position: absolute;
   top: 0;
   left: 0;
-  padding: 40px 0;
+  padding: 20px 0;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   margin: auto;
 }
 
 .static {
-  padding: 40px 10px;
+  padding: 60px 10px 20px;
   width: 100%;
   max-width: 680px;
   margin: auto;
@@ -80,7 +74,7 @@
   font-family: var(--pt-serif);
 
   @media (--desktop) {
-    padding: 80px 20px;
+    padding: 120px 20px 80px;
   }
 
   & h2 {

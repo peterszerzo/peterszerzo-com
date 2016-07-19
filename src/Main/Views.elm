@@ -24,7 +24,7 @@ import Data.Markdown
 viewTextBox model =
   let
     isPrimaryContentDisplayed = model.mode == Conventional
-    defaultModel = TextBox.Models.Model Nothing Nothing False
+    defaultModel = TextBox.Models.Model Nothing Nothing True
     viewModel = case model.route of
       Home -> defaultModel
       Projects -> defaultModel

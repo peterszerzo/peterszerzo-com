@@ -34,12 +34,8 @@ links =
     , url = External "http://blog.peterszerzo.com"
     , subLinks = []
     }
-  , { label = "About"
-    , url = Internal About
-    , subLinks = []
-    }
-  , { label = "Now"
-    , url = Internal Now
+  , { label = "CV"
+    , url = External "https://represent.io/peterszerzo"
     , subLinks = []
     }
   , { label = "Talks"
@@ -48,6 +44,14 @@ links =
       [ ("CphFront 1", "https://pickled-plugins.github.io/css-by-the-fireplace/")
       , ("CphFront 2", "https://pickled-plugins.github.io/practical-elm-and-friends/")
       ]
+    }
+  , { label = "About"
+    , url = Internal About
+    , subLinks = []
+    }
+  , { label = "Now"
+    , url = Internal Now
+    , subLinks = []
     }
   , { label = "Archive"
     , url = Internal Archive

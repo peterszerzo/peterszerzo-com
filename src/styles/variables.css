@@ -21,4 +21,4 @@
   --z-nav: 1000;
 }
 
-@custom-media --desktop (min-width: 600px);
+@custom-media --desktop (min-width: 680px);

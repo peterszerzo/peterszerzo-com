@@ -23,7 +23,7 @@ viewMainLink className currentRoute {label, url, subLinks} =
   let
     (variableAttr, htmlTag, isActive) = case url of
       Internal route -> ([onClick (ChangeRoute (if currentRoute == route then Home else route))], div, currentRoute == route)
-      External route -> ([href route], a, False)
+      External route -> ([href route, target "_blank"], a, False)
     attr = (classList [(className ++ "__link", True), (className ++ "__link--active", isActive)]) :: variableAttr
   in
     htmlTag attr [text label]

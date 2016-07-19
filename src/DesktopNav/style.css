@@ -2,12 +2,17 @@
 
 .desktop-nav {
   width: 100%;
+  display: none;
   position: absolute;
   bottom: 30px;
   left: 0;
   transform: translate3d(0, 0, 0);
   transition: transform .3s;
   z-index: var(--z-desktop-nav);
+
+  @media (--desktop) {
+    display: block;
+  }
 }
 
 .desktop-nav--expanded {
