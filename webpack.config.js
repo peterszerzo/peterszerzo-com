@@ -40,6 +40,9 @@ const config = {
   resolve: {
     extensions: ['', '.js', '.elm', '.css', '.json']
   },
+  plugins: process.env.NODE_ENV === 'development' ? [] : [
+    new webpack.optimize.UglifyJsPlugin()
+  ],
   devtool: 'source-map',
   postcss() {
     return [
