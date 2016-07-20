@@ -16,7 +16,7 @@
   width: calc(100% - 20px);
   height: calc(100% - 20px);
   background-color: var(--white);
-  opacity: .9;
+  opacity: .95;
   border-radius: 3px;
   z-index: var(--z-mobile-nav);
   transition: background-color .3s;
@@ -33,7 +33,6 @@
 
   & svg {
     fill: var(--white);
-    transition: fill .3s;
 
     @media (--desktop) {
       fill: var(--blue);
@@ -142,7 +141,7 @@
   color: var(--blue);
   padding: 10px 0;
   text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: .2rem;
   font-weight: 400;
   font-size: 1.5rem;
 }
@@ -151,7 +150,7 @@
   & a {
     display: block;
     text-align: center;
-    letter-spacing: 2px;
+    letter-spacing: .2rem;
     font-weight: 300;
     text-decoration: none;
     color: var(--blue);

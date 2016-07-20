@@ -41,8 +41,8 @@ links =
   , { label = "Talks"
     , url = Internal Talks
     , subLinks =
-      [ ("CphFront 1", "https://pickled-plugins.github.io/css-by-the-fireplace/")
-      , ("CphFront 2", "https://pickled-plugins.github.io/practical-elm-and-friends/")
+      [ ("CSS@fireplace", "https://pickled-plugins.github.io/css-by-the-fireplace/")
+      , ("Elm+friends", "https://pickled-plugins.github.io/practical-elm-and-friends/")
       ]
     }
   , { label = "About"

@@ -4,4 +4,5 @@
   box-sizing: border-box;
   font-family: var(--pt-sans);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }

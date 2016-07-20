@@ -6,16 +6,17 @@
   color: var(--white);
 
   & h1 {
-    margin: 0;
+    margin: 15px 0 0 0;
+    line-height: 1.1;
     font-weight: 400;
-    letter-spacing: 1.5px;
-    font-size: 36px;
+    letter-spacing: .1rem;
+    font-size: 2.5rem;
   }
 
   & p {
     margin: 0;
-    font-size: 18px;
-    letter-spacing: .5px;
+    font-size: 1.2rem;
+    letter-spacing: .1rem;
   }
 }
 
@@ -60,5 +61,5 @@
 }
 
 .banner__overlay {
-  background-color: rgba(0, 0, 0, .4);
+  background-color: color(var(--blue) alpha(25%));
 }

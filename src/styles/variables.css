@@ -20,4 +20,4 @@
   --z-desktop-nav: 2;
 }
 
-@custom-media --desktop (min-width: 680px);
+@custom-media --desktop (min-width: 700px);
