@@ -4,7 +4,6 @@ require('./styles/app');
 require('./Banner/style');
 require('./DesktopNav/style');
 require('./Links/style');
-require('./Nav/style');
 require('./Main/style');
 require('./MobileNav/style');
 require('./Switch/style');

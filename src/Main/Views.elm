@@ -12,29 +12,14 @@ import Switch.Views
 import Switch.Models
 import DesktopNav.Views
 import MobileNav.Views
-import Nav.Views
 import TextBox.Views
 import Notification.Views
 import TextBox.Models
+import TextBox.Views
 import Banner.Views
 import Links.Models
 
 import Data.Markdown
-
-viewTextBox model =
-  let
-    isPrimaryContentDisplayed = model.mode == Conventional
-    defaultModel = TextBox.Models.Model Nothing Nothing True
-    viewModel = case model.route of
-      Home -> defaultModel
-      Projects -> defaultModel
-      Talks -> defaultModel
-      Archive -> defaultModel
-      NotFound -> defaultModel
-      Now -> TextBox.Models.Model (Just Data.Markdown.now) Nothing True
-      About -> TextBox.Models.Model (Just Data.Markdown.aboutConventional) (Just Data.Markdown.aboutReal) isPrimaryContentDisplayed
-  in
-    TextBox.Views.view viewModel
 
 viewMainContent model =
   div [class "main__content"]
@@ -44,9 +29,8 @@ viewMainContent model =
 view model =
   div [class "main"]
     [ viewMainContent model
-    , viewTextBox model
+    , TextBox.Views.view model
     , DesktopNav.Views.view model.route
-    , Nav.Views.view model
     , map NotificationMsg (Notification.Views.view model.notification)
-    , MobileNav.Views.view model.mobileNav model.route ToggleMobileNav
+    , MobileNav.Views.view model.mobileNav model.route (not model.mobileNav.isActive) ToggleMobileNav
     ]

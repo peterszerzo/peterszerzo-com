@@ -13,12 +13,10 @@
   --switch-button-size: 12px;
 
   --z-hidden: -1;
-  --z-text-box: 100;
   --z-notification: 10000;
-  --z-mobile-nav: 9000;
+  --z-text-box: 6000;
+  --z-mobile-nav: 5000;
   --z-desktop-nav: 50;
-
-  --z-nav: 1000;
 }
 
 @custom-media --desktop (min-width: 680px);

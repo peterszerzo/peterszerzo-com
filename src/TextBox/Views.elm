@@ -6,6 +6,14 @@ import Html.Events exposing (..)
 import Markdown exposing (toHtml)
 import Routes.Models exposing (Route(..))
 import Main.Messages exposing (..)
+import Main.Models exposing (Mode(..))
+import TextBox.Models exposing (getModel)
+
+import Shapes.Logo as Logo
+import Shapes.Falafel as Falafel
+import Shapes.Arrow as Arrow
+import Switch.Views
+import Switch.Models
 
 viewContents model =
   div [class "text-box__contents"] [ div [class "text-box__content"]
@@ -16,14 +24,32 @@ viewContents model =
       ]
   ]
 
+viewNav model =
+  let
+    switchModel = if model.mode == Conventional then Switch.Models.Left else Switch.Models.Right
+    isSwitchHidden = model.route /= About
+  in
+    div [class "text-box-nav"]
+      [ div [class "text-box-nav__home-link", onClick (ChangeRoute Home)]
+        [ Arrow.view
+        ]
+      , div [classList [("text-box-nav__switch", True), ("text-box-nav__switch--hidden", isSwitchHidden)]]
+        [ Switch.Views.view switchModel ToggleMode
+        ]
+      ]
+
 view model =
-  div
-  [ classList
-    [ ("text-box", True)
-    , ("text-box--hidden", model.primaryContent == Nothing)
-    , ("text-box--primary-displayed", model.isPrimaryContentDisplayed)
-    , ("text-box--secondary-displayed", not model.isPrimaryContentDisplayed)
+  let
+    textBoxModel = getModel model
+  in
+    div
+    [ classList
+      [ ("text-box", True)
+      , ("text-box--hidden", textBoxModel.primaryContent == Nothing)
+      , ("text-box--primary-displayed", textBoxModel.isPrimaryContentDisplayed)
+      , ("text-box--secondary-displayed", not textBoxModel.isPrimaryContentDisplayed)
+      ]
     ]
-  ]
-  [ viewContents model
-  ]
+    [ viewNav model
+    , viewContents textBoxModel
+    ]

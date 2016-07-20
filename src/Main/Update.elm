@@ -32,7 +32,7 @@ update msg model =
             |> Maybe.withDefault (Home, "")
             |> snd
       in
-        ({model | mobileNav = {isActive = False}}, Navigation.modifyUrl ("/" ++ newUrl))
+        (model, Navigation.modifyUrl ("/" ++ newUrl))
 
     Tick time ->
       ({model | time = model.time + 1, notification = Notification.Update.update Notification.Messages.Tick model.notification}, Cmd.none)

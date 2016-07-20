@@ -6,7 +6,7 @@ import Html.Events exposing (..)
 
 import Routes.Models exposing (Route(..))
 import Main.Messages exposing (..)
-import Links.Views exposing (viewMainLinks, viewLinkBox)
+import Links.Views exposing (viewMainLinks, viewSecondaryLinks)
 import Links.Models exposing (links, getActiveSubLinks)
 
 view currentRoute =
@@ -17,5 +17,5 @@ view currentRoute =
     ]
   ]
   [ viewMainLinks "main-links" currentRoute
-  , viewLinkBox currentRoute
+  , viewSecondaryLinks "link-box" currentRoute
   ]

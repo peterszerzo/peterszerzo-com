@@ -8,16 +8,16 @@ import Routes.Models exposing (Route(..))
 import Main.Messages exposing (Msg(..))
 import Links.Models exposing (Url(..), links, getActiveSubLinks)
 
-viewLinkBoxItems (name, url) =
+viewSecondaryLink (name, url) =
   a [href url] [text name]
 
-viewLinkBox currentRoute =
+viewSecondaryLinks className currentRoute =
   let
     activeSubLinks = getActiveSubLinks links currentRoute
     (isHidden, subLinks) = if (List.length activeSubLinks) == 0 then (True, []) else (False, activeSubLinks)
   in
-    div [classList [("link-box", True), ("link-box--hidden", isHidden)]]
-      (List.map viewLinkBoxItems subLinks)
+    div [classList [(className, True), (className ++ "--hidden", isHidden)]]
+      (List.map viewSecondaryLink subLinks)
 
 viewMainLink className currentRoute {label, url, subLinks} =
   let

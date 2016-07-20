@@ -3,7 +3,7 @@ module Shapes.Falafel exposing (..)
 import Svg exposing (..)
 import Svg.Attributes exposing (..)
 
-view =
+view showAll =
   let
     height' = 8
     spacing = 24
@@ -15,7 +15,7 @@ view =
         [ x "0"
         , y (toString startY)
         , width "100"
-        , height (toString height')
+        , height (if showAll then (toString height') else "0")
         , rx "4"
         ] []
       , rect
@@ -29,7 +29,7 @@ view =
         [ x "0"
         , y (toString (startY + 2 * height' + 2 * spacing))
         , width "100"
-        , height (toString height')
+        , height (if showAll then (toString height') else "0")
         , rx "4"
         ] []
       ]
