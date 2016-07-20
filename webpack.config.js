@@ -52,7 +52,9 @@ const config = {
   postcss() {
     return [
       postCssImport(),
-      postCssCssNext()
+      postCssCssNext({
+        browsers: ['ie >= 10', 'last 3 versions']
+      })
     ];
   }
 };
