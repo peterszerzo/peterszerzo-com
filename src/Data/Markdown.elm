@@ -41,5 +41,5 @@ now = """
 """
 
 notificationText = """
-Hey :) please bear with me while I'm being built! &hearts;
+Add notification text here.
 """

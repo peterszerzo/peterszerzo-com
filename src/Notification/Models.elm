@@ -9,4 +9,4 @@ type alias Model =
   }
 
 init =
-  Model notificationText True 0
+  Model notificationText False 0

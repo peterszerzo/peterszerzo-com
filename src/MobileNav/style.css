@@ -6,6 +6,10 @@
   background-color: var(--transparent-white);
   top: 10px;
   right: 10px;
+
+  @media (--desktop) {
+    display: none;
+  }
 }
 
 .mobile-nav--active {
