@@ -7,12 +7,15 @@
   height: 100%;
   position: fixed;
   left: 0;
+  opacity: 1;
+  transition: opacity .3s;
   border-radius: 3px;
   z-index: var(--z-text-box);
 }
 
 .text-box--hidden {
   opacity: 0;
+  transition: opacity .3s;
   z-index: var(--z-hidden);
 }
 

@@ -1,6 +1,7 @@
 :root {
   --blue: #15487F;
   --white: #FFFFFF;
+  --transparent-white: #FFFFFF00;
   --black: #222222;
   --red: #CC370A;
   --shadow-color: #33333333;
@@ -13,10 +14,10 @@
   --switch-button-size: 12px;
 
   --z-hidden: -1;
-  --z-notification: 10000;
-  --z-text-box: 6000;
-  --z-mobile-nav: 5000;
-  --z-desktop-nav: 50;
+  --z-notification: 12000;
+  --z-text-box: 10000;
+  --z-mobile-nav: 1000;
+  --z-desktop-nav: 2;
 }
 
 @custom-media --desktop (min-width: 680px);
