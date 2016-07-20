@@ -4,6 +4,7 @@
   display: inline-block;
   position: relative;
   cursor: pointer;
+  padding: 10px;
 
   opacity: .6;
   transition: opacity .3s;
@@ -12,6 +13,10 @@
     opacity: 1;
     transition: opacity .3s;
   }
+}
+
+.switch__content {
+  position: relative;
 }
 
 .switch__frame {

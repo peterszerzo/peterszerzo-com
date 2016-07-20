@@ -15,6 +15,8 @@ view model msgOnClick =
       Right -> "switch switch--right"
   in
     div [class className, onClick msgOnClick]
-      [ div [class "switch__frame"] []
-      , div [class "switch__button"] []
+      [ div [class "switch__content"]
+        [ div [class "switch__frame"] []
+        , div [class "switch__button"] []
+        ]
       ]
