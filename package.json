@@ -7,7 +7,7 @@
     "test": "./node_modules/.bin/mocha --recursive ./test",
     "dev": "NODE_ENV=development ./node_modules/.bin/webpack-dev-server --hot --history-api-fallback --inline --open --content-base build/ --port 3000",
     "build:setup": "rm -rf ./build && mkdir -p ./build",
-    "build:js": "NODE_ENV=production ./node_modules/.bin/webpack --config webpack.config.js",
+    "build:js": "NODE_ENV=production ./node_modules/.bin/webpack --config ./webpack.config.js",
     "build:html": "cp ./build/index.html ./build/200.html",
     "build": "npm run build:setup && npm run build:js && npm run build:html",
     "deploy": "./node_modules/.bin/surge ./build www.peterszerzo.com"
