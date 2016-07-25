@@ -29,15 +29,15 @@ It means a lot to me that you've read this.
 """
 
 now = """
-## Peter's week:
+The /now page is Derek Sivers' [brilliant idea](https://sivers.org/nowff). Cheers, Derek!
 
-* give a talk on Elm at Copenhagen Frontenders. Open-source slide generator.
-* read the New Yorker in the mornings. Take time to people-watch in the meantime.
-* get excited for a weekend in Amsterdam.
+## Week of July 25th
 
-<div class="static__footer">
-  The /now page is Derek Sivers' [brilliant idea](https://sivers.org/nowff). Cheers, Derek!
-</div>
+I've just become co-organizer of the Copenhagen frontenders' meetup, starting the one on August 2nd. I'll be finishing up and testing CphRain, my codeoff challenge for the event. The teams will be competing in creating a raindrop animation by supplying animation logic only (renderer and animator provided). It has silly error messages. It'll be tons of fun.
+
+Just finished *From Russia with Love*, feeding my latest infatuation with Super Agent 007. I'm starting *Intuitive Eating* now, in my quest to improve my relationship with food and eating.
+
+Other great things I plan to do is repot some lilies that are growing out of their nursery, and picking some mint and lemonbalm from the garden to dry for the fall and winter. Exciting!
 """
 
 notificationText = """

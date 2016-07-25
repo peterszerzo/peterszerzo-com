@@ -36,7 +36,7 @@
   opacity: .6;
   height: 25px;
   font-size: 1rem;
-  letter-spacing: .1rem;
+  letter-spacing: .05rem;
   font-kerning: normal;
   margin: 0 20px;
   padding: 6px 0 0;
@@ -83,7 +83,7 @@
     height: 20px;
     padding: 0;
     font-size: 1rem;
-    letter-spacing: .03rem;
+    letter-spacing: .05rem;
     text-decoration: none;
     margin: 6px 12px;
     display: inline-block;
