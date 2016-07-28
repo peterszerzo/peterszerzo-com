@@ -41,7 +41,7 @@ Other great things I plan to do is repot some lilies that are growing out of the
 """
 
 notificationTexts =
-  [ "According to [a really great speaker](https://medium.com/@akosma/being-a-developer-after-40-3c5dd112210c#.pjq16al88), announcing our income in public decreases income inequality. I make 45000dkk a month."
+  [ "[A really great speaker](https://medium.com/@akosma/being-a-developer-after-40-3c5dd112210c#.pjq16al88) made me realize how announcing our income in public can decrease income inequality. I make 45000dkk a month."
   ]
 
 notificationText =

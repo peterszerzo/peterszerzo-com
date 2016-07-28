@@ -10,6 +10,7 @@ require('./TextBox/style');
 require('./Notification/style');
 
 require('./images/peter-szerzo-180-2x.jpg');
+require('./images/ripple-2x.gif');
 
 var attachFastClick = require('fastclick');
 var domReady = require('domready');
