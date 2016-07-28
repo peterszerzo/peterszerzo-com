@@ -3,12 +3,12 @@
 const expect = require('chai').expect;
 const isFunction = require('lodash/isFunction');
 
-const startApp = require('../src/start_app');
+const startElmApp = require('../src/start-elm-app');
 
-describe('startApp', function() {
+describe('startElmApp', function() {
 
   it('is a function', function() {
-    expect(isFunction(startApp)).to.equal(true);
+    expect(isFunction(startElmApp)).to.equal(true);
   });
 
 });

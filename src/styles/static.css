@@ -1,0 +1,78 @@
+@import './variables.css';
+
+.static {
+  padding: 40px 20px 20px;
+  width: 100%;
+  max-width: 680px;
+  margin: auto;
+  color: var(--black);
+  font-family: var(--pt-serif);
+
+  @media (--desktop) {
+    padding: 80px 20px;
+  }
+
+  & h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+
+    @media (--desktop) {
+      margin: 1.4rem 0;
+      font-size: 4rem;
+      text-align: left;
+    }
+  }
+
+  & p {
+    font-family: inherit;
+
+    margin: 1.5rem 0;
+
+    &:first-of-type {
+      padding-top: 0;
+      margin-top: 0;
+    }
+
+    &:last-of-type {
+      padding-bottom: 0;
+      margin-bottom: 0;
+    }
+
+    @media (--desktop) {
+      margin: 2.05rem 0;
+    }
+  }
+
+  & p,
+  & li {
+    font-size: 1.1rem;
+    line-height: 1.68;
+
+    @media (--desktop) {
+      font-size: 1.375rem;
+    }
+  }
+
+  & ul {
+    margin: 0;
+    list-style-position: inside;
+    padding: 0;
+  }
+
+  & li {
+    margin: 10px 0;
+  }
+
+  & a {
+    font-family: inherit;
+    text-decoration: none;
+    color: var(--blue);
+    opacity: .8;
+
+    &:hover {
+      opacity: 1;
+      border-bottom: 1px solid var(--blue);
+    }
+  }
+}

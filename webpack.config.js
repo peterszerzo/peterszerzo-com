@@ -32,8 +32,12 @@ const config = {
         loaders: ['elm-webpack']
       },
       {
-        test: /\.(html|svg|jpg|gif)$/,
+        test: /\.(svg|jpg|gif)$/,
         loader: 'file?name=[name].[ext]'
+      },
+      {
+        test: /\.html$/,
+        loader: 'file?name=[name].[ext]!html-minify'
       }
     ]
   },

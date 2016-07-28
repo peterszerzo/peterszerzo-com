@@ -6,6 +6,7 @@
   "scripts": {
     "test": "./node_modules/.bin/mocha --recursive ./test",
     "dev": "NODE_ENV=development ./node_modules/.bin/webpack-dev-server --hot --history-api-fallback --inline --open --content-base build/ --port 3000",
+    "lint": "./node_modules/.bin/stylelint ./src/**/*.css",
     "build:setup": "rm -rf ./build && mkdir -p ./build",
     "build:js": "NODE_ENV=production ./node_modules/.bin/webpack --config ./webpack.config.js",
     "build:html": "cp ./build/index.html ./build/200.html",
@@ -23,6 +24,7 @@
     "css-loader": "^0.23.1",
     "elm-webpack-loader": "^3.0.3",
     "file-loader": "^0.9.0",
+    "html-minify-loader": "^1.1.0",
     "json-loader": "^0.5.4",
     "lodash": "^4.13.1",
     "mocha": "^2.5.3",
@@ -31,6 +33,7 @@
     "postcss-loader": "^0.9.1",
     "raw-loader": "^0.5.1",
     "style-loader": "^0.13.1",
+    "stylelint": "^7.0.3",
     "surge": "^0.18.0",
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.1",

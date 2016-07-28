@@ -27,7 +27,6 @@ view model currentRoute isMobileNavActive handleToggleClick =
         [ toHtml [class "mobile-nav__back", onClick (ChangeRoute Home)] "&larr;"
         , viewSecondaryLinks "mobile-secondary-links" currentRoute
         ]
-
       ]
     ]
   ]

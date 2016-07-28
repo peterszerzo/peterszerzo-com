@@ -1,11 +1,11 @@
 module Main exposing (..)
 
+import Navigation exposing (program)
+
 import Main.Views exposing (view)
 import Main.Models exposing (..)
 import Main.Subscriptions exposing (subscriptions)
 import Main.Update exposing (update)
--- import Html.App exposing (program)
-import Navigation exposing (program)
 
 import Routes.Matching exposing (routeFromResult, parser)
 

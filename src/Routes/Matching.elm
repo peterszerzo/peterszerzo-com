@@ -2,8 +2,8 @@ module Routes.Matching exposing (..)
 
 import Navigation
 import String
-import UrlParser exposing (..)
 
+import UrlParser exposing (..)
 import Routes.Models exposing (Route(..))
 
 routeUrls =
@@ -18,7 +18,7 @@ routeUrls =
 matchers : Parser (Route -> a) a
 matchers =
   routeUrls
-    |> List.map (\(rt, url) -> (format rt (s url))) 
+    |> List.map (\(rt, url) -> (format rt (s url)))
     |> oneOf
 
 pathnameParser location =

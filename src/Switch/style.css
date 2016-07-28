@@ -1,12 +1,11 @@
 @import '../styles/variables.css';
 
 .switch {
-  display: inline-block;
-  position: relative;
   cursor: pointer;
-  padding: 10px;
-
+  display: inline-block;
   opacity: .6;
+  padding: 10px;
+  position: relative;
   transition: opacity .3s;
 
   &:hover {
@@ -20,11 +19,11 @@
 }
 
 .switch__frame {
-  box-sizing: border-box;
-  width: var(--switch-frame-width);
-  height: var(--switch-frame-height);
-  border-radius: calc(var(--switch-frame-height) / 2);
   border: 1px solid var(--blue);
+  border-radius: calc(var(--switch-frame-height) / 2);
+  box-sizing: border-box;
+  height: var(--switch-frame-height);
+  width: var(--switch-frame-width);
 }
 
 .switch__button {
@@ -36,15 +35,15 @@
   top: calc(var(--switch-frame-height) / 2 - var(--switch-button-size) / 2);
   left: calc(var(--switch-frame-width) / 2 - var(--switch-button-size) / 2);
   transform: translate3d(0, 0, 0);
-  transition: .3s transform;
-}
+  transition: transform .3s;
 
-.switch--right .switch__button {
-  transform: translate3d(calc(var(--switch-frame-width) / 2 - var(--switch-button-size) / 2), 0, 0);
-  transition: .3s transform;
-}
+  @nest .switch--right & {
+    transform: translate3d(calc(var(--switch-frame-width) / 2 - var(--switch-button-size) / 2), 0, 0);
+    transition: transform .3s;
+  }
 
-.switch--left .switch__button {
-  transform: translate3d(calc(- var(--switch-frame-width) / 2 + var(--switch-button-size) / 2), 0, 0);
-  transition: .3s transform;
+  @nest .switch--left & {
+    transform: translate3d(calc(- var(--switch-frame-width) / 2 + var(--switch-button-size) / 2), 0, 0);
+    transition: transform .3s;
+  }
 }

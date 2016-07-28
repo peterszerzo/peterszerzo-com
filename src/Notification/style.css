@@ -27,11 +27,11 @@
   margin: auto;
   color: var(--white);
   font-size: 14px;
-}
 
-.notification__body p {
-  margin: 0;
-  padding: 0;
+  & p {
+    margin: 0;
+    padding: 0;
+  }
 }
 
 .notification__close {
