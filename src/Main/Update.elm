@@ -35,4 +35,4 @@ update msg model =
         (model, Navigation.modifyUrl ("/" ++ newUrl))
 
     Tick time ->
-      ({model | time = model.time + 1, notification = Notification.Update.update Notification.Messages.Tick model.notification}, Cmd.none)
+      ({model | time = model.time + 1, notification = Notification.Update.update (Notification.Messages.Tick model.time) model.notification}, Cmd.none)

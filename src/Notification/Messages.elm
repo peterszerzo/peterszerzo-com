@@ -1,5 +1,5 @@
 module Notification.Messages exposing (..)
 
 type Msg =
-  Toggle |
-  Tick
+  Dismiss |
+  Tick Float

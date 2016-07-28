@@ -10,5 +10,5 @@ import Notification.Messages exposing (Msg(..))
 view model =
   div [classList [("notification", True), ("notification--visible", model.isVisible)]]
     [ toHtml [class "notification__body"] model.text
-    , p [class "notification__close", onClick Toggle] [text "x"]
+    , p [class "notification__close", onClick Dismiss] [text "x"]
     ]

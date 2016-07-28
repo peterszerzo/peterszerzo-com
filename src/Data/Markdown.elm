@@ -40,6 +40,10 @@ Just finished *From Russia with Love*, feeding my latest infatuation with Super 
 Other great things I plan to do is repot some lilies that are growing out of their nursery, and picking some mint and lemonbalm from the garden to dry for the fall and winter. Exciting!
 """
 
-notificationText = """
-Add notification text here.
-"""
+notificationTexts =
+  [ "According to [a really great speaker](https://medium.com/@akosma/being-a-developer-after-40-3c5dd112210c#.pjq16al88), announcing our income in public decreases income inequality. I make 45000dkk a month."
+  ]
+
+notificationText =
+  List.head notificationTexts
+    |> Maybe.withDefault ""
