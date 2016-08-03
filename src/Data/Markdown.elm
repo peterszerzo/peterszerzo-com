@@ -1,5 +1,6 @@
 module Data.Markdown exposing (..)
 
+aboutConventional : String
 aboutConventional = """
 ## Hello
 
@@ -12,6 +13,7 @@ I enjoy designing my own interfaces and contributing to design processes at work
 You can find me on my bike on the streets of Copenhagen, sitting around in a coffee shop, the local front end, React and Elm meetups, here and there online. Let's talk!
 """
 
+aboutReal : String
 aboutReal = """
 ## Oh, good!
 
@@ -28,22 +30,24 @@ I am often in a reflective mood. When I feel really bad, I ask myself: ‘What i
 It means a lot to me that you've read this.
 """
 
+now : String
 now = """
 The /now page is Derek Sivers' [brilliant idea](https://sivers.org/nowff). Cheers, Derek!
 
-## Week of July 25th
+## Week of August 1st
 
-I've just become co-organizer of the Copenhagen frontenders' meetup, starting the one on August 2nd. I'll be finishing up and testing CphRain, my codeoff challenge for the event. The teams will be competing in creating a raindrop animation by supplying animation logic only (renderer and animator provided). It has silly error messages. It'll be tons of fun.
-
-Just finished *From Russia with Love*, feeding my latest infatuation with Super Agent 007. I'm starting *Intuitive Eating* now, in my quest to improve my relationship with food and eating.
-
-Other great things I plan to do is repot some lilies that are growing out of their nursery, and picking some mint and lemonbalm from the garden to dry for the fall and winter. Exciting!
+* Copenhagen frontenders' meetup (it's going to be great!)
+* Building my first ever shopping cart
+* Reading **Intuitive eating**
+* Jump in water from 15 feet and up, as many times as possible
 """
 
+notificationTexts : List String
 notificationTexts =
-  [ "[A really great speaker](https://medium.com/@akosma/being-a-developer-after-40-3c5dd112210c#.pjq16al88) made me realize how announcing our income in public can decrease income inequality. I make 45000dkk a month."
+  [ "Respect the hedgehog."
   ]
 
+notificationText : String
 notificationText =
   List.head notificationTexts
     |> Maybe.withDefault ""
