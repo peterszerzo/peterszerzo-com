@@ -54,7 +54,6 @@
   right: 0;
   cursor: pointer;
   margin: 0;
-  line-height: .9;
 
   & svg {
     width: 100%;
