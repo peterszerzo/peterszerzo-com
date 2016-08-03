@@ -1,15 +1,17 @@
 module Shapes.Falafel exposing (..)
 
+import Html exposing (Html)
 import Svg exposing (..)
 import Svg.Attributes exposing (..)
 
+view : Bool -> Html a
 view showAll =
   let
     height' = 8
     spacing = 24
     startY = 50 - spacing - 1.5 * height'
   in
-    svg [viewBox "0 0 100 100"]
+    svg [ viewBox "0 0 100 100" ]
     [ g []
       [ rect
         [ x "0"
