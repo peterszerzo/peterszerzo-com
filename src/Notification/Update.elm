@@ -13,5 +13,5 @@ update msg model =
 
     Tick time ->
       { model |
-          isVisible = (not model.isDismissed) && (time > 1) && (time < 60)
+          isVisible = (not model.isDismissed) && (time > 3) && (time < 60)
       }

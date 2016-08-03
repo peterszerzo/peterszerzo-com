@@ -2,7 +2,7 @@
 
 .notification {
   position: fixed;
-  background-color: var(--red);
+  background-color: var(--mustard);
   box-shadow: 0 0 10px 0 var(--shadow-color);
   top: 20px;
   height: auto;
@@ -26,7 +26,8 @@
   text-align: center;
   margin: auto;
   color: var(--white);
-  font-size: 14px;
+  font-size: 1rem;
+  letter-spacing: .02rem;
 
   & p {
     margin: 0;
