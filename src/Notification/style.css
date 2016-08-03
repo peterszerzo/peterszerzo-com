@@ -22,7 +22,7 @@
 }
 
 .notification__body {
-  padding: 10px 40px;
+  padding: .75rem 40px;
   text-align: center;
   margin: auto;
   color: var(--white);
@@ -30,11 +30,14 @@
   letter-spacing: .02rem;
 
   & p {
+    font-size: inherit;
     margin: 0;
     padding: 0;
+    line-height: 1;
   }
 
   & a {
+    font-size: inherit;
     text-decoration: none;
     color: inherit;
     border-bottom: 1px solid var(--white);
@@ -42,14 +45,13 @@
 }
 
 .notification__close {
-  width: 40px;
-  height: 40px;
-  padding: 12px;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: .75rem;
   display: inline-block;
   position: absolute;
   top: 0;
   right: 0;
-  padding: 5;
   cursor: pointer;
   margin: 0;
   line-height: .9;
