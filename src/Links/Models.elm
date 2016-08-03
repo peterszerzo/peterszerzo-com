@@ -12,6 +12,7 @@ type alias Link =
   , subLinks : List SubLink
   }
 
+getActiveSubLinks : (List Link) -> Route -> (List SubLink)
 getActiveSubLinks links currentRoute =
   links
   |> List.filter (\lnk -> lnk.url == Internal currentRoute)
@@ -25,6 +26,7 @@ links =
     , url = Internal Projects
     , subLinks =
       [ ("Albatross", "http://albatross.surge.sh")
+      , ("CphRain", "http://cphrain.surge.sh")
       , ("Slides, MD.", "https://github.com/pickled-plugins/slides-md")
       , ("ripsaw.js", "http://pickled-plugins.github.io/ripsaw-js")
       , ("Liquid Lab", "http://pickled-plugins.github.io/liquidlab/#home")
