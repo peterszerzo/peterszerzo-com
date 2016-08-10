@@ -11,6 +11,7 @@ view =
   , strokeLinecap "round"
   , strokeLinejoin "round"
   , strokeWidth "7"
+  , fill "none"
   , textRendering "geometricPrecision"
   ]
   [ g [ transform "translate(16, 30)" ]

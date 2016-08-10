@@ -80,18 +80,11 @@
 .mobile-nav__back {
   text-align: center;
   cursor: pointer;
+  width: 50px;
+  height: 50px;
   padding: 10px;
-  margin: 0;
-  font-weight: 700;
-  font-size: 1.6rem;
-  color: var(--blue);
-
-  & p {
-    font-family: monospace;
-    margin: 0;
-    line-height: .9;
-    font-weight: 700;
-  }
+  margin: 0px auto;
+  stroke: var(--blue);
 }
 
 .mobile-nav__tab:nth-of-type(1) {

@@ -8,8 +8,7 @@ import Routes.Models exposing (Route(..))
 import Main.Messages exposing (Msg(..))
 import Shapes.Falafel as Falafel
 import Links.Views exposing (viewMainLinks, viewSecondaryLinks)
-import Links.Models exposing (links, getActiveSubLinks)
-import Markdown exposing (toHtml)
+import Shapes.Arrow as Arrow
 
 view model currentRoute isMobileNavActive handleToggleClick =
   div
@@ -22,9 +21,9 @@ view model currentRoute isMobileNavActive handleToggleClick =
     [ div [class "mobile-nav__tab"]
       [ viewMainLinks "mobile-main-links" currentRoute
       ]
-    , div [class "mobile-nav__tab"]
-      [ div [class "mobile-nav__tab-content"]
-        [ toHtml [class "mobile-nav__back", onClick (ChangeRoute Home)] "&larr;"
+    , div [ class "mobile-nav__tab" ]
+      [ div [ class "mobile-nav__tab-content" ]
+        [ div [ class "mobile-nav__back", onClick (ChangeRoute Home) ] [ Arrow.view ]
         , viewSecondaryLinks "mobile-secondary-links" currentRoute
         ]
       ]
