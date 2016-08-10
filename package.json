@@ -11,7 +11,8 @@
     "build:js": "NODE_ENV=production ./node_modules/.bin/webpack --config ./webpack.config.js",
     "build:html": "cp ./build/index.html ./build/200.html",
     "build": "npm run build:setup && npm run build:js && npm run build:html",
-    "deploy": "./node_modules/.bin/surge ./build www.peterszerzo.com"
+    "deploy": "./node_modules/.bin/surge ./build www.peterszerzo.com",
+    "all": "npm run build && npm run deploy"
   },
   "author": "Peter Szerzo <szerzo.peter@gmail.com>",
   "license": "ISC",
