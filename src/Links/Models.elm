@@ -22,7 +22,7 @@ getActiveSubLinks links currentRoute =
 
 links : List Link
 links =
-  [ { label = "Projects"
+  [ { label = "Recent Works"
     , url = Internal Projects
     , subLinks =
       [ ("Albatross", "http://albatross.surge.sh")
