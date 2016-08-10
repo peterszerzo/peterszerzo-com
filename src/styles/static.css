@@ -25,7 +25,8 @@
   }
 
   & p,
-  & li {
+  & li,
+  & ul {
     font-family: inherit;
   }
 
