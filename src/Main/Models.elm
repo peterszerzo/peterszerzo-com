@@ -1,9 +1,11 @@
 module Main.Models exposing (..)
 
-import Data.Markdown exposing (notificationText)
 import Routes.Models exposing (Route(..))
 import Notification.Models
 import MobileNav.Models
+import Main.Messages exposing (Msg)
+
+type alias Flag = String
 
 type Mode = Conventional | Real
 
@@ -15,8 +17,6 @@ type alias Model =
   , notification : Notification.Models.Model
   }
 
-init =
-  (Model Home Conventional 0 (MobileNav.Models.init) (Notification.Models.init), Cmd.none)
-
-initWithRouteResult route =
+init : Flag -> Route -> (Model, Cmd Msg)
+init flags route =
   (Model route Conventional 0 (MobileNav.Models.init) (Notification.Models.init), Cmd.none)

@@ -1,6 +1,6 @@
 module Main exposing (..)
 
-import Navigation exposing (program)
+import Navigation exposing (programWithFlags)
 
 import Main.Views exposing (view)
 import Main.Models exposing (..)
@@ -9,15 +9,15 @@ import Main.Update exposing (update)
 
 import Routes.Matching exposing (routeFromResult, parser)
 
-initWithRoute result =
+initWithRoute flags result =
   routeFromResult result
-    |> Main.Models.initWithRouteResult
+    |> Main.Models.init flags
 
 urlUpdate result model =
   ({model | route = (routeFromResult result)}, Cmd.none)
 
 main =
-  program parser
+  programWithFlags parser
     { init = initWithRoute
     , view = view
     , update = update
