@@ -34,17 +34,17 @@ now : String
 now = """
 The /now page is Derek Sivers' [brilliant idea](https://sivers.org/nowff). Cheers, Derek!
 
-## Week of August 1st
+## Week of August 8th
 
-* Copenhagen frontenders' meetup (it's going to be great!)
-* Building my first ever shopping cart
-* Reading **Intuitive eating**
-* Jump in water from 15 feet and up, as many times as possible
+* A wonderful WebGL side project
+* Some more repotting and gardening
+* Collages of random items, scanned
+* Some more time spent staring at trees, birds and the water
 """
 
 notificationTexts : List String
 notificationTexts =
-  [ "Respect the hedgehog."
+  [ "Talk about your feelings"
   ]
 
 notificationText : String
