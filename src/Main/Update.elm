@@ -14,7 +14,10 @@ update msg model =
       ({model | mode = if model.mode == Conventional then Real else Conventional}, Cmd.none)
 
     NotificationMsg msg ->
-      ({model | notification = Notification.Update.update msg model.notification}, Cmd.none)
+      let
+        (notificationModel, notificationCmd) = Notification.Update.update msg model.notification
+      in
+        ({model | notification = notificationModel}, notificationCmd)
 
     ToggleMobileNav ->
       let
@@ -35,4 +38,10 @@ update msg model =
         (model, Navigation.modifyUrl ("/" ++ newUrl))
 
     Tick time ->
-      ({model | time = model.time + 1, notification = Notification.Update.update (Notification.Messages.Tick model.time) model.notification}, Cmd.none)
+      let
+        (notificationModel, notificationCmd) = Notification.Update.update (Notification.Messages.Tick model.time) model.notification
+      in
+        ({ model |
+            time = model.time + 1
+            , notification = notificationModel
+         }, Cmd.none)
