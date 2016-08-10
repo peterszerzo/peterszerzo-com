@@ -25,7 +25,7 @@ module.exports = function startApp(window, Elm) {
   var isNotificationRecentlyDismissed = getTimeSinceNotificationLastDismissed() < 2 * 24 * 3600 * 1000;
   window.requestAnimationFrame(function() {
     node.innerHTML = '';
-    elmApp = Elm.Main.embed(node, !isNotificationRecentlyDismissed);
+    elmApp = Elm.Main.embed(node, isNotificationRecentlyDismissed);
     if (window.localStorage) {
       elmApp.ports.notificationDismissed.subscribe(setNotificationLastDismissed);
     }

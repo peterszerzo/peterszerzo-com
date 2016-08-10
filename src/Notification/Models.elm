@@ -8,5 +8,6 @@ type alias Model =
   , isDismissed : Bool
   }
 
-init =
-  Model notificationText False False
+init : Bool -> Model
+init isDismissed =
+  Model notificationText False (isDismissed)

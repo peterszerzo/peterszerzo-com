@@ -5,8 +5,8 @@ import Notification.Models
 import MobileNav.Models
 import Main.Messages exposing (Msg)
 
-type alias DisplayNotification = Bool
-type alias Flags = DisplayNotification
+type alias IsNotificationDismissed = Bool
+type alias Flags = IsNotificationDismissed
 
 type Mode = Conventional | Real
 
@@ -19,5 +19,5 @@ type alias Model =
   }
 
 init : Flags -> Route -> (Model, Cmd Msg)
-init flags route =
-  (Model route Conventional 0 (MobileNav.Models.init) (Notification.Models.init), Cmd.none)
+init isNotificationDismissed route =
+  (Model route Conventional 0 (MobileNav.Models.init) (Notification.Models.init isNotificationDismissed), Cmd.none)
