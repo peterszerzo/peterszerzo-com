@@ -44,7 +44,7 @@ The /now page is Derek Sivers' [brilliant idea](https://sivers.org/nowff). Cheer
 
 notificationTexts : List String
 notificationTexts =
-  [ "Talk about your feelings"
+  [ "Enjoy your fucking life 😊"
   ]
 
 notificationText : String

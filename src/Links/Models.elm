@@ -25,10 +25,11 @@ links =
   [ { label = "Recent Works"
     , url = Internal Projects
     , subLinks =
-      [ ("Albatross", "http://albatross.surge.sh")
-      , ("CphRain", "http://cphrain.surge.sh")
-      , ("Slides, MD.", "https://github.com/pickled-plugins/slides-md")
+      [ ("Splyt Light", "http://splytlight.surge.sh")
       , ("ripsaw.js", "http://pickled-plugins.github.io/ripsaw-js")
+      , ("CphRain", "http://cphrain.surge.sh")
+      , ("Albatross", "http://albatross.surge.sh")
+      , ("Slides, MD.", "https://github.com/pickled-plugins/slides-md")
       , ("Liquid Lab", "http://pickled-plugins.github.io/liquidlab/#home")
       ]
     }
