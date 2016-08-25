@@ -11,12 +11,12 @@ const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 
 const commonPlugins = [
   new HtmlWebpackPlugin({
-    template: './src/index.ejs',
+    template: './src/index.pug',
     inject: false
   }),
   new HtmlWebpackPlugin({
     filename: '200.html',
-    template: './src/index.ejs',
+    template: './src/index.pug',
     inject: false
   }),
   new FaviconsWebpackPlugin({
@@ -54,8 +54,8 @@ const config = {
         loader: 'file?name=[name].[ext]'
       },
       {
-        test: /\.html$/,
-        loader: 'file?name=[name].[ext]!html-minify'
+        test: /\.pug/,
+        loader: 'pug'
       }
     ]
   },

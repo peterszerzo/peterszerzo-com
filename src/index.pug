@@ -1,0 +1,26 @@
+doctype html
+html
+  head
+    title.
+      Peter Szerzo makes himself a website
+    meta(charset='utf-8')
+    meta(name='HandheldFriendly', content='True')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    script(type='application/ld+json').
+      {
+        "@context": "https://schema.org",
+        "@type": "Website",
+        "publisher": "Peter Szerzo",
+        "url": "http://www.peterszerzo.com/",
+        "description": "Personal website"
+      }
+    style.
+      html,body{margin:0;padding:0;width:100%;height:100%;}#app {width:100%;height:100%;}.loader{width:100%;height:100%;display:flex;}.loader img{width:60px;height:60px;margin:auto;}
+    link(href='https://fonts.googleapis.com/css?family=PT+Sans|PT+Serif:400', rel='stylesheet', type='text/css')
+
+  body
+    #app
+      .loader
+        img(src='/ripple-2x.gif', alt='Loading icon')
+    each pth in htmlWebpackPlugin.files.js
+      script(src='/#{pth}')
