@@ -11,11 +11,13 @@ const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 
 const commonPlugins = [
   new HtmlWebpackPlugin({
-    template: './src/index.ejs'
+    template: './src/index.ejs',
+    inject: false
   }),
   new HtmlWebpackPlugin({
     filename: '200.html',
-    template: './src/index.ejs'
+    template: './src/index.ejs',
+    inject: false
   }),
   new FaviconsWebpackPlugin({
     logo: './src/images/peter-szerzo-180-2x.jpg',
