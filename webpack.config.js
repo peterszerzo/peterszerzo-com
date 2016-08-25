@@ -6,6 +6,17 @@ const autoprefixer = require('autoprefixer');
 const postCssCssNext = require('postcss-cssnext');
 const postCssImport = require('postcss-import');
 const validate = require('webpack-validator');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+const commonPlugins = [
+  new HtmlWebpackPlugin({
+    template: './src/index.ejs'
+  }),
+  new HtmlWebpackPlugin({
+    filename: '200.html',
+    template: './src/index.ejs'
+  })
+];
 
 const config = {
   entry: [
@@ -44,14 +55,14 @@ const config = {
   resolve: {
     extensions: ['', '.js', '.elm', '.css', '.json']
   },
-  plugins: process.env.NODE_ENV === 'development' ? [] : [
+  plugins: process.env.NODE_ENV === 'development' ? commonPlugins : commonPlugins.concat([
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: false,
       compress: {
         warnings: false
       }
     })
-  ],
+  ]),
   devtool: 'source-map',
   postcss() {
     return [

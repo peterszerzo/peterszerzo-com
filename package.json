@@ -9,8 +9,7 @@
     "lint": "./node_modules/.bin/stylelint ./src/**/*.css",
     "build:setup": "rm -rf ./build && mkdir -p ./build",
     "build:js": "NODE_ENV=production ./node_modules/.bin/webpack --config ./webpack.config.js",
-    "build:html": "cp ./build/index.html ./build/200.html",
-    "build": "npm run build:setup && npm run build:js && npm run build:html",
+    "build": "npm run build:setup && npm run build:js",
     "deploy": "./node_modules/.bin/surge ./build www.peterszerzo.com",
     "all": "npm run build && npm run deploy"
   },
@@ -26,6 +25,7 @@
     "elm-webpack-loader": "^3.0.3",
     "file-loader": "^0.9.0",
     "html-minify-loader": "^1.1.0",
+    "html-webpack-plugin": "^2.22.0",
     "json-loader": "^0.5.4",
     "lodash": "^4.13.1",
     "mocha": "^2.5.3",

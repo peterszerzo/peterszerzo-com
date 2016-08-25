@@ -1,4 +1,3 @@
-require('./index.html');
 require('./styles/main');
 
 require('./Banner/style');
