@@ -34,17 +34,19 @@ now : String
 now = """
 The /now page is Derek Sivers' [brilliant idea](https://sivers.org/nowff). Cheers, Derek!
 
-## Week of August 8th
+## Week of August 22nd
 
-* A wonderful WebGL side project
-* Some more repotting and gardening
-* Collages of random items, scanned
-* Some more time spent staring at trees, birds and the water
+* I am jumping in the water a lot, and trying to work with my jellyfish-o-phobia.
+* Some more [architectural WebGL stuff](http://splytlight.surge.sh).
+* Open-sourcing my very simple UI state container called cradle.js. Goo-goo, gah-gah.
+* Building a shopping cart for [airtame.com](https://airtame.com).
+
+Working in tech is quite hard, and I wonder if there's a way to have more gentleness and care in life despite all the code that screams at you to be written.
 """
 
 notificationTexts : List String
 notificationTexts =
-  [ "Enjoy your fucking life 😊"
+  [ "Embrace stoicismophobia 🤓"
   ]
 
 notificationText : String
