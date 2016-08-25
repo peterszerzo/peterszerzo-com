@@ -7,6 +7,7 @@ const postCssCssNext = require('postcss-cssnext');
 const postCssImport = require('postcss-import');
 const validate = require('webpack-validator');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 
 const commonPlugins = [
   new HtmlWebpackPlugin({
@@ -15,6 +16,10 @@ const commonPlugins = [
   new HtmlWebpackPlugin({
     filename: '200.html',
     template: './src/index.ejs'
+  }),
+  new FaviconsWebpackPlugin({
+    logo: './src/images/peter-szerzo-180-2x.jpg',
+    inject: true
   })
 ];
 
