@@ -23,4 +23,4 @@ html
       .loader
         img(src='/ripple-2x.gif', alt='Loading icon')
     each pth in htmlWebpackPlugin.files.js
-      script(src='/#{pth}')
+      script(src='/' + pth)
