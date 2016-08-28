@@ -6,23 +6,25 @@
   box-shadow: 0 0 10px 0 var(--shadow-color);
   top: 20px;
   height: auto;
-  width: calc(100% - 40px);
-  left: 20px;
+  width: calc(100% - 140px);
+  left: 70px;
   border-radius: 3px;
   z-index: var(--z-hidden);
   opacity: 0;
   transition: all .3s;
   display: flex;
+  transform: translateY(-5px);
 }
 
 .notification--visible {
   z-index: var(--z-notification);
   opacity: 1;
+  transform: translateY(0);
   transition: all .3s;
 }
 
 .notification__body {
-  padding: .75rem 40px;
+  padding: .65rem 20px;
   text-align: center;
   margin: auto;
   color: var(--white);
@@ -33,7 +35,7 @@
     font-size: inherit;
     margin: 0;
     padding: 0;
-    line-height: 1;
+    line-height: 1.2;
   }
 
   & a {
