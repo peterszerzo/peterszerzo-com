@@ -16,10 +16,17 @@ getModel model =
     defaultModel = Model Nothing Nothing True
   in
     case model.route of
-      Home -> defaultModel
-      Projects -> defaultModel
-      Talks -> defaultModel
-      Archive -> defaultModel
-      NotFound -> defaultModel
-      Now -> Model (Just Data.Markdown.now) Nothing True
-      About -> Model (Just Data.Markdown.aboutConventional) (Just Data.Markdown.aboutReal) isPrimaryContentDisplayed
+      Home ->
+        defaultModel
+      Projects ->
+        defaultModel
+      Talks ->
+        defaultModel
+      Archive ->
+        defaultModel
+      NotFound ->
+        defaultModel
+      Now ->
+        Model (Just Data.Markdown.now) Nothing True
+      About ->
+        Model (Just Data.Markdown.aboutConventional) (Just Data.Markdown.aboutReal) isPrimaryContentDisplayed

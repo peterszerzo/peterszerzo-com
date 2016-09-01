@@ -1,13 +1,15 @@
 module Main.Views exposing (..)
 
-import Html exposing (..)
+import Html exposing (Html, div)
 import Html.Attributes exposing (class, src, href)
 import Html.Events exposing (onClick)
 import Html.App exposing (map)
 
 import Routes.Models exposing (Route(..))
-import Main.Models exposing (Mode(..))
+import Main.Models exposing (Model, Mode(..))
 import Main.Messages exposing (Msg(..))
+import Data.Markdown
+import Links.Models
 import Switch.Views
 import Switch.Models
 import DesktopNav.Views
@@ -17,17 +19,20 @@ import Notification.Views
 import TextBox.Models
 import TextBox.Views
 import Banner.Views
-import Links.Models
 
-import Data.Markdown
-
+viewMainContent : Model -> Html Msg
 viewMainContent model =
-  div [class "main__content"]
+  div
+    [ class "main__content"
+    ]
     [ Banner.Views.view
     ]
 
+view : Model -> Html Msg
 view model =
-  div [class "main"]
+  div
+    [ class "main"
+    ]
     [ viewMainContent model
     , TextBox.Views.view model
     , DesktopNav.Views.view model.route

@@ -1,3 +1,6 @@
 module Switch.Models exposing (..)
 
-type Model = Left | Center | Right
+type Model =
+  Left |
+  Center |
+  Right

@@ -20,4 +20,10 @@ type alias Model =
 
 init : Flags -> Route -> (Model, Cmd Msg)
 init isNotificationDismissed route =
-  (Model route Conventional 0 (MobileNav.Models.init) (Notification.Models.init isNotificationDismissed), Cmd.none)
+  let
+    mobileNav = MobileNav.Models.init
+    notification = Notification.Models.init isNotificationDismissed
+  in
+    ( Model route Conventional 0 mobileNav notification
+    , Cmd.none
+    )

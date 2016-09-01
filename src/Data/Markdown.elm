@@ -45,12 +45,6 @@ I'm still open-sourcing my very simple UI state container called cradle.js. Goo-
 Oh, and a local conference called [Coldfront](https://2016.coldfrontconf.com/) is happening. Very excited!
 """
 
-notificationTexts : List String
-notificationTexts =
-  [ "Water your plants"
-  ]
-
 notificationText : String
 notificationText =
-  List.head notificationTexts
-    |> Maybe.withDefault ""
+  "Water your plants"

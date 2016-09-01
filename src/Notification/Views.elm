@@ -13,14 +13,18 @@ view : Models.Model -> Html.Html Msg
 view model =
   div
   [ classList
-    [ ("notification", True)
-    , ("notification--visible", model.isVisible)
-    ]
+      [ ("notification", True)
+      , ("notification--visible", model.isVisible)
+      ]
   ]
-  [ toHtml [class "notification__body"] model.text
+  [ toHtml
+      [ class "notification__body"
+      ]
+      model.text
   , div
-    [ class "notification__close"
-    , onClick Dismiss
-    ]
-    [ X.view ]
+      [ class "notification__close"
+      , onClick Dismiss
+      ]
+      [ X.view
+      ]
   ]

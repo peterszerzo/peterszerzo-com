@@ -1,12 +1,17 @@
 module Banner.Views exposing (..)
 
-import Html exposing (..)
-import Html.Attributes exposing (..)
+import Html exposing (Html, div, h1, p, text)
+import Html.Attributes exposing (class)
 import Shapes.Logo
 
+view : Html a
 view =
-  div [class "banner"]
-    [ div [class "banner__logo"]
+  div
+    [ class "banner"
+    ]
+    [ div
+      [ class "banner__logo"
+      ]
       [ Shapes.Logo.view
       , div [class "banner__image-container"]
         [ div [class "banner__image"] []
