@@ -34,17 +34,11 @@ now : String
 now = """
 The /now page is Derek Sivers' [brilliant idea](https://sivers.org/nowff). Cheers, Derek!
 
-## Week of August 29th
+## Week of September 5th
 
-I'm picking writing back up, focusing on mental health. I'd like to share the story of my coming out of the closet about mental health struggles, and shout it out to the world that we should talk about this shit a whole lot more.
-
-Got down right to the basics of WebGL, trying to wrap my head around its low-level API. It's refreshing to do raw mathy stuff again.
-
-I'm still open-sourcing my very simple UI state container called cradle.js. Goo-goo, gah-gah. And I am still building a shopping cart for [airtame.com](https://airtame.com).
-
-Oh, and a local conference called [Coldfront](https://2016.coldfrontconf.com/) is happening. Very excited!
+It's spontaneous week: lots of yoga, little work, no plans.
 """
 
 notificationText : String
 notificationText =
-  "Water your plants"
+  "Talk about your feelings"
