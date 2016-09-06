@@ -16,11 +16,12 @@
   background-color: var(--blue);
   overflow: hidden;
   display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
   animation: fade-in ease-in 1s;
 }
 
 .main__content {
   margin: auto;
-  height: 300px;
 }

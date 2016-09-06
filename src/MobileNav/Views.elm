@@ -34,18 +34,18 @@ view model currentRoute isMobileNavActive handleToggleClick =
             ]
             [ viewMainLinks "mobile-main-links" currentRoute
             ]
-        ]
-      , div
-          [ class "mobile-nav__tab"
-          ]
-          [ div [ class "mobile-nav__tab-content" ]
-            [ div
-                [ class "mobile-nav__back"
-                , onClick (ChangeRoute Home)
-                ]
-                [ Arrow.view
-                ]
-            , viewSecondaryLinks "mobile-secondary-links" currentRoute
+        , div
+            [ class "mobile-nav__tab"
             ]
-          ]
+            [ div [ class "mobile-nav__tab-content" ]
+              [ div
+                  [ class "mobile-nav__back"
+                  , onClick (ChangeRoute Home)
+                  ]
+                  [ Arrow.view
+                  ]
+              , viewSecondaryLinks "mobile-secondary-links" currentRoute
+              ]
+            ]
+        ]
     ]
