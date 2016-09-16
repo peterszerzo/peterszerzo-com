@@ -34,11 +34,13 @@ now : String
 now = """
 The /now page is Derek Sivers' [brilliant idea](https://sivers.org/nowff). Cheers, Derek!
 
-## Week of September 5th
+## Week of September 12th
 
-It's spontaneous week: lots of yoga, little work, no plans.
+Very much into creating multiplayer wordgames with Elm and Express. Spending a lot of time on [WordSnake](wordsnake.herokuapp.com), and thinking about how to abstract it into a cute multiplayer game engine.
+
+I'm off to New York this weekend on a one-week, laptop-free vacation. Looking to do lots of meditation, a road trip, and some lovely diner meals.
 """
 
 notificationText : String
 notificationText =
-  "Talk about your feelings"
+  "There is nothing left to do"
