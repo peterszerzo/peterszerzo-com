@@ -10,7 +10,7 @@
     "build:setup": "rm -rf ./build && mkdir -p ./build",
     "build:js": "NODE_ENV=production ./node_modules/.bin/webpack --config ./webpack.config.js",
     "build": "npm run build:setup && npm run build:js",
-    "deploy": "./node_modules/.bin/surge ./build www.peterszerzo.com",
+    "deploy": "./node_modules/.bin/surge ./build peterszerzo.com",
     "all": "npm run build && npm run deploy"
   },
   "author": "Peter Szerzo <szerzo.peter@gmail.com>",
