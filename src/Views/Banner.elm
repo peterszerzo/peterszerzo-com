@@ -1,8 +1,8 @@
-module Banner.Views exposing (..)
+module Views.Banner exposing (..)
 
 import Html exposing (Html, div, h1, p, text)
 import Html.Attributes exposing (class)
-import Shapes.Logo
+import Views.Shapes.Logo as Logo
 
 view : Html a
 view =
@@ -12,7 +12,7 @@ view =
     [ div
       [ class "banner__logo"
       ]
-      [ Shapes.Logo.view
+      [ Logo.view
       , div [class "banner__image-container"]
         [ div [class "banner__image"] []
         , div [class "banner__overlay"] []

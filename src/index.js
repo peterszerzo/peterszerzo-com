@@ -1,13 +1,5 @@
 require('./styles/main');
 
-require('./Banner/style');
-require('./DesktopNav/style');
-require('./Main/style');
-require('./MobileNav/style');
-require('./Switch/style');
-require('./TextBox/style');
-require('./Notification/style');
-
 require('./images/peter-szerzo-180-2x.jpg');
 require('./images/ripple-2x.gif');
 

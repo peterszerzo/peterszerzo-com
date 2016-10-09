@@ -1,2 +1,10 @@
 @import './setup.css';
 @import './static.css';
+
+@import './modules/main.css';
+@import './modules/banner.css';
+@import './modules/desktop-nav.css';
+@import './modules/mobile-nav.css';
+@import './modules/switch.css';
+@import './modules/text-box.css';
+@import './modules/notification.css';

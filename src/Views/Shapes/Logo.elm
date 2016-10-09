@@ -1,4 +1,4 @@
-module Shapes.Logo exposing (..)
+module Views.Shapes.Logo exposing (..)
 
 import Html exposing (Html)
 import Svg exposing (svg, g, path)

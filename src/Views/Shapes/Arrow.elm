@@ -1,4 +1,4 @@
-module Shapes.Arrow exposing (..)
+module Views.Shapes.Arrow exposing (..)
 
 import Html exposing (Html)
 import Svg exposing (svg, g, path, polyline)

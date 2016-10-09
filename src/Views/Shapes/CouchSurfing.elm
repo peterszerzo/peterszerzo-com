@@ -1,4 +1,4 @@
-module Shapes.CouchSurfing exposing (..)
+module Views.Shapes.CouchSurfing exposing (..)
 
 import Html exposing (Html)
 import Svg exposing (svg, g, path)

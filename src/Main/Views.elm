@@ -12,20 +12,20 @@ import Data.Markdown
 import Links.Models
 import Switch.Views
 import Switch.Models
-import DesktopNav.Views
+import Views.DesktopNav
 import MobileNav.Views
 import TextBox.Views
 import Notification.Views
 import TextBox.Models
 import TextBox.Views
-import Banner.Views
+import Views.Banner
 
 viewMainContent : Model -> Html Msg
 viewMainContent model =
   div
     [ class "main__content"
     ]
-    [ Banner.Views.view
+    [ Views.Banner.view
     ]
 
 view : Model -> Html Msg
@@ -35,7 +35,7 @@ view model =
     ]
     [ viewMainContent model
     , TextBox.Views.view model
-    , DesktopNav.Views.view model.route
+    , Views.DesktopNav.view model.route
     , map NotificationMsg (Notification.Views.view model.notification)
     , MobileNav.Views.view model.mobileNav model.route (not model.mobileNav.isActive) ToggleMobileNav
     ]

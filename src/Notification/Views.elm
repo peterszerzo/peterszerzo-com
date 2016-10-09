@@ -4,7 +4,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Markdown exposing (toHtml)
-import Shapes.X as X
+import Views.Shapes.X as X
 import Notification.Models as Models
 
 import Notification.Messages exposing (Msg(..))

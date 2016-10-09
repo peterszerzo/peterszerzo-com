@@ -9,9 +9,7 @@ import Main.Messages exposing (..)
 import Main.Models exposing (Mode(..))
 import TextBox.Models exposing (getModel)
 
-import Shapes.Logo as Logo
-import Shapes.Falafel as Falafel
-import Shapes.Arrow as Arrow
+import Views.Shapes.Arrow as Arrow
 import Switch.Views
 import Switch.Models
 

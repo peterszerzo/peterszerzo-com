@@ -1,4 +1,4 @@
-module DesktopNav.Views exposing (..)
+module Views.DesktopNav exposing (..)
 
 import Html exposing (Html, nav)
 import Html.Attributes exposing (classList, attribute)

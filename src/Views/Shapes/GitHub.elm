@@ -1,4 +1,4 @@
-module Shapes.GitHub exposing (..)
+module Views.Shapes.GitHub exposing (..)
 
 import Html exposing (Html)
 import Svg exposing (svg, g, path)

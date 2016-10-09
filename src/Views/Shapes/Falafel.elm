@@ -1,4 +1,4 @@
-module Shapes.Falafel exposing (..)
+module Views.Shapes.Falafel exposing (..)
 
 import Html exposing (Html)
 import Svg exposing (..)

@@ -6,9 +6,9 @@ import Html.Events exposing (onClick)
 
 import Routes.Models exposing (Route(..))
 import Main.Messages exposing (Msg(..))
-import Shapes.Falafel as Falafel
 import Links.Views exposing (viewMainLinks, viewSecondaryLinks)
-import Shapes.Arrow as Arrow
+import Views.Shapes.Falafel as Falafel
+import Views.Shapes.Arrow as Arrow
 
 view model currentRoute isMobileNavActive handleToggleClick =
   nav

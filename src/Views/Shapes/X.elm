@@ -1,4 +1,4 @@
-module Shapes.X exposing (..)
+module Views.Shapes.X exposing (..)
 
 import Html exposing (Html)
 import Svg exposing (svg, g, line)

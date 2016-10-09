@@ -1,4 +1,4 @@
-module Shapes.Twitter exposing (..)
+module Views.Shapes.Twitter exposing (..)
 
 import Html exposing (Html)
 import Svg exposing (svg, g, path)

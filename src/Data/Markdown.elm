@@ -34,9 +34,13 @@ now : String
 now = """
 The /now page is Derek Sivers' [brilliant idea](https://sivers.org/nowff). Cheers, Derek!
 
-## Week of October 1st
+## Week of October 10th
 
-Taking it really easy this week. Reading [We Are All Weird](https://www.amazon.com/Are-All-Weird-Seth-Godin/dp/1936719223), getting a monthly membership at a pool, listening to some Tiny Desk concerts.
+Had a great weekend watching dramas/action movies [Skyfall](http://www.imdb.com/title/tt1074638/) and [Victoria](http://www.imdb.com/title/tt4226388/). Great discovery: movies like these are a great way to balance the slow, drowsy and melancholic moods of the rainy Scandinavian fall.
+
+Some more wordgaming under way. WordSnake got renamed to Lettero, got a nice boost in motivation and a chunky cleanup in code. Very excited to move forward with it.
+
+Also looking forward to discussing inclusivity in tech circles with some other local meetup organizers.
 """
 
 notificationText : String

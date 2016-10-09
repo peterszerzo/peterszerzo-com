@@ -48,7 +48,7 @@ update msg model =
             |> snd
       in
         ( model
-        , Navigation.modifyUrl ("/" ++ newUrl)
+        , Navigation.newUrl ("/" ++ newUrl)
         )
 
     Tick time ->

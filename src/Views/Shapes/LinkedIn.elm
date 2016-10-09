@@ -1,4 +1,4 @@
-module Shapes.LinkedIn exposing (..)
+module Views.Shapes.LinkedIn exposing (..)
 
 import Html exposing (Html)
 import Svg exposing (svg, g, path)
