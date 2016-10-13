@@ -1,4 +1,4 @@
-module MobileNav.Views exposing (..)
+module Views.MobileNav exposing (..)
 
 import Html exposing (Html, div, nav)
 import Html.Attributes exposing (classList, class, attribute)
@@ -6,7 +6,7 @@ import Html.Events exposing (onClick)
 
 import Router exposing (Route(..))
 import Messages exposing (Msg(..))
-import Links.Views exposing (viewMainLinks, viewSecondaryLinks)
+import Views.Links exposing (viewMainLinks, viewSecondaryLinks)
 import Views.Shapes.Falafel as Falafel
 import Views.Shapes.Arrow as Arrow
 

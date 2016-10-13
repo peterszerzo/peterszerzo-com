@@ -1,6 +1,7 @@
 module Messages exposing (..)
 
 import Time exposing (Time)
+
 import Notification.Messages
 import Router exposing (Route)
 

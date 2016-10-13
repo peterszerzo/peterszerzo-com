@@ -1,20 +1,22 @@
-module Switch.Views exposing (..)
+module Views.Switch exposing (..)
 
 import Html exposing (Html, div)
 import Html.Attributes exposing (class)
 import Html.Events exposing (onClick)
 import Messages exposing (Msg)
 
-import Switch.Models exposing (Model(..))
+import Models exposing (Model, SwitchPosition(..))
 
-view : Model -> Msg -> Html Msg
+view : SwitchPosition -> Msg -> Html Msg
 view model msgOnClick =
   let
     className = case model of
       Left ->
         "switch switch--left"
+
       Center ->
         "switch"
+
       Right ->
         "switch switch--right"
   in

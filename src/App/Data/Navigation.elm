@@ -1,24 +1,7 @@
-module Links.Models exposing (..)
+module Data.Navigation exposing (..)
 
+import Models exposing (Link, Url(..))
 import Router exposing (Route(..))
-
-type alias SubLink = (String, String)
-
-type Url = Internal Route | External String
-
-type alias Link =
-  { label : String
-  , url : Url
-  , subLinks : List SubLink
-  }
-
-getActiveSubLinks : (List Link) -> Route -> (List SubLink)
-getActiveSubLinks links currentRoute =
-  links
-    |> List.filter (\lnk -> lnk.url == Internal currentRoute)
-    |> List.head
-    |> Maybe.map .subLinks
-    |> Maybe.withDefault []
 
 links : List Link
 links =

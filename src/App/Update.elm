@@ -8,55 +8,56 @@ import Router
 import Navigation exposing (..)
 
 update : Msg -> Model -> (Model, Cmd Msg)
-update msg model =
+update msg ({mode, mobileNav} as model) =
   case msg of
     ToggleMode ->
       let
-        mode =
-          if model.mode == Conventional
+        newMode =
+          if mode == Conventional
             then Real
             else Conventional
       in
-        ( {model | mode = mode}
+        ( { model | mode = newMode }
         , Cmd.none)
 
     NotificationMsg msg ->
       let
-        (notificationModel, notificationCmd) = Notification.Update.update msg model.notification
+        ( notificationModel
+        , notificationCmd ) =
+          Notification.Update.update msg model.notification
       in
-        ( {model | notification = notificationModel}
+        ( { model | notification = notificationModel }
         , notificationCmd
         )
 
     ToggleMobileNav ->
       let
-        oldMobileNav = model.mobileNav
-        newMobileNav = {oldMobileNav | isActive = not oldMobileNav.isActive}
+        newMobileNav =
+          { mobileNav
+              | isActive = not mobileNav.isActive
+          }
       in
-        ( {model | mobileNav = newMobileNav}
+        ( { model
+              | mobileNav = newMobileNav
+          }
         , Cmd.none
         )
 
     ChangeRoute newRoute ->
-      let
-        newUrl =
-          Router.routeUrls
-            |> List.filter (\(rt, url) -> rt == newRoute)
-            |> List.head
-            |> Maybe.withDefault (Router.Home, "")
-            |> snd
-      in
-        ( model
-        , Navigation.newUrl ("/" ++ newUrl)
-        )
+      ( model
+      , Navigation.newUrl ("/" ++ (Router.getUrl newRoute))
+      )
 
     Tick time ->
       let
-        (notificationModel, notificationCmd) = Notification.Update.update (Notification.Messages.Tick model.time) model.notification
+        ( notificationModel
+        , notificationCmd ) =
+          model.notification
+            |> Notification.Update.update (Notification.Messages.Tick model.time)
       in
-        ( { model |
-              time = model.time + 1
-            , notification = notificationModel
+        ( { model
+              | time = model.time + 1
+              , notification = notificationModel
           }
         , Cmd.none
         )

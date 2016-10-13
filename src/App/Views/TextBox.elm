@@ -1,17 +1,18 @@
-module TextBox.Views exposing (..)
+module Views.TextBox exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Markdown exposing (toHtml)
+
 import Router exposing (Route(..))
 import Messages exposing (..)
 import Models exposing (Mode(..))
-import TextBox.Models exposing (getModel)
+import Models exposing (getTextBox)
 
 import Views.Shapes.Arrow as Arrow
-import Switch.Views
-import Switch.Models
+import Views.Switch
+import Models exposing (SwitchPosition(..))
 
 viewContents model =
   div [class "text-box__contents"] [ div [class "text-box__content"]
@@ -24,7 +25,7 @@ viewContents model =
 
 viewNav model =
   let
-    switchModel = if model.mode == Conventional then Switch.Models.Left else Switch.Models.Right
+    switchModel = if model.mode == Conventional then Left else Right
     isSwitchHidden = model.route /= About
   in
     div [class "text-box-nav"]
@@ -32,13 +33,13 @@ viewNav model =
         [ Arrow.view
         ]
       , div [classList [("text-box-nav__switch", True), ("text-box-nav__switch--hidden", isSwitchHidden)]]
-        [ Switch.Views.view switchModel ToggleMode
+        [ Views.Switch.view switchModel ToggleMode
         ]
       ]
 
 view model =
   let
-    textBoxModel = getModel model
+    textBoxModel = getTextBox model
   in
     div
     [ classList

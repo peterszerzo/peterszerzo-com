@@ -5,8 +5,9 @@ import Html.Attributes exposing (classList, attribute)
 
 import Router exposing (Route)
 import Messages exposing (Msg)
-import Links.Views exposing (viewMainLinks, viewSecondaryLinks)
-import Links.Models exposing (links, getActiveSubLinks)
+import Views.Links exposing (viewMainLinks, viewSecondaryLinks)
+import Models exposing (getActiveSubLinks)
+import Data.Navigation exposing (links)
 
 view : Route -> Html Msg
 view currentRoute =

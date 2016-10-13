@@ -2,21 +2,24 @@ module Main exposing (..)
 
 import Navigation exposing (programWithFlags)
 
-import Messages
+import Messages exposing (Msg)
 import Views exposing (view)
-import Models
+import Models exposing (Model, Flags)
 import Subscriptions exposing (subscriptions)
 import Update exposing (update)
-import Router
+import Router exposing (Route)
 
-initWithRoute : Models.Flags -> Result a Router.Route -> (Models.Model, Cmd Messages.Msg)
+initWithRoute : Flags -> Result String Route -> (Model, Cmd Msg)
 initWithRoute flags result =
   Router.routeFromResult result
     |> Models.init flags
 
-urlUpdate : Result a Router.Route -> Models.Model -> (Models.Model, Cmd Messages.Msg)
+urlUpdate : Result String Route -> Model -> (Model, Cmd Msg)
 urlUpdate result model =
-  ({model | route = (Router.routeFromResult result)}, Cmd.none)
+  ( { model
+        | route = (Router.routeFromResult result)
+    }
+  , Cmd.none)
 
 main : Program Models.Flags
 main =

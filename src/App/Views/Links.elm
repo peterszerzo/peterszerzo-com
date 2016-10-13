@@ -1,4 +1,4 @@
-module Links.Views exposing (..)
+module Views.Links exposing (..)
 
 import Html exposing (Html, div, a, text)
 import Html.Attributes exposing (..)
@@ -6,7 +6,8 @@ import Html.Events exposing (onClick)
 
 import Messages exposing (Msg(..))
 import Router exposing (Route(..))
-import Links.Models exposing (Url(..), links, getActiveSubLinks)
+import Models exposing (Url(..), getActiveSubLinks)
+import Data.Navigation exposing (links)
 
 viewSecondaryLink : (String, String) -> Html a
 viewSecondaryLink (name, url) =
