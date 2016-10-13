@@ -4,8 +4,7 @@ import Messages exposing (Msg(..))
 import Models exposing (Model, Mode(..))
 import Notification.Update
 import Notification.Messages
-import Routes.Models exposing (..)
-import Routes.Matching exposing (routeUrls)
+import Router
 import Navigation exposing (..)
 
 update : Msg -> Model -> (Model, Cmd Msg)
@@ -41,10 +40,10 @@ update msg model =
     ChangeRoute newRoute ->
       let
         newUrl =
-          routeUrls
+          Router.routeUrls
             |> List.filter (\(rt, url) -> rt == newRoute)
             |> List.head
-            |> Maybe.withDefault (Home, "")
+            |> Maybe.withDefault (Router.Home, "")
             |> snd
       in
         ( model

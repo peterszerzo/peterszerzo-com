@@ -7,22 +7,20 @@ import Views exposing (view)
 import Models
 import Subscriptions exposing (subscriptions)
 import Update exposing (update)
+import Router
 
-import Routes.Matching exposing (routeFromResult, parser)
-import Routes.Models
-
-initWithRoute : Models.Flags -> Result a Routes.Models.Route -> (Models.Model, Cmd Messages.Msg)
+initWithRoute : Models.Flags -> Result a Router.Route -> (Models.Model, Cmd Messages.Msg)
 initWithRoute flags result =
-  routeFromResult result
+  Router.routeFromResult result
     |> Models.init flags
 
-urlUpdate : Result a Routes.Models.Route -> Models.Model -> (Models.Model, Cmd Messages.Msg)
+urlUpdate : Result a Router.Route -> Models.Model -> (Models.Model, Cmd Messages.Msg)
 urlUpdate result model =
-  ({model | route = (routeFromResult result)}, Cmd.none)
+  ({model | route = (Router.routeFromResult result)}, Cmd.none)
 
 main : Program Models.Flags
 main =
-  programWithFlags parser
+  programWithFlags Router.parser
     { init = initWithRoute
     , view = view
     , update = update

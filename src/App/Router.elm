@@ -1,11 +1,19 @@
-module Routes.Matching exposing (..)
+module Router exposing (..)
 
 import Navigation
+import UrlParser exposing (Parser, format, s, oneOf)
 import String
 
-import UrlParser exposing (..)
-import Routes.Models exposing (Route(..))
+type Route
+  = Home
+  | Projects
+  | Now
+  | About
+  | Talks
+  | Archive
+  | NotFound
 
+routeUrls : List (Route, String)
 routeUrls =
   [ (Home, "")
   , (Projects, "projects")
@@ -24,7 +32,7 @@ matchers =
 pathnameParser location =
   location.pathname
     |> String.dropLeft 1
-    |> parse identity matchers
+    |> UrlParser.parse identity matchers
 
 parser =
   Navigation.makeParser pathnameParser

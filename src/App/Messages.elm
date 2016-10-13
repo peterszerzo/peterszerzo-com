@@ -2,11 +2,11 @@ module Messages exposing (..)
 
 import Time exposing (Time)
 import Notification.Messages
-import Routes.Models exposing (Route)
+import Router exposing (Route)
 
-type Msg =
-  ToggleMode |
-  NotificationMsg Notification.Messages.Msg |
-  ToggleMobileNav |
-  ChangeRoute Route |
-  Tick Time
+type Msg
+  = ToggleMode
+  | NotificationMsg Notification.Messages.Msg
+  | ToggleMobileNav
+  | ChangeRoute Route
+  | Tick Time

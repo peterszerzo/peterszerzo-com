@@ -1,6 +1,6 @@
 module TextBox.Models exposing (..)
 
-import Routes.Models exposing (Route(..))
+import Router exposing (Route(..))
 import Models exposing (Mode(..))
 import Data.Markdown
 

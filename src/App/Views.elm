@@ -5,7 +5,7 @@ import Html.Attributes exposing (class, src, href)
 import Html.Events exposing (onClick)
 import Html.App exposing (map)
 
-import Routes.Models exposing (Route(..))
+import Router exposing (Route(..))
 import Models exposing (Model, Mode(..))
 import Messages exposing (Msg(..))
 import Data.Markdown

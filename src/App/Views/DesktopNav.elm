@@ -3,7 +3,7 @@ module Views.DesktopNav exposing (..)
 import Html exposing (Html, nav)
 import Html.Attributes exposing (classList, attribute)
 
-import Routes.Models exposing (Route)
+import Router exposing (Route)
 import Messages exposing (Msg)
 import Links.Views exposing (viewMainLinks, viewSecondaryLinks)
 import Links.Models exposing (links, getActiveSubLinks)
