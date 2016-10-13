@@ -19,7 +19,7 @@
   align-items: center;
   justify-content: center;
   position: relative;
-  animation: fade-in ease-in .5s;
+  animation: fade-in ease-out .5s;
 }
 
 .main__content {
