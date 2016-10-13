@@ -1,7 +1,7 @@
 module Notification.Update exposing (..)
 
 import Notification.Messages exposing (Msg(..))
-import Main.Ports
+import Ports
 
 update msg model =
   case msg of
@@ -10,7 +10,7 @@ update msg model =
             isVisible = False
           , isDismissed = True
         }
-      , Main.Ports.notificationDismissed ()
+      , Ports.notificationDismissed ()
       )
     Tick time ->
       ( { model |

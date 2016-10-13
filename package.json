@@ -1,6 +1,6 @@
 {
   "name": "peterszerzo.com",
-  "version": "0.2.0",
+  "version": "0.3.0-beta",
   "description": "Source code for my personal website.",
   "main": "index.js",
   "scripts": {

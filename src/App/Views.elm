@@ -1,4 +1,4 @@
-module Main.Views exposing (..)
+module Views exposing (..)
 
 import Html exposing (Html, div)
 import Html.Attributes exposing (class, src, href)
@@ -6,8 +6,8 @@ import Html.Events exposing (onClick)
 import Html.App exposing (map)
 
 import Routes.Models exposing (Route(..))
-import Main.Models exposing (Model, Mode(..))
-import Main.Messages exposing (Msg(..))
+import Models exposing (Model, Mode(..))
+import Messages exposing (Msg(..))
 import Data.Markdown
 import Links.Models
 import Switch.Views

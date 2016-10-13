@@ -1,9 +1,9 @@
-module Main.Models exposing (..)
+module Models exposing (..)
 
 import Routes.Models exposing (Route(..))
 import Notification.Models
 import MobileNav.Models
-import Main.Messages exposing (Msg)
+import Messages exposing (Msg)
 
 type alias IsNotificationDismissed = Bool
 type alias Flags = IsNotificationDismissed

@@ -5,7 +5,7 @@ import Html.Attributes exposing (classList, class, attribute)
 import Html.Events exposing (onClick)
 
 import Routes.Models exposing (Route(..))
-import Main.Messages exposing (Msg(..))
+import Messages exposing (Msg(..))
 import Links.Views exposing (viewMainLinks, viewSecondaryLinks)
 import Views.Shapes.Falafel as Falafel
 import Views.Shapes.Arrow as Arrow

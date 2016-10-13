@@ -5,8 +5,8 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Markdown exposing (toHtml)
 import Routes.Models exposing (Route(..))
-import Main.Messages exposing (..)
-import Main.Models exposing (Mode(..))
+import Messages exposing (..)
+import Models exposing (Mode(..))
 import TextBox.Models exposing (getModel)
 
 import Views.Shapes.Arrow as Arrow

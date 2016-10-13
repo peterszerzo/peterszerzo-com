@@ -1,4 +1,4 @@
-module Main.Messages exposing (..)
+module Messages exposing (..)
 
 import Time exposing (Time)
 import Notification.Messages

@@ -3,7 +3,7 @@ module Switch.Views exposing (..)
 import Html exposing (Html, div)
 import Html.Attributes exposing (class)
 import Html.Events exposing (onClick)
-import Main.Messages exposing (Msg)
+import Messages exposing (Msg)
 
 import Switch.Models exposing (Model(..))
 

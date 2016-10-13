@@ -4,9 +4,8 @@ import Html exposing (Html, div, a, text)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
 
-import Main.Messages exposing (Msg)
+import Messages exposing (Msg(..))
 import Routes.Models exposing (Route(..))
-import Main.Messages exposing (Msg(..))
 import Links.Models exposing (Url(..), links, getActiveSubLinks)
 
 viewSecondaryLink : (String, String) -> Html a

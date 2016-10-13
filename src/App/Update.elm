@@ -1,7 +1,7 @@
-module Main.Update exposing (..)
+module Update exposing (..)
 
-import Main.Messages exposing (Msg(..))
-import Main.Models exposing (Model, Mode(..))
+import Messages exposing (Msg(..))
+import Models exposing (Model, Mode(..))
 import Notification.Update
 import Notification.Messages
 import Routes.Models exposing (..)

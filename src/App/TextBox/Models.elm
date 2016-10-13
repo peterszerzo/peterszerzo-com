@@ -1,7 +1,7 @@
 module TextBox.Models exposing (..)
 
 import Routes.Models exposing (Route(..))
-import Main.Models exposing (Mode(..))
+import Models exposing (Mode(..))
 import Data.Markdown
 
 type alias Model =
