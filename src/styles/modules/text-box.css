@@ -73,10 +73,10 @@
 
 .text-box-nav__home-link {
   position: absolute;
-  top: 5px;
-  left: 5px;
-  width: 50px;
-  height: 50px;
+  top: 16px;
+  left: 16px;
+  width: 48px;
+  height: 48px;
   padding: 10px;
   opacity: .5;
   cursor: pointer;
@@ -92,29 +92,9 @@
   }
 }
 
-.text-box-nav__falafel {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 20px;
-  height: 20px;
-  opacity: .6;
-  cursor: pointer;
-  transition: opacity .3s;
-
-  & svg {
-    fill: var(--blue);
-  }
-
-  &:hover {
-    opacity: 1;
-    transition: opacity .3s;
-  }
-}
-
 .text-box-nav__switch {
   position: fixed;
-  top: 15px;
+  top: 23px;
   right: calc(50% - 23px);
 }
 

@@ -1,9 +1,9 @@
 @import '../variables.css';
 
 :root {
-  --height: 40px;
-  --padding: 12px;
-  --top: 20px;
+  --height: 48px;
+  --icon-size: 18px;
+  --top: 16px;
   --left: 70px;
 }
 
@@ -11,7 +11,7 @@
   position: fixed;
   background-color: var(--mustard);
   box-shadow: 0 0 10px 0 var(--shadow-color);
-  top: 20px;
+  top: var(--top);
   height: auto;
   width: calc(100% - calc(2 * var(--left)));
   height: var(--height);
@@ -32,12 +32,12 @@
 }
 
 .notification__body {
-  padding: 0 20px;
+  padding: 0 calc(var(--height) - 20px);
   text-align: center;
   margin: auto;
   color: var(--white);
   font-size: 1rem;
-  letter-spacing: .02rem;
+  letter-spacing: .04rem;
 
   & p {
     font-size: inherit;
@@ -57,7 +57,7 @@
 .notification__close {
   width: var(--height);
   height: var(--height);
-  padding: var(--padding);
+  padding: calc(var(--height)/2 - var(--icon-size)/2);
   display: inline-block;
   position: absolute;
   top: 0;
@@ -66,8 +66,8 @@
   margin: 0;
 
   & svg {
-    width: calc(var(--height) - 2*var(--padding));
-    height: calc(var(--height) - 2*var(--padding));
+    width: var(--icon-size);
+    height: var(--icon-size);
   }
 
   & g {

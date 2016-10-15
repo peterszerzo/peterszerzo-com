@@ -15,11 +15,20 @@ import Views.Switch
 import Models exposing (SwitchPosition(..))
 
 viewContents model =
-  div [class "text-box__contents"] [ div [class "text-box__content"]
-      [ toHtml [class "static"] (Maybe.withDefault "" model.primaryContent)
+  div
+    [ class "text-box__contents"]
+    [ div [class "text-box__content"]
+        [ toHtml
+            [ class "static" ]
+            (Maybe.withDefault "" model.primaryContent)
+        ]
+  , div
+      [ class "text-box__content"
       ]
-  , div [class "text-box__content"]
-      [ toHtml [class "static"] (Maybe.withDefault "" model.secondaryContent)
+      [ toHtml
+          [ class "static"
+          ]
+          (Maybe.withDefault "" model.secondaryContent)
       ]
   ]
 
@@ -28,13 +37,23 @@ viewNav model =
     switchModel = if model.mode == Conventional then Left else Right
     isSwitchHidden = model.route /= About
   in
-    div [class "text-box-nav"]
-      [ div [class "text-box-nav__home-link", onClick (ChangeRoute Home)]
-        [ Arrow.view
-        ]
-      , div [classList [("text-box-nav__switch", True), ("text-box-nav__switch--hidden", isSwitchHidden)]]
-        [ Views.Switch.view switchModel ToggleMode
-        ]
+    div
+      [ class "text-box-nav"
+      ]
+      [ div
+          [ class "text-box-nav__home-link"
+          , onClick (ChangeRoute Home)
+          ]
+          [ Arrow.view
+          ]
+      , div
+          [ classList
+              [ ("text-box-nav__switch", True)
+              , ("text-box-nav__switch--hidden", isSwitchHidden)
+              ]
+          ]
+          [ Views.Switch.view switchModel ToggleMode
+          ]
       ]
 
 view model =
@@ -43,11 +62,11 @@ view model =
   in
     div
     [ classList
-      [ ("text-box", True)
-      , ("text-box--hidden", textBoxModel.primaryContent == Nothing)
-      , ("text-box--primary-displayed", textBoxModel.isPrimaryContentDisplayed)
-      , ("text-box--secondary-displayed", not textBoxModel.isPrimaryContentDisplayed)
-      ]
+        [ ("text-box", True)
+        , ("text-box--hidden", textBoxModel.primaryContent == Nothing)
+        , ("text-box--primary-displayed", textBoxModel.isPrimaryContentDisplayed)
+        , ("text-box--secondary-displayed", not textBoxModel.isPrimaryContentDisplayed)
+        ]
     ]
     [ viewNav model
     , viewContents textBoxModel

@@ -2,7 +2,7 @@ module Data.Markdown exposing (..)
 
 aboutConventional : String
 aboutConventional = """
-## Hello
+## Hello :)
 
 This is Peter, programmer, designer, language enthusiast, yogi, cook. A friendly, straightforward fellow with eager-to-pedal feet, a green thumb and a curious mind.
 
@@ -45,4 +45,4 @@ Also looking forward to discussing inclusivity in tech circles with some other l
 
 notificationText : String
 notificationText =
-  "Know your neighbor's dog 🐺"
+  "Be human. Make a mistake once in a while 🤕"
