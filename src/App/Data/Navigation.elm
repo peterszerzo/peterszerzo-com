@@ -8,8 +8,8 @@ links =
   [ { label = "Recent Works"
     , url = Internal Projects
     , subLinks =
-      [ ("Splyt Light", "http://splytlight.surge.sh")
-      , ("ripsaw.js", "http://pickled-plugins.github.io/ripsaw-js")
+      [ ("Lettero", "http://lettero.herokuapp.com/")
+      , ("Splyt Light", "http://splytlight.surge.sh")
       , ("CphRain", "http://cphrain.surge.sh")
       , ("Albatross", "http://albatross.surge.sh")
       , ("Liquid Lab", "http://pickled-plugins.github.io/liquidlab/#home")
@@ -41,7 +41,8 @@ links =
   , { label = "Archive"
     , url = Internal Archive
     , subLinks =
-      [ ("Helicopters", "http://pickled-plugins.github.io/helicopter-ride/")
+      [ ("ripsaw.js", "http://pickled-plugins.github.io/ripsaw-js")
+      , ("Helicopters", "http://pickled-plugins.github.io/helicopter-ride/")
       , ("Pendants", "https://www.youtube.com/watch?v=0bKI3VSdD1g")
       , ("DChisel", "http://dchisel.herokuapp.com/")
       , ("PBA", "http://pickled-plugins.github.io/pba/")
