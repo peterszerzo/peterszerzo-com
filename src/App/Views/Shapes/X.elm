@@ -7,24 +7,24 @@ import Svg.Attributes exposing (viewBox, stroke, fill, strokeWidth, strokeLineca
 view : Html a
 view =
   svg
-  [ viewBox "0 0 100 100"
-  , strokeLinecap "round"
-  , strokeLinejoin "round"
-  , strokeWidth "8"
-  , textRendering "geometricPrecision"
-  ]
-  [ g []
-    [ line
-      [ x1 "10"
-      , y1 "10"
-      , x2 "90"
-      , y2 "90"
-      ] []
-    , line
-      [ x1 "10"
-      , y1 "90"
-      , x2 "90"
-      , y2 "10"
-      ] []
+    [ viewBox "0 0 100 100"
+    , strokeLinecap "round"
+    , strokeLinejoin "round"
+    , strokeWidth "8"
+    , textRendering "geometricPrecision"
     ]
-  ]
+    [ g []
+        [ line
+            [ x1 "10"
+            , y1 "10"
+            , x2 "90"
+            , y2 "90"
+            ] []
+        , line
+            [ x1 "10"
+            , y1 "90"
+            , x2 "90"
+            , y2 "10"
+            ] []
+        ]
+    ]

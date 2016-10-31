@@ -17,8 +17,7 @@ update msg ({mode, mobileNav} as model) =
             then Real
             else Conventional
       in
-        ( { model | mode = newMode }
-        , Cmd.none)
+        { model | mode = newMode } ! [ Cmd.none ]
 
     NotificationMsg msg ->
       let
@@ -26,9 +25,7 @@ update msg ({mode, mobileNav} as model) =
         , notificationCmd ) =
           Notification.Update.update msg model.notification
       in
-        ( { model | notification = notificationModel }
-        , notificationCmd
-        )
+        { model | notification = notificationModel } ! [ notificationCmd ]
 
     ToggleMobileNav ->
       let
@@ -37,11 +34,7 @@ update msg ({mode, mobileNav} as model) =
               | isActive = not mobileNav.isActive
           }
       in
-        ( { model
-              | mobileNav = newMobileNav
-          }
-        , Cmd.none
-        )
+        { model | mobileNav = newMobileNav } ! [ Cmd.none ]
 
     ChangeRoute newRoute ->
       ( model
@@ -55,9 +48,7 @@ update msg ({mode, mobileNav} as model) =
           model.notification
             |> Notification.Update.update (Notification.Messages.Tick model.time)
       in
-        ( { model
-              | time = model.time + 1
-              , notification = notificationModel
-          }
-        , Cmd.none
-        )
+        { model
+            | time = model.time + 1
+            , notification = notificationModel
+        } ! [ Cmd.none ]
