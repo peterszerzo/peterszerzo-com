@@ -34,13 +34,11 @@ now : String
 now = """
 The /now page is Derek Sivers' [brilliant idea](https://sivers.org/nowff). Cheers, Derek!
 
-## Week of October 10th
+## Week of October 31st
 
-Had a great weekend watching dramas/action movies [Skyfall](http://www.imdb.com/title/tt1074638/) and [Victoria](http://www.imdb.com/title/tt4226388/). Great discovery: movies like these are a great way to balance the slow, drowsy and melancholic moods of the rainy Scandinavian fall.
+Still quite invested in making my delightfully frustarting word game [Lettero](https://lettero-27803.firebaseapp.com/). Excited about [Elm 0.18](http://elm-lang.org/) coming out soon, and to learn some more about [Firebase](https://firebase.google.com/) backends.
 
-Some more wordgaming under way. WordSnake got renamed to Lettero, got a nice boost in motivation and a chunky cleanup in code. Very excited to move forward with it.
-
-Also looking forward to discussing inclusivity in tech circles with some other local meetup organizers.
+Looking to establish a pleasant morning routine, including some yoga followed by some New Yorker reading. May start on some Albert Camus this weekend.
 """
 
 notificationText : String
