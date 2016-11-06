@@ -34,11 +34,20 @@ now : String
 now = """
 The /now page is Derek Sivers' [brilliant idea](https://sivers.org/nowff). Cheers, Derek!
 
-## Week of October 31st
+## Week of November 7th
 
-Still quite invested in making my delightfully frustarting word game [Lettero](https://lettero-27803.firebaseapp.com/). Excited about [Elm 0.18](http://elm-lang.org/) coming out soon, and to learn some more about [Firebase](https://firebase.google.com/) backends.
+Happy to say that [Lettero](https://lettero-27803.firebaseapp.com/) is playable now. There's some usability this and that to flush out, but at least people can try it, and it works ok on a phone.
 
-Looking to establish a pleasant morning routine, including some yoga followed by some New Yorker reading. May start on some Albert Camus this weekend.
+Put out two blog posts, [this one](http://blog.peterszerzo.com/im-depressed-and-my-coworkers-love-it/) and [this one](http://blog.peterszerzo.com/high-school-newsletter-interview/), and boy does it feel amazing to write again. What is even more astonishing is that I'm having a much easier time letting go and putting stuff up online.
+
+Anyways, some new ideas for the next week:
+* swimming
+* animating the process of figuring out a matrix' determinant by having a child do hopscotch on the grid of squares
+* designing a backgammon set
+
+Excited to getting 1% of all that done :).
+
+Wish all of you, especially the Davis' in Greepoint, a lovely week!
 """
 
 notificationText : String

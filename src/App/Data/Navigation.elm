@@ -8,7 +8,7 @@ links =
   [ { label = "Recent Works"
     , url = Internal Projects
     , subLinks =
-        [ ("Lettero", "http://lettero.herokuapp.com/")
+        [ ("Lettero", "https://lettero-27803.firebaseapp.com")
         , ("Splyt Light", "http://splytlight.surge.sh")
         , ("CphRain", "http://cphrain.surge.sh")
         , ("Albatross", "http://albatross.surge.sh")
