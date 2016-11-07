@@ -8,21 +8,25 @@ const postCssImport = require('postcss-import');
 const validate = require('webpack-validator');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
 
 const commonPlugins = [
   new HtmlWebpackPlugin({
     template: './src/index.pug',
-    inject: false
+    inject: false,
+    hash: true
   }),
   new HtmlWebpackPlugin({
     filename: '200.html',
     template: './src/index.pug',
-    inject: false
+    inject: false,
+    hash: true
   }),
   new FaviconsWebpackPlugin({
     logo: './src/images/peter-szerzo-180-2x.jpg',
     inject: true
-  })
+  }),
+  new ExtractTextWebpackPlugin('styles.css')
 ];
 
 const config = {
@@ -31,7 +35,7 @@ const config = {
   ],
   output: {
     path: path.resolve('./build/'),
-    publicPath: '',
+    publicPath: '/',
     filename: 'index.js',
     sourceMapFilename: 'index.js.map'
   },
@@ -39,15 +43,15 @@ const config = {
     loaders: [
       {
         test: /\.css$/,
-        loaders: ['style', 'css', 'postcss']
+        loader: ExtractTextWebpackPlugin.extract('style', 'css-loader!postcss-loader')
       },
       {
         test: /\.json/,
-        loaders: ['json']
+        loader: 'json'
       },
       {
         test: /\.elm$/,
-        loaders: ['elm-webpack']
+        loader: 'elm-webpack'
       },
       {
         test: /\.(svg|jpg|gif)$/,
