@@ -1,7 +1,9 @@
 module Data.Markdown exposing (..)
 
+
 aboutConventional : String
-aboutConventional = """
+aboutConventional =
+    """
 ## Hello :)
 
 This is Peter, programmer, designer, language enthusiast, yogi, cook. A friendly, straightforward fellow with eager-to-pedal feet, a green thumb and a curious mind.
@@ -13,8 +15,10 @@ I previously studied and dabbled with algorithmic approaches to architectural de
 You can find me on my bike on the streets of Copenhagen, sitting around in a coffee shop, at the local frontend, React and Elm meetups, [here](https://twitter.com/peterszerzo) and [there](https://medium.com/@peterszerzo) online. Let's talk!
 """
 
+
 aboutReal : String
-aboutReal = """
+aboutReal =
+    """
 ## Oh, good!
 
 You hit the magic switch. Let me balance out the somewhat conformist professionalism on the other page with some real Peter Szerzo.
@@ -30,8 +34,10 @@ I am often in a reflective mood. I often ask myself: ‘What is wrong with this 
 It means a lot to me that you've read this.
 """
 
+
 now : String
-now = """
+now =
+    """
 The /now page is Derek Sivers' [brilliant idea](https://sivers.org/nowff). Cheers, Derek!
 
 ## Week of November 7th
@@ -50,6 +56,7 @@ Excited to getting 1% of all that done :).
 Wish all of you, especially the Davis' in Greepoint, a lovely week!
 """
 
+
 notificationText : String
 notificationText =
-  "Be human. Make a mistake once in a while 🤕"
+    "Be human. Make a mistake once in a while \x1F915"

@@ -1,5 +1,6 @@
 module Notification.Messages exposing (..)
 
-type Msg =
-  Dismiss |
-  Tick Float
+
+type Msg
+    = Dismiss
+    | Tick Float

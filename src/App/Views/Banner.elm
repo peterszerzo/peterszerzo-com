@@ -4,20 +4,21 @@ import Html exposing (Html, div, h1, p, text)
 import Html.Attributes exposing (class)
 import Views.Shapes.Logo as Logo
 
+
 view : Html a
 view =
-  div
-    [ class "banner"
-    ]
-    [ div
-      [ class "banner__logo"
-      ]
-      [ Logo.view
-      , div [class "banner__image-container"]
-        [ div [class "banner__image"] []
-        , div [class "banner__overlay"] []
+    div
+        [ class "banner"
         ]
-      ]
-    , h1 [] [text "Peter Szerzo"]
-    , p [] [text "makes himself a website"]
-    ]
+        [ div
+            [ class "banner__logo"
+            ]
+            [ Logo.view
+            , div [ class "banner__image-container" ]
+                [ div [ class "banner__image" ] []
+                , div [ class "banner__overlay" ] []
+                ]
+            ]
+        , h1 [] [ text "Peter Szerzo" ]
+        , p [] [ text "makes himself a website" ]
+        ]
