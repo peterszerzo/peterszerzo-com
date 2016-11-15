@@ -48,7 +48,7 @@ viewNav model =
             ]
             [ div
                 [ class "text-box-nav__home-link"
-                , onClick (ChangeRoute Home)
+                , onClick (ChangePath "")
                 ]
                 [ Arrow.view
                 ]

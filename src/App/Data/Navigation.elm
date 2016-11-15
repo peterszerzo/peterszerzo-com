@@ -7,7 +7,7 @@ import Router exposing (Route(..))
 links : List Link
 links =
     [ { label = "Recent Works"
-      , url = Internal Projects
+      , url = Internal "projects"
       , subLinks =
             [ ( "Lettero", "https://lettero-27803.firebaseapp.com" )
             , ( "Splyt Light", "http://splytlight.surge.sh" )
@@ -25,22 +25,22 @@ links =
       , subLinks = []
       }
     , { label = "Talks"
-      , url = Internal Talks
+      , url = Internal "talks"
       , subLinks =
             [ ( "CSS@fireplace", "https://pickled-plugins.github.io/css-by-the-fireplace/" )
             , ( "Elm+friends", "https://pickled-plugins.github.io/practical-elm-and-friends/" )
             ]
       }
     , { label = "About"
-      , url = Internal About
+      , url = Internal "about"
       , subLinks = []
       }
     , { label = "Now"
-      , url = Internal Now
+      , url = Internal "now"
       , subLinks = []
       }
     , { label = "Archive"
-      , url = Internal Archive
+      , url = Internal "archive"
       , subLinks =
             [ ( "ripsaw.js", "http://pickled-plugins.github.io/ripsaw-js" )
             , ( "Helicopters", "http://pickled-plugins.github.io/helicopter-ride/" )

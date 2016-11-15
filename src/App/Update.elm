@@ -4,7 +4,6 @@ import Messages exposing (Msg(..))
 import Models exposing (Model, Mode(..))
 import Notification.Update
 import Notification.Messages
-import Router
 import Navigation exposing (..)
 
 
@@ -37,9 +36,14 @@ update msg ({ mode, mobileNav } as model) =
             in
                 { model | mobileNav = newMobileNav } ! [ Cmd.none ]
 
-        ChangeRoute newRoute ->
+        ChangePath newPath ->
             ( model
-            , Navigation.newUrl ("/" ++ (Router.getUrl newRoute))
+            , Navigation.newUrl ("/" ++ newPath)
+            )
+
+        ChangeRoute newRoute ->
+            ( { model | route = newRoute }
+            , Cmd.none
             )
 
         Tick time ->

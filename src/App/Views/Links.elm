@@ -4,7 +4,7 @@ import Html exposing (Html, div, a, text)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
 import Messages exposing (Msg(..))
-import Router exposing (Route(..))
+import Router exposing (Route(..), routeDefs, parseUrlFragment)
 import Models exposing (Url(..), getActiveSubLinks)
 import Data.Navigation exposing (links)
 
@@ -43,18 +43,12 @@ viewMainLink className currentRoute { label, url, subLinks } =
     let
         ( variableAttr, htmlTag, isActive ) =
             case url of
-                Internal route ->
+                Internal pth ->
                     ( [ onClick
-                            (ChangeRoute
-                                (if currentRoute == route then
-                                    Home
-                                 else
-                                    route
-                                )
-                            )
+                            ( ChangePath (if parseUrlFragment routeDefs pth == currentRoute then "" else pth) )
                       ]
                     , div
-                    , currentRoute == route
+                    , currentRoute == (parseUrlFragment routeDefs pth)
                     )
 
                 External route ->

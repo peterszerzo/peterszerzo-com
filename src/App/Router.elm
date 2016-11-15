@@ -1,7 +1,6 @@
 module Router exposing (..)
 
 import Navigation
-import UrlParser exposing (Parser, format, s, oneOf)
 import String
 
 
@@ -15,8 +14,8 @@ type Route
     | NotFound
 
 
-routeUrls : List ( Route, String )
-routeUrls =
+routeDefs : List ( Route, String )
+routeDefs =
     [ ( Home, "" )
     , ( Projects, "projects" )
     , ( Now, "now" )
@@ -26,39 +25,24 @@ routeUrls =
     ]
 
 
-matchers : Parser (Route -> a) a
-matchers =
-    routeUrls
-        |> List.map (\( rt, url ) -> (format rt (s url)))
-        |> oneOf
+parse : Navigation.Location -> Route
+parse =
+  (parseUrlFragment routeDefs) << getPathname
 
 
-getUrl : Route -> String
-getUrl route =
-    routeUrls
-        |> List.filter (\( rt, url ) -> rt == route)
-        |> List.head
-        |> Maybe.withDefault ( Home, "" )
-        |> Tuple.second
+getPathname : Navigation.Location -> String
+getPathname location =
+  location.pathname
+    |> String.dropLeft 1
 
 
-pathnameParser : Navigation.Location -> Result String Route
-pathnameParser location =
-    location.pathname
-        |> String.dropLeft 1
-        |> UrlParser.parse identity matchers
-
-
-parser : Navigation.Parser (Result String Route)
-parser =
-    Navigation.makeParser pathnameParser
-
-
-routeFromResult : Result String Route -> Route
-routeFromResult result =
-    case result of
-        Ok route ->
-            route
-
-        Err string ->
-            NotFound
+parseUrlFragment : List ( Route, String ) -> String -> Route
+parseUrlFragment routeDefs str =
+  case List.head routeDefs of
+    Just routeDef ->
+      if (Tuple.second routeDef) == str then
+        Tuple.first routeDef
+      else
+        parseUrlFragment (List.drop 1 routeDefs) str
+    Nothing ->
+      NotFound

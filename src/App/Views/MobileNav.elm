@@ -41,7 +41,7 @@ view model currentRoute isMobileNavActive handleToggleClick =
                 [ div [ class "mobile-nav__tab-content" ]
                     [ div
                         [ class "mobile-nav__back"
-                        , onClick (ChangeRoute Home)
+                        , onClick (ChangePath "")
                         ]
                         [ Arrow.view
                         ]

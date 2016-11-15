@@ -2,7 +2,7 @@ module Models exposing (..)
 
 import Notification.Models
 import Messages exposing (Msg)
-import Router exposing (Route)
+import Router exposing (Route, routeDefs, parseUrlFragment)
 import Data.Markdown
 
 
@@ -35,7 +35,7 @@ type alias SubLink =
 
 
 type Url
-    = Internal Route
+    = Internal String
     | External String
 
 
@@ -106,7 +106,11 @@ getTextBox model =
 getActiveSubLinks : List Link -> Route -> List SubLink
 getActiveSubLinks links currentRoute =
     links
-        |> List.filter (\lnk -> lnk.url == Internal currentRoute)
+        |> List.filter (\lnk ->
+              case lnk.url of
+                Internal str -> (parseUrlFragment routeDefs str) == currentRoute
+                External str -> False
+            )
         |> List.head
         |> Maybe.map .subLinks
         |> Maybe.withDefault []

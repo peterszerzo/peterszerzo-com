@@ -1,8 +1,7 @@
 module Views exposing (..)
 
-import Html exposing (Html, div)
+import Html exposing (Html, div, map)
 import Html.Attributes exposing (class, src, href)
-import Html.App exposing (map)
 import Models exposing (Model, Mode(..))
 import Messages exposing (Msg(..))
 import Views.DesktopNav

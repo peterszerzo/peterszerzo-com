@@ -9,5 +9,6 @@ type Msg
     = ToggleMode
     | NotificationMsg Notification.Messages.Msg
     | ToggleMobileNav
-    | ChangeRoute Route
+    | ChangePath String
     | Tick Time
+    | ChangeRoute Route
