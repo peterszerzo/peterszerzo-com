@@ -1,32 +1,25 @@
 module Main exposing (..)
 
-import Navigation exposing (programWithFlags)
-
-import Messages exposing (Msg)
+import Navigation exposing (Location, programWithFlags)
+import Messages exposing (Msg(..))
 import Views exposing (view)
 import Models exposing (Model, Flags)
 import Subscriptions exposing (subscriptions)
 import Update exposing (update)
-import Router exposing (Route)
+import Router exposing (Route, parse)
 
-initWithRoute : Flags -> Result String Route -> (Model, Cmd Msg)
-initWithRoute flags result =
-  Router.routeFromResult result
-    |> Models.init flags
 
-urlUpdate : Result String Route -> Model -> (Model, Cmd Msg)
-urlUpdate result model =
-  ( { model
-        | route = (Router.routeFromResult result)
-    }
-  , Cmd.none)
+init : Flags -> Location -> ( Model, Cmd Msg )
+init flags location =
+    Models.init flags (parse location)
 
-main : Program Models.Flags
+
+main : Program Flags Model Msg
 main =
-  programWithFlags Router.parser
-    { init = initWithRoute
-    , view = view
-    , update = update
-    , subscriptions = subscriptions
-    , urlUpdate = urlUpdate
-    }
+    programWithFlags
+        (ChangeRoute << parse)
+        { init = init
+        , view = view
+        , update = update
+        , subscriptions = subscriptions
+        }
