@@ -27,22 +27,23 @@ routeDefs =
 
 parse : Navigation.Location -> Route
 parse =
-  (parseUrlFragment routeDefs) << getPathname
+    (parseUrlFragment routeDefs) << getPathname
 
 
 getPathname : Navigation.Location -> String
 getPathname location =
-  location.pathname
-    |> String.dropLeft 1
+    location.pathname
+        |> String.dropLeft 1
 
 
 parseUrlFragment : List ( Route, String ) -> String -> Route
 parseUrlFragment routeDefs str =
-  case List.head routeDefs of
-    Just routeDef ->
-      if (Tuple.second routeDef) == str then
-        Tuple.first routeDef
-      else
-        parseUrlFragment (List.drop 1 routeDefs) str
-    Nothing ->
-      NotFound
+    case List.head routeDefs of
+        Just routeDef ->
+            if (Tuple.second routeDef) == str then
+                Tuple.first routeDef
+            else
+                parseUrlFragment (List.drop 1 routeDefs) str
+
+        Nothing ->
+            NotFound

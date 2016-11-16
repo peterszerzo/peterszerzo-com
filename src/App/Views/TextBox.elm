@@ -13,6 +13,7 @@ import Views.Switch
 import Models exposing (SwitchPosition(..))
 
 
+viewContents : Models.TextBox -> Html Msg
 viewContents model =
     div
         [ class "text-box__contents" ]
@@ -32,6 +33,7 @@ viewContents model =
         ]
 
 
+viewNav : Models.Model -> Html Msg
 viewNav model =
     let
         switchModel =
@@ -63,6 +65,7 @@ viewNav model =
             ]
 
 
+view : Models.Model -> Html Msg
 view model =
     let
         textBoxModel =
