@@ -59,4 +59,4 @@ Wish all of you, especially the Davis' in Greepoint, a lovely week!
 
 notificationText : String
 notificationText =
-    "Be human. Make a mistake once in a while \x1F915"
+    "Life is a story. [Make it a good one](https://www.shortoftheweek.com/2014/12/10/the-moped-diaries/)"
