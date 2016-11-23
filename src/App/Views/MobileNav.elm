@@ -10,30 +10,30 @@ import Views.Shapes.Falafel as Falafel
 import Views.Shapes.Arrow as Arrow
 
 
-view model currentRoute isMobileNavActive handleToggleClick =
+view model =
     nav
         [ classList
             [ ( "mobile-nav", True )
-            , ( "mobile-nav--active", model.isActive )
+            , ( "mobile-nav--active", model.isMobileNavActive )
             ]
         , attribute "role" "navigation"
         ]
         [ div
             [ class "mobile-nav__toggle"
-            , onClick handleToggleClick
+            , onClick ToggleMobileNav
             ]
-            [ Falafel.view isMobileNavActive
+            [ Falafel.view (not model.isMobileNavActive)
             ]
         , div
             [ classList
                 [ ( "mobile-nav__content", True )
-                , ( "mobile-nav__content--at-second-tab", List.member currentRoute [ Projects, Talks, Archive ] )
+                , ( "mobile-nav__content--at-second-tab", List.member model.route [ Projects, Talks, Archive ] )
                 ]
             ]
             [ div
                 [ class "mobile-nav__tab"
                 ]
-                [ viewMainLinks "mobile-main-links" currentRoute
+                [ viewMainLinks "mobile-main-links" model.route
                 ]
             , div
                 [ class "mobile-nav__tab"
@@ -45,7 +45,7 @@ view model currentRoute isMobileNavActive handleToggleClick =
                         ]
                         [ Arrow.view
                         ]
-                    , viewSecondaryLinks "mobile-secondary-links" currentRoute
+                    , viewSecondaryLinks "mobile-secondary-links" model.route
                     ]
                 ]
             ]

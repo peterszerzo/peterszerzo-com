@@ -1,28 +1,34 @@
-module Data.Navigation exposing (..)
+module Content.Pages exposing (..)
 
-import Models exposing (Link, Url(..))
-import Router exposing (Route(..))
+import Content.Text as Txt
+import Models exposing (Url(..))
 
 
-links : List Link
-links =
+pages : List Models.Page
+pages =
     [ { label = "Recent Works"
       , url = Internal "projects"
       , subLinks =
-            [ ( "Lettero", "https://lettero-27803.firebaseapp.com" )
+            [ ( "Lettero", "https://lettero.co" )
             , ( "Splyt Light", "http://splytlight.surge.sh" )
             , ( "CphRain", "http://cphrain.surge.sh" )
             , ( "Albatross", "http://albatross.surge.sh" )
             , ( "Liquid Lab", "http://pickled-plugins.github.io/liquidlab/#home" )
             ]
+      , conventionalContent = Nothing
+      , realContent = Nothing
       }
     , { label = "Blog"
       , url = External "http://blog.peterszerzo.com"
       , subLinks = []
+      , conventionalContent = Nothing
+      , realContent = Nothing
       }
     , { label = "CV"
       , url = External "https://represent.io/peterszerzo"
       , subLinks = []
+      , conventionalContent = Nothing
+      , realContent = Nothing
       }
     , { label = "Talks"
       , url = Internal "talks"
@@ -30,14 +36,20 @@ links =
             [ ( "CSS@fireplace", "https://pickled-plugins.github.io/css-by-the-fireplace/" )
             , ( "Elm+friends", "https://pickled-plugins.github.io/practical-elm-and-friends/" )
             ]
+      , conventionalContent = Nothing
+      , realContent = Nothing
       }
     , { label = "About"
       , url = Internal "about"
       , subLinks = []
+      , conventionalContent = Just Txt.aboutConventional
+      , realContent = Just Txt.aboutReal
       }
     , { label = "Now"
       , url = Internal "now"
       , subLinks = []
+      , conventionalContent = Just Txt.now
+      , realContent = Nothing
       }
     , { label = "Archive"
       , url = Internal "archive"
@@ -48,5 +60,7 @@ links =
             , ( "DChisel", "http://dchisel.herokuapp.com/" )
             , ( "PBA", "http://pickled-plugins.github.io/pba/" )
             ]
+      , conventionalContent = Nothing
+      , realContent = Nothing
       }
     ]

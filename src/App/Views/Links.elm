@@ -5,8 +5,8 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
 import Messages exposing (Msg(..))
 import Router exposing (Route(..), routeDefs, parseUrlFragment)
-import Models exposing (Url(..), getActiveSubLinks)
-import Data.Navigation exposing (links)
+import Models exposing (Url(..))
+import Content.Pages exposing (pages)
 
 
 viewSecondaryLink : ( String, String ) -> Html a
@@ -22,7 +22,8 @@ viewSecondaryLinks : String -> Route -> Html a
 viewSecondaryLinks className currentRoute =
     let
         activeSubLinks =
-            getActiveSubLinks links currentRoute
+            Models.getActivePage pages currentRoute
+              |> .subLinks
 
         ( isHidden, subLinks ) =
             if (List.length activeSubLinks) == 0 then
@@ -73,4 +74,4 @@ viewMainLinks className currentRoute =
     div
         [ class className
         ]
-        (List.map (viewMainLink className currentRoute) links)
+        (List.map (viewMainLink className currentRoute) pages)

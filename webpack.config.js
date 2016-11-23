@@ -13,13 +13,13 @@ const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
 const commonPlugins = [
   new HtmlWebpackPlugin({
     template: './src/index.pug',
-    inject: false,
+    inject: true,
     hash: true
   }),
   new HtmlWebpackPlugin({
     filename: '200.html',
     template: './src/index.pug',
-    inject: false,
+    inject: true,
     hash: true
   }),
   new FaviconsWebpackPlugin({

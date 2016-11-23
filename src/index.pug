@@ -8,19 +8,9 @@ html
     meta(name='keywords', content='programmer, designer, writer')
     meta(name='HandheldFriendly', content='True')
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
-    script(type='application/ld+json').
-      {
-        "@context": "https://schema.org",
-        "@type": "Website",
-        "publisher": "Peter Szerzo",
-        "url": "http://www.peterszerzo.com/",
-        "description": "Personal website"
-      }
-    link(href=htmlWebpackPlugin.files.css[0], rel='stylesheet', type='text/css')
     link(href='https://fonts.googleapis.com/css?family=PT+Sans|PT+Serif:400', rel='stylesheet', type='text/css')
 
   body
     #app
       .loader
         img(src='/ripple-2x.gif', alt='Loading icon')
-    script(src=htmlWebpackPlugin.files.js[0])

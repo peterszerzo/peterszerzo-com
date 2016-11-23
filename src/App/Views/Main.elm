@@ -1,4 +1,4 @@
-module Views exposing (..)
+module Views.Main exposing (..)
 
 import Html exposing (Html, div, map)
 import Html.Attributes exposing (class, src, href)
@@ -6,9 +6,9 @@ import Models exposing (Model, Mode(..))
 import Messages exposing (Msg(..))
 import Views.DesktopNav
 import Views.MobileNav
-import Notification.Views
 import Views.TextBox
 import Views.Banner
+import Views.Notification
 
 
 viewMainContent : Model -> Html Msg
@@ -27,7 +27,7 @@ view model =
         ]
         [ viewMainContent model
         , Views.TextBox.view model
-        , Views.DesktopNav.view model.route
-        , map NotificationMsg (Notification.Views.view model.notification)
-        , Views.MobileNav.view model.mobileNav model.route (not model.mobileNav.isActive) ToggleMobileNav
+        , Views.DesktopNav.view model
+        , Views.Notification.view model
+        , Views.MobileNav.view model
         ]

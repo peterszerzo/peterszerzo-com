@@ -1,27 +1,17 @@
 module Models exposing (..)
 
-import Notification.Models
 import Messages exposing (Msg)
 import Router exposing (Route, routeDefs, parseUrlFragment)
-import Data.Markdown
-
-
-type alias IsNotificationDismissed =
-    Bool
+import Content.Text as Txt
 
 
 type alias Flags =
-    IsNotificationDismissed
+    Bool
 
 
 type Mode
     = Conventional
     | Real
-
-
-type alias MobileNav =
-    { isActive : Bool
-    }
 
 
 type SwitchPosition
@@ -39,17 +29,12 @@ type Url
     | External String
 
 
-type alias Link =
+type alias Page =
     { label : String
     , url : Url
     , subLinks : List SubLink
-    }
-
-
-type alias TextBox =
-    { primaryContent : Maybe String
-    , secondaryContent : Maybe String
-    , isPrimaryContentDisplayed : Bool
+    , conventionalContent : Maybe String
+    , realContent : Maybe String
     }
 
 
@@ -57,21 +42,15 @@ type alias Model =
     { route : Route
     , mode : Mode
     , time : Float
-    , mobileNav : MobileNav
-    , notification : Notification.Models.Model
+    , isMobileNavActive : Bool
+    , notificationContent : String
+    , isNotificationDismissed : Bool
     }
 
 
 init : Flags -> Route -> ( Model, Cmd Msg )
 init isNotificationDismissed route =
-    let
-        mobileNav =
-            MobileNav False
-
-        notification =
-            Notification.Models.init isNotificationDismissed
-    in
-        ( Model route Conventional 0 mobileNav notification
+        ( Model route Conventional 0 False Txt.notification isNotificationDismissed
         , Cmd.none
         )
 
@@ -80,37 +59,13 @@ init isNotificationDismissed route =
 -- Helpers
 
 
-getTextBox : Model -> TextBox
-getTextBox model =
-    let
-        isPrimaryContentDisplayed =
-            model.mode == Conventional
-
-        defaultModel =
-            TextBox Nothing Nothing True
-    in
-        case model.route of
-            Router.Now ->
-                TextBox (Just Data.Markdown.now) Nothing True
-
-            Router.About ->
-                TextBox
-                    (Just Data.Markdown.aboutConventional)
-                    (Just Data.Markdown.aboutReal)
-                    isPrimaryContentDisplayed
-
-            _ ->
-                defaultModel
-
-
-getActiveSubLinks : List Link -> Route -> List SubLink
-getActiveSubLinks links currentRoute =
-    links
-        |> List.filter (\lnk ->
-              case lnk.url of
+getActivePage : List Page -> Route -> Page
+getActivePage pages currentRoute =
+    pages
+        |> List.filter (\pg ->
+              case pg.url of
                 Internal str -> (parseUrlFragment routeDefs str) == currentRoute
                 External str -> False
             )
         |> List.head
-        |> Maybe.map .subLinks
-        |> Maybe.withDefault []
+        |> Maybe.withDefault (Page "Dummy" (Internal "asdf") [] Nothing Nothing)

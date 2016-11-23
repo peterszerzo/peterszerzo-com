@@ -1,4 +1,4 @@
-module Data.Markdown exposing (..)
+module Content.Text exposing (..)
 
 
 aboutConventional : String
@@ -57,6 +57,6 @@ Wish all of you, especially the Davis' in Greepoint, a lovely week!
 """
 
 
-notificationText : String
-notificationText =
+notification : String
+notification =
     "Life is a story. [Make it a good one](https://www.shortoftheweek.com/2014/12/10/the-moped-diaries/)"

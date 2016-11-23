@@ -1,12 +1,12 @@
-module Notification.Views exposing (..)
+module Views.Notification exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Markdown exposing (toHtml)
 import Views.Shapes.X as X
-import Notification.Models as Models
-import Notification.Messages exposing (Msg(..))
+import Messages exposing (Msg(..))
+import Models
 
 
 view : Models.Model -> Html.Html Msg
@@ -14,16 +14,16 @@ view model =
     div
         [ classList
             [ ( "notification", True )
-            , ( "notification--visible", model.isVisible )
+            , ( "notification--visible", (not model.isNotificationDismissed) && (model.time > 3 && model.time < 60))
             ]
         ]
         [ toHtml
             [ class "notification__body"
             ]
-            model.text
+            model.notificationContent
         , div
             [ class "notification__close"
-            , onClick Dismiss
+            , onClick DismissNotification
             ]
             [ X.view
             ]

@@ -7,20 +7,20 @@ import Markdown exposing (toHtml)
 import Router exposing (Route(..))
 import Messages exposing (..)
 import Models exposing (Mode(..))
-import Models exposing (getTextBox)
 import Views.Shapes.Arrow as Arrow
 import Views.Switch
 import Models exposing (SwitchPosition(..))
+import Content.Pages exposing (pages)
 
 
-viewContents : Models.TextBox -> Html Msg
-viewContents model =
+viewContents : String -> String -> Html Msg
+viewContents conventional real =
     div
         [ class "text-box__contents" ]
         [ div [ class "text-box__content" ]
             [ toHtml
                 [ class "static" ]
-                (Maybe.withDefault "" model.primaryContent)
+                conventional
             ]
         , div
             [ class "text-box__content"
@@ -28,7 +28,7 @@ viewContents model =
             [ toHtml
                 [ class "static"
                 ]
-                (Maybe.withDefault "" model.secondaryContent)
+                real
             ]
         ]
 
@@ -67,18 +67,19 @@ viewNav model =
 
 view : Models.Model -> Html Msg
 view model =
-    let
-        textBoxModel =
-            getTextBox model
-    in
+  let
+    activePage = Models.getActivePage pages model.route
+  in
         div
             [ classList
                 [ ( "text-box", True )
-                , ( "text-box--hidden", textBoxModel.primaryContent == Nothing )
-                , ( "text-box--primary-displayed", textBoxModel.isPrimaryContentDisplayed )
-                , ( "text-box--secondary-displayed", not textBoxModel.isPrimaryContentDisplayed )
+                , ( "text-box--hidden", (activePage.conventionalContent == Nothing) )
+                , ( "text-box--primary-displayed", model.mode == Conventional )
+                , ( "text-box--secondary-displayed", model.mode == Real && (activePage.realContent /= Nothing) )
                 ]
             ]
             [ viewNav model
-            , viewContents textBoxModel
+            , viewContents
+                (activePage.conventionalContent |> Maybe.withDefault "")
+                (activePage.realContent |> Maybe.withDefault "")
             ]

@@ -2,22 +2,22 @@ module Views.DesktopNav exposing (..)
 
 import Html exposing (Html, nav)
 import Html.Attributes exposing (classList, attribute)
-import Router exposing (Route)
+import Models
 import Messages exposing (Msg)
 import Views.Links exposing (viewMainLinks, viewSecondaryLinks)
-import Models exposing (getActiveSubLinks)
-import Data.Navigation exposing (links)
+import Models
+import Content.Pages exposing (pages)
 
 
-view : Route -> Html Msg
-view currentRoute =
+view : Models.Model -> Html Msg
+view model =
     nav
         [ attribute "role" "navigation"
         , classList
             [ ( "desktop-nav", True )
-            , ( "desktop-nav--expanded", List.length (getActiveSubLinks links currentRoute) > 0 )
+            , ( "desktop-nav--expanded", List.length (Models.getActivePage pages model.route |> .subLinks) > 0 )
             ]
         ]
-        [ viewMainLinks "main-links" currentRoute
-        , viewSecondaryLinks "link-box" currentRoute
+        [ viewMainLinks "main-links" model.route
+        , viewSecondaryLinks "link-box" model.route
         ]
