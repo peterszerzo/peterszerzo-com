@@ -44,10 +44,6 @@ const config = {
         loader: ExtractTextWebpackPlugin.extract('style', 'css-loader!postcss-loader')
       },
       {
-        test: /\.json/,
-        loader: 'json'
-      },
-      {
         test: /\.elm$/,
         loader: 'elm-webpack'
       },
@@ -62,7 +58,7 @@ const config = {
     ]
   },
   resolve: {
-    extensions: ['', '.js', '.elm', '.css', '.json']
+    extensions: ['', '.js', '.elm', '.css']
   },
   plugins: process.env.NODE_ENV === 'development' ? commonPlugins : commonPlugins.concat([
     new webpack.optimize.UglifyJsPlugin({
