@@ -6,7 +6,7 @@ import Models
 import Messages exposing (Msg)
 import Views.Links exposing (viewMainLinks, viewSecondaryLinks)
 import Models
-import Content.Pages exposing (pages)
+import Content exposing (pages)
 
 
 view : Models.Model -> Html Msg

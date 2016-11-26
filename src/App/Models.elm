@@ -2,7 +2,6 @@ module Models exposing (..)
 
 import Messages exposing (Msg)
 import Router exposing (Route, routeDefs, parseUrlFragment)
-import Content.Text as Txt
 
 
 type alias Flags =
@@ -43,14 +42,13 @@ type alias Model =
     , mode : Mode
     , time : Float
     , isMobileNavActive : Bool
-    , notificationContent : String
     , isNotificationDismissed : Bool
     }
 
 
 init : Flags -> Route -> ( Model, Cmd Msg )
 init isNotificationDismissed route =
-        ( Model route Conventional 0 False Txt.notification isNotificationDismissed
+        ( Model route Conventional 0 False isNotificationDismissed
         , Cmd.none
         )
 

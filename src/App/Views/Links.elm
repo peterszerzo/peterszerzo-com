@@ -6,7 +6,7 @@ import Html.Events exposing (onClick)
 import Messages exposing (Msg(..))
 import Router exposing (Route(..), routeDefs, parseUrlFragment)
 import Models exposing (Url(..))
-import Content.Pages exposing (pages)
+import Content exposing (pages)
 
 
 viewSecondaryLink : ( String, String ) -> Html a

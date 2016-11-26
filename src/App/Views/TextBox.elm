@@ -10,7 +10,7 @@ import Models exposing (Mode(..))
 import Views.Shapes.Arrow as Arrow
 import Views.Switch
 import Models exposing (SwitchPosition(..))
-import Content.Pages exposing (pages)
+import Content exposing (pages)
 
 
 viewContents : String -> String -> Html Msg

@@ -7,6 +7,7 @@ import Markdown exposing (toHtml)
 import Views.Shapes.X as X
 import Messages exposing (Msg(..))
 import Models
+import Content
 
 
 view : Models.Model -> Html.Html Msg
@@ -20,7 +21,7 @@ view model =
         [ toHtml
             [ class "notification__body"
             ]
-            model.notificationContent
+            Content.notification
         , div
             [ class "notification__close"
             , onClick DismissNotification

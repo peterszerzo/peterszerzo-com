@@ -1,6 +1,7 @@
 @import '../variables.css';
 
 .banner {
+  max-width: 300px;
   position: relative;
   text-align: center;
   color: var(--white);
@@ -14,9 +15,10 @@
   }
 
   & p {
-    margin: 0;
+    margin: .5rem 0 0;
     font-size: 1.2rem;
     letter-spacing: .1rem;
+    line-height: 1.35;
   }
 }
 
