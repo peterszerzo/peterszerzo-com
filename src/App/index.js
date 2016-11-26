@@ -1,3 +1,5 @@
+var Elm = require('./Main.elm');
+
 var LOCAL_STORAGE_KEY = 'peterszerzo-com:notification-last-dismissed';
 
 function getTimeSinceNotificationLastDismissed() {
@@ -19,9 +21,9 @@ function setNotificationLastDismissed() {
   }
 }
 
-module.exports = function startApp(window, Elm) {
+module.exports = function startApp() {
   var elmApp;
-  var node = window.document.getElementById('app');
+  var node = document.getElementById('app');
   var isNotificationRecentlyDismissed = getTimeSinceNotificationLastDismissed() < 2 * 24 * 3600 * 1000;
   window.requestAnimationFrame(function() {
     node.innerHTML = '';
