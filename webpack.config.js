@@ -2,9 +2,7 @@
 
 const path = require('path');
 const webpack = require('webpack');
-const autoprefixer = require('autoprefixer');
 const postCssCssNext = require('postcss-cssnext');
-const postCssImport = require('postcss-import');
 const validate = require('webpack-validator');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
@@ -77,7 +75,6 @@ const config = {
   devtool: 'source-map',
   postcss() {
     return [
-      postCssImport(),
       postCssCssNext({
         browsers: ['ie >= 10', 'last 3 versions']
       })
