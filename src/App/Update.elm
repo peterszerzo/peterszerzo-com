@@ -17,13 +17,13 @@ update msg model =
                     else
                         Conventional
             in
-                { model | mode = newMode } ! [ Cmd.none ]
+                { model | mode = newMode } ! []
 
         DismissNotification ->
             { model | isNotificationDismissed = True } ! [ Ports.notificationDismissed () ]
 
         ToggleMobileNav ->
-            { model | isMobileNavActive = not model.isMobileNavActive } ! [ Cmd.none ]
+            { model | isMobileNavActive = not model.isMobileNavActive } ! []
 
         ChangePath newPath ->
             ( model
@@ -31,12 +31,10 @@ update msg model =
             )
 
         ChangeRoute newRoute ->
-            ( { model | route = newRoute }
-            , Cmd.none
-            )
+            { model | route = newRoute } ! []
 
         Tick time ->
             { model
                 | time = model.time + 1
             }
-                ! [ Cmd.none ]
+                ! []

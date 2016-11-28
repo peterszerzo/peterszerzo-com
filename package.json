@@ -15,8 +15,13 @@
   "author": "Peter Szerzo <szerzo.peter@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "css-loader": "0.26.0",
     "domready": "^1.0.8",
-    "fastclick": "^1.0.6"
+    "elm-webpack-loader": "3.1.0",
+    "fastclick": "^1.0.6",
+    "favicons-webpack-plugin": "0.0.7",
+    "postcss-cssnext": "2.9.0",
+    "postcss-loader": "1.1.1"
   },
   "devDependencies": {
     "css-loader": "^0.23.1",
