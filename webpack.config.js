@@ -1,12 +1,12 @@
-'use strict';
+'use strict'
 
-const path = require('path');
-const webpack = require('webpack');
-const postCssCssNext = require('postcss-cssnext');
-const validate = require('webpack-validator');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
-const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
+const path = require('path')
+const webpack = require('webpack')
+const postCssCssNext = require('postcss-cssnext')
+const validate = require('webpack-validator')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
+const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin')
 
 const commonPlugins = [
   new HtmlWebpackPlugin({
@@ -25,7 +25,7 @@ const commonPlugins = [
     inject: true
   }),
   new ExtractTextWebpackPlugin('styles.css')
-];
+]
 
 const config = {
   entry: [
@@ -69,13 +69,13 @@ const config = {
     })
   ]),
   devtool: 'source-map',
-  postcss() {
+  postcss () {
     return [
       postCssCssNext({
         browsers: ['ie >= 10', 'last 3 versions']
       })
-    ];
+    ]
   }
-};
+}
 
-module.exports = validate(config);
+module.exports = validate(config)

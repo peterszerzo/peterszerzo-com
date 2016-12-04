@@ -1,35 +1,37 @@
-var Elm = require('./Main.elm');
+var Elm = require('./Main.elm')
 
-var LOCAL_STORAGE_KEY = 'peterszerzo-com:notification-last-dismissed';
+var LOCAL_STORAGE_KEY = 'peterszerzo-com:notification-last-dismissed'
 
-function getTimeSinceNotificationLastDismissed() {
-  var localStorageItem;
-  var lastDismissedAt = window.localStorage
-    ?
-    (window.localStorage.getItem(LOCAL_STORAGE_KEY) ? Number(window.localStorage.getItem(LOCAL_STORAGE_KEY)) : 0)
-    : 0;
-  var now = new Date().getTime();
-  return now - lastDismissedAt;
+function getTimeSinceNotificationLastDismissed () {
+  var now = new Date().getTime()
+  if (!window.localStorage) {
+    return now
+  }
+  var lastDismissedAt = Number(window.localStorage.getItem(LOCAL_STORAGE_KEY))
+  if (isNaN(lastDismissedAt)) {
+    return now
+  }
+  return now - lastDismissedAt
 }
 
-function setNotificationLastDismissed() {
+function setNotificationLastDismissed () {
   if (window.localStorage) {
     window.localStorage.setItem(
       LOCAL_STORAGE_KEY,
       String(new Date().getTime())
-    );
+    )
   }
 }
 
-module.exports = function startApp() {
-  var elmApp;
-  var node = document.getElementById('app');
-  var isNotificationRecentlyDismissed = getTimeSinceNotificationLastDismissed() < 2 * 24 * 3600 * 1000;
-  window.requestAnimationFrame(function() {
-    node.innerHTML = '';
-    elmApp = Elm.Main.embed(node, isNotificationRecentlyDismissed);
+module.exports = function startApp () {
+  var elmApp
+  var node = document.getElementById('app')
+  var isNotificationRecentlyDismissed = getTimeSinceNotificationLastDismissed() < 2 * 24 * 3600 * 1000
+  window.requestAnimationFrame(function () {
+    node.innerHTML = ''
+    elmApp = Elm.Main.embed(node, isNotificationRecentlyDismissed)
     if (window.localStorage) {
-      elmApp.ports.notificationDismissed.subscribe(setNotificationLastDismissed);
+      elmApp.ports.notificationDismissed.subscribe(setNotificationLastDismissed)
     }
-  });
+  })
 }
