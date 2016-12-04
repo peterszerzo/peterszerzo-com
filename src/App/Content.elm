@@ -11,8 +11,6 @@ pages =
             [ ( "Lettero", "https://lettero.co" )
             , ( "Splyt Light", "http://splytlight.surge.sh" )
             , ( "CphRain", "http://cphrain.surge.sh" )
-            , ( "Albatross", "http://albatross.surge.sh" )
-            , ( "Liquid Lab", "http://pickled-plugins.github.io/liquidlab/#home" )
             ]
       , conventionalContent = Nothing
       , realContent = Nothing
@@ -54,9 +52,9 @@ pages =
       , url = Internal "archive"
       , subLinks =
             [ ( "ripsaw.js", "http://pickled-plugins.github.io/ripsaw-js" )
+            , ( "Liquid Lab", "http://pickled-plugins.github.io/liquidlab/#home" )
             , ( "Helicopters", "http://pickled-plugins.github.io/helicopter-ride/" )
             , ( "Pendants", "https://www.youtube.com/watch?v=0bKI3VSdD1g" )
-            , ( "DChisel", "http://dchisel.herokuapp.com/" )
             , ( "PBA", "http://pickled-plugins.github.io/pba/" )
             ]
       , conventionalContent = Nothing
@@ -111,20 +109,13 @@ now =
     """
 The /now page is Derek Sivers’ [brilliant idea](https://sivers.org/nowff). Cheers, Derek!
 
-## Week of November 7th
+## Now
 
-Happy to say that [Lettero](https://lettero-27803.firebaseapp.com/) is playable now. There’s some usability this and that to flush out, but at least people can try it, and it works ok on a phone.
+I am doing lots of ad-hoc programming and design, including [a game](https://lettero.co/) and a [lamp design tool](http://splytlight.surge.sh). I do it partly for fun, partly to shed some new light on what I like to do and what feels right to focus on, and partly to iron out my next step towards ever more fulfilling work. Reading [So good the y can’t ignore you](https://sivers.org/book/SoGood) for some extra inspiration.
 
-Put out two blog posts, [this one](http://blog.peterszerzo.com/im-depressed-and-my-coworkers-love-it/) and [this one](http://blog.peterszerzo.com/high-school-newsletter-interview/), and boy does it feel amazing to write again. What is even more astonishing is that I’m having a much easier time letting go and putting stuff up online.
+Also writing some blog posts, such as [this one](http://blog.peterszerzo.com/im-depressed-and-my-coworkers-love-it/) and [this one](http://blog.peterszerzo.com/high-school-newsletter-interview/), and boy does it feel amazing to write again. What is even more astonishing is that I’m having a much easier time letting go and putting stuff up online.
 
-Anyways, some new ideas for the next week:
-* swimming
-* animating the process of figuring out a matrix’ determinant by having a child do hopscotch on the grid of squares
-* designing a backgammon set
-
-Excited to getting 1% of all that done :).
-
-Wish all of you, especially the Davis’ in Greepoint, a lovely week!
+Doing more yoga, taking more frequent and longer walks. Eating more pastries.
 """
 
 notification : String
