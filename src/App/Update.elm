@@ -4,11 +4,35 @@ import Messages exposing (Msg(..))
 import Models exposing (Model, Mode(..))
 import Navigation exposing (..)
 import Ports
+import Router
+import Today.Update
+import Today.Messages
+
+
+updateToday_ : Today.Messages.Msg -> Model -> ( Model, Cmd Msg )
+updateToday_ msg model =
+    case model.route of
+        Router.Today today ->
+            Today.Update.update msg today
+                |> (\( md, cmd ) -> ( { model | route = Router.Today md }, Cmd.map TodayMsg cmd ))
+
+        _ ->
+            ( model, Cmd.none )
+
+
+updateToday : Today.Messages.Msg -> Model -> ( Model, Cmd Msg )
+updateToday msg model =
+    Today.Messages.navigate msg
+        |> Maybe.map (\str -> model ! [ Navigation.newUrl str ])
+        |> Maybe.withDefault (updateToday_ msg model)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
+        TodayMsg msg ->
+            updateToday msg model
+
         ToggleMode ->
             let
                 newMode =

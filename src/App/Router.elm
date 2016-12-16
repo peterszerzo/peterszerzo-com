@@ -2,6 +2,7 @@ module Router exposing (..)
 
 import Navigation
 import String
+import Today.Models
 
 
 type Route
@@ -11,6 +12,7 @@ type Route
     | About
     | Talks
     | Archive
+    | Today Today.Models.Model
     | NotFound
 
 
@@ -42,7 +44,12 @@ slugToRoute slug =
         |> List.filter (\( route, slug_ ) -> slug == slug_)
         |> List.head
         |> Maybe.map Tuple.first
-        |> Maybe.withDefault NotFound
+        |> Maybe.withDefault
+            (if slug == "today" then
+                Today.Models.init |> Tuple.first |> Today
+             else
+                NotFound
+            )
 
 
 routeToSlug : Route -> Maybe String

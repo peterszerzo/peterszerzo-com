@@ -4,7 +4,6 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Markdown exposing (toHtml)
-import Router exposing (Route(..))
 import Messages exposing (..)
 import Models exposing (Mode(..))
 import Views.Shapes.Arrow as Arrow
@@ -13,13 +12,13 @@ import Models exposing (SwitchPosition(..))
 
 
 viewContents : String -> String -> Html Msg
-viewContents conventional real =
+viewContents c1 c2 =
     div
         [ class "text-box__contents" ]
         [ div [ class "text-box__content" ]
             [ toHtml
                 [ class "static" ]
-                conventional
+                c1
             ]
         , div
             [ class "text-box__content"
@@ -27,7 +26,7 @@ viewContents conventional real =
             [ toHtml
                 [ class "static"
                 ]
-                real
+                c2
             ]
         ]
 

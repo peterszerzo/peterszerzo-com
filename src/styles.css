@@ -23,10 +23,11 @@
   --icon-size: 18px;
 
   --z-hidden: -1;
-  --z-notification: 12000;
+  --z-notification: 11000;
   --z-text-box: 10000;
   --z-mobile-nav: 1000;
   --z-desktop-nav: 2;
+  --z-container: 12000;
 
   --standard-text: {
     font-size: 1rem;
@@ -355,6 +356,15 @@ h3 {
   justify-content: center;
   position: relative;
   animation: fade-in ease-out .5s;
+}
+
+.main__container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: var(--white);
 }
 
 
@@ -726,4 +736,41 @@ h3 {
 
 .text-box-nav__switch--hidden {
   display: none;
+}
+
+/* Today */
+
+.t {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: var(--z-container);
+}
+
+.t_nav {
+  bottom: 30px;
+}
+
+.t_banner {
+  margin: 0;
+  text-align: center;
+}
+
+.t_bg,
+.t_bg__element {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: absolute;
+}
+
+.t_bg__overlay {
+  background: rgba(0, 0, 0, .3);
 }

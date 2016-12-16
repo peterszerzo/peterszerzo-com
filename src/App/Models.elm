@@ -3,6 +3,7 @@ module Models exposing (..)
 import Messages exposing (Msg)
 import Router exposing (Route(..))
 import Content
+import Today.Models
 
 
 type alias Flags =
@@ -41,8 +42,20 @@ type alias Model =
 init : Flags -> Route -> ( Model, Cmd Msg )
 init isNotificationDismissed route =
     ( Model route Conventional 0 False isNotificationDismissed
-    , Cmd.none
+    , getCmdOnRouteChange route
     )
+
+
+getCmdOnRouteChange : Route -> Cmd Msg
+getCmdOnRouteChange rt =
+    case rt of
+        Today today ->
+            Today.Models.init
+                |> Tuple.second
+                |> Cmd.map Messages.TodayMsg
+
+        _ ->
+            Cmd.none
 
 
 

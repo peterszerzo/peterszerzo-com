@@ -10,13 +10,24 @@ import Views.MobileNav
 import Views.TextBox
 import Views.Banner
 import Views.Notification
+import Today.Views
 
 
 view : Model -> Html Msg
 view model =
     let
-        currentPath =
+        currentSlug =
             Router.routeToSlug model.route
+
+        containerView =
+            case model.route of
+                Router.Today todayModel ->
+                    Today.Views.view todayModel
+                        |> map TodayMsg
+                        |> (\v -> [div [class "main__container"] [v]])
+
+                _ ->
+                    []
 
         ( textbox, sublinks ) =
             standardPage model
@@ -41,7 +52,7 @@ view model =
                 [ Views.Banner.view
                 ]
             , Views.TextBox.view textbox model.mode
-            , Views.DesktopNav.view currentPath sublinks
+            , Views.DesktopNav.view currentSlug sublinks
             , Views.Notification.view model
-            , Views.MobileNav.view currentPath model.isMobileNavActive sublinks
-            ]
+            , Views.MobileNav.view currentSlug model.isMobileNavActive sublinks
+            ] ++ containerView
