@@ -56,7 +56,7 @@ const config = {
       },
       {
         test: /\.elm$/,
-        loader: 'elm-webpack?debug=true'
+        loader: 'elm-webpack'
       },
       {
         test: /\.(svg|jpg|gif)$/,
