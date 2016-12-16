@@ -1,74 +1,50 @@
 module Content exposing (..)
 
-import Models exposing (Url(..))
 
-
-pages : List Models.Page
-pages =
-    [ { label = "Recent Works"
-      , url = Internal "projects"
-      , subLinks =
-            [ ( "Lettero", "https://lettero.co" )
-            , ( "Splyt Light", "http://splytlight.surge.sh" )
-            , ( "CphRain", "http://cphrain.surge.sh" )
-            ]
-      , conventionalContent = Nothing
-      , realContent = Nothing
-      }
-    , { label = "Blog"
-      , url = External "http://blog.peterszerzo.com"
-      , subLinks = []
-      , conventionalContent = Nothing
-      , realContent = Nothing
-      }
-    , { label = "CV"
-      , url = External "https://represent.io/peterszerzo"
-      , subLinks = []
-      , conventionalContent = Nothing
-      , realContent = Nothing
-      }
-    , { label = "Talks"
-      , url = Internal "talks"
-      , subLinks =
-            [ ( "CSS@fireplace", "https://pickled-plugins.github.io/css-by-the-fireplace/" )
-            , ( "Elm+friends", "https://pickled-plugins.github.io/practical-elm-and-friends/" )
-            ]
-      , conventionalContent = Nothing
-      , realContent = Nothing
-      }
-    , { label = "About"
-      , url = Internal "about"
-      , subLinks = []
-      , conventionalContent = Just aboutConventional
-      , realContent = Just aboutReal
-      }
-    , { label = "Now"
-      , url = Internal "now"
-      , subLinks = []
-      , conventionalContent = Just now
-      , realContent = Nothing
-      }
-    , { label = "Archive"
-      , url = Internal "archive"
-      , subLinks =
-            [ ( "ripsaw.js", "http://pickled-plugins.github.io/ripsaw-js" )
-            , ( "Liquid Lab", "http://pickled-plugins.github.io/liquidlab/#home" )
-            , ( "Helicopters", "http://pickled-plugins.github.io/helicopter-ride/" )
-            , ( "Pendants", "https://www.youtube.com/watch?v=0bKI3VSdD1g" )
-            , ( "PBA", "http://pickled-plugins.github.io/pba/" )
-            ]
-      , conventionalContent = Nothing
-      , realContent = Nothing
-      }
+mainLinks : List ( String, String )
+mainLinks =
+    [ ( "Recent works", "/projects" )
+    , ( "Blog", "http://blog.peterszerzo.com" )
+    , ( "CV", "https://represent.io/peterszerzo" )
+    , ( "Talks", "/talks" )
+    , ( "About", "/about" )
+    , ( "Now", "/now" )
+    , ( "Archive", "/archive" )
     ]
+
+
+projectLinks : List ( String, String )
+projectLinks =
+    [ ( "Lettero", "https://lettero.co" )
+    , ( "Splyt Light", "http://splytlight.surge.sh" )
+    , ( "CphRain", "http://cphrain.surge.sh" )
+    ]
+
+
+talkLinks : List ( String, String )
+talkLinks =
+    [ ( "CSS@fireplace", "https://pickled-plugins.github.io/css-by-the-fireplace/" )
+    , ( "Elm+friends", "https://pickled-plugins.github.io/practical-elm-and-friends/" )
+    ]
+
+
+archiveLinks : List ( String, String )
+archiveLinks =
+    [ ( "Helicopters", "https://lettero.co" )
+    , ( "Pendants", "http://splytlight.surge.sh" )
+    , ( "PBA", "http://cphrain.surge.sh" )
+    ]
+
 
 title : String
 title =
-  "Hi, I’m Peter"
+    "Hi, I’m Peter"
+
 
 subtitle : String
 subtitle =
-  "programmer, designer, writer, but mostly just person"
+    "programmer, designer, writer, but mostly just person"
+
 
 aboutConventional : String
 aboutConventional =
@@ -117,6 +93,7 @@ Also writing some blog posts, such as [this one](http://blog.peterszerzo.com/im-
 
 Doing more yoga, taking more frequent and longer walks. Eating more pastries.
 """
+
 
 notification : String
 notification =

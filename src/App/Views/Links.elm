@@ -4,13 +4,11 @@ import Html exposing (Html, div, a, text)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
 import Messages exposing (Msg(..))
-import Router exposing (Route(..), routeDefs, parseUrlFragment)
-import Models exposing (Url(..))
-import Content exposing (pages)
+import Content exposing (mainLinks)
 
 
-viewSecondaryLink : ( String, String ) -> Html a
-viewSecondaryLink ( name, url ) =
+viewSublink : ( String, String ) -> Html Msg
+viewSublink ( name, url ) =
     a
         [ href url
         ]
@@ -18,60 +16,55 @@ viewSecondaryLink ( name, url ) =
         ]
 
 
-viewSecondaryLinks : String -> Route -> Html a
-viewSecondaryLinks className currentRoute =
-    let
-        activeSubLinks =
-            Models.getActivePage pages currentRoute
-              |> .subLinks
-
-        ( isHidden, subLinks ) =
-            if (List.length activeSubLinks) == 0 then
-                ( True, [] )
-            else
-                ( False, activeSubLinks )
-    in
-        div
-            [ classList
-                [ ( className, True )
-                , ( className ++ "--hidden", isHidden )
-                ]
+viewSublinks : Maybe String -> String -> Maybe (List ( String, String )) -> Html Msg
+viewSublinks currentPath className sublinks =
+    div
+        [ classList
+            [ ( className, True )
+            , ( className ++ "--hidden", sublinks == Nothing )
             ]
-            (List.map viewSecondaryLink subLinks)
+        ]
+        (List.map viewSublink (sublinks |> Maybe.withDefault []))
 
 
-viewMainLink className currentRoute { label, url, subLinks } =
+viewMainLink : Maybe String -> String -> Maybe (List ( String, String )) -> ( String, String ) -> Html Msg
+viewMainLink currentSlug className sublinks ( label, url ) =
     let
-        ( variableAttr, htmlTag, isActive ) =
-            case url of
-                Internal pth ->
-                    ( [ onClick
-                            ( ChangePath (if parseUrlFragment routeDefs pth == currentRoute then "" else pth) )
-                      ]
-                    , div
-                    , currentRoute == (parseUrlFragment routeDefs pth)
-                    )
+        isExternalLink =
+            String.slice 0 4 url == "http"
 
-                External route ->
-                    ( [ href route, target "_blank" ]
-                    , a
-                    , False
-                    )
-
-        attr =
-            (classList
-                [ ( className ++ "__link", True )
-                , ( className ++ "__link--active", isActive )
-                ]
-            )
-                :: variableAttr
+        slug =
+            String.dropLeft 1 url
     in
-        htmlTag attr [ text label ]
+        (if isExternalLink then
+            a
+         else
+            div
+        )
+            [ (classList
+                [ ( className ++ "__link", True )
+                , ( className ++ "__link--active", currentSlug == Just slug )
+                ]
+              )
+            , if isExternalLink then
+                (href url)
+              else
+                (onClick
+                    (ChangePath
+                        (if currentSlug == Just slug then
+                            ""
+                         else
+                            slug
+                        )
+                    )
+                )
+            ]
+            [ text label ]
 
 
-viewMainLinks : String -> Route -> Html Msg
-viewMainLinks className currentRoute =
+viewMainLinks : Maybe String -> String -> Maybe (List ( String, String )) -> Html Msg
+viewMainLinks currentPath className sublinks =
     div
         [ class className
         ]
-        (List.map (viewMainLink className currentRoute) pages)
+        (List.map (viewMainLink currentPath className sublinks) Content.mainLinks)

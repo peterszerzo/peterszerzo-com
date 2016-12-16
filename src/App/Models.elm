@@ -1,7 +1,8 @@
 module Models exposing (..)
 
 import Messages exposing (Msg)
-import Router exposing (Route, routeDefs, parseUrlFragment)
+import Router exposing (Route(..))
+import Content
 
 
 type alias Flags =
@@ -23,18 +24,9 @@ type alias SubLink =
     ( String, String )
 
 
-type Url
-    = Internal String
-    | External String
-
-
-type alias Page =
-    { label : String
-    , url : Url
-    , subLinks : List SubLink
-    , conventionalContent : Maybe String
-    , realContent : Maybe String
-    }
+type StandardPage
+    = SublinkPage (List ( String, String ))
+    | StaticPage String (Maybe String)
 
 
 type alias Model =
@@ -48,22 +40,35 @@ type alias Model =
 
 init : Flags -> Route -> ( Model, Cmd Msg )
 init isNotificationDismissed route =
-        ( Model route Conventional 0 False isNotificationDismissed
-        , Cmd.none
-        )
+    ( Model route Conventional 0 False isNotificationDismissed
+    , Cmd.none
+    )
 
 
 
 -- Helpers
 
 
-getActivePage : List Page -> Route -> Page
-getActivePage pages currentRoute =
-    pages
-        |> List.filter (\pg ->
-              case pg.url of
-                Internal str -> (parseUrlFragment routeDefs str) == currentRoute
-                External str -> False
-            )
-        |> List.head
-        |> Maybe.withDefault (Page "Dummy" (Internal "asdf") [] Nothing Nothing)
+standardPage : Model -> Maybe StandardPage
+standardPage model =
+    case model.route of
+        Home ->
+            Nothing
+
+        Projects ->
+            SublinkPage Content.projectLinks |> Just
+
+        Talks ->
+            SublinkPage Content.talkLinks |> Just
+
+        Now ->
+            StaticPage Content.now Nothing |> Just
+
+        About ->
+            StaticPage Content.aboutConventional (Just Content.aboutReal) |> Just
+
+        Archive ->
+            SublinkPage Content.archiveLinks |> Just
+
+        _ ->
+            Nothing

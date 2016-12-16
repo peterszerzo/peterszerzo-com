@@ -2,7 +2,8 @@ module Views.Main exposing (..)
 
 import Html exposing (Html, div, map)
 import Html.Attributes exposing (class, src, href)
-import Models exposing (Model, Mode(..))
+import Models exposing (Model, Mode(..), StandardPage(..), standardPage)
+import Router
 import Messages exposing (Msg(..))
 import Views.DesktopNav
 import Views.MobileNav
@@ -11,23 +12,36 @@ import Views.Banner
 import Views.Notification
 
 
-viewMainContent : Model -> Html Msg
-viewMainContent model =
-    div
-        [ class "main__content"
-        ]
-        [ Views.Banner.view
-        ]
-
-
 view : Model -> Html Msg
 view model =
-    div
-        [ class "main"
-        ]
-        [ viewMainContent model
-        , Views.TextBox.view model
-        , Views.DesktopNav.view model
-        , Views.Notification.view model
-        , Views.MobileNav.view model
-        ]
+    let
+        currentPath =
+            Router.routeToSlug model.route
+
+        ( textbox, sublinks ) =
+            standardPage model
+                |> Maybe.map
+                    (\sp ->
+                        case sp of
+                            SublinkPage sublinks ->
+                                ( ( Nothing, Nothing ), Just sublinks )
+
+                            StaticPage content1 content2 ->
+                                ( ( Just content1, content2 ), Nothing )
+                    )
+                |> Maybe.withDefault ( ( Nothing, Nothing ), Nothing )
+    in
+        div
+            [ class "main"
+            ]
+        <|
+            [ div
+                [ class "main__content"
+                ]
+                [ Views.Banner.view
+                ]
+            , Views.TextBox.view textbox model.mode
+            , Views.DesktopNav.view currentPath sublinks
+            , Views.Notification.view model
+            , Views.MobileNav.view currentPath model.isMobileNavActive sublinks
+            ]

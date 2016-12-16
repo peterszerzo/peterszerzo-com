@@ -5,16 +5,17 @@ import Html.Attributes exposing (classList, class, attribute)
 import Html.Events exposing (onClick)
 import Router exposing (Route(..))
 import Messages exposing (Msg(..))
-import Views.Links exposing (viewMainLinks, viewSecondaryLinks)
+import Views.Links exposing (viewMainLinks, viewSublinks)
 import Views.Shapes.Falafel as Falafel
 import Views.Shapes.Arrow as Arrow
 
 
-view model =
+view : Maybe String -> Bool -> Maybe (List ( String, String )) -> Html Msg
+view currentPath isMobileNavActive sublinks =
     nav
         [ classList
             [ ( "mobile-nav", True )
-            , ( "mobile-nav--active", model.isMobileNavActive )
+            , ( "mobile-nav--active", isMobileNavActive )
             ]
         , attribute "role" "navigation"
         ]
@@ -22,18 +23,18 @@ view model =
             [ class "mobile-nav__toggle"
             , onClick ToggleMobileNav
             ]
-            [ Falafel.view (not model.isMobileNavActive)
+            [ Falafel.view (not isMobileNavActive)
             ]
         , div
             [ classList
                 [ ( "mobile-nav__content", True )
-                , ( "mobile-nav__content--at-second-tab", List.member model.route [ Projects, Talks, Archive ] )
+                , ( "mobile-nav__content--at-second-tab", sublinks /= Nothing )
                 ]
             ]
             [ div
                 [ class "mobile-nav__tab"
                 ]
-                [ viewMainLinks "mobile-main-links" model.route
+                [ viewMainLinks currentPath "mobile-main-links" sublinks
                 ]
             , div
                 [ class "mobile-nav__tab"
@@ -45,7 +46,7 @@ view model =
                         ]
                         [ Arrow.view
                         ]
-                    , viewSecondaryLinks "mobile-secondary-links" model.route
+                    , viewSublinks currentPath "mobile-secondary-links" sublinks
                     ]
                 ]
             ]

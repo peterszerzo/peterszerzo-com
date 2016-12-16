@@ -14,8 +14,8 @@ type Route
     | NotFound
 
 
-routeDefs : List ( Route, String )
-routeDefs =
+simpleRouteDefs : List ( Route, String )
+simpleRouteDefs =
     [ ( Home, "" )
     , ( Projects, "projects" )
     , ( Now, "now" )
@@ -27,7 +27,7 @@ routeDefs =
 
 parse : Navigation.Location -> Route
 parse =
-    (parseUrlFragment routeDefs) << getPathname
+    slugToRoute << getPathname
 
 
 getPathname : Navigation.Location -> String
@@ -36,14 +36,18 @@ getPathname location =
         |> String.dropLeft 1
 
 
-parseUrlFragment : List ( Route, String ) -> String -> Route
-parseUrlFragment routeDefs str =
-    case List.head routeDefs of
-        Just routeDef ->
-            if (Tuple.second routeDef) == str then
-                Tuple.first routeDef
-            else
-                parseUrlFragment (List.drop 1 routeDefs) str
+slugToRoute : String -> Route
+slugToRoute slug =
+    simpleRouteDefs
+        |> List.filter (\( route, slug_ ) -> slug == slug_)
+        |> List.head
+        |> Maybe.map Tuple.first
+        |> Maybe.withDefault NotFound
 
-        Nothing ->
-            NotFound
+
+routeToSlug : Route -> Maybe String
+routeToSlug route =
+    simpleRouteDefs
+        |> List.filter (\( route_, slug ) -> route == route_)
+        |> List.head
+        |> Maybe.map Tuple.second

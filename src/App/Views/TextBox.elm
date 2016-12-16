@@ -10,7 +10,6 @@ import Models exposing (Mode(..))
 import Views.Shapes.Arrow as Arrow
 import Views.Switch
 import Models exposing (SwitchPosition(..))
-import Content exposing (pages)
 
 
 viewContents : String -> String -> Html Msg
@@ -33,17 +32,17 @@ viewContents conventional real =
         ]
 
 
-viewNav : Models.Model -> Html Msg
-viewNav model =
+viewNav : Models.Mode -> Html Msg
+viewNav mode =
     let
         switchModel =
-            if model.mode == Conventional then
+            if mode == Conventional then
                 Left
             else
                 Right
 
         isSwitchHidden =
-            model.route /= About
+            False
     in
         div
             [ class "text-box-nav"
@@ -65,21 +64,18 @@ viewNav model =
             ]
 
 
-view : Models.Model -> Html Msg
-view model =
-  let
-    activePage = Models.getActivePage pages model.route
-  in
-        div
-            [ classList
-                [ ( "text-box", True )
-                , ( "text-box--hidden", (activePage.conventionalContent == Nothing) )
-                , ( "text-box--primary-displayed", model.mode == Conventional )
-                , ( "text-box--secondary-displayed", model.mode == Real && (activePage.realContent /= Nothing) )
-                ]
+view : ( Maybe String, Maybe String ) -> Models.Mode -> Html Msg
+view ( c1, c2 ) mode =
+    div
+        [ classList
+            [ ( "text-box", True )
+            , ( "text-box--hidden", (c1 == Nothing) )
+            , ( "text-box--primary-displayed", mode == Conventional )
+            , ( "text-box--secondary-displayed", mode == Real && (c1 /= Nothing) )
             ]
-            [ viewNav model
-            , viewContents
-                (activePage.conventionalContent |> Maybe.withDefault "")
-                (activePage.realContent |> Maybe.withDefault "")
-            ]
+        ]
+        [ viewNav mode
+        , viewContents
+            (c1 |> Maybe.withDefault "")
+            (c2 |> Maybe.withDefault "")
+        ]
