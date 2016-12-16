@@ -4,6 +4,7 @@ import Time exposing (Time, every, millisecond)
 import Messages exposing (Msg(..))
 import Models exposing (Model)
 import Today.Subscriptions
+import Map.Subscriptions
 import Router
 
 
@@ -15,6 +16,10 @@ subscriptions model =
             Router.Today today ->
                 Today.Subscriptions.subscriptions today
                     |> Sub.map TodayMsg
+
+            Router.Map map ->
+                Map.Subscriptions.subscriptions map
+                    |> Sub.map MapMsg
 
             _ ->
                 Sub.none

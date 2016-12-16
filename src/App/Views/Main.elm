@@ -11,6 +11,7 @@ import Views.TextBox
 import Views.Banner
 import Views.Notification
 import Today.Views
+import Map.Views
 
 
 view : Model -> Html Msg
@@ -24,7 +25,12 @@ view model =
                 Router.Today todayModel ->
                     Today.Views.view todayModel
                         |> map TodayMsg
-                        |> (\v -> [div [class "main__container"] [v]])
+                        |> (\v -> [ div [ class "main__container" ] [ v ] ])
+
+                Router.Map mapModel ->
+                    Map.Views.view mapModel
+                        |> map MapMsg
+                        |> (\v -> [ div [ class "main__container" ] [ v ] ])
 
                 _ ->
                     []
@@ -55,4 +61,5 @@ view model =
             , Views.DesktopNav.view currentSlug sublinks
             , Views.Notification.view model
             , Views.MobileNav.view currentSlug model.isMobileNavActive sublinks
-            ] ++ containerView
+            ]
+                ++ containerView

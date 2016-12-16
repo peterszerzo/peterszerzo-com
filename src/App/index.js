@@ -2,6 +2,7 @@ var Elm = require('./Main.elm')
 
 var LOCAL_STORAGE_KEY = 'peterszerzo-com:notification-last-dismissed'
 var todayPorts = require('./Today/ports')
+var mapPorts = require('./Map/ports')
 
 function getTimeSinceNotificationLastDismissed () {
   var now = new Date().getTime()
@@ -32,6 +33,7 @@ module.exports = function startApp () {
     node.innerHTML = ''
     elmApp = Elm.Main.embed(node, isNotificationRecentlyDismissed)
     todayPorts(elmApp.ports)
+    mapPorts(elmApp.ports)
     if (window.localStorage) {
       elmApp.ports.notificationDismissed.subscribe(setNotificationLastDismissed)
     }

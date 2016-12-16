@@ -1,6 +1,7 @@
-var loadPromise
-var startPromise
+var loader = require('./loader')
 
+var FIREBASE_SCRIPT_URL = 'https://www.gstatic.com/firebasejs/3.6.1/firebase.js'
+var startPromise
 var config = {
   apiKey: process.env.FIREBASE_API_KEY,
   authDomain: process.env.FIREBASE_AUTH_DOMAIN,
@@ -10,19 +11,7 @@ var config = {
 }
 
 function load() {
-  if (loadPromise) {
-    return loadPromise
-  }
-  loadPromise = new Promise((resolve, reject) => {
-    var scriptElement = document.createElement('script')
-    scriptElement.src = 'https://www.gstatic.com/firebasejs/3.6.1/firebase.js'
-    scriptElement.type = 'text/javascript'
-    scriptElement.async = 'true'
-    scriptElement.onload = resolve
-    scriptElement.onerror = reject
-    document.head.appendChild(scriptElement)
-  })
-  return loadPromise
+  return loader.script(FIREBASE_SCRIPT_URL)
 }
 
 function start() {

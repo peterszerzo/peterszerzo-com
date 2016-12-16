@@ -4,6 +4,7 @@ import Messages exposing (Msg)
 import Router exposing (Route(..))
 import Content
 import Today.Models
+import Map.Models
 
 
 type alias Flags =
@@ -53,6 +54,11 @@ getCmdOnRouteChange rt =
             Today.Models.init
                 |> Tuple.second
                 |> Cmd.map Messages.TodayMsg
+
+        Map today ->
+            Map.Models.init
+                |> Tuple.second
+                |> Cmd.map Messages.MapMsg
 
         _ ->
             Cmd.none
