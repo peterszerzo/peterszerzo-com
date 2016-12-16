@@ -23,11 +23,11 @@
   --icon-size: 18px;
 
   --z-hidden: -1;
-  --z-notification: 11000;
-  --z-text-box: 10000;
-  --z-mobile-nav: 1000;
+  --z-notification: 12;
+  --z-text-box: 11;
+  --z-mobile-nav: 10;
   --z-desktop-nav: 2;
-  --z-container: 12000;
+  --z-container: 13;
 
   --standard-text: {
     font-size: 1rem;

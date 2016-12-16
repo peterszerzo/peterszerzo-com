@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "css-loader": "^0.26.1",
+    "dotenv": "^2.0.0",
     "elm-webpack-loader": "^3.1.0",
     "extract-text-webpack-plugin": "^1.0.1",
     "favicons-webpack-plugin": "^0.0.7",

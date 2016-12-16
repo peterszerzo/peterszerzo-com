@@ -62,7 +62,7 @@ viewBackground model =
                 [ class "t_bg__element"
                 , attribute
                     "style"
-                    ("t_bg-image: " ++ startUrl ++ "; -webkit-clip-path: " ++ clipPathString ++ ";")
+                    ("background-image: " ++ startUrl ++ "; -webkit-clip-path: " ++ clipPathString ++ ";")
                 ]
                 []
             , div [ class "t_bg__element t_bg__overlay" ] []

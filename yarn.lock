@@ -1198,6 +1198,10 @@ dot-case@^2.1.0:
   dependencies:
     no-case "^2.2.0"
 
+dotenv:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-2.0.0.tgz#bd759c357aaa70365e01c96b7b0bec08a6e0d949"
+
 du@0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/du/-/du-0.1.0.tgz#f26e340a09c7bc5b6fd69af6dbadea60fa8c6f4d"

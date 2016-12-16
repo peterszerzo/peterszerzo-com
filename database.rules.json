@@ -1,0 +1,6 @@
+{
+  "rules": {
+    ".read": "true",
+    ".write": "auth.token.email_verified == true && auth.token.email.matches(/^szerzo.peter@gmail.com$/)"
+  }
+}
