@@ -8,8 +8,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin')
 
-require('dotenv').load()
-
 const commonPlugins = [
   new webpack.DefinePlugin({
     'process.env.FIREBASE_API_KEY': `"${process.env.FIREBASE_API_KEY}"`,
@@ -21,13 +19,13 @@ const commonPlugins = [
     'process.env.MAPBOX_MAP_STYLE_URL': `"${process.env.MAPBOX_MAP_STYLE_URL}"`
   }),
   new HtmlWebpackPlugin({
-    template: './src/index.pug',
+    template: './src/index.html',
     inject: true,
     hash: true
   }),
   new HtmlWebpackPlugin({
     filename: '200.html',
-    template: './src/index.pug',
+    template: './src/index.html',
     inject: true,
     hash: true
   }),
@@ -61,10 +59,6 @@ const config = {
       {
         test: /\.(svg|jpg|gif)$/,
         loader: 'file?name=[name].[ext]'
-      },
-      {
-        test: /\.pug/,
-        loader: 'pug'
       }
     ]
   },
