@@ -30,9 +30,9 @@ talkLinks =
 
 archiveLinks : List ( String, String )
 archiveLinks =
-    [ ( "Helicopters", "https://lettero.co" )
-    , ( "Pendants", "http://splytlight.surge.sh" )
-    , ( "PBA", "http://cphrain.surge.sh" )
+    [ ( "Helicopters", "http://peterszerzo.github.io/helicopter-ride/" )
+    , ( "Pendants", "https://www.youtube.com/watch?v=0bKI3VSdD1g" )
+    , ( "PBA", "http://peterszerzo.github.io/pba/" )
     ]
 
 
