@@ -1,6 +1,4 @@
-require('./styles.css')
-require('./images/peter-szerzo-180-2x.jpg')
-require('./images/ripple-2x.gif')
+require('./styles.compiled.css')
 
 var attachFastClick = require('fastclick')
 var domReady = require('domready')

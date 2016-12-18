@@ -4,13 +4,10 @@
   "description": "Source code for my personal website.",
   "main": "index.js",
   "scripts": {
-    "dev": "node dev.js",
+    "dev:copy": "cp -r src/images/* dist/",
+    "dev:watchcss": "postcss src/styles.css --use postcss-cssnext --output src/styles.compiled.css --watch",
     "lint": "./node_modules/.bin/stylelint ./src/**/*.css && ./node_modules/.bin/standard --fix",
-    "build:setup": "rm -rf ./build && mkdir -p ./build",
-    "build:js": "NODE_ENV=production ./node_modules/.bin/webpack --config ./webpack.config.js",
-    "build": "npm run build:setup && npm run build:js",
-    "deploy": "./node_modules/.bin/surge ./build peterszerzo.com",
-    "all": "npm run build && npm run deploy"
+    "deploy": "./node_modules/.bin/surge ./build peterszerzo.com"
   },
   "author": "Peter Szerzo <szerzo.peter@gmail.com>",
   "license": "ISC",
@@ -19,22 +16,8 @@
     "fastclick": "^1.0.6"
   },
   "devDependencies": {
-    "css-loader": "^0.26.1",
-    "dotenv": "^2.0.0",
-    "elm-webpack-loader": "^3.1.0",
-    "extract-text-webpack-plugin": "^1.0.1",
-    "favicons-webpack-plugin": "^0.0.7",
-    "file-loader": "^0.9.0",
-    "firebase-tools": "^3.2.0",
-    "html-webpack-plugin": "^2.22.0",
-    "postcss-cssnext": "^2.9.0",
-    "postcss-loader": "^1.2.0",
     "standard": "^8.6.0",
-    "style-loader": "^0.13.1",
     "stylelint": "^7.6.0",
-    "surge": "^0.18.0",
-    "webpack": "^1.13.1",
-    "webpack-dev-server": "^1.14.1",
-    "webpack-validator": "^2.2.2"
+    "surge": "^0.18.0"
   }
 }
