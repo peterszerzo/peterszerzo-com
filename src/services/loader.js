@@ -1,6 +1,6 @@
 var loadPromises = {}
 
-function script(url) {
+function script (url) {
   if (loadPromises[url]) {
     return loadPromises[url]
   }
@@ -17,7 +17,7 @@ function script(url) {
   return loadPromise
 }
 
-function style(url) {
+function style (url) {
   if (loadPromises[url]) {
     return loadPromises[url]
   }

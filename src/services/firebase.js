@@ -10,22 +10,22 @@ var config = {
   messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID
 }
 
-function load() {
+function load () {
   return loader.script(FIREBASE_SCRIPT_URL)
 }
 
-function start() {
+function start () {
   if (startPromise) {
     return startPromise
   }
   startPromise = load().then(() => {
-    app = global.firebase.initializeApp(config)
+    var app = global.firebase.initializeApp(config)
     return Promise.resolve(app)
   })
   return startPromise
 }
 
-function queryDb(app, ref) {
+function queryDb (app, ref) {
   return app.database().ref(ref).once('value').then(s => s.val())
 }
 

@@ -4,10 +4,10 @@
   "description": "Source code for my personal website.",
   "main": "index.js",
   "scripts": {
-    "dev:copy": "cp -r src/images/* dist/",
-    "dev:watchcss": "postcss src/styles.css --use postcss-cssnext --output src/styles.compiled.css --watch",
-    "lint": "./node_modules/.bin/stylelint ./src/**/*.css && ./node_modules/.bin/standard --fix",
-    "deploy": "./node_modules/.bin/surge ./build peterszerzo.com"
+    "copy": "cp -r src/images/* dist/",
+    "watchcss": "postcss src/styles.css --use postcss-cssnext --output src/styles.compiled.css --watch",
+    "lint": "./node_modules/.bin/stylelint ./src/styles.css && ./node_modules/.bin/standard --fix",
+    "deploy": "elm-app build && npm run copy && mv dist/index.html dist/200.html ./node_modules/.bin/surge ./dist peterszerzo.surge.sh"
   },
   "author": "Peter Szerzo <szerzo.peter@gmail.com>",
   "license": "ISC",

@@ -19,7 +19,7 @@ function getGeoJson (sounds) {
   }
 }
 
-function load() {
+function load () {
   return Promise.all([
     loader.script(MAPBOX_SCRIPT_URL),
     loader.style(MAPBOX_STYLESHEET_URL)
@@ -27,10 +27,10 @@ function load() {
 }
 
 function createMap ({onClick, onDoubleClick, onCreated, onFeatureClick}) {
-  return load().then(function() {
+  return load().then(function () {
     var mapboxgl = global.mapboxgl
     mapboxgl.accessToken = process.env.MAPBOX_ACCESS_TOKEN
-    map = new mapboxgl.Map({container: 'm_map', style: process.env.MAPBOX_MAP_STYLE_URL})
+    var map = new mapboxgl.Map({container: 'm_map', style: process.env.MAPBOX_MAP_STYLE_URL})
     map.on('load', onCreated)
     map.on('dblclick', e => {
       onDoubleClick(e.lngLat.lat, e.lngLat.lng)
