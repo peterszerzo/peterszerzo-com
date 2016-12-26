@@ -52,9 +52,14 @@ function queryDb (app, ref) {
   })
 }
 
+function queryStorage (app, ref) {
+  return Promise.resolve('/media/' + ref)
+}
+
 module.exports = {
   _start: _start,
   _queryDb: _queryDb,
   start: start,
-  queryDb: queryDb
+  queryDb: queryDb,
+  queryStorage: queryStorage
 }

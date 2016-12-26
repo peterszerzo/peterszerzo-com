@@ -27,7 +27,7 @@
   --z-text-box: 11;
   --z-mobile-nav: 10;
   --z-desktop-nav: 2;
-  --z-container: 13;
+  --z-app: 13;
 
   --standard-text: {
     font-size: 1rem;
@@ -741,13 +741,13 @@ h3 {
 /* Today */
 
 .t {
+  position: relative;
+  z-index: var(--z-app);
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
-  z-index: var(--z-container);
 }
 
 .t_nav {
@@ -796,6 +796,8 @@ h3 {
 /* Map */
 
 .m {
+  position: relative;
+  z-index: var(--z-app);
   width: 100%;
   height: 100%;
 }

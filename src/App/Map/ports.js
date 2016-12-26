@@ -30,6 +30,8 @@ module.exports = function (ports) {
   })
   ports.pauseAudio.subscribe(audio.pause)
   ports.playAudio.subscribe(function (ref) {
-    fb.getStorage(ref, audio.play)
+    fb.start().then(function (app) {
+      return fb.queryStorage(app, ref)
+    }).then(audio.play)
   })
 }
