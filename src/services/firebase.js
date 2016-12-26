@@ -10,26 +10,45 @@ var config = {
   messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID
 }
 
-function load () {
+// Use once Firebase is working
+
+function _load () {
   return loader.script(FIREBASE_SCRIPT_URL)
 }
 
-function start () {
+function _start () {
   if (startPromise) {
     return startPromise
   }
-  startPromise = load().then(() => {
+  startPromise = _load().then(() => {
     var app = global.firebase.initializeApp(config)
     return Promise.resolve(app)
   })
   return startPromise
 }
 
-function queryDb (app, ref) {
+function _queryDb (app, ref) {
   return app.database().ref(ref).once('value').then(s => s.val())
 }
 
+// Temporary replacements
+
+function load () {
+  return Promise.resolve(true)
+}
+
+function start () {
+  const dummyApp = {}
+  return load().then(() => Promise.resolve(dummyApp))
+}
+
+function queryDb (app, ref) {
+  return global.fetch(`/api${ref}.json`).then(res => res.json())
+}
+
 module.exports = {
+  _start: _start,
+  _queryDb: _queryDb,
   start: start,
   queryDb: queryDb
 }
