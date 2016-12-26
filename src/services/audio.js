@@ -1,7 +1,6 @@
 var currentAudio
 
 function play (url) {
-  console.log(url)
   stop()
   currentAudio = new global.Audio(url)
   currentAudio.load()
