@@ -2,6 +2,7 @@ var loader = require('./loader')
 
 var MAPBOX_SCRIPT_URL = 'https://api.mapbox.com/mapbox-gl-js/v0.28.0/mapbox-gl.js'
 var MAPBOX_STYLESHEET_URL = 'https://api.mapbox.com/mapbox-gl-js/v0.28.0/mapbox-gl.css'
+var map
 
 function getGeoJson (sounds) {
   return {
@@ -34,7 +35,7 @@ function createMap (options) {
   return load().then(function () {
     var mapboxgl = global.mapboxgl
     mapboxgl.accessToken = process.env.MAPBOX_ACCESS_TOKEN
-    var map = new mapboxgl.Map({container: 'm_map', style: process.env.MAPBOX_MAP_STYLE_URL})
+    map = new mapboxgl.Map({container: 'm_map', style: process.env.MAPBOX_MAP_STYLE_URL})
     map.on('load', onCreated)
     map.on('dblclick', function (e) {
       onDoubleClick(e.lngLat.lat, e.lngLat.lng)
@@ -51,7 +52,7 @@ function createMap (options) {
   })
 }
 
-function renderSounds (map, soundsObj) {
+function renderSounds (soundsObj) {
   var sounds = Object.keys(soundsObj).map(function (key) { return soundsObj[key] })
   var geoJson = getGeoJson(sounds)
   var soundsSource = map.getSource('sounds')

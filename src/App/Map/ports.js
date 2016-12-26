@@ -3,9 +3,8 @@ var mapper = require('../../services/mapper')
 var audio = require('../../services/audio')
 
 module.exports = function (ports) {
-  var map
   ports.createMap.subscribe(function () {
-    mapper.createMap({
+    return mapper.createMap({
       onClick: function () {
         ports.clearActiveSound.send('placeholder')
       },
@@ -16,7 +15,7 @@ module.exports = function (ports) {
         ports.setActiveSound.send(sound.id)
       },
       onDoubleClick: function () {}
-    }).then(function (_map) { map = _map })
+    })
   })
   ports.requestSoundData.subscribe(function () {
     fb.start().then(function (app) {
@@ -26,9 +25,12 @@ module.exports = function (ports) {
     })
   })
   ports.renderSounds.subscribe(function (sounds) {
-    mapper.renderSounds(map, JSON.parse(sounds))
+    mapper.renderSounds(JSON.parse(sounds))
   })
-  ports.pauseAudio.subscribe(audio.pause)
+  ports.pauseAudio.subscribe(function(ref) {
+    console.log(ref)
+    audio.stop(ref)
+  })
   ports.playAudio.subscribe(function (ref) {
     fb.start().then(function (app) {
       return fb.queryStorage(app, ref)
