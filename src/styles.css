@@ -751,12 +751,29 @@ h3 {
 }
 
 .t_nav {
-  bottom: 30px;
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translate3d(-50%, 0, 0);
+  font-size: 2rem;
+
+  & p {
+    margin: 0;
+    cursor: pointer;
+  }
 }
 
 .t_banner {
   margin: 0;
   text-align: center;
+  position: relative;
+  z-index: 2;
+  color: var(--white);
+  max-width: 600px;
+
+  & h1 {
+    font-size: calc(2vw + 2vh);
+  }
 }
 
 .t_bg,

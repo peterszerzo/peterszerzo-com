@@ -29,19 +29,12 @@ getClipPath : Float -> String
 getClipPath ratio =
     let
         clipPathCoordinates =
-            if ratio < 0.5 then
-                [ [ 0, ratio * 2 ]
-                , [ ratio * 2, 0 ]
-                , [ 1, 0 ]
-                , [ 1, 1 ]
-                , [ 0, 1 ]
-                , [ 0, ratio * 2 ]
-                ]
-            else
-                [ [ 1, ratio * 2 - 1 ]
-                , [ 1, 1 ]
-                , [ ratio * 2 - 1, 1 ]
-                ]
+            [ [ 0, 0 ]
+            , [ 0.3 + 0.6 * ratio, 0 ]
+            , [ 0.1 + 0.6 * ratio, 1 ]
+            , [ 0, 1 ]
+            , [ 0, 0 ]
+            ]
     in
         clipPathCoordinates
             |> List.map pointToString

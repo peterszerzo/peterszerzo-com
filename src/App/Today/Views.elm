@@ -6,7 +6,6 @@ import Html.Events exposing (onClick)
 import Today.Models exposing (Model, getCurrentDeed)
 import Today.Messages exposing (Msg(..))
 import Today.Helpers exposing (getClipPath)
-import Today.Constants exposing (shiftTicks)
 
 
 viewTitle : Model -> String
@@ -41,10 +40,12 @@ viewBackground model =
                 |> Maybe.withDefault ""
 
         ratio =
-            if model.ticksSinceLastDeedChange > shiftTicks then
-                1
-            else
-                model.ticksSinceLastDeedChange / shiftTicks
+            model.ticksSinceLastDeedChange
+                |> (\t -> t / 50)
+                |> sin
+                |> (+) 1
+                |> (*) 0.5
+                |> Debug.log "ratio"
 
         clipPath =
             getClipPath ratio
