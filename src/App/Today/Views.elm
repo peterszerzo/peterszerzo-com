@@ -5,7 +5,7 @@ import Html.Attributes exposing (class, style, src, attribute)
 import Html.Events exposing (onClick)
 import Today.Models exposing (Model, getCurrentDeed)
 import Today.Messages exposing (Msg(..))
-import Today.Helpers exposing (getClipPath)
+import Today.Helpers exposing (getStartClipPath, getEndClipPath)
 
 
 viewTitle : Model -> String
@@ -24,49 +24,67 @@ viewNav =
         ]
 
 
+wrapUrl : String -> String
+wrapUrl s =
+    "url(" ++ s ++ ")"
+
+
+wrapPolygon : String -> String
+wrapPolygon s =
+    "polygon(" ++ s ++ ")"
+
+
 viewBackground : Model -> Html Msg
 viewBackground model =
     let
         startUrl =
             getCurrentDeed model
                 |> Maybe.map .startGifUrl
-                |> Maybe.map (\s -> "url(" ++ s ++ ")")
+                |> Maybe.map wrapUrl
                 |> Maybe.withDefault ""
 
         endUrl =
             getCurrentDeed model
                 |> Maybe.map .endGifUrl
-                |> Maybe.map (\s -> "url(" ++ s ++ ")")
+                |> Maybe.map wrapUrl
                 |> Maybe.withDefault ""
 
         ratio =
             model.ticksSinceLastDeedChange
-                |> (\t -> t / 50)
+                |> (\t -> t / 100)
                 |> sin
                 |> (+) 1
                 |> (*) 0.5
-                |> Debug.log "ratio"
 
-        clipPath =
-            getClipPath ratio
+        startClipPath =
+            ratio
+                |> getStartClipPath
+                |> wrapPolygon
 
-        clipPathString =
-            "polygon(" ++ clipPath ++ ")"
+        endClipPath =
+            ratio
+                |> getEndClipPath
+                |> wrapPolygon
     in
         div [ class "t_bg" ]
             [ div
                 [ class "t_bg__element"
-                , attribute "style" ("background-image: " ++ endUrl ++ ";")
+                , style
+                    [ ( "background-image", endUrl )
+                    , ( "-webkit-clip-path", endClipPath )
+                    , ( "clip-path", endClipPath )
+                    ]
                 ]
                 []
             , div
                 [ class "t_bg__element"
-                , attribute
-                    "style"
-                    ("background-image: " ++ startUrl ++ "; -webkit-clip-path: " ++ clipPathString ++ ";")
+                , style
+                    [ ( "background-image", startUrl )
+                    , ( "-webkit-clip-path", startClipPath )
+                    , ( "clip-path", startClipPath )
+                    ]
                 ]
                 []
-            , div [ class "t_bg__element t_bg__overlay" ] []
             ]
 
 

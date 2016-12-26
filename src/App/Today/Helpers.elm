@@ -1,4 +1,4 @@
-module Today.Helpers exposing (getClipPath)
+module Today.Helpers exposing (..)
 
 
 numberToPercentage : Float -> String
@@ -25,15 +25,47 @@ pointToString pt =
         first ++ " " ++ second
 
 
-getClipPath : Float -> String
-getClipPath ratio =
+gapFactor : Float
+gapFactor =
+    0.001
+
+
+offset1 : Float
+offset1 =
+    0.4
+
+
+offset2 : Float
+offset2 =
+    0.2
+
+
+getStartClipPath : Float -> String
+getStartClipPath ratio =
     let
         clipPathCoordinates =
             [ [ 0, 0 ]
-            , [ 0.3 + 0.6 * ratio, 0 ]
-            , [ 0.1 + 0.6 * ratio, 1 ]
+            , [ offset1 + (1 - offset1 - offset2) * ratio - gapFactor, 0 ]
+            , [ offset2 + (1 - offset1 - offset2) * ratio - gapFactor, 1 ]
             , [ 0, 1 ]
             , [ 0, 0 ]
+            ]
+    in
+        clipPathCoordinates
+            |> List.map pointToString
+            |> List.intersperse ", "
+            |> List.foldr (++) ""
+
+
+getEndClipPath : Float -> String
+getEndClipPath ratio =
+    let
+        clipPathCoordinates =
+            [ [ 1, 0 ]
+            , [ offset1 + (1 - offset1 - offset2) * ratio + gapFactor, 0 ]
+            , [ offset2 + (1 - offset1 - offset2) * ratio + gapFactor, 1 ]
+            , [ 1, 1 ]
+            , [ 1, 0 ]
             ]
     in
         clipPathCoordinates
