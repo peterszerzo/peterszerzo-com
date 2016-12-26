@@ -20,7 +20,7 @@ function _start () {
   if (startPromise) {
     return startPromise
   }
-  startPromise = _load().then(() => {
+  startPromise = _load().then(function () {
     var app = global.firebase.initializeApp(config)
     return Promise.resolve(app)
   })
@@ -28,7 +28,9 @@ function _start () {
 }
 
 function _queryDb (app, ref) {
-  return app.database().ref(ref).once('value').then(s => s.val())
+  return app.database().ref(ref).once('value').then(function (s) {
+    return s.val()
+  })
 }
 
 // Temporary replacements
@@ -38,12 +40,16 @@ function load () {
 }
 
 function start () {
-  const dummyApp = {}
-  return load().then(() => Promise.resolve(dummyApp))
+  var dummyApp = {}
+  return load().then(function () {
+    return Promise.resolve(dummyApp)
+  })
 }
 
 function queryDb (app, ref) {
-  return global.fetch(`/api${ref}.json`).then(res => res.json())
+  return global.fetch('/api' + ref + '.json').then(function (res) {
+    return res.json()
+  })
 }
 
 module.exports = {

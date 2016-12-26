@@ -6,7 +6,7 @@ var MAPBOX_STYLESHEET_URL = 'https://api.mapbox.com/mapbox-gl-js/v0.28.0/mapbox-
 function getGeoJson (sounds) {
   return {
     type: 'FeatureCollection',
-    features: sounds.map(sound => {
+    features: sounds.map(function (sound) {
       return {
         type: 'Feature',
         geometry: {
@@ -26,17 +26,21 @@ function load () {
   ])
 }
 
-function createMap ({onClick, onDoubleClick, onCreated, onFeatureClick}) {
+function createMap (options) {
+  var onClick = options.onClick
+  var onDoubleClick = options.onDoubleClick
+  var onCreated = options.onCreated
+  var onFeatureClick = options.onFeatureClick
   return load().then(function () {
     var mapboxgl = global.mapboxgl
     mapboxgl.accessToken = process.env.MAPBOX_ACCESS_TOKEN
     var map = new mapboxgl.Map({container: 'm_map', style: process.env.MAPBOX_MAP_STYLE_URL})
     map.on('load', onCreated)
-    map.on('dblclick', e => {
+    map.on('dblclick', function (e) {
       onDoubleClick(e.lngLat.lat, e.lngLat.lng)
     })
-    map.on('click', e => {
-      const feature = map.queryRenderedFeatures(e.point, {layers: ['sounds']})[0]
+    map.on('click', function (e) {
+      var feature = map.queryRenderedFeatures(e.point, {layers: ['sounds']})[0]
       if (feature) {
         onFeatureClick(feature.properties)
       } else {
@@ -48,9 +52,9 @@ function createMap ({onClick, onDoubleClick, onCreated, onFeatureClick}) {
 }
 
 function renderSounds (map, soundsObj) {
-  const sounds = Object.keys(soundsObj).map(key => soundsObj[key])
-  const geoJson = getGeoJson(sounds)
-  const soundsSource = map.getSource('sounds')
+  var sounds = Object.keys(soundsObj).map(function (key) { return soundsObj[key] })
+  var geoJson = getGeoJson(sounds)
+  var soundsSource = map.getSource('sounds')
   if (soundsSource) {
     return soundsSource.setData(geoJson)
   }

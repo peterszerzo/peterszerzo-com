@@ -4,7 +4,7 @@ function script (url) {
   if (loadPromises[url]) {
     return loadPromises[url]
   }
-  var loadPromise = new Promise((resolve, reject) => {
+  var loadPromise = new Promise(function (resolve, reject) {
     var scriptElement = document.createElement('script')
     scriptElement.src = url
     scriptElement.type = 'text/javascript'
@@ -21,7 +21,7 @@ function style (url) {
   if (loadPromises[url]) {
     return loadPromises[url]
   }
-  var loadPromise = new Promise((resolve, reject) => {
+  var loadPromise = new Promise(function (resolve, reject) {
     var styleElement = document.createElement('style')
     styleElement.href = url
     styleElement.type = 'text/css'
