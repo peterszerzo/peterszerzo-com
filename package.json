@@ -4,9 +4,6 @@
   "description": "Source code for my personal website.",
   "main": "index.js",
   "scripts": {
-    "copy": "cp -r ./src/images/* ./dist/ && cp ./dist/index.html ./dist/200.html",
-    "transform": "sed -i '' 's/js\/main/\/js\/main/g' ./dist/index.html && sed -i '' 's/css\/main/\/css\/main/g' ./dist/index.html",
-    "compilecss": "postcss ./src/styles.css --use postcss-cssnext --output ./src/styles.compiled.css",
     "watchcss": "postcss ./src/styles.css --use postcss-cssnext --output ./src/styles.compiled.css --watch",
     "lint": "./node_modules/.bin/stylelint ./src/styles.css && ./node_modules/.bin/standard --fix"
   },
