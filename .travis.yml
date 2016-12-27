@@ -1,0 +1,14 @@
+language: node_js
+node_js:
+  - "5.10.0"
+before_script:
+  - npm install -g create-elm-app@0.2.3 postcss postcss-cssnext
+script:
+  - npm run compilecss
+  - elm-app build
+  - npm run transform
+deploy:
+  skip_cleanup: true
+  provider: surge
+  project: ./dist/
+  domain: peterszerzo.com
