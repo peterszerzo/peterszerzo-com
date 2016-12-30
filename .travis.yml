@@ -2,7 +2,7 @@ language: node_js
 node_js:
   - "5.10.0"
 before_script:
-  - yarn global add create-elm-app@0.2.3 postcss postcss-cli postcss-cssnext
+  - npm install -g elm@0.18.0 create-elm-app@0.2.3 postcss@5.2.8 postcss-cli@2.6.0 postcss-cssnext@2.9.0
 script:
   - chmod +x prod.sh
   - ./prod.sh
