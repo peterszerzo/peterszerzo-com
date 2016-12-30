@@ -31,9 +31,10 @@ talkLinks =
 
 archiveLinks : List ( String, String )
 archiveLinks =
-    [ ( "Helicopters", "http://peterszerzo.github.io/helicopter-ride/" )
+    [ ( "Helicopters", "http://helicopter-ride.peterszerzo.com/" )
     , ( "Pendants", "https://www.youtube.com/watch?v=0bKI3VSdD1g" )
-    , ( "PBA", "http://peterszerzo.github.io/pba/" )
+    , ( "Rotary", "http://rotary-phone.peterszerzo.com/" )
+    , ( "PBA", "http://pba.peterszerzo.com/" )
     ]
 
 
