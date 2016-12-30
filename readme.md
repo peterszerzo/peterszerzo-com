@@ -1,16 +1,10 @@
 # peterszerzo.com
 
-A little web space for self-expression. A continuous front-end experiment, following the rigorous principles of JDD, or joy-driven development. Merrily made using [Elm](http://elm-lang.org/) and [Mapbox](https://www.mapbox.com/mapbox-gl-js/api/).
+[![Build Status](https://travis-ci.org/peterszerzo/peterszerzo.com.svg?branch=master)](https://travis-ci.org/peterszerzo/albatross)
+[![Standard - JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
+
+A little web space for self-expression. A continuous front-end experiment, following the rigorous principles of JDD, or joy-driven development. Merrily built with [Elm](http://elm-lang.org/).
 
 ## Running locally
 
-Install dependencies:
-
-`npm i -g create-elm-app`
-`yarn install`
-
-Run development server (things are still a bit manual to work around `create-elm-app`):
-
-`npm run copy`
-`npm run watchcss`
-`elm-app start`
+Install global dependencies as in `./travis.yml`. Then run `./dev.sh`.

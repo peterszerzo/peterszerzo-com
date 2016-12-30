@@ -5,18 +5,15 @@
   "main": "index.js",
   "scripts": {
     "watchcss": "postcss ./src/styles.css --use postcss-cssnext --output ./src/styles.compiled.css --watch",
-    "lint": "./node_modules/.bin/stylelint ./src/styles.css && ./node_modules/.bin/standard --fix",
-    "transform": "sed -i 's/js\/main/\/js\/main/g' ./dist/index.html && sed -i 's/css\/main/\/css\/main/g' ./dist/index.html"
+    "lint": "./node_modules/.bin/stylelint ./src/styles.css && ./node_modules/.bin/standard --fix"
   },
   "author": "Peter Szerzo <szerzo.peter@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "domready": "^1.0.8",
     "fastclick": "^1.0.6"
   },
   "devDependencies": {
     "standard": "^8.6.0",
-    "stylelint": "^7.6.0",
-    "surge": "^0.18.0"
+    "stylelint": "^7.6.0"
   }
 }
