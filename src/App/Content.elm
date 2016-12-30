@@ -16,6 +16,7 @@ mainLinks =
 projectLinks : List ( String, String )
 projectLinks =
     [ ( "Lettero", "https://lettero.co" )
+    , ( "Albatross", "http://albatross.peterszerzo.com" )
     , ( "Splyt Light", "http://splytlight.surge.sh" )
     , ( "CphRain", "http://cphrain.surge.sh" )
     ]

@@ -36,29 +36,33 @@ viewMainLink currentSlug className sublinks ( label, url ) =
         slug =
             String.dropLeft 1 url
     in
-        (if isExternalLink then
-            a
-         else
-            div
-        )
-            [ (classList
-                [ ( className ++ "__link", True )
-                , ( className ++ "__link--active", currentSlug == Just slug )
-                ]
-              )
-            , if isExternalLink then
-                (href url)
-              else
-                (onClick
-                    (ChangePath
-                        (if currentSlug == Just slug then
-                            ""
-                         else
-                            slug
-                        )
-                    )
+        a
+            ([ (classList
+                    [ ( className ++ "__link", True )
+                    , ( className ++ "__link--active", currentSlug == Just slug )
+                    ]
+               )
+             , href
+                (if isExternalLink then
+                    url
+                 else
+                    "javascript:void(0)"
                 )
-            ]
+             ]
+                ++ (if isExternalLink then
+                        []
+                    else
+                        [ onClick
+                            (ChangePath
+                                (if currentSlug == Just slug then
+                                    ""
+                                 else
+                                    slug
+                                )
+                            )
+                        ]
+                   )
+            )
             [ text label ]
 
 
