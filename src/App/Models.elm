@@ -52,9 +52,6 @@ init isNotificationDismissed route =
 standardPage : Model -> Maybe StandardPage
 standardPage model =
     case model.route of
-        Home ->
-            Nothing
-
         Projects ->
             SublinkPage Content.projectLinks |> Just
 
