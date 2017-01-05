@@ -72,7 +72,7 @@ You hit the magic switch. Let me balance out the somewhat conformist professiona
 
 I’m a great guy: caring, fun, passionate. That said, when I’m wrapped up in excessive anxiety or self-judgement (which is often), then I can be a bit too much. Ramble ramble ramble.
 
-I judge myself for spending money and I am afraid of gaining weight. I have a fear that one day, due to say world politics, I will have to return to my native Romania, a place I haven’t made peace with yet. German society freaks me out.
+I judge myself for spending money and I am afraid of gaining weight. I have a fear that one day, due to say world politics, I will have to return to my native Romania, a place I haven’t made peace with yet. The time I was locked up in Germany solely based on my citizenship seems to have left me with a bitterness that simply just won’t fade.
 
 When I was 6, I hit my brother on the back with my fist so hard I felt his entire ribcage resonate through mine. I regret it to this day. Thing is, while my adult brother can forgive me, his child version is just not around. And while we’re at my family: for each web project I launch, I write ‘Hi, Mom!’ in the console. Because my mother rocks!
 
