@@ -1,7 +1,7 @@
 require('./styles.compiled.css')
 var attachFastClick = require('fastclick')
-var app = require('./App')
+var startApp = require('./App')
 
 console.log('Hi, Mom!')
-attachFastClick.attach(document.body)
-app()
+attachFastClick.attach(global.document.body)
+startApp(document.getElementById('app'), global.localStorage)

@@ -2,35 +2,34 @@ var Elm = require('./Main.elm')
 
 var LOCAL_STORAGE_KEY = 'peterszerzo-com:notification-last-dismissed'
 
-function getTimeSinceNotificationLastDismissed () {
+function notificationLastDismissedFor (localStorage) {
   var now = new Date().getTime()
-  if (!window.localStorage) {
+  if (!localStorage) {
     return now
   }
-  var lastDismissedAt = Number(window.localStorage.getItem(LOCAL_STORAGE_KEY))
+  var lastDismissedAt = Number(localStorage.getItem(LOCAL_STORAGE_KEY))
   if (isNaN(lastDismissedAt)) {
     return now
   }
   return now - lastDismissedAt
 }
 
-function setNotificationLastDismissed () {
-  if (window.localStorage) {
-    window.localStorage.setItem(
+function setNotificationLastDismissed (localStorage) {
+  if (localStorage) {
+    localStorage.setItem(
       LOCAL_STORAGE_KEY,
       String(new Date().getTime())
     )
   }
 }
 
-module.exports = function startApp () {
+module.exports = function startApp (node, localStorage) {
   var elmApp
-  var node = document.getElementById('app')
-  var isNotificationRecentlyDismissed = getTimeSinceNotificationLastDismissed() < 2 * 24 * 3600 * 1000
+  var isNotificationRecentlyDismissed = notificationLastDismissedFor(localStorage) < 2 * 24 * 3600 * 1000
   window.requestAnimationFrame(function () {
     node.innerHTML = ''
     elmApp = Elm.Main.embed(node, isNotificationRecentlyDismissed)
-    if (window.localStorage) {
+    if (localStorage) {
       elmApp.ports.notificationDismissed.subscribe(setNotificationLastDismissed)
     }
   })

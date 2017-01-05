@@ -4,7 +4,6 @@ import Messages exposing (Msg(..))
 import Models exposing (Model, Mode(..))
 import Navigation exposing (..)
 import Ports
-import Router
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -18,13 +17,19 @@ update msg model =
                     else
                         Conventional
             in
-                { model | mode = newMode } ! []
+                ( { model | mode = newMode }
+                , Cmd.none
+                )
 
         DismissNotification ->
-            { model | isNotificationDismissed = True } ! [ Ports.notificationDismissed () ]
+            ( { model | isNotificationDismissed = True }
+            , Ports.notificationDismissed ()
+            )
 
         ToggleMobileNav ->
-            { model | isMobileNavActive = not model.isMobileNavActive } ! []
+            ( { model | isMobileNavActive = not model.isMobileNavActive }
+            , Cmd.none
+            )
 
         ChangePath newPath ->
             ( model
@@ -32,10 +37,13 @@ update msg model =
             )
 
         ChangeRoute newRoute ->
-            { model | route = newRoute } ! []
+            ( { model | route = newRoute }
+            , Cmd.none
+            )
 
         Tick time ->
-            { model
+            ( { model
                 | time = model.time + 1
-            }
-                ! []
+              }
+            , Cmd.none
+            )
