@@ -2,14 +2,16 @@ module Views.Main exposing (..)
 
 import Html exposing (Html, div, map)
 import Html.Attributes exposing (class, src, href)
-import Models exposing (Model, Mode(..), StandardPage(..), standardPage)
+import Models exposing (Model, Mode(..))
 import Router
 import Messages exposing (Msg(..))
 import Views.DesktopNav
 import Views.MobileNav
 import Views.TextBox
+import Views.ProjectBox
 import Views.Banner
 import Views.Notification
+import Content
 
 
 view : Model -> Html Msg
@@ -18,18 +20,25 @@ view model =
         currentSlug =
             Router.routeToSlug model.route
 
-        ( textbox, sublinks ) =
-            standardPage model
-                |> Maybe.map
-                    (\sp ->
-                        case sp of
-                            SublinkPage sublinks ->
-                                ( ( Nothing, Nothing ), Just sublinks )
+        content =
+            case model.route of
+                Router.Home ->
+                    div [] []
 
-                            StaticPage content1 content2 ->
-                                ( ( Just content1, content2 ), Nothing )
-                    )
-                |> Maybe.withDefault ( ( Nothing, Nothing ), Nothing )
+                Router.Projects ->
+                    Views.ProjectBox.view Content.projects
+
+                Router.Now ->
+                    Views.TextBox.view ( Content.now, Nothing ) model.mode
+
+                Router.About ->
+                    Views.TextBox.view ( Content.aboutConventional, Just Content.aboutReal ) model.mode
+
+                Router.Talks ->
+                    div [] []
+
+                Router.NotFound ->
+                    div [] []
     in
         div
             [ class "main"
@@ -39,8 +48,8 @@ view model =
                 ]
                 [ Views.Banner.view
                 ]
-            , Views.TextBox.view textbox model.mode
-            , Views.DesktopNav.view currentSlug sublinks
+            , content
+            , Views.DesktopNav.view currentSlug
             , Views.Notification.view model
-            , Views.MobileNav.view currentSlug model.isMobileNavActive sublinks
+            , Views.MobileNav.view currentSlug model.isMobileNavActive
             ]

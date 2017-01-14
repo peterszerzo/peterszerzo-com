@@ -8,8 +8,8 @@ import Views.Links exposing (viewMainLinks)
 import Views.Shapes.Falafel as Falafel
 
 
-view : Maybe String -> Bool -> Maybe (List ( String, String )) -> Html Msg
-view currentPath isMobileNavActive sublinks =
+view : Maybe String -> Bool -> Html Msg
+view currentPath isMobileNavActive =
     nav
         [ classList
             [ ( "mobile-nav", True )
@@ -31,7 +31,7 @@ view currentPath isMobileNavActive sublinks =
             [ div
                 [ class "mobile-nav__tab"
                 ]
-                [ viewMainLinks currentPath "mobile-main-links" sublinks
+                [ viewMainLinks currentPath "mobile-main-links"
                 ]
             ]
         ]

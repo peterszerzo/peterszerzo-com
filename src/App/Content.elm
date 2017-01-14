@@ -1,5 +1,7 @@
 module Content exposing (..)
 
+import Models
+
 
 mainLinks : List ( String, String )
 mainLinks =
@@ -12,16 +14,64 @@ mainLinks =
     ]
 
 
-projectLinks : List ( String, String )
-projectLinks =
-    [ ( "Lettero", "https://lettero.co" )
-    , ( "Albatross", "http://albatross.peterszerzo.com" )
-    , ( "Splyt Light", "http://splytlight.surge.sh" )
-    , ( "CphRain", "http://cphrain.surge.sh" )
-    , ( "Helicopters", "http://helicopter-ride.peterszerzo.com/" )
-    , ( "Pendants", "https://www.youtube.com/watch?v=0bKI3VSdD1g" )
-    , ( "Rotary", "http://rotary-phone.peterszerzo.com/" )
-    , ( "PBA", "http://pba.peterszerzo.com/" )
+projects : List Models.Project
+projects =
+    [ { id = "lettero"
+      , title = "Lettero"
+      , description = "Playground for the social wordnerd"
+      , url = "https://lettero.co"
+      , imageUrl = ""
+      , gifUrl = ""
+      }
+    , { id = "albatross"
+      , title = "Albatross"
+      , description = "Immersive sound diary"
+      , url = "http://albatross.peterszerzo.com"
+      , imageUrl = ""
+      , gifUrl = ""
+      }
+    , { id = "splytlight"
+      , title = "Splyt Light"
+      , description = "3d product interface"
+      , url = "http://splytlight.surge.sh"
+      , imageUrl = ""
+      , gifUrl = ""
+      }
+    , { id = "ripsaw"
+      , title = "ripsaw.js"
+      , description = "Interactive product design for the browser"
+      , url = "http://peterszerzo.github.io/ripsaw-js"
+      , imageUrl = ""
+      , gifUrl = ""
+      }
+    , { id = "pendants"
+      , title = "Pendants"
+      , description = "Jewelry experiments"
+      , url = ""
+      , imageUrl = ""
+      , gifUrl = ""
+      }
+    , { id = "rotary"
+      , title = "Rotary Phone"
+      , description = "First ever web app"
+      , url = "http://rotary-phone.peterszerzo.com/"
+      , imageUrl = ""
+      , gifUrl = ""
+      }
+    , { id = "helicopters"
+      , title = "Helicopter Ride"
+      , description = ""
+      , url = "http://helicopter-ride.peterszerzo.com/"
+      , imageUrl = ""
+      , gifUrl = ""
+      }
+    , { id = "pba"
+      , title = "Pascal Basketball Association"
+      , description = ""
+      , url = "http://pba.peterszerzo.com/"
+      , imageUrl = ""
+      , gifUrl = ""
+      }
     ]
 
 

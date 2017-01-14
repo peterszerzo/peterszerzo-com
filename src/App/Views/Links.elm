@@ -46,8 +46,8 @@ viewMainLink currentSlug className ( label, url ) =
             [ text label ]
 
 
-viewMainLinks : Maybe String -> String -> Maybe (List ( String, String )) -> Html Msg
-viewMainLinks currentPath className sublinks =
+viewMainLinks : Maybe String -> String -> Html Msg
+viewMainLinks currentPath className =
     div
         [ class className
         ]

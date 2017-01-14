@@ -2,7 +2,6 @@ module Models exposing (..)
 
 import Messages exposing (Msg)
 import Router exposing (Route(..))
-import Content
 
 
 type alias Flags =
@@ -20,20 +19,12 @@ type SwitchPosition
     | Right
 
 
-type alias SubLink =
-    ( String, String )
-
-
-type StandardPage
-    = SublinkPage (List ( String, String ))
-    | StaticPage String (Maybe String)
-
-
 type alias Project =
     { id : String
     , title : String
     , description : String
-    , thumbnailUrl : String
+    , url : String
+    , imageUrl : String
     , gifUrl : String
     }
 
@@ -52,26 +43,3 @@ init isNotificationDismissed route =
     ( Model route Conventional 0 False isNotificationDismissed
     , Cmd.none
     )
-
-
-
--- Helpers
-
-
-standardPage : Model -> Maybe StandardPage
-standardPage model =
-    case model.route of
-        Projects ->
-            SublinkPage Content.projectLinks |> Just
-
-        Talks ->
-            SublinkPage Content.talkLinks |> Just
-
-        Now ->
-            StaticPage Content.now Nothing |> Just
-
-        About ->
-            StaticPage Content.aboutConventional (Just Content.aboutReal) |> Just
-
-        _ ->
-            Nothing

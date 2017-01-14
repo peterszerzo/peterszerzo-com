@@ -31,17 +31,14 @@ viewContents c1 c2 =
         ]
 
 
-viewNav : Models.Mode -> Html Msg
-viewNav mode =
+viewNav : Models.Mode -> Bool -> Html Msg
+viewNav mode isSwitchHidden =
     let
         switchModel =
             if mode == Conventional then
                 Left
             else
                 Right
-
-        isSwitchHidden =
-            False
     in
         div
             [ class "text-box-nav"
@@ -63,18 +60,17 @@ viewNav mode =
             ]
 
 
-view : ( Maybe String, Maybe String ) -> Models.Mode -> Html Msg
+view : ( String, Maybe String ) -> Models.Mode -> Html Msg
 view ( c1, c2 ) mode =
     div
         [ classList
             [ ( "text-box", True )
-            , ( "text-box--hidden", (c1 == Nothing) )
-            , ( "text-box--primary-displayed", mode == Conventional )
-            , ( "text-box--secondary-displayed", mode == Real && (c1 /= Nothing) )
+            , ( "text-box--primary-displayed", mode == Conventional || c2 == Nothing )
+            , ( "text-box--secondary-displayed", mode == Real && c2 /= Nothing )
             ]
         ]
-        [ viewNav mode
+        [ viewNav mode (c2 == Nothing)
         , viewContents
-            (c1 |> Maybe.withDefault "")
+            c1
             (c2 |> Maybe.withDefault "")
         ]
