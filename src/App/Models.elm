@@ -29,6 +29,15 @@ type StandardPage
     | StaticPage String (Maybe String)
 
 
+type alias Project =
+    { id : String
+    , title : String
+    , description : String
+    , thumbnailUrl : String
+    , gifUrl : String
+    }
+
+
 type alias Model =
     { route : Route
     , mode : Mode
@@ -63,9 +72,6 @@ standardPage model =
 
         About ->
             StaticPage Content.aboutConventional (Just Content.aboutReal) |> Just
-
-        Archive ->
-            SublinkPage Content.archiveLinks |> Just
 
         _ ->
             Nothing

@@ -2,10 +2,8 @@ module Views.DesktopNav exposing (..)
 
 import Html exposing (Html, nav)
 import Html.Attributes exposing (classList, attribute)
-import Models
 import Messages exposing (Msg)
-import Views.Links exposing (viewMainLinks, viewSublinks)
-import Models
+import Views.Links exposing (viewMainLinks)
 
 
 view : Maybe String -> Maybe (List ( String, String )) -> Html Msg
@@ -18,5 +16,4 @@ view currentPath sublinks =
             ]
         ]
         [ viewMainLinks currentPath "main-links" sublinks
-        , viewSublinks currentPath "link-box" sublinks
         ]

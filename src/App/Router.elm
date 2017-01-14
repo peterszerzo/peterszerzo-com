@@ -10,7 +10,6 @@ type Route
     | Now
     | About
     | Talks
-    | Archive
     | NotFound
 
 
@@ -21,7 +20,6 @@ simpleRouteDefs =
     , ( Now, "now" )
     , ( About, "about" )
     , ( Talks, "talks" )
-    , ( Archive, "archive" )
     ]
 
 

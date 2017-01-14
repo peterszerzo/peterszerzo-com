@@ -3,13 +3,12 @@ module Content exposing (..)
 
 mainLinks : List ( String, String )
 mainLinks =
-    [ ( "Recent works", "/projects" )
+    [ ( "Works", "/projects" )
     , ( "Blog", "http://blog.peterszerzo.com" )
     , ( "CV", "https://represent.io/peterszerzo" )
     , ( "Talks", "/talks" )
     , ( "About", "/about" )
     , ( "Now", "/now" )
-    , ( "Archive", "/archive" )
     ]
 
 
@@ -19,6 +18,10 @@ projectLinks =
     , ( "Albatross", "http://albatross.peterszerzo.com" )
     , ( "Splyt Light", "http://splytlight.surge.sh" )
     , ( "CphRain", "http://cphrain.surge.sh" )
+    , ( "Helicopters", "http://helicopter-ride.peterszerzo.com/" )
+    , ( "Pendants", "https://www.youtube.com/watch?v=0bKI3VSdD1g" )
+    , ( "Rotary", "http://rotary-phone.peterszerzo.com/" )
+    , ( "PBA", "http://pba.peterszerzo.com/" )
     ]
 
 
@@ -26,15 +29,6 @@ talkLinks : List ( String, String )
 talkLinks =
     [ ( "CSS@fireplace", "https://pickled-plugins.github.io/css-by-the-fireplace/" )
     , ( "Elm+friends", "https://pickled-plugins.github.io/practical-elm-and-friends/" )
-    ]
-
-
-archiveLinks : List ( String, String )
-archiveLinks =
-    [ ( "Helicopters", "http://helicopter-ride.peterszerzo.com/" )
-    , ( "Pendants", "https://www.youtube.com/watch?v=0bKI3VSdD1g" )
-    , ( "Rotary", "http://rotary-phone.peterszerzo.com/" )
-    , ( "PBA", "http://pba.peterszerzo.com/" )
     ]
 
 
