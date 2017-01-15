@@ -5,8 +5,7 @@ import Html.Attributes exposing (class, src, href)
 import Models exposing (Model, Mode(..))
 import Router
 import Messages exposing (Msg(..))
-import Views.DesktopNav
-import Views.MobileNav
+import Views.Nav
 import Views.TextBox
 import Views.ProjectBox
 import Views.Banner
@@ -17,9 +16,6 @@ import Content
 view : Model -> Html Msg
 view model =
     let
-        currentSlug =
-            Router.routeToSlug model.route
-
         content =
             case model.route of
                 Router.Home ->
@@ -49,7 +45,6 @@ view model =
                 [ Views.Banner.view
                 ]
             , content
-            , Views.DesktopNav.view currentSlug
+            , Views.Nav.view model
             , Views.Notification.view model
-            , Views.MobileNav.view currentSlug model.isMobileNavActive
             ]

@@ -2,11 +2,9 @@ module Views.TextBox exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Html.Events exposing (..)
 import Markdown exposing (toHtml)
 import Messages exposing (..)
 import Models exposing (Mode(..))
-import Views.Shapes.Arrow as Arrow
 import Views.Switch
 import Models exposing (SwitchPosition(..))
 
@@ -41,22 +39,12 @@ viewNav mode isSwitchHidden =
                 Right
     in
         div
-            [ class "text-box-nav"
+            [ classList
+                [ ( "text-box__switch", True )
+                , ( "text-box__switch--hidden", isSwitchHidden )
+                ]
             ]
-            [ div
-                [ class "text-box-nav__home-link"
-                , onClick (ChangePath "")
-                ]
-                [ Arrow.view
-                ]
-            , div
-                [ classList
-                    [ ( "text-box-nav__switch", True )
-                    , ( "text-box-nav__switch--hidden", isSwitchHidden )
-                    ]
-                ]
-                [ Views.Switch.view switchModel ToggleMode
-                ]
+            [ Views.Switch.view switchModel ToggleMode
             ]
 
 

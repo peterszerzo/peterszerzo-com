@@ -33,9 +33,4 @@ all =
                         )
                         1
             ]
-        , describe "standardPage"
-            [ test "homepage is standard page" <|
-                \() ->
-                    Expect.equal (testInit |> Tuple.first |> Models.standardPage) Nothing
-            ]
         ]

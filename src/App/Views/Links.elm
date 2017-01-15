@@ -18,8 +18,8 @@ viewMainLink currentSlug className ( label, url ) =
     in
         a
             ([ (classList
-                    [ ( className ++ "__link", True )
-                    , ( className ++ "__link--active", currentSlug == Just slug )
+                    [ ( className, True )
+                    , ( className ++ "--active", currentSlug == Just slug )
                     ]
                )
              , href
@@ -46,9 +46,9 @@ viewMainLink currentSlug className ( label, url ) =
             [ text label ]
 
 
-viewMainLinks : Maybe String -> String -> Html Msg
-viewMainLinks currentPath className =
+viewMainLinks : Maybe String -> String -> String -> Html Msg
+viewMainLinks currentPath containerClassName linkClassName =
     div
-        [ class className
+        [ class containerClassName
         ]
-        (List.map (viewMainLink currentPath className) Content.mainLinks)
+        (List.map (viewMainLink currentPath linkClassName) Content.mainLinks)

@@ -17,6 +17,5 @@ deploy:
   provider: surge
   project: ./dist/
   domain: peterszerzo.com
-branches:
-  only:
-  - master
+notifications:
+  email: false
