@@ -6,7 +6,6 @@ import Router exposing (Route)
 
 type Msg
     = ToggleMode
-    | ToggleMobileNav
     | ChangePath String
     | Tick Time
     | ChangeRoute Route

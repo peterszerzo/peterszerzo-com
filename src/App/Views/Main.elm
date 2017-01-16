@@ -5,11 +5,12 @@ import Html.Attributes exposing (class, src, href)
 import Models exposing (Model, Mode(..))
 import Router
 import Messages exposing (Msg(..))
-import Views.Nav
+import Views.Header
 import Views.TextBox
 import Views.ProjectBox
 import Views.Banner
 import Views.Notification
+import Views.Menu
 import Content
 
 
@@ -30,6 +31,9 @@ view model =
                 Router.About ->
                     Views.TextBox.view ( Content.aboutConventional, Just Content.aboutReal ) model.mode
 
+                Router.Menu ->
+                    Views.Menu.view model
+
                 Router.Talks ->
                     div [] []
 
@@ -45,6 +49,6 @@ view model =
                 [ Views.Banner.view
                 ]
             , content
-            , Views.Nav.view model
+            , Views.Header.view model
             , Views.Notification.view model
             ]

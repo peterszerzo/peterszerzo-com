@@ -8,6 +8,7 @@ type Route
     = Home
     | Projects
     | Now
+    | Menu
     | About
     | Talks
     | NotFound
@@ -18,6 +19,7 @@ simpleRouteDefs =
     [ ( Home, "" )
     , ( Projects, "projects" )
     , ( Now, "now" )
+    , ( Menu, "menu" )
     , ( About, "about" )
     , ( Talks, "talks" )
     ]

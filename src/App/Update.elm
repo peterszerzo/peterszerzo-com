@@ -26,11 +26,6 @@ update msg model =
             , Ports.notificationDismissed ()
             )
 
-        ToggleMobileNav ->
-            ( { model | isMobileNavActive = not model.isMobileNavActive }
-            , Cmd.none
-            )
-
         ChangePath newPath ->
             ( model
             , Navigation.newUrl ("/" ++ newPath)

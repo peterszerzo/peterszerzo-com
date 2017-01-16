@@ -33,13 +33,12 @@ type alias Model =
     { route : Route
     , mode : Mode
     , time : Float
-    , isMobileNavActive : Bool
     , isNotificationDismissed : Bool
     }
 
 
 init : Flags -> Route -> ( Model, Cmd Msg )
 init isNotificationDismissed route =
-    ( Model route Conventional 0 False isNotificationDismissed
+    ( Model route Conventional 0 isNotificationDismissed
     , Cmd.none
     )
