@@ -3,9 +3,10 @@
   --faint-blue: color(#15487F a(30%));
   --white: #FFFFFF;
   --transparent-white: #FFFFFF00;
+  --slightly-transparent-white: color(var(--white) a(90%));
   --black: #222222;
   --red: #CC370A;
-  --mustard: #F2B800;
+  --mustard: #DBA700;
   --shadow-color: #33333333;
 
   --pt-sans: 'PT Sans', sans-serif;
@@ -14,10 +15,6 @@
   --switch-frame-width: 26px;
   --switch-frame-height: 12px;
   --switch-button-size: 12px;
-
-  --notification-height: 48px;
-  --notification-top: 80px;
-  --notification-left: 70px;
 
   --logo-size: 180px;
 
@@ -265,8 +262,8 @@ h3 {
   border-bottom: 1px solid #CCCCCC;
 
   @media (--desktop) {
-    background: #FFFFFF33;
-    box-shadow: 0 0 18px #FFFFFF33;
+    background: var(--white);
+    box-shadow: 0 0 18px var(--shadow-color);
   }
 }
 
@@ -283,21 +280,39 @@ h3 {
   }
 }
 
-.header__falafel {
+.header__icon {
+  cursor: pointer;
   width: 60px;
   height: 60px;
-  padding: 20px;
-  position: fixed;
+  padding: 18px;
+  position: absolute;
   top: 0;
-  right: 0;
-  fill: var(--black);
-  z-index: var(--z-mobile-nav);
+  fill: var(--blue);
+  transition: opacity .3s;
+  opacity: .7;
 
-  @nest .nav--discrete & {
+  @nest .header--discrete & {
     fill: var(--white);
   }
 
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.header__falafel {
+  right: 0;
+  z-index: var(--z-mobile-nav);
+
   @media (--desktop) {
+    display: none;
+  }
+}
+
+.header__logo {
+  left: 0;
+
+  @nest .header--discrete & {
     display: none;
   }
 }
@@ -316,7 +331,7 @@ h3 {
 }
 
 .header__desktop-link {
-  color: var(--black);
+  color: var(--blue);
   display: inline-block;
   cursor: pointer;
   position: relative;
@@ -327,7 +342,7 @@ h3 {
   margin: 0 20px;
   transition: opacity .3s;
 
-  @nest .nav--discrete & {
+  @nest .header--discrete & {
     color: var(--white);
   }
 }
@@ -364,19 +379,26 @@ h3 {
 }
 
 
-/* MobileNav */
+/* Menu */
 
 .menu {
-  margin: auto;
-}
-
-.menu {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  background: var(--white);
   transform: translate3d(0, 0, 0);
   transition: transform .3s;
-  display: none;
   margin: auto;
-  width: 100%;
   text-align: center;
+}
+
+.menu__links {
+  display: block;
+  position: relative;
+  margin: 0;
 }
 
 .menu__link {
@@ -384,6 +406,8 @@ h3 {
   display: block;
   color: var(--blue);
   padding: 10px 0;
+  text-decoration: none;
+  font-weight: 300;
   text-transform: uppercase;
   letter-spacing: .2rem;
   font-size: 1.5rem;
@@ -396,10 +420,10 @@ h3 {
   position: fixed;
   background-color: var(--mustard);
   box-shadow: 0 0 10px 0 var(--shadow-color);
-  top: var(--notification-top);
-  width: calc(100% - calc(2 * var(--notification-left)));
-  height: var(--notification-height);
-  left: var(--notification-left);
+  bottom: 80px;
+  width: 280px;
+  height: auto;
+  right: 40px;
   border-radius: 3px;
   z-index: var(--z-hidden);
   opacity: 0;
@@ -416,8 +440,8 @@ h3 {
 }
 
 .notification__body {
-  padding: 0 calc(var(--notification-height) - 20px);
-  text-align: center;
+  padding: 20px 60px 20px 20px;
+  text-align: left;
   margin: auto;
   color: var(--white);
   font-size: 1rem;
@@ -438,9 +462,9 @@ h3 {
 }
 
 .notification__close {
-  width: var(--notification-height);
-  height: var(--notification-height);
-  padding: calc(var(--notification-height)/2 - var(--icon-size)/2);
+  width: 40px;
+  height: 40px;
+  padding: 10px;
   display: inline-block;
   position: absolute;
   top: 0;
@@ -525,7 +549,7 @@ h3 {
 
 .project-box__content {
   display: flex;
-  align-items: center;
+  align-items: top;
   justify-content: center;
   flex-wrap: wrap;
   width: 100%;
@@ -535,16 +559,24 @@ h3 {
 }
 
 .project {
+  flex: 1 1 240px;
   margin: 30px;
   border-radius: 8px;
-  padding: 30px;
-  max-width: 400px;
+  width: 33%;
+
+  & h2 {
+    margin: 1rem 0 0;
+  }
+
+  & p {
+    margin-top: 0;
+  }
 }
 
 .project__image {
-  width: 340px;
-  height: 340px;
-  border-radius: 4px;
+  width: 100%;
+  height: 280px;
+  background-color: #00000011;
   background-size: cover;
   background-repeat: no-repeat;
 }

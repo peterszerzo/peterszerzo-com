@@ -1,7 +1,7 @@
 module Views.Menu exposing (..)
 
 import Html exposing (Html, nav, div)
-import Html.Attributes exposing (classList, attribute, class)
+import Html.Attributes exposing (attribute, class)
 import Models exposing (Model)
 import Messages exposing (Msg)
 import Views.Links exposing (viewMainLinks)
@@ -15,9 +15,7 @@ view model =
             Router.routeToSlug model.route
     in
         div
-            [ classList
-                [ ( "menu", True )
-                ]
+            [ class "menu"
             ]
-            [ viewMainLinks currentPath "menu" "menu__link"
+            [ viewMainLinks currentPath "menu__links" "menu__link"
             ]

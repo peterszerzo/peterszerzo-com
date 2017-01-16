@@ -6,6 +6,7 @@ import Html.Events exposing (onClick)
 import Messages exposing (Msg(..))
 import Views.Links exposing (viewMainLinks)
 import Views.Shapes.Falafel as Falafel
+import Views.Shapes.SmallLogo as SmallLogo
 import Models exposing (Model)
 import Router
 
@@ -25,10 +26,11 @@ view model =
                 , ( "header--discrete", isDiscrete )
                 ]
             ]
-            [ viewMainLinks currentPath "header__desktop-links" "header__desktop-link"
+            [ div [ class "header__icon header__logo", onClick (ChangePath "") ] [ SmallLogo.view ]
+            , viewMainLinks currentPath "header__desktop-links" "header__desktop-link"
             , div
-                [ class "header__falafel"
-                , onClick (ChangePath "/menu")
+                [ class "header__icon header__falafel"
+                , onClick (ChangePath "menu")
                 ]
                 [ Falafel.view True
                 ]

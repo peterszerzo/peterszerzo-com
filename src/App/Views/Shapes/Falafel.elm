@@ -9,10 +9,10 @@ view : Bool -> Html a
 view showAll =
     let
         height_ =
-            8
+            6
 
         spacing =
-            24
+            18
 
         startY =
             50 - spacing - 1.5 * height_
@@ -29,7 +29,7 @@ view showAll =
                          else
                             "0"
                         )
-                    , rx "4"
+                    , rx "3"
                     ]
                     []
                 , rect
@@ -37,7 +37,7 @@ view showAll =
                     , y (toString (startY + height_ + spacing))
                     , width "100"
                     , height (toString height_)
-                    , rx "4"
+                    , rx "3"
                     ]
                     []
                 , rect
@@ -50,7 +50,7 @@ view showAll =
                          else
                             "0"
                         )
-                    , rx "4"
+                    , rx "3"
                     ]
                     []
                 ]
