@@ -17,20 +17,32 @@ view model =
         currentPath =
             Router.routeToSlug model.route
 
-        isDiscrete =
+        isHome =
             model.route == Router.Home
     in
         header
             [ classList
                 [ ( "header", True )
-                , ( "header--discrete", isDiscrete )
+                , ( "header--discrete", isHome )
                 ]
             ]
-            [ div [ class "header__icon header__logo", onClick (ChangePath "") ] [ SmallLogo.view ]
+            [ div
+                [ class "header__icon header__logo"
+                , onClick
+                    (ChangePath "")
+                ]
+                [ SmallLogo.view ]
             , viewMainLinks currentPath "header__desktop-links" "header__desktop-link"
             , div
                 [ class "header__icon header__falafel"
-                , onClick (ChangePath "menu")
+                , onClick
+                    (ChangePath
+                        (if model.route == Router.Menu then
+                            ""
+                         else
+                            "menu"
+                        )
+                    )
                 ]
                 [ Falafel.view True
                 ]

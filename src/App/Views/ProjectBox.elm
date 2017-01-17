@@ -1,14 +1,14 @@
 module Views.ProjectBox exposing (..)
 
-import Html exposing (Html, text, div, h2, p, img)
-import Html.Attributes exposing (class, src, alt, style)
+import Html exposing (Html, text, div, h2, p, img, a)
+import Html.Attributes exposing (class, src, alt, style, href)
 import Messages exposing (Msg)
 import Models
 
 
 viewProject : Models.Project -> Html Msg
 viewProject project =
-    div [ class "project" ]
+    a [ class "project", href project.url ]
         [ div [ class "project__image", style [ ( "background-image", "url(" ++ project.imageUrl ++ ")" ) ] ]
             []
         , h2 [] [ text project.title ]

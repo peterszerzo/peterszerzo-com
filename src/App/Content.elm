@@ -5,7 +5,7 @@ import Models
 
 mainLinks : List ( String, String )
 mainLinks =
-    [ ( "Works", "/projects" )
+    [ ( "Projects", "/projects" )
     , ( "Blog", "http://blog.peterszerzo.com" )
     , ( "CV", "https://represent.io/peterszerzo" )
     , ( "Talks", "/talks" )
@@ -75,10 +75,22 @@ projects =
     ]
 
 
-talkLinks : List ( String, String )
-talkLinks =
-    [ ( "CSS@fireplace", "https://pickled-plugins.github.io/css-by-the-fireplace/" )
-    , ( "Elm+friends", "https://pickled-plugins.github.io/practical-elm-and-friends/" )
+talks : List Models.Project
+talks =
+    [ { id = "cssfire"
+      , title = "CSS at the fireplace"
+      , description = "Copenhagen Frontenders meetup talk"
+      , url = "https://lettero.co"
+      , imageUrl = "https://peterszerzo.github.io/css-by-the-fireplace/"
+      , gifUrl = ""
+      }
+    , { id = "practicalelm"
+      , title = "Practical Elm. And friends"
+      , description = "Copenhagen Frontenders meetup talk"
+      , url = "https://peterszerzo.github.io/practical-elm-and-friends/"
+      , imageUrl = "http://stuff.peterszerzo.com/img/projects/albatross.png"
+      , gifUrl = ""
+      }
     ]
 
 
@@ -143,4 +155,4 @@ Doing more yoga, taking more frequent and longer walks. Eating more pastries.
 
 notification : String
 notification =
-    "Your life is a story. [Make it a good one](https://www.shortoftheweek.com/2014/12/10/the-moped-diaries/)"
+    "Levi, your life is a story. [Make it a good one](https://www.shortoftheweek.com/2014/12/10/the-moped-diaries/)"

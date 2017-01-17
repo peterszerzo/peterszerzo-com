@@ -23,12 +23,7 @@ view showAll =
                     [ x "0"
                     , y (toString startY)
                     , width "100"
-                    , height
-                        (if showAll then
-                            (toString height_)
-                         else
-                            "0"
-                        )
+                    , height (toString height_)
                     , rx "3"
                     ]
                     []
@@ -44,12 +39,7 @@ view showAll =
                     [ x "0"
                     , y (toString (startY + 2 * height_ + 2 * spacing))
                     , width "100"
-                    , height
-                        (if showAll then
-                            (toString height_)
-                         else
-                            "0"
-                        )
+                    , height (toString height_)
                     , rx "3"
                     ]
                     []

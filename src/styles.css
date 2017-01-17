@@ -3,7 +3,7 @@
   --faint-blue: color(#15487F a(30%));
   --white: #FFFFFF;
   --transparent-white: #FFFFFF00;
-  --slightly-transparent-white: color(var(--white) a(90%));
+  --slightly-transparent-white: color(var(--white) a(95%));
   --black: #222222;
   --red: #CC370A;
   --mustard: #DBA700;
@@ -259,11 +259,10 @@ h3 {
   top: 0;
   left: 0;
   z-index: var(--z-nav);
-  border-bottom: 1px solid #CCCCCC;
 
   @media (--desktop) {
     background: var(--white);
-    box-shadow: 0 0 18px var(--shadow-color);
+    box-shadow: 0 0 12px var(--shadow-color);
   }
 }
 
@@ -387,18 +386,19 @@ h3 {
   height: 100%;
   top: 0;
   left: 0;
-  display: flex;
-  background: var(--white);
+  background: var(--slightly-transparent-white);
   transform: translate3d(0, 0, 0);
   transition: transform .3s;
-  margin: auto;
-  text-align: center;
 }
 
 .menu__links {
   display: block;
-  position: relative;
-  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  height: auto;
+  text-align: center;
 }
 
 .menu__link {
@@ -408,7 +408,6 @@ h3 {
   padding: 10px 0;
   text-decoration: none;
   font-weight: 300;
-  text-transform: uppercase;
   letter-spacing: .2rem;
   font-size: 1.5rem;
 }
@@ -554,15 +553,18 @@ h3 {
   flex-wrap: wrap;
   width: 100%;
   height: 100%;
-  overflow: auto;
-  padding: 60px;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  padding: 80px 40px 60px;
 }
 
 .project {
-  flex: 1 1 240px;
+  flex: 1 0 320px;
   margin: 30px;
   border-radius: 8px;
-  width: 33%;
+  width: 100%;
+  text-decoration: none;
+  color: currentColor;
 
   & h2 {
     margin: 1rem 0 0;
@@ -575,10 +577,11 @@ h3 {
 
 .project__image {
   width: 100%;
-  height: 280px;
+  padding-top: 75%;
   background-color: #00000011;
   background-size: cover;
   background-repeat: no-repeat;
+  background-position: 50% 50%;
 }
 
 
