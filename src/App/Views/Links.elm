@@ -33,13 +33,7 @@ viewMainLink currentSlug className ( label, url ) =
                         []
                     else
                         [ onClick
-                            (ChangePath
-                                (if currentSlug == Just slug then
-                                    ""
-                                 else
-                                    slug
-                                )
-                            )
+                            (ChangePath slug)
                         ]
                    )
             )
