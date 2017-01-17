@@ -36,6 +36,11 @@ update msg model =
             , Cmd.none
             )
 
+        Resize window ->
+            ( { model | window = window }
+            , Cmd.none
+            )
+
         Tick time ->
             ( { model
                 | time = model.time + 1

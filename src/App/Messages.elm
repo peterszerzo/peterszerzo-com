@@ -2,6 +2,7 @@ module Messages exposing (..)
 
 import Time exposing (Time)
 import Router exposing (Route)
+import Window
 
 
 type Msg
@@ -10,3 +11,4 @@ type Msg
     | Tick Time
     | ChangeRoute Route
     | DismissNotification
+    | Resize Window.Size

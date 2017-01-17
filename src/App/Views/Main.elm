@@ -11,6 +11,7 @@ import Views.ProjectBox
 import Views.Banner
 import Views.Notification
 import Views.Menu
+import Views.Background
 import Content
 
 
@@ -49,6 +50,7 @@ view model =
                 [ Views.Banner.view
                 ]
             , content
+            , Views.Background.view model
             , Views.Header.view model
             , Views.Notification.view model
             ]
