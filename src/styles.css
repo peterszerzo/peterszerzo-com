@@ -23,8 +23,8 @@
   --z-hidden: -1;
   --z-notification: 12;
   --z-text-box: 11;
-  --z-mobile-nav: 20;
-  --z-nav: 15;
+  --z-menu: 14;
+  --z-header: 15;
   --z-bg: 1;
   --z-banner: 10;
 
@@ -44,6 +44,16 @@
 
   to {
     opacity: 1;
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translate3d(-5px, 3px, 0);
+  }
+
+  100% {
+    transform: translate3d(5px, -3px, 0);
   }
 }
 
@@ -109,6 +119,7 @@ h3 {
   top: 0;
   left: 0;
   z-index: var(--z-bg);
+  animation: float 10s ease-in-out infinite alternate forwards;
 }
 
 
@@ -269,7 +280,8 @@ h3 {
   transition: all .3s;
   top: 0;
   left: 0;
-  z-index: var(--z-nav);
+  color: var(--black);
+  z-index: var(--z-header);
 
   @media (--desktop) {
     background: var(--white);
@@ -281,8 +293,10 @@ h3 {
   border: none;
   background: transparent;
   transition: none;
+  color: var(--white);
 
   @media (--desktop) {
+    color: var(--black);
     top: auto;
     bottom: 0;
     background: none;
@@ -298,13 +312,9 @@ h3 {
   padding: 18px;
   position: absolute;
   top: 0;
-  fill: var(--blue);
+  fill: currentColor;
   transition: opacity .3s;
   opacity: .7;
-
-  @nest .header--discrete & {
-    fill: var(--white);
-  }
 
   &:hover {
     opacity: 1;
@@ -313,7 +323,6 @@ h3 {
 
 .header__falafel {
   right: 0;
-  z-index: var(--z-mobile-nav);
 
   @media (--desktop) {
     display: none;
@@ -334,7 +343,6 @@ h3 {
   margin: 0;
   padding-top: 20px;
   text-align: center;
-  color: var(--white);
 
   @media (--desktop) {
     display: block;
@@ -342,11 +350,11 @@ h3 {
 }
 
 .header__desktop-link {
-  color: var(--blue);
+  color: currentColor;
   display: inline-block;
   cursor: pointer;
   position: relative;
-  opacity: .7;
+  opacity: .5;
   font-size: 1rem;
   letter-spacing: .05rem;
   font-kerning: normal;
@@ -362,7 +370,6 @@ h3 {
 .header__desktop-link--active {
   opacity: 1;
   transition: opacity .3s;
-  border-bottom: 1px solid currentColor;
 }
 
 
@@ -401,6 +408,7 @@ h3 {
   background: var(--slightly-transparent-white);
   transform: translate3d(0, 0, 0);
   transition: transform .3s;
+  z-index: var(--z-menu);
 }
 
 .menu__links {

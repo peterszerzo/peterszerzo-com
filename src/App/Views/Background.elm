@@ -37,15 +37,30 @@ polygons scale =
 view : Model -> Html Msg
 view model =
     let
-        size =
-            max model.window.width model.window.height
+        expand =
+            50
 
-        offset =
-            (toFloat (model.window.width - model.window.height)) / 2
+        size =
+            (max model.window.width model.window.height) + 2 * expand
+
+        top =
+            (toFloat (size - model.window.height)) / 2
+
+        left =
+            (toFloat (size - model.window.width)) / 2
+
+        isTop =
+            model.window.width > model.window.height
 
         scale =
             (toFloat size) / 200 |> Debug.log "scale"
     in
-        div [ class "bg", style [ ( "top", "-" ++ (toString offset) ++ "px" ) ] ]
+        div
+            [ class "bg"
+            , style
+                [ ( "top", "-" ++ (toString top) ++ "px" )
+                , ( "left", "-" ++ (toString left) ++ "px" )
+                ]
+            ]
             [ Element.toHtml (collage size size (polygons scale))
             ]
