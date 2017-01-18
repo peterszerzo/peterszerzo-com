@@ -25,6 +25,8 @@
   --z-text-box: 11;
   --z-mobile-nav: 20;
   --z-nav: 15;
+  --z-bg: 1;
+  --z-banner: 10;
 
   --standard-text: {
     font-size: 1rem;
@@ -106,6 +108,7 @@ h3 {
   position: absolute;
   top: 0;
   left: 0;
+  z-index: var(--z-bg);
 }
 
 
@@ -197,6 +200,7 @@ h3 {
   position: relative;
   text-align: center;
   color: var(--white);
+  z-index: var(--z-banner);
 
   & h1 {
     margin: 20px 0 18px;
