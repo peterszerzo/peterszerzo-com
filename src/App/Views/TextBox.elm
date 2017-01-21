@@ -2,11 +2,9 @@ module Views.TextBox exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Html.Events exposing (..)
 import Markdown exposing (toHtml)
 import Messages exposing (..)
 import Models exposing (Mode(..))
-import Views.Shapes.Arrow as Arrow
 import Views.Switch
 import Models exposing (SwitchPosition(..))
 
@@ -31,50 +29,36 @@ viewContents c1 c2 =
         ]
 
 
-viewNav : Models.Mode -> Html Msg
-viewNav mode =
+viewNav : Models.Mode -> Bool -> Html Msg
+viewNav mode isSwitchHidden =
     let
         switchModel =
             if mode == Conventional then
                 Left
             else
                 Right
-
-        isSwitchHidden =
-            False
     in
         div
-            [ class "text-box-nav"
+            [ classList
+                [ ( "text-box__switch", True )
+                , ( "text-box__switch--hidden", isSwitchHidden )
+                ]
             ]
-            [ div
-                [ class "text-box-nav__home-link"
-                , onClick (ChangePath "")
-                ]
-                [ Arrow.view
-                ]
-            , div
-                [ classList
-                    [ ( "text-box-nav__switch", True )
-                    , ( "text-box-nav__switch--hidden", isSwitchHidden )
-                    ]
-                ]
-                [ Views.Switch.view switchModel ToggleMode
-                ]
+            [ Views.Switch.view switchModel ToggleMode
             ]
 
 
-view : ( Maybe String, Maybe String ) -> Models.Mode -> Html Msg
+view : ( String, Maybe String ) -> Models.Mode -> Html Msg
 view ( c1, c2 ) mode =
     div
         [ classList
             [ ( "text-box", True )
-            , ( "text-box--hidden", (c1 == Nothing) )
-            , ( "text-box--primary-displayed", mode == Conventional )
-            , ( "text-box--secondary-displayed", mode == Real && (c1 /= Nothing) )
+            , ( "text-box--primary-displayed", mode == Conventional || c2 == Nothing )
+            , ( "text-box--secondary-displayed", mode == Real && c2 /= Nothing )
             ]
         ]
-        [ viewNav mode
+        [ viewNav mode (c2 == Nothing)
         , viewContents
-            (c1 |> Maybe.withDefault "")
+            c1
             (c2 |> Maybe.withDefault "")
         ]

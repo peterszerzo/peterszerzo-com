@@ -8,9 +8,9 @@ type Route
     = Home
     | Projects
     | Now
+    | Menu
     | About
     | Talks
-    | Archive
     | NotFound
 
 
@@ -19,9 +19,9 @@ simpleRouteDefs =
     [ ( Home, "" )
     , ( Projects, "projects" )
     , ( Now, "now" )
+    , ( Menu, "menu" )
     , ( About, "about" )
     , ( Talks, "talks" )
-    , ( Archive, "archive" )
     ]
 
 

@@ -2,34 +2,44 @@ module Views.Main exposing (..)
 
 import Html exposing (Html, div, map)
 import Html.Attributes exposing (class, src, href)
-import Models exposing (Model, Mode(..), StandardPage(..), standardPage)
+import Models exposing (Model, Mode(..))
 import Router
 import Messages exposing (Msg(..))
-import Views.DesktopNav
-import Views.MobileNav
+import Views.Header
 import Views.TextBox
+import Views.ProjectBox
 import Views.Banner
 import Views.Notification
+import Views.Menu
+import Views.Background
+import Content
 
 
 view : Model -> Html Msg
 view model =
     let
-        currentSlug =
-            Router.routeToSlug model.route
+        content =
+            case model.route of
+                Router.Home ->
+                    div [] []
 
-        ( textbox, sublinks ) =
-            standardPage model
-                |> Maybe.map
-                    (\sp ->
-                        case sp of
-                            SublinkPage sublinks ->
-                                ( ( Nothing, Nothing ), Just sublinks )
+                Router.Projects ->
+                    Views.ProjectBox.view Content.projects
 
-                            StaticPage content1 content2 ->
-                                ( ( Just content1, content2 ), Nothing )
-                    )
-                |> Maybe.withDefault ( ( Nothing, Nothing ), Nothing )
+                Router.Now ->
+                    Views.TextBox.view ( Content.now, Nothing ) model.mode
+
+                Router.About ->
+                    Views.TextBox.view ( Content.aboutConventional, Just Content.aboutReal ) model.mode
+
+                Router.Menu ->
+                    Views.Menu.view model
+
+                Router.Talks ->
+                    Views.TextBox.view ( Content.talks, Nothing ) model.mode
+
+                Router.NotFound ->
+                    div [] []
     in
         div
             [ class "main"
@@ -39,8 +49,8 @@ view model =
                 ]
                 [ Views.Banner.view
                 ]
-            , Views.TextBox.view textbox model.mode
-            , Views.DesktopNav.view currentSlug sublinks
+            , content
+            , Views.Background.view model
+            , Views.Header.view model
             , Views.Notification.view model
-            , Views.MobileNav.view currentSlug model.isMobileNavActive sublinks
             ]

@@ -7,28 +7,8 @@ import Messages exposing (Msg(..))
 import Content exposing (mainLinks)
 
 
-viewSublink : ( String, String ) -> Html Msg
-viewSublink ( name, url ) =
-    a
-        [ href url
-        ]
-        [ text name
-        ]
-
-
-viewSublinks : Maybe String -> String -> Maybe (List ( String, String )) -> Html Msg
-viewSublinks currentPath className sublinks =
-    div
-        [ classList
-            [ ( className, True )
-            , ( className ++ "--hidden", sublinks == Nothing )
-            ]
-        ]
-        (List.map viewSublink (sublinks |> Maybe.withDefault []))
-
-
-viewMainLink : Maybe String -> String -> Maybe (List ( String, String )) -> ( String, String ) -> Html Msg
-viewMainLink currentSlug className sublinks ( label, url ) =
+viewMainLink : Maybe String -> String -> ( String, String ) -> Html Msg
+viewMainLink currentSlug className ( label, url ) =
     let
         isExternalLink =
             String.slice 0 4 url == "http"
@@ -38,8 +18,8 @@ viewMainLink currentSlug className sublinks ( label, url ) =
     in
         a
             ([ (classList
-                    [ ( className ++ "__link", True )
-                    , ( className ++ "__link--active", currentSlug == Just slug )
+                    [ ( className, True )
+                    , ( className ++ "--active", currentSlug == Just slug )
                     ]
                )
              , href
@@ -53,22 +33,16 @@ viewMainLink currentSlug className sublinks ( label, url ) =
                         []
                     else
                         [ onClick
-                            (ChangePath
-                                (if currentSlug == Just slug then
-                                    ""
-                                 else
-                                    slug
-                                )
-                            )
+                            (ChangePath slug)
                         ]
                    )
             )
             [ text label ]
 
 
-viewMainLinks : Maybe String -> String -> Maybe (List ( String, String )) -> Html Msg
-viewMainLinks currentPath className sublinks =
+viewMainLinks : Maybe String -> String -> String -> Html Msg
+viewMainLinks currentPath containerClassName linkClassName =
     div
-        [ class className
+        [ class containerClassName
         ]
-        (List.map (viewMainLink currentPath className sublinks) Content.mainLinks)
+        (List.map (viewMainLink currentPath linkClassName) Content.mainLinks)

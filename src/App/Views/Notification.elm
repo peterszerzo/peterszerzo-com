@@ -15,7 +15,7 @@ view model =
     div
         [ classList
             [ ( "notification", True )
-            , ( "notification--visible", (not model.isNotificationDismissed) && (model.time > 30 && model.time < 75))
+            , ( "notification--visible", (not model.isNotificationDismissed) && (model.time > 12 && model.time < 75) )
             ]
         ]
         [ toHtml

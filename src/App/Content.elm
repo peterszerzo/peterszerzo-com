@@ -1,5 +1,7 @@
 module Content exposing (..)
 
+import Models
+
 
 mainLinks : List ( String, String )
 mainLinks =
@@ -9,32 +11,116 @@ mainLinks =
     , ( "Talks", "/talks" )
     , ( "About", "/about" )
     , ( "Now", "/now" )
-    , ( "Archive", "/archive" )
     ]
 
 
-projectLinks : List ( String, String )
-projectLinks =
-    [ ( "Lettero", "https://lettero.co" )
-    , ( "Albatross", "http://albatross.peterszerzo.com" )
-    , ( "Splyt Light", "http://splytlight.surge.sh" )
-    , ( "CphRain", "http://cphrain.surge.sh" )
+projects : List Models.Project
+projects =
+    [ { id = "splytlight"
+      , title = "Splyt Light"
+      , description = "3d product interface"
+      , url = "http://splytlight.surge.sh"
+      , roles = [ "dev", "design" ]
+      , technologies = [ "React", "Three.js" ]
+      , category = Models.Featured
+      , imageUrl = "http://stuff.peterszerzo.com/img/projects/splytlight.jpg"
+      , gifUrl = ""
+      }
+    , { id = "lettero"
+      , title = "Lettero"
+      , description = "Multiplayer wordgame"
+      , url = "https://lettero.co"
+      , roles = [ "dev" ]
+      , technologies = [ "Elm", "Google Firebase" ]
+      , category = Models.Featured
+      , imageUrl = "http://stuff.peterszerzo.com/img/projects/lettero.jpg"
+      , gifUrl = ""
+      }
+    , { id = "airtame"
+      , title = "Airtame"
+      , description = "Product and e-commerce website"
+      , url = "https://airtame.com"
+      , roles = [ "dev" ]
+      , technologies = [ "React", "Express" ]
+      , category = Models.Featured
+      , imageUrl = "http://stuff.peterszerzo.com/img/projects/airtame.jpg"
+      , gifUrl = ""
+      }
+    , { id = "atlas"
+      , title = "Atlas"
+      , description = "Data visualization CMS"
+      , url = "http://atlas.newamerica.org"
+      , roles = [ "dev" ]
+      , technologies = [ "React", "Express", "Mapbox" ]
+      , category = Models.Featured
+      , imageUrl = "http://stuff.peterszerzo.com/img/projects/atlas.jpg"
+      , gifUrl = ""
+      }
+    , { id = "albatross"
+      , title = "Albatross"
+      , description = "Immersive sound diary"
+      , url = "http://albatross.peterszerzo.com"
+      , roles = [ "dev", "design" ]
+      , technologies = [ "Elm", "Mapbox" ]
+      , category = Models.Featured
+      , imageUrl = "http://stuff.peterszerzo.com/img/projects/albatross.jpg"
+      , gifUrl = ""
+      }
+    , { id = "ripsaw"
+      , title = "ripsaw.js"
+      , description = "Interactive product design for the browser"
+      , url = "http://peterszerzo.github.io/ripsaw-js"
+      , roles = [ "dev", "design" ]
+      , technologies = [ "Vanilla JS", "Canvas" ]
+      , category = Models.Featured
+      , imageUrl = "http://stuff.peterszerzo.com/img/projects/ripsaw.jpg"
+      , gifUrl = ""
+      }
     ]
 
 
-talkLinks : List ( String, String )
-talkLinks =
-    [ ( "CSS@fireplace", "https://pickled-plugins.github.io/css-by-the-fireplace/" )
-    , ( "Elm+friends", "https://pickled-plugins.github.io/practical-elm-and-friends/" )
-    ]
-
-
-archiveLinks : List ( String, String )
-archiveLinks =
-    [ ( "Helicopters", "http://helicopter-ride.peterszerzo.com/" )
-    , ( "Pendants", "https://www.youtube.com/watch?v=0bKI3VSdD1g" )
-    , ( "Rotary", "http://rotary-phone.peterszerzo.com/" )
-    , ( "PBA", "http://pba.peterszerzo.com/" )
+archivedProjects : List Models.Project
+archivedProjects =
+    [ { id = "pendants"
+      , title = "Pendants"
+      , description = "Jewelry experiments"
+      , url = "http://stuff.peterszerzo.com/img/projects/pendants.jpg"
+      , roles = [ "design" ]
+      , technologies = []
+      , category = Models.Side
+      , imageUrl = ""
+      , gifUrl = ""
+      }
+    , { id = "rotary-phone"
+      , title = "Rotary Phone"
+      , description = "First ever web app"
+      , url = "http://rotary-phone.peterszerzo.com/"
+      , roles = [ "dev" ]
+      , technologies = [ "Vanilla JS", "Canvas" ]
+      , category = Models.Archive
+      , imageUrl = "http://stuff.peterszerzo.com/img/projects/rotary-phone.jpg"
+      , gifUrl = ""
+      }
+    , { id = "helicopter-ride"
+      , title = "Helicopter Ride"
+      , description = ""
+      , url = "http://helicopter-ride.peterszerzo.com/"
+      , roles = [ "dev" ]
+      , technologies = [ "Elm", "Borland Pascal" ]
+      , category = Models.Archive
+      , imageUrl = ""
+      , gifUrl = ""
+      }
+    , { id = "pba"
+      , title = "Pascal Basketball Association"
+      , description = ""
+      , url = "http://pba.peterszerzo.com/"
+      , roles = [ "dev" ]
+      , technologies = [ "Processing", "Borland Pascal" ]
+      , category = Models.Archive
+      , imageUrl = "http://stuff.peterszerzo.com/img/projects/pba.jpg"
+      , gifUrl = ""
+      }
     ]
 
 
@@ -46,6 +132,18 @@ title =
 subtitle : String
 subtitle =
     "programmer, designer, writer, but mostly just person"
+
+
+talks : String
+talks =
+    """
+## Talks
+
+Speaking in public I enjoy - here are the few I did so far:
+* [CSS by the fireplace](https://peterszerzo.github.io/css-by-the-fireplace/)
+* [Practical Elm. And friends](https://peterszerzo.github.io/practical-elm-and-friends/)
+* [Copenhagen React Workshop](https://www.eventbrite.com/e/copenhagen-react-workshop-1-tickets-25344956447#)
+  """
 
 
 aboutConventional : String
@@ -89,7 +187,7 @@ The /now page is Derek Sivers’ [brilliant idea](https://sivers.org/nowff). Che
 
 ## Now
 
-I am doing lots of ad-hoc programming and design, including [a game](https://lettero.co/) and a [lamp design tool](http://splytlight.surge.sh). I do it partly for fun, partly to shed some new light on what I like to do and what feels right to focus on, and partly to iron out my next step towards ever more fulfilling work. Reading [So good the y can’t ignore you](https://sivers.org/book/SoGood) for some extra inspiration.
+I am doing lots of ad-hoc programming and design, including [a game](https://lettero.co/) and a [lamp design tool](http://splytlight.surge.sh). I do it partly for fun, partly to shed some new light on what I like to do and what feels right to focus on, and partly to iron out my next step towards ever more fulfilling work. Reading [So good they can’t ignore you](https://sivers.org/book/SoGood) for some extra inspiration.
 
 Also writing some blog posts, such as [this one](http://blog.peterszerzo.com/im-depressed-and-my-coworkers-love-it/) and [this one](http://blog.peterszerzo.com/high-school-newsletter-interview/), and boy does it feel amazing to write again. What is even more astonishing is that I’m having a much easier time letting go and putting stuff up online.
 
@@ -99,4 +197,4 @@ Doing more yoga, taking more frequent and longer walks. Eating more pastries.
 
 notification : String
 notification =
-    "Your life is a story. [Make it a good one](https://www.shortoftheweek.com/2014/12/10/the-moped-diaries/)"
+    "Levi, your life is a story. [Make it a good one](https://www.shortoftheweek.com/2014/12/10/the-moped-diaries/)"
