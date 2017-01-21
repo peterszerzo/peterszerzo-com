@@ -36,7 +36,7 @@ view model =
                     Views.Menu.view model
 
                 Router.Talks ->
-                    Views.ProjectBox.view Content.talks
+                    Views.TextBox.view ( Content.talks, Nothing ) model.mode
 
                 Router.NotFound ->
                     div [] []

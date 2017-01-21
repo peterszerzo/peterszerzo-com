@@ -5,7 +5,7 @@ import Models
 
 mainLinks : List ( String, String )
 mainLinks =
-    [ ( "Projects", "/projects" )
+    [ ( "Recent works", "/projects" )
     , ( "Blog", "http://blog.peterszerzo.com" )
     , ( "CV", "https://represent.io/peterszerzo" )
     , ( "Talks", "/talks" )
@@ -16,52 +16,98 @@ mainLinks =
 
 projects : List Models.Project
 projects =
-    [ { id = "lettero"
+    [ { id = "splytlight"
+      , title = "Splyt Light"
+      , description = "3d product interface"
+      , url = "http://splytlight.surge.sh"
+      , roles = [ "dev", "design" ]
+      , technologies = [ "React", "Three.js" ]
+      , category = Models.Featured
+      , imageUrl = "http://stuff.peterszerzo.com/img/projects/splytlight.jpg"
+      , gifUrl = ""
+      }
+    , { id = "lettero"
       , title = "Lettero"
-      , description = "Playground for the social wordnerd"
+      , description = "Multiplayer wordgame"
       , url = "https://lettero.co"
-      , imageUrl = "http://stuff.peterszerzo.com/img/projects/lettero.png"
+      , roles = [ "dev" ]
+      , technologies = [ "Elm", "Google Firebase" ]
+      , category = Models.Featured
+      , imageUrl = "http://stuff.peterszerzo.com/img/projects/lettero.jpg"
+      , gifUrl = ""
+      }
+    , { id = "airtame"
+      , title = "Airtame"
+      , description = "Product and e-commerce website"
+      , url = "https://airtame.com"
+      , roles = [ "dev" ]
+      , technologies = [ "React", "Express" ]
+      , category = Models.Featured
+      , imageUrl = "http://stuff.peterszerzo.com/img/projects/airtame.jpg"
+      , gifUrl = ""
+      }
+    , { id = "atlas"
+      , title = "Atlas"
+      , description = "Data visualization CMS"
+      , url = "http://atlas.newamerica.org"
+      , roles = [ "dev" ]
+      , technologies = [ "React", "Express", "Mapbox" ]
+      , category = Models.Featured
+      , imageUrl = "http://stuff.peterszerzo.com/img/projects/atlas.jpg"
       , gifUrl = ""
       }
     , { id = "albatross"
       , title = "Albatross"
       , description = "Immersive sound diary"
       , url = "http://albatross.peterszerzo.com"
-      , imageUrl = "http://stuff.peterszerzo.com/img/projects/albatross.png"
-      , gifUrl = ""
-      }
-    , { id = "splytlight"
-      , title = "Splyt Light"
-      , description = "3d product interface"
-      , url = "http://splytlight.surge.sh"
-      , imageUrl = "http://stuff.peterszerzo.com/img/projects/splytlight.png"
+      , roles = [ "dev", "design" ]
+      , technologies = [ "Elm", "Mapbox" ]
+      , category = Models.Featured
+      , imageUrl = "http://stuff.peterszerzo.com/img/projects/albatross.jpg"
       , gifUrl = ""
       }
     , { id = "ripsaw"
       , title = "ripsaw.js"
       , description = "Interactive product design for the browser"
       , url = "http://peterszerzo.github.io/ripsaw-js"
-      , imageUrl = "http://stuff.peterszerzo.com/img/projects/ripsaw.png"
+      , roles = [ "dev", "design" ]
+      , technologies = [ "Vanilla JS", "Canvas" ]
+      , category = Models.Featured
+      , imageUrl = "http://stuff.peterszerzo.com/img/projects/ripsaw.jpg"
       , gifUrl = ""
       }
-    , { id = "pendants"
+    ]
+
+
+archivedProjects : List Models.Project
+archivedProjects =
+    [ { id = "pendants"
       , title = "Pendants"
       , description = "Jewelry experiments"
-      , url = "http://stuff.peterszerzo.com/img/projects/pendants.png"
+      , url = "http://stuff.peterszerzo.com/img/projects/pendants.jpg"
+      , roles = [ "design" ]
+      , technologies = []
+      , category = Models.Side
       , imageUrl = ""
       , gifUrl = ""
       }
-    , { id = "rotary"
+    , { id = "rotary-phone"
       , title = "Rotary Phone"
       , description = "First ever web app"
       , url = "http://rotary-phone.peterszerzo.com/"
-      , imageUrl = ""
+      , roles = [ "dev" ]
+      , technologies = [ "Vanilla JS", "Canvas" ]
+      , category = Models.Archive
+      , imageUrl = "http://stuff.peterszerzo.com/img/projects/rotary-phone.jpg"
       , gifUrl = ""
       }
-    , { id = "helicopters"
+    , { id = "helicopter-ride"
       , title = "Helicopter Ride"
       , description = ""
       , url = "http://helicopter-ride.peterszerzo.com/"
+      , roles = [ "dev" ]
+      , technologies = [ "Elm", "Borland Pascal" ]
+      , category = Models.Archive
       , imageUrl = ""
       , gifUrl = ""
       }
@@ -69,26 +115,10 @@ projects =
       , title = "Pascal Basketball Association"
       , description = ""
       , url = "http://pba.peterszerzo.com/"
-      , imageUrl = ""
-      , gifUrl = ""
-      }
-    ]
-
-
-talks : List Models.Project
-talks =
-    [ { id = "cssfire"
-      , title = "CSS at the fireplace"
-      , description = "Copenhagen Frontenders meetup talk"
-      , url = "https://lettero.co"
-      , imageUrl = "https://peterszerzo.github.io/css-by-the-fireplace/"
-      , gifUrl = ""
-      }
-    , { id = "practicalelm"
-      , title = "Practical Elm. And friends"
-      , description = "Copenhagen Frontenders meetup talk"
-      , url = "https://peterszerzo.github.io/practical-elm-and-friends/"
-      , imageUrl = "http://stuff.peterszerzo.com/img/projects/albatross.png"
+      , roles = [ "dev" ]
+      , technologies = [ "Processing", "Borland Pascal" ]
+      , category = Models.Archive
+      , imageUrl = "http://stuff.peterszerzo.com/img/projects/pba.jpg"
       , gifUrl = ""
       }
     ]
@@ -102,6 +132,18 @@ title =
 subtitle : String
 subtitle =
     "programmer, designer, writer, but mostly just person"
+
+
+talks : String
+talks =
+    """
+## Talks
+
+Speaking in public I enjoy - here are the few I did so far:
+* [CSS by the fireplace](https://peterszerzo.github.io/css-by-the-fireplace/)
+* [Practical Elm. And friends](https://peterszerzo.github.io/practical-elm-and-friends/)
+* [Copenhagen React Workshop](https://www.eventbrite.com/e/copenhagen-react-workshop-1-tickets-25344956447#)
+  """
 
 
 aboutConventional : String

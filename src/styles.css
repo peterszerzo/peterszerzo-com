@@ -5,6 +5,7 @@
   --transparent-white: #FFFFFF00;
   --slightly-transparent-white: color(var(--white) a(95%));
   --black: #222222;
+  --dark-grey: #333333;
   --red: #CC370A;
   --mustard: #DBA700;
   --shadow-color: #33333333;
@@ -89,6 +90,24 @@ h3 {
   font-weight: 400;
 }
 
+h2 {
+  font-size: 2rem;
+
+  @media (--desktop) {
+    margin: 1.4rem 0;
+    font-size: 3rem;
+  }
+}
+
+h3 {
+  font-size: 1.5rem;
+  margin: .5rem 0;
+
+  @media (--desktop) {
+    font-size: 2rem;
+  }
+}
+
 
 /* Spinner */
 
@@ -138,13 +157,7 @@ h3 {
   }
 
   & h2 {
-    font-size: 2rem;
     text-align: center;
-
-    @media (--desktop) {
-      margin: 1.4rem 0;
-      font-size: 3rem;
-    }
   }
 
   & p,
@@ -440,7 +453,7 @@ h3 {
   background-color: var(--mustard);
   box-shadow: 0 0 10px 0 var(--shadow-color);
   bottom: 80px;
-  width: 280px;
+  width: calc(100% - 80px);
   height: auto;
   right: 40px;
   border-radius: 3px;
@@ -448,6 +461,10 @@ h3 {
   opacity: 0;
   transition: all 1s;
   pointer-events: none;
+
+  @media (--desktop) {
+    width: 280px;
+  }
 }
 
 .notification--visible {
@@ -559,6 +576,7 @@ h3 {
 .project-box,
 .text-box {
   background-color: var(--white);
+  color: var(--dark-grey);
   width: 100%;
   height: 100%;
   position: fixed;
@@ -567,24 +585,32 @@ h3 {
 }
 
 .project-box__content {
-  display: flex;
-  align-items: top;
-  justify-content: center;
-  flex-wrap: wrap;
   width: 100%;
   height: 100%;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
-  padding: 80px 40px 60px;
+  padding: 100px 40px 60px;
 }
 
 .project {
-  flex: 1 0 320px;
-  margin: 30px;
-  border-radius: 8px;
+  display: block;
+  margin: 40px auto;
+  padding: 20px;
+  max-width: 580px;
   width: 100%;
   text-decoration: none;
+  text-align: left;
   color: currentColor;
+  border: 1px solid transparent;
+  transition: border-color .6s;
+
+  &:first-of-type {
+    margin-top: 0;
+  }
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
 
   & h2 {
     margin: 1rem 0 0;
@@ -593,12 +619,21 @@ h3 {
   & p {
     margin-top: 0;
   }
+
+  &:hover {
+    border-color: var(--shadow-color);
+  }
+
+  @media (--desktop) {
+    margin: 80px auto;
+  }
 }
 
 .project__image {
   width: 100%;
-  padding-top: 75%;
-  background-color: #00000011;
+  margin-bottom: 1rem;
+  padding-top: 62.5%;
+  border: 1px solid #00000011;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: 50% 50%;
@@ -652,7 +687,7 @@ h3 {
   position: absolute;
   top: 0;
   left: 0;
-  padding: 20px 0;
+  padding: 40px 0;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   margin: auto;
