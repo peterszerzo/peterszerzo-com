@@ -2,7 +2,7 @@
   --blue: #15487F;
   --faint-blue: color(#15487F a(30%));
   --white: #FFFFFF;
-  --transparent-white: #FFFFFF00;
+  --transparent-white: #FFFFFF44;
   --slightly-transparent-white: color(var(--white) a(95%));
   --black: #222222;
   --dark-grey: #333333;
@@ -293,11 +293,11 @@ h3 {
   transition: all .3s;
   top: 0;
   left: 0;
-  color: var(--black);
+  color: var(--blue);
   z-index: var(--z-header);
 
   @media (--desktop) {
-    background: var(--white);
+    background: var(--transparent-white);
     box-shadow: 0 0 12px var(--shadow-color);
   }
 }
@@ -452,7 +452,7 @@ h3 {
   position: fixed;
   background-color: var(--mustard);
   box-shadow: 0 0 10px 0 var(--shadow-color);
-  bottom: 80px;
+  bottom: 40px;
   width: calc(100% - 80px);
   height: auto;
   right: 40px;

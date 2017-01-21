@@ -11,7 +11,7 @@ import Messages exposing (Msg)
 
 transformPt : Float -> ( Float, Float ) -> ( Float, Float )
 transformPt scale ( x, y ) =
-    ( (x - 100) * scale, -(y - 100) * scale )
+    ( (x - 50) * scale, -(y - 50) * scale )
 
 
 polygons : Float -> List Collage.Form
@@ -19,19 +19,14 @@ polygons scale =
     if scale == 0 then
         []
     else
-        [ [ ( 0, 0 ), ( 68, 0 ), ( 85, 103 ), ( 102, 116 ), ( 114, 200 ), ( 0, 200 ) ]
-            |> List.map (transformPt scale)
-            |> polygon
-            |> filled (rgba 255 255 255 0.02)
-        , [ ( 68, 0 ), ( 85, 103 ), ( 102, 116 ), ( 136, 78 ), ( 200, 63 ), ( 200, 0 ) ]
-            |> List.map (transformPt scale)
-            |> polygon
-            |> filled (rgba 255 255 255 0.04)
-        , [ ( 114, 200 ), ( 102, 116 ), ( 85, 103 ), ( 136, 78 ), ( 200, 63 ), ( 200, 200 ) ]
-            |> List.map (transformPt scale)
-            |> polygon
-            |> filled (rgba 255 255 255 0)
-        ]
+        p
+            |> List.indexedMap
+                (\i ->
+                    ((filled (rgba 255 255 255 (0.01 * (toFloat i))))
+                        << polygon
+                        << List.map (transformPt scale)
+                    )
+                )
 
 
 view : Model -> Html Msg
@@ -53,7 +48,7 @@ view model =
             model.window.width > model.window.height
 
         scale =
-            (toFloat size) / 200 |> Debug.log "scale"
+            (toFloat size) / 100 |> Debug.log "scale"
     in
         div
             [ class "bg"
@@ -64,3 +59,52 @@ view model =
             ]
             [ Element.toHtml (collage size size (polygons scale))
             ]
+
+
+p : List (List ( Float, Float ))
+p =
+    [ [ ( 0.0, 60.94 )
+      , ( 17.26, 60.94 )
+      , ( 50.98, 26.11 )
+      , ( 50.98, 0.0 )
+      , ( 0.0, 0.0 )
+      , ( 0.0, 60.94 )
+      ]
+    , [ ( 100.0, 65.11 )
+      , ( 81.49, 65.11 )
+      , ( 79.29, 63.07 )
+      , ( 79.29, 54.58 )
+      , ( 50.98, 26.11 )
+      , ( 50.98, 0.0 )
+      , ( 100.0, 0.0 )
+      , ( 100.0, 65.11 )
+      ]
+    , [ ( 0.0, 60.94 )
+      , ( 17.26, 60.94 )
+      , ( 22.92, 55.09 )
+      , ( 27.51, 55.09 )
+      , ( 49.58, 76.82 )
+      , ( 41.06, 84.94 )
+      , ( 41.06, 100.0 )
+      , ( 0.0, 100.0 )
+      , ( 0.0, 60.94 )
+      ]
+    , [ ( 41.06, 100.0 )
+      , ( 100.0, 100.0 )
+      , ( 100.0, 65.11 )
+      , ( 81.49, 65.11 )
+      , ( 79.29, 63.07 )
+      , ( 64.01, 63.07 )
+      , ( 41.06, 84.94 )
+      , ( 41.06, 100.0 )
+      ]
+    , [ ( 22.92, 55.09 )
+      , ( 27.51, 55.09 )
+      , ( 49.58, 76.82 )
+      , ( 64.01, 63.07 )
+      , ( 79.29, 63.07 )
+      , ( 79.29, 54.58 )
+      , ( 50.98, 26.11 )
+      , ( 22.92, 55.09 )
+      ]
+    ]
