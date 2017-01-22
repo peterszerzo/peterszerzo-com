@@ -2,8 +2,8 @@
   --blue: #15487F;
   --faint-blue: color(#15487F a(30%));
   --white: #FFFFFF;
-  --transparent-white: #FFFFFF00;
-  --slightly-transparent-white: color(var(--white) a(95%));
+  --transparent-white: #FFFFFF44;
+  --slightly-transparent-white: color(var(--white) a(80%));
   --black: #222222;
   --dark-grey: #333333;
   --red: #CC370A;
@@ -33,6 +33,10 @@
     font-size: 1rem;
     letter-spacing: .05rem;
     line-height: 1.35;
+  }
+
+  --standard-shadow: {
+    box-shadow: 0 0 12px var(--shadow-color);
   }
 }
 
@@ -293,12 +297,12 @@ h3 {
   transition: all .3s;
   top: 0;
   left: 0;
-  color: var(--black);
+  color: var(--blue);
   z-index: var(--z-header);
 
   @media (--desktop) {
-    background: var(--white);
-    box-shadow: 0 0 12px var(--shadow-color);
+    background: var(--transparent-white);
+    @apply (--standard-shadow);
   }
 }
 
@@ -326,6 +330,7 @@ h3 {
   position: absolute;
   top: 0;
   fill: currentColor;
+  stroke: currentColor;
   transition: opacity .3s;
   opacity: .7;
 
@@ -451,8 +456,8 @@ h3 {
 .notification {
   position: fixed;
   background-color: var(--mustard);
-  box-shadow: 0 0 10px 0 var(--shadow-color);
-  bottom: 80px;
+  @apply (--standard-shadow);
+  bottom: 40px;
   width: calc(100% - 80px);
   height: auto;
   right: 40px;
@@ -596,13 +601,13 @@ h3 {
   display: block;
   margin: 40px auto;
   padding: 20px;
-  max-width: 580px;
+  max-width: 640px;
   width: 100%;
   text-decoration: none;
   text-align: left;
   color: currentColor;
   border: 1px solid transparent;
-  transition: border-color .6s;
+  transition: all .6s;
 
   &:first-of-type {
     margin-top: 0;
@@ -621,11 +626,12 @@ h3 {
   }
 
   &:hover {
-    border-color: var(--shadow-color);
+    @apply (--standard-shadow);
   }
 
   @media (--desktop) {
     margin: 80px auto;
+    padding: 40px;
   }
 }
 
