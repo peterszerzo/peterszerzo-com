@@ -108,7 +108,10 @@ header_ model =
                         )
                     )
                 ]
-                [ falafel True
+                [ if (model.route == Router.Menu) then
+                    close
+                  else
+                    falafel True
                 ]
             ]
 

@@ -47,3 +47,10 @@ update msg model =
               }
             , Cmd.none
             )
+
+        AnimationTick time ->
+            ( { model
+                | animationTicks = model.animationTicks + 1
+              }
+            , Cmd.none
+            )
