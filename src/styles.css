@@ -157,11 +157,16 @@ h3 {
   font-family: var(--pt-serif);
 
   @media (--desktop) {
-    padding: 80px 20px;
+    padding: 60px 20px;
   }
 
   & h2 {
     text-align: center;
+
+    @media (--desktop) {
+      margin-bottom: 3rem;
+      margin-top: 3rem;
+    }
   }
 
   & p,
@@ -315,7 +320,7 @@ h3 {
   @media (--desktop) {
     color: var(--black);
     top: auto;
-    bottom: 0;
+    bottom: 24px;
     background: none;
     border: none;
     box-shadow: none;
@@ -359,7 +364,7 @@ h3 {
   width: 100%;
   display: none;
   margin: 0;
-  padding-top: 20px;
+  padding-top: 17px;
   text-align: center;
 
   @media (--desktop) {
@@ -372,15 +377,23 @@ h3 {
   display: inline-block;
   cursor: pointer;
   position: relative;
-  opacity: .5;
+  padding: 4px 12px;
+  border-radius: 3px;
+  opacity: .6;
   font-size: 1rem;
   letter-spacing: .05rem;
   font-kerning: normal;
-  margin: 0 20px;
-  transition: opacity .3s;
+  margin: 0 10px;
+  transition: all .3s;
 
   @nest .header--discrete & {
     color: var(--white);
+    background-color: #FFFFFF22;
+
+    &:hover {
+      color: var(--blue);
+      background-color: var(--white);
+    }
   }
 }
 
