@@ -8,7 +8,6 @@ mainLinks =
     [ ( "Recent works", "/projects" )
     , ( "Blog", "http://blog.peterszerzo.com" )
     , ( "CV", "https://represent.io/peterszerzo" )
-    , ( "Talks", "/talks" )
     , ( "About", "/about" )
     , ( "Now", "/now" )
     ]
@@ -183,15 +182,16 @@ It means a lot to me that you’ve read this.
 now : String
 now =
     """
-The /now page is Derek Sivers’ [brilliant idea](https://sivers.org/nowff). Cheers, Derek!
 
-## Now
+## What am I doing now?
 
-I am doing lots of ad-hoc programming and design, including [a game](https://lettero.co/) and a [lamp design tool](http://splytlight.surge.sh). I do it partly for fun, partly to shed some new light on what I like to do and what feels right to focus on, and partly to iron out my next step towards ever more fulfilling work. Reading [So good they can’t ignore you](https://sivers.org/book/SoGood) for some extra inspiration.
+A fair bit of ad-hoc programming and design, including [a game](https://lettero.co/) and a [lamp design tool](http://splytlight.surge.sh). I do it partly for fun, partly to shed some new light on what I like to do and what feels right to focus on, and partly to iron out my next step towards ever more fulfilling work. Reading [So good they can’t ignore you](https://sivers.org/book/SoGood) for some extra inspiration.
 
 Also writing some blog posts, such as [this one](http://blog.peterszerzo.com/im-depressed-and-my-coworkers-love-it/) and [this one](http://blog.peterszerzo.com/high-school-newsletter-interview/), and boy does it feel amazing to write again. What is even more astonishing is that I’m having a much easier time letting go and putting stuff up online.
 
 Doing more yoga, taking more frequent and longer walks. Eating more pastries.
+
+> The /now page is Derek Sivers’ [brilliant idea](https://sivers.org/nowff). Cheers, Derek!
 """
 
 
