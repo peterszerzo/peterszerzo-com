@@ -1,40 +1,33 @@
 module Views.Background exposing (..)
 
-import Html exposing (Html, div)
+import Html exposing (Html, Attribute, div)
 import Html.Attributes exposing (class, style)
-import Color exposing (rgba)
-import Collage exposing (group, polygon, filled, collage)
-import Element exposing (toHtml)
+import Svg exposing (svg)
+import Svg.Attributes exposing (viewBox, points, width, height)
 import Models exposing (Model)
 import Messages exposing (Msg)
 
 
-transformPt : Float -> ( Float, Float ) -> ( Float, Float )
-transformPt scale ( x, y ) =
-    ( (x - 50) * scale, (y - 50) * scale )
-
-
-opacity : Int -> Int -> Float
-opacity index ticks =
-    if index == 0 then
-        0
-    else
-        0.06 + 0.02 * (sin ((toFloat (ticks + 525 * index)) / 300))
-
-
-polygons : Float -> Int -> List Collage.Form
-polygons scale animationTicks =
-    if scale == 0 then
-        []
-    else
-        p
-            |> List.indexedMap
-                (\i ->
-                    ((filled (rgba 255 255 255 (opacity i animationTicks)))
-                        << polygon
-                        << List.map (transformPt scale)
-                    )
-                )
+svgView : List (Attribute Msg) -> List (List ( Float, Float )) -> Html Msg
+svgView attrs polygons =
+    svg
+        ([ viewBox "0 0 100 100"
+         ]
+            ++ attrs
+        )
+        (List.map
+            (\pts ->
+                Svg.polygon
+                    [ points
+                        (pts
+                            |> List.map (\( x, y ) -> (toString x) ++ "," ++ (toString y))
+                            |> String.join " "
+                        )
+                    ]
+                    []
+            )
+            polygons
+        )
 
 
 view : Model -> Html Msg
@@ -62,60 +55,60 @@ view model =
             (toFloat size) / 100
     in
         div
-            [ class "bg"
+            [ class "background"
             , style
                 [ ( "top", "-" ++ (toString top) ++ "px" )
                 , ( "left", "-" ++ (toString left) ++ "px" )
                 ]
             ]
-            [ Element.toHtml (collage size size (polygons scale model.animationTicks))
+            [ svgView [ width (toString size), height (toString size) ] polygons
             ]
 
 
-p : List (List ( Float, Float ))
-p =
-    [ [ ( 25.3, 47.68 )
-      , ( 29.4, 48.09 )
-      , ( 47.26, 69.49 )
-      , ( 61.4, 58.44 )
-      , ( 75.08, 59.78 )
-      , ( 75.83, 52.18 )
-      , ( 52.98, 24.18 )
-      , ( 25.3, 47.68 )
+polygons : List (List ( Float, Float ))
+polygons =
+    [ [ ( 24.56, 50.52 )
+      , ( 28.67, 50.92 )
+      , ( 46.53, 72.32 )
+      , ( 60.66, 61.27 )
+      , ( 74.35, 62.62 )
+      , ( 75.09, 55.01 )
+      , ( 52.24, 27.02 )
+      , ( 24.56, 50.52 )
       ]
-    , [ ( 100.0, 64.07 )
-      , ( 76.88, 61.8 )
-      , ( 75.08, 59.78 )
-      , ( 75.83, 52.18 )
-      , ( 52.98, 24.18 )
-      , ( 55.32, 0.0 )
-      , ( 100.0, 0.0 )
-      , ( 100.0, 64.07 )
-      ]
-    , [ ( -0.0, 50.49 )
-      , ( 19.71, 52.42 )
-      , ( 52.98, 24.18 )
-      , ( 55.32, 0.0 )
-      , ( 0.0, 0.0 )
-      , ( -0.0, 50.49 )
-      ]
-    , [ ( 36.57, 100.0 )
-      , ( 100.0, 100.0 )
-      , ( 100.0, 64.07 )
-      , ( 76.88, 61.8 )
-      , ( 75.08, 59.78 )
-      , ( 61.4, 58.44 )
-      , ( 38.92, 76.01 )
-      , ( 36.57, 100.0 )
-      ]
-    , [ ( -0.0, 50.49 )
-      , ( 19.71, 52.42 )
-      , ( 25.3, 47.68 )
-      , ( 29.4, 48.09 )
-      , ( 47.26, 69.49 )
-      , ( 38.92, 76.01 )
-      , ( 36.57, 100.0 )
+    , [ ( -0.0, 53.4 )
+      , ( 18.98, 55.26 )
+      , ( 24.56, 50.52 )
+      , ( 28.67, 50.92 )
+      , ( 46.53, 72.32 )
+      , ( 38.19, 78.85 )
+      , ( 36.11, 100.0 )
       , ( 0.0, 100.0 )
-      , ( -0.0, 50.49 )
+      , ( -0.0, 53.4 )
+      ]
+    , [ ( 100.0, 66.97 )
+      , ( 76.15, 64.63 )
+      , ( 74.35, 62.62 )
+      , ( 75.09, 55.01 )
+      , ( 52.24, 27.02 )
+      , ( 54.86, 0.0 )
+      , ( 100.0, 0.0 )
+      , ( 100.0, 66.97 )
+      ]
+    , [ ( -0.0, 53.4 )
+      , ( 18.98, 55.26 )
+      , ( 52.24, 27.02 )
+      , ( 54.86, 0.0 )
+      , ( 0.0, 0.0 )
+      , ( -0.0, 53.4 )
+      ]
+    , [ ( 36.11, 100.0 )
+      , ( 100.0, 100.0 )
+      , ( 100.0, 66.97 )
+      , ( 76.15, 64.63 )
+      , ( 74.35, 62.62 )
+      , ( 60.66, 61.27 )
+      , ( 38.19, 78.85 )
+      , ( 36.11, 100.0 )
       ]
     ]
