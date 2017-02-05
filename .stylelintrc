@@ -1,9 +1,6 @@
 {
   "rules": {
-    "block-closing-brace-newline-after": "always",
-    "block-closing-brace-newline-before": "always",
     "block-no-empty": true,
-    "block-no-single-line": true,
     "color-named": "never",
     "color-hex-length": "long",
     "color-no-invalid-hex": true,
@@ -15,15 +12,11 @@
     "declaration-block-trailing-semicolon": "always",
     "declaration-block-no-duplicate-properties": true,
     "indentation": 2,
-    "max-nesting-depth": 5,
+    "max-nesting-depth": 3,
     "max-empty-lines": 2,
     "number-leading-zero": "never",
     "number-no-trailing-zeros": true,
     "length-zero-no-unit": true,
-    "rule-nested-empty-line-before": ["always", {
-      "except": ["first-nested"],
-      "ignore": ["after-comment"]
-    }],
     "selector-type-case": "lower",
     "selector-list-comma-newline-after": "always",
     "selector-combinator-space-after": "always",

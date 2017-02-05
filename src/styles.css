@@ -21,6 +21,8 @@
 
   --icon-size: 18px;
 
+  --background-opacity-scale: .005;
+
   --z-hidden: -1;
   --z-notification: 12;
   --z-text-box: 11;
@@ -137,12 +139,63 @@ h3 {
   }
 }
 
-.bg {
+/* Background */
+
+.background {
   position: absolute;
   top: 0;
   left: 0;
   z-index: var(--z-bg);
-  animation: float 10s ease-in-out infinite alternate forwards;
+
+  & polygon {
+    fill: #FFFFFF;
+    &:nth-of-type(1) { animation: fade1 20s ease-in-out infinite forwards; }
+    &:nth-of-type(2) { animation: fade2 20s ease-in-out infinite forwards; }
+    &:nth-of-type(3) { animation: fade3 20s ease-in-out infinite forwards; }
+    &:nth-of-type(4) { animation: fade4 20s ease-in-out infinite forwards; }
+    &:nth-of-type(5) { animation: fade5 20s ease-in-out infinite forwards; }
+  }
+}
+
+@keyframes fade1 {
+  0% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@keyframes fade2 {
+  0% { opacity: calc(15 * var(--background-opacity-scale)); }
+  20% { opacity: calc(15 * var(--background-opacity-scale)); }
+  30% { opacity: calc(5 * var(--background-opacity-scale)); }
+  70% { opacity: calc(5 * var(--background-opacity-scale)); }
+  80% { opacity: calc(15 * var(--background-opacity-scale)); }
+  100% { opacity: calc(15 * var(--background-opacity-scale)); }
+}
+
+@keyframes fade3 {
+  0% { opacity: calc(18 * var(--background-opacity-scale)); }
+  20% { opacity: calc(18 * var(--background-opacity-scale)); }
+  30% { opacity: calc(7.5 * var(--background-opacity-scale)); }
+  70% { opacity: calc(7.5 * var(--background-opacity-scale)); }
+  80% { opacity: calc(18 * var(--background-opacity-scale)); }
+  100% { opacity: calc(18 * var(--background-opacity-scale)); }
+}
+
+@keyframes fade4 {
+  0% { opacity: calc(6.25 * var(--background-opacity-scale)); }
+  20% { opacity: calc(6.25 * var(--background-opacity-scale)); }
+  30% { opacity: calc(17.5 * var(--background-opacity-scale)); }
+  70% { opacity: calc(17.5 * var(--background-opacity-scale)); }
+  80% { opacity: calc(6.25 * var(--background-opacity-scale)); }
+  100% { opacity: calc(6.25 * var(--background-opacity-scale)); }
+}
+
+@keyframes fade5 {
+  0% { opacity: calc(12.5 * var(--background-opacity-scale)); }
+  20% { opacity: calc(12.5 * var(--background-opacity-scale)); }
+  30% { opacity: calc(25 * var(--background-opacity-scale)); }
+  70% { opacity: calc(25 * var(--background-opacity-scale)); }
+  80% { opacity: calc(12.5 * var(--background-opacity-scale)); }
+  100% { opacity: calc(12.5 * var(--background-opacity-scale)); }
 }
 
 
@@ -715,8 +768,8 @@ h3 {
 
 .text-box__switch {
   position: fixed;
-  bottom: 20px;
-  right: 30px;
+  bottom: 10px;
+  left: 5px;
   z-index: 3;
 }
 

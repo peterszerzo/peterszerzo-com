@@ -12,4 +12,3 @@ type Msg
     | ChangeRoute Route
     | DismissNotification
     | Resize Window.Size
-    | AnimationTick Time
