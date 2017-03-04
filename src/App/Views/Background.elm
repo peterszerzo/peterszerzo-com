@@ -3,7 +3,7 @@ module Views.Background exposing (..)
 import Html exposing (Html, Attribute, div)
 import Html.Attributes exposing (class, style)
 import Svg exposing (svg)
-import Svg.Attributes exposing (viewBox, points, width, height)
+import Svg.Attributes exposing (viewBox, points, width, height, transform)
 import Models exposing (Model)
 import Messages exposing (Msg)
 
@@ -20,7 +20,7 @@ svgView attrs polygons =
                 Svg.polygon
                     [ points
                         (pts
-                            |> List.map (\( x, y ) -> (toString x) ++ "," ++ (toString y))
+                            |> List.map (\( x, y ) -> (toString x) ++ "," ++ (toString (100 - y)))
                             |> String.join " "
                         )
                     ]

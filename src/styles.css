@@ -24,7 +24,7 @@
   --background-opacity-scale: .005;
 
   --z-hidden: -1;
-  --z-notification: 12;
+  --z-notification: 20;
   --z-text-box: 11;
   --z-menu: 14;
   --z-header: 15;
@@ -149,11 +149,11 @@ h3 {
 
   & polygon {
     fill: #FFFFFF;
-    &:nth-of-type(1) { animation: fade1 20s ease-in-out infinite forwards; }
-    &:nth-of-type(2) { animation: fade2 20s ease-in-out infinite forwards; }
-    &:nth-of-type(3) { animation: fade3 20s ease-in-out infinite forwards; }
-    &:nth-of-type(4) { animation: fade4 20s ease-in-out infinite forwards; }
-    &:nth-of-type(5) { animation: fade5 20s ease-in-out infinite forwards; }
+    &:nth-of-type(1) { animation: fade1 20s -5s ease-in-out infinite forwards; }
+    &:nth-of-type(2) { animation: fade2 20s -5s ease-in-out infinite forwards; }
+    &:nth-of-type(3) { animation: fade3 20s -5s ease-in-out infinite forwards; }
+    &:nth-of-type(4) { animation: fade4 20s -5s ease-in-out infinite forwards; }
+    &:nth-of-type(5) { animation: fade5 20s -5s ease-in-out infinite forwards; }
   }
 }
 
