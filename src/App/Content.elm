@@ -197,4 +197,4 @@ Doing more yoga, taking more frequent and longer walks. Eating more pastries.
 
 notification : String
 notification =
-    "Levi, your life is yout story. [Make it a good one](https://www.shortoftheweek.com/2014/12/10/the-moped-diaries/)"
+    "Levi, your life is your story. [Make it a good one](https://www.shortoftheweek.com/2014/12/10/the-moped-diaries/)"
