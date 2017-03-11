@@ -6,6 +6,7 @@ import Models
 mainLinks : List ( String, String )
 mainLinks =
     [ ( "Recent works", "/projects" )
+    , ( "Playground", "http://codepen.io/peterszerzo/" )
     , ( "Blog", "http://blog.peterszerzo.com" )
     , ( "CV", "https://represent.io/peterszerzo" )
     , ( "About", "/about" )
