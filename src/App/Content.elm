@@ -23,7 +23,7 @@ projects =
       , roles = [ "dev", "design" ]
       , technologies = [ "React", "Three.js" ]
       , category = Models.Featured
-      , imageUrl = "http://stuff.peterszerzo.com/img/projects/splytlight.jpg"
+      , imageUrl = "/imgs/projects/splytlight.jpg"
       , gifUrl = ""
       }
     , { id = "lettero"
@@ -33,7 +33,7 @@ projects =
       , roles = [ "dev" ]
       , technologies = [ "Elm", "Google Firebase" ]
       , category = Models.Featured
-      , imageUrl = "http://stuff.peterszerzo.com/img/projects/lettero.jpg"
+      , imageUrl = "/imgs/projects/lettero.jpg"
       , gifUrl = ""
       }
     , { id = "airtame"
@@ -43,7 +43,7 @@ projects =
       , roles = [ "dev" ]
       , technologies = [ "React", "Express" ]
       , category = Models.Featured
-      , imageUrl = "http://stuff.peterszerzo.com/img/projects/airtame.jpg"
+      , imageUrl = "/imgs/projects/airtame.jpg"
       , gifUrl = ""
       }
     , { id = "atlas"
@@ -53,7 +53,7 @@ projects =
       , roles = [ "dev" ]
       , technologies = [ "React", "Express", "Mapbox" ]
       , category = Models.Featured
-      , imageUrl = "http://stuff.peterszerzo.com/img/projects/atlas.jpg"
+      , imageUrl = "/imgs/projects/atlas.jpg"
       , gifUrl = ""
       }
     , { id = "albatross"
@@ -63,7 +63,7 @@ projects =
       , roles = [ "dev", "design" ]
       , technologies = [ "Elm", "Mapbox" ]
       , category = Models.Featured
-      , imageUrl = "http://stuff.peterszerzo.com/img/projects/albatross.jpg"
+      , imageUrl = "/imgs/projects/albatross.jpg"
       , gifUrl = ""
       }
     , { id = "ripsaw"
@@ -73,7 +73,7 @@ projects =
       , roles = [ "dev", "design" ]
       , technologies = [ "Vanilla JS", "Canvas" ]
       , category = Models.Featured
-      , imageUrl = "http://stuff.peterszerzo.com/img/projects/ripsaw.jpg"
+      , imageUrl = "/imgs/projects/ripsaw.jpg"
       , gifUrl = ""
       }
     ]
@@ -84,7 +84,7 @@ archivedProjects =
     [ { id = "pendants"
       , title = "Pendants"
       , description = "Jewelry experiments"
-      , url = "http://stuff.peterszerzo.com/img/projects/pendants.jpg"
+      , url = "/imgs/projects/pendants.jpg"
       , roles = [ "design" ]
       , technologies = []
       , category = Models.Side
@@ -98,7 +98,7 @@ archivedProjects =
       , roles = [ "dev" ]
       , technologies = [ "Vanilla JS", "Canvas" ]
       , category = Models.Archive
-      , imageUrl = "http://stuff.peterszerzo.com/img/projects/rotary-phone.jpg"
+      , imageUrl = "/imgs/projects/rotary-phone.jpg"
       , gifUrl = ""
       }
     , { id = "helicopter-ride"
@@ -118,7 +118,7 @@ archivedProjects =
       , roles = [ "dev" ]
       , technologies = [ "Processing", "Borland Pascal" ]
       , category = Models.Archive
-      , imageUrl = "http://stuff.peterszerzo.com/img/projects/pba.jpg"
+      , imageUrl = "/imgs/projects/pba.jpg"
       , gifUrl = ""
       }
     ]

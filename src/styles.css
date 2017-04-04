@@ -334,7 +334,7 @@ h3 {
 }
 
 .banner__image {
-  background-image: url('http://stuff.peterszerzo.com/img/portrait-360.jpg');
+  background-image: url('/imgs/portrait-360.jpg');
   background-size: cover;
   background-position: 50% 50%;
   background-repeat: no-repeat;
