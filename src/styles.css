@@ -146,15 +146,30 @@ h3 {
   top: 0;
   left: 0;
   z-index: var(--z-bg);
+}
 
-  & polygon {
-    fill: #FFFFFF;
-    &:nth-of-type(1) { animation: fade1 20s -5s ease-in-out infinite forwards; }
-    &:nth-of-type(2) { animation: fade2 20s -5s ease-in-out infinite forwards; }
-    &:nth-of-type(3) { animation: fade3 20s -5s ease-in-out infinite forwards; }
-    &:nth-of-type(4) { animation: fade4 20s -5s ease-in-out infinite forwards; }
-    &:nth-of-type(5) { animation: fade5 20s -5s ease-in-out infinite forwards; }
-  }
+.background polygon {
+  fill: #FFFFFF;
+}
+
+.background polygon:nth-of-type(1) {
+  animation: fade1 20s -5s ease-in-out infinite forwards;
+}
+
+.background polygon:nth-of-type(2) {
+  animation: fade2 20s -5s ease-in-out infinite forwards;
+}
+
+.background polygon:nth-of-type(3) {
+  animation: fade3 20s -5s ease-in-out infinite forwards;
+}
+
+.background polygon:nth-of-type(4) {
+  animation: fade4 20s -5s ease-in-out infinite forwards;
+}
+
+.background polygon:nth-of-type(5) {
+  animation: fade5 20s -5s ease-in-out infinite forwards;
 }
 
 @keyframes fade1 {
@@ -212,70 +227,70 @@ h3 {
   @media (--desktop) {
     padding: 60px 20px;
   }
+}
 
-  & h2 {
-    text-align: center;
+.static h2 {
+  text-align: center;
 
-    @media (--desktop) {
-      margin-bottom: 3rem;
-      margin-top: 3rem;
-    }
+  @media (--desktop) {
+    margin-bottom: 3rem;
+    margin-top: 3rem;
   }
+}
 
-  & p,
-  & li,
-  & ul {
-    font-family: inherit;
+.static p,
+.static li,
+.static ul {
+  font-family: inherit;
+}
+
+.static p {
+  margin: 1.5rem 0;
+
+  @media (--desktop) {
+    margin: 2.05rem 0;
   }
+}
 
-  & p {
-    margin: 1.5rem 0;
+.static p:first-of-type {
+  padding-top: 0;
+  margin-top: 0;
+}
 
-    &:first-of-type {
-      padding-top: 0;
-      margin-top: 0;
-    }
+.static p:last-of-type {
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
 
-    &:last-of-type {
-      padding-bottom: 0;
-      margin-bottom: 0;
-    }
+.static p,
+.static li {
+  font-size: 1rem;
+  line-height: 1.68;
 
-    @media (--desktop) {
-      margin: 2.05rem 0;
-    }
+  @media (--desktop) {
+    font-size: 1.375rem;
   }
+}
 
-  & p,
-  & li {
-    font-size: 1rem;
-    line-height: 1.68;
+.static ul {
+  margin: 0;
+  list-style-position: inside;
+  padding: 0;
+}
 
-    @media (--desktop) {
-      font-size: 1.375rem;
-    }
-  }
+.static li {
+  margin: 10px 0;
+}
 
-  & ul {
-    margin: 0;
-    list-style-position: inside;
-    padding: 0;
-  }
+.static a {
+  font-family: inherit;
+  color: var(--blue);
+  opacity: .8;
+}
 
-  & li {
-    margin: 10px 0;
-  }
-
-  & a {
-    font-family: inherit;
-    color: var(--blue);
-    opacity: .8;
-
-    &:hover {
-      opacity: 1;
-      border-bottom: 1px solid currentColor;
-    }
-  }
+.static a:hover {
+  opacity: 1;
+  border-bottom: 1px solid currentColor;
 }
 
 
@@ -287,18 +302,18 @@ h3 {
   text-align: center;
   color: var(--white);
   z-index: var(--z-banner);
+}
 
-  & h1 {
-    margin: 20px 0 18px;
-    line-height: 1.1;
-    letter-spacing: .1rem;
-    font-size: 2rem;
-  }
+.banner h1 {
+  margin: 20px 0 18px;
+  line-height: 1.1;
+  letter-spacing: .1rem;
+  font-size: 2rem;
+}
 
-  & p {
-    margin: .5rem 0 0;
-    @apply (--standard-text);
-  }
+.banner p {
+  margin: .5rem 0 0;
+  @apply (--standard-text);
 }
 
 .banner__logo {
@@ -326,11 +341,11 @@ h3 {
 .banner__image-container {
   opacity: 0;
   transition: opacity .5s;
+}
 
-  @nest .banner:hover & {
-    opacity: 1;
-    transition: opacity .5s;
-  }
+.banner:hover .banner__image-container {
+  opacity: 1;
+  transition: opacity .5s;
 }
 
 .banner__image {
@@ -455,31 +470,6 @@ h3 {
   opacity: 1;
   transition: opacity .3s;
 }
-
-
-/* Main */
-
-.main {
-  width: 100%;
-  height: 100%;
-  background: var(--blue);
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  animation: fade-in ease-out .5s;
-}
-
-.main__container {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: var(--white);
-}
-
 
 /* Menu */
 

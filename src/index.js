@@ -1,4 +1,4 @@
-require('./styles.compiled.css')
+require('./styles.css')
 var attachFastClick = require('fastclick')
 var startApp = require('./App')
 

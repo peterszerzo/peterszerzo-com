@@ -1,7 +1,7 @@
 module Views.Main exposing (..)
 
-import Html exposing (Html, div, text, h1, p, header)
-import Html.Attributes exposing (class, classList, src, href)
+import Html exposing (Html, div, text, h1, p, header, node)
+import Html.Attributes exposing (class, classList, src, href, attribute, style)
 import Html.Events exposing (onClick)
 import Markdown exposing (toHtml)
 import Models exposing (Model, Mode(..))
@@ -13,6 +13,8 @@ import Views.Background
 import Content
 import Views.Shapes exposing (logo, smallLogo, falafel, close)
 import Views.Links exposing (viewMainLinks)
+import Styles exposing (css)
+import Css.File exposing (compile)
 
 
 view : Model -> Html Msg
@@ -41,18 +43,21 @@ view model =
                 Router.NotFound ->
                     div [] []
     in
-        div
-            [ class "main"
-            ]
-            [ div
-                [ class "main__content"
+        div [ style [ ( "width", "100%" ), ( "height", "100%" ) ] ]
+            [ node "style" [] [ compile [ css ] |> .css |> text ]
+            , div
+                [ class "Main"
                 ]
-                [ banner
+                [ div
+                    [ class "MainContent"
+                    ]
+                    [ banner
+                    ]
+                , content
+                , Views.Background.view model
+                , header_ model
+                , notification model
                 ]
-            , content
-            , Views.Background.view model
-            , header_ model
-            , notification model
             ]
 
 

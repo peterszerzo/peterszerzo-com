@@ -12,7 +12,6 @@
     "fastclick": "^1.0.6"
   },
   "devDependencies": {
-    "min-document": "^2.19.0",
     "standard": "^8.6.0",
     "stylelint": "^7.6.0"
   }
