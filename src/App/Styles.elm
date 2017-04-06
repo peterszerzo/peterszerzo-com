@@ -26,6 +26,11 @@ type CssClasses
     | DesktopLink
     | DesktopLinkActive
     | Static
+    | Spinner
+    | Switch
+    | SwitchButton
+    | SwitchLeft
+    | SwitchRight
 
 
 type CssIds
@@ -398,6 +403,57 @@ css =
                     , each [ p, li ]
                         [ fontSize (Css.rem 1.375)
                         ]
+                    ]
+                ]
+            ]
+        , class Spinner
+            [ position absolute
+            , top (pct 40)
+            , left (pct 50)
+            , property "transform" "translate3d(-50%, -50%, 0)"
+            , descendants
+                [ svg
+                    [ fill blue
+                    , property "animation" "spin 1s ease-in-out infinite"
+                    ]
+                ]
+            ]
+        , class Switch
+            [ cursor pointer
+            , display inlineBlock
+            , width (px 26)
+            , height (px 12)
+            , borderRadius (px 6)
+            , property "opacity" ".6"
+            , padding (px 10)
+            , position relative
+            , property "transition" "opacity .3s"
+            , borderColor blue
+            , property "border-width" "1px"
+            , hover
+                [ property "opacity" "1"
+                ]
+            ]
+        , class SwitchButton
+            [ width (px 12)
+            , height (px 12)
+            , borderRadius (px 6)
+            , backgroundColor blue
+            , position absolute
+            , top (px 0)
+            , left (px 0)
+            , property "transform" "translate3d(0, 0, 0)"
+            , property "transition" "transform .3s"
+            ]
+        , class SwitchLeft
+            [ descendants
+                [ class SwitchButton []
+                ]
+            ]
+        , class SwitchRight
+            [ descendants
+                [ class SwitchButton
+                    [ property "transform" "translate3d(14px, 0, 0)"
                     ]
                 ]
             ]

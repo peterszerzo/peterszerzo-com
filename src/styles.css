@@ -10,15 +10,6 @@
   --mustard: #DBA700;
   --shadow-color: #33333333;
 
-  --pt-sans: 'PT Sans', sans-serif;
-  --pt-serif: 'PT Serif', serif;
-
-  --switch-frame-width: 26px;
-  --switch-frame-height: 12px;
-  --switch-button-size: 12px;
-
-  --logo-size: 180px;
-
   --icon-size: 18px;
 
   --background-opacity-scale: .005;
@@ -30,65 +21,7 @@
   --z-header: 15;
   --z-bg: 1;
   --z-banner: 10;
-
-  --standard-text: {
-    font-size: 1rem;
-    letter-spacing: .05rem;
-    line-height: 1.35;
-  }
-
-  --standard-shadow: {
-    box-shadow: 0 0 12px var(--shadow-color);
-  }
 }
-
-@custom-media --desktop (min-width: 700px);
-
-@keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes float {
-  0% {
-    transform: translate3d(-5px, 3px, 0);
-  }
-
-  100% {
-    transform: translate3d(5px, -3px, 0);
-  }
-}
-
-
-/* Spinner */
-
-.spinner {
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  transform: translate3d(-50%, -50%, 0);
-
-  & svg {
-    fill: var(--blue);
-    animation: spin 1s ease-in-out infinite;
-  }
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0turn);
-  }
-
-  100% {
-    transform: rotate(1turn);
-  }
-}
-
 /* Background */
 
 .background {
@@ -161,57 +94,6 @@
   70% { opacity: calc(25 * var(--background-opacity-scale)); }
   80% { opacity: calc(12.5 * var(--background-opacity-scale)); }
   100% { opacity: calc(12.5 * var(--background-opacity-scale)); }
-}
-
-
-/* Switch */
-
-.switch {
-  cursor: pointer;
-  display: inline-block;
-  opacity: .6;
-  padding: 10px;
-  position: relative;
-  transition: opacity .3s;
-
-  &:hover {
-    opacity: 1;
-    transition: opacity .3s;
-  }
-}
-
-.switch__content {
-  position: relative;
-}
-
-.switch__frame {
-  border: 1px solid var(--blue);
-  border-radius: calc(var(--switch-frame-height) / 2);
-  box-sizing: border-box;
-  height: var(--switch-frame-height);
-  width: var(--switch-frame-width);
-}
-
-.switch__button {
-  width: var(--switch-button-size);
-  height: var(--switch-button-size);
-  border-radius: 100%;
-  background-color: var(--blue);
-  position: absolute;
-  top: calc(var(--switch-frame-height) / 2 - var(--switch-button-size) / 2);
-  left: calc(var(--switch-frame-width) / 2 - var(--switch-button-size) / 2);
-  transform: translate3d(0, 0, 0);
-  transition: transform .3s;
-
-  @nest .switch--right & {
-    transform: translate3d(calc(var(--switch-frame-width) / 2 - var(--switch-button-size) / 2), 0, 0);
-    transition: transform .3s;
-  }
-
-  @nest .switch--left & {
-    transform: translate3d(calc(- var(--switch-frame-width) / 2 + var(--switch-button-size) / 2), 0, 0);
-    transition: transform .3s;
-  }
 }
 
 

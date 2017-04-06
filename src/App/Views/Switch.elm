@@ -3,32 +3,26 @@ module Views.Switch exposing (..)
 import Html exposing (Html, div)
 import Html.Attributes exposing (class)
 import Html.Events exposing (onClick)
-import Messages exposing (Msg)
 import Models exposing (Model, SwitchPosition(..))
 
 
-view : SwitchPosition -> Msg -> Html Msg
-view model msgOnClick =
+view : SwitchPosition -> msg -> Html msg
+view model handleClick =
     let
         className =
             case model of
                 Left ->
-                    "switch switch--left"
+                    "Switch SwitchLeft"
 
                 Center ->
-                    "switch"
+                    "Switch"
 
                 Right ->
-                    "switch switch--right"
+                    "Switch SwitchRight"
     in
         div
             [ class className
-            , onClick msgOnClick
+            , onClick handleClick
             ]
-            [ div
-                [ class "switch__content"
-                ]
-                [ div [ class "switch__frame" ] []
-                , div [ class "switch__button" ] []
-                ]
+            [ div [ class "SwitchButton" ] []
             ]
