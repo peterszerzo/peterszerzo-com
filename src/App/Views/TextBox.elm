@@ -15,14 +15,14 @@ viewContents c1 c2 =
         [ class "text-box__contents" ]
         [ div [ class "text-box__content" ]
             [ toHtml
-                [ class "static" ]
+                [ class "Static" ]
                 c1
             ]
         , div
             [ class "text-box__content"
             ]
             [ toHtml
-                [ class "static"
+                [ class "Static"
                 ]
                 c2
             ]

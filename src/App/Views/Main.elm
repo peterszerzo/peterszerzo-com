@@ -64,16 +64,14 @@ view model =
 banner : Html Msg
 banner =
     div
-        [ class "banner"
+        [ class "Banner"
         ]
         [ div
-            [ class "banner__logo"
+            [ class "BannerLogo"
             ]
             [ logo
-            , div [ class "banner__image-container" ]
-                [ div [ class "banner__image" ] []
-                , div [ class "banner__overlay" ] []
-                ]
+            , div [ class "BannerImage" ]
+                []
             ]
         , h1 [] [ text Content.title ]
         , p [] [ text Content.subtitle ]
@@ -91,19 +89,19 @@ header_ model =
     in
         header
             [ classList
-                [ ( "header", True )
-                , ( "header--discrete", isHome )
+                [ ( "Header", True )
+                , ( "HeaderDiscrete", isHome )
                 ]
             ]
             [ div
-                [ class "header__icon header__logo"
+                [ class "HeaderIcon HeaderLogo"
                 , onClick
                     (ChangePath "")
                 ]
                 [ smallLogo ]
-            , viewMainLinks currentPath "header__desktop-links" "header__desktop-link"
+            , viewMainLinks currentPath "DesktopLinks" "DesktopLink"
             , div
-                [ class "header__icon header__falafel"
+                [ class "HeaderIcon HeaderFalafel"
                 , onClick
                     (ChangePath
                         (if model.route == Router.Menu then
@@ -125,16 +123,16 @@ notification : Models.Model -> Html.Html Msg
 notification model =
     div
         [ classList
-            [ ( "notification", True )
-            , ( "notification--visible", (not model.isNotificationDismissed) && (model.time > 12 && model.time < 75) )
+            [ ( "Notification", True )
+            , ( "NotificationVisible", (not model.isNotificationDismissed) && (model.time > 12 && model.time < 75) )
             ]
         ]
         [ toHtml
-            [ class "notification__body"
+            [ class "NotificationBody"
             ]
             Content.notification
         , div
-            [ class "notification__close"
+            [ class "NotificationClose"
             , onClick DismissNotification
             ]
             [ close
@@ -149,7 +147,7 @@ menu model =
             Router.routeToSlug model.route
     in
         div
-            [ class "menu"
+            [ class "Menu"
             ]
-            [ viewMainLinks currentPath "menu__links" "menu__link"
+            [ viewMainLinks currentPath "MenuLinks" "MenuLink"
             ]

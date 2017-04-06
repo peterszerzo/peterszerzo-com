@@ -19,7 +19,7 @@ viewMainLink currentSlug className ( label, url ) =
         a
             ([ (classList
                     [ ( className, True )
-                    , ( className ++ "--active", currentSlug == Just slug )
+                    , ( className ++ "Active", currentSlug == Just slug )
                     ]
                )
              , href
