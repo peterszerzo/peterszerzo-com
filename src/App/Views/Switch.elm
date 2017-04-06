@@ -8,7 +8,10 @@ import Html.Events exposing (onClick)
 view : Bool -> msg -> Html msg
 view isRight handleClick =
     div
-        [ classList [ ( "Switch", True ), ( "SwitchRight", isRight ) ]
+        [ classList
+            [ ( "Switch", True )
+            , ( "SwitchRight", isRight )
+            ]
         , onClick handleClick
         ]
         [ div [ class "SwitchButton" ] []

@@ -4,7 +4,7 @@ import Html exposing (Html, div, text, h1, p, header, node)
 import Html.Attributes exposing (class, classList, src, href, attribute, style)
 import Html.Events exposing (onClick)
 import Markdown exposing (toHtml)
-import Models exposing (Model, Mode(..))
+import Models exposing (Model)
 import Router
 import Messages exposing (Msg(..))
 import Views.TextBox

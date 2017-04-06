@@ -1,7 +1,7 @@
 module Update exposing (..)
 
 import Messages exposing (Msg(..))
-import Models exposing (Model, Mode(..))
+import Models exposing (Model)
 import Navigation exposing (..)
 import Ports
 

@@ -425,11 +425,11 @@ css =
             , height (px 12)
             , borderRadius (px 6)
             , property "opacity" ".6"
-            , padding (px 10)
             , position relative
             , property "transition" "opacity .3s"
             , borderColor blue
             , property "border-width" "1px"
+            , property "border-style" "solid"
             , hover
                 [ property "opacity" "1"
                 ]
@@ -440,8 +440,8 @@ css =
             , borderRadius (px 6)
             , backgroundColor blue
             , position absolute
-            , top (px 0)
-            , left (px 0)
+            , top (px -1)
+            , left (px -1)
             , property "transform" "translate3d(0, 0, 0)"
             , property "transition" "transform .3s"
             ]

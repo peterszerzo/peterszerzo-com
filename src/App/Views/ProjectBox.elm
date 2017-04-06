@@ -9,7 +9,12 @@ import Models
 viewProject : Models.Project -> Html Msg
 viewProject project =
     a [ class "project", href project.url ]
-        [ div [ class "project__image", style [ ( "background-image", "url(" ++ project.imageUrl ++ ")" ) ] ]
+        [ div
+            [ class "project__image"
+            , style
+                [ ( "background-image", "url(" ++ project.imageUrl ++ ")" )
+                ]
+            ]
             []
         , h3 [] [ text project.title ]
         , p [] [ text project.description ]
