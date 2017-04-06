@@ -11,6 +11,7 @@ import Views.TextBox
 import Views.ProjectBox
 import Views.Background
 import Content
+import Views.Banner
 import Views.Shapes exposing (logo, smallLogo, falafel, close)
 import Views.Links exposing (viewMainLinks)
 import Styles exposing (css)
@@ -29,16 +30,16 @@ view model =
                     Views.ProjectBox.view Content.projects
 
                 Router.Now ->
-                    Views.TextBox.view ( Content.now, Nothing ) model.mode
+                    Views.TextBox.view ( Content.now, Nothing ) model.isQuirky
 
                 Router.About ->
-                    Views.TextBox.view ( Content.aboutConventional, Just Content.aboutReal ) model.mode
+                    Views.TextBox.view ( Content.aboutConventional, Just Content.aboutReal ) model.isQuirky
 
                 Router.Menu ->
                     menu model
 
                 Router.Talks ->
-                    Views.TextBox.view ( Content.talks, Nothing ) model.mode
+                    Views.TextBox.view ( Content.talks, Nothing ) model.isQuirky
 
                 Router.NotFound ->
                     div [] []
@@ -51,7 +52,7 @@ view model =
                 [ div
                     [ class "MainContent"
                     ]
-                    [ banner
+                    [ Views.Banner.view
                     ]
                 , content
                 , Views.Background.view model
@@ -59,23 +60,6 @@ view model =
                 , notification model
                 ]
             ]
-
-
-banner : Html Msg
-banner =
-    div
-        [ class "Banner"
-        ]
-        [ div
-            [ class "BannerLogo"
-            ]
-            [ logo
-            , div [ class "BannerImage" ]
-                []
-            ]
-        , h1 [] [ text Content.title ]
-        , p [] [ text Content.subtitle ]
-        ]
 
 
 header_ : Model -> Html Msg

@@ -4,9 +4,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Markdown exposing (toHtml)
 import Messages exposing (..)
-import Models exposing (Mode(..))
 import Views.Switch
-import Models exposing (SwitchPosition(..))
 
 
 viewContents : String -> String -> Html Msg
@@ -29,35 +27,28 @@ viewContents c1 c2 =
         ]
 
 
-viewNav : Models.Mode -> Bool -> Html Msg
-viewNav mode isSwitchHidden =
-    let
-        switchModel =
-            if mode == Conventional then
-                Left
-            else
-                Right
-    in
-        div
-            [ classList
-                [ ( "text-box__switch", True )
-                , ( "text-box__switch--hidden", isSwitchHidden )
-                ]
+viewNav : Bool -> Bool -> Html Msg
+viewNav isRight isSwitchHidden =
+    div
+        [ classList
+            [ ( "text-box__switch", True )
+            , ( "text-box__switch--hidden", isSwitchHidden )
             ]
-            [ Views.Switch.view switchModel ToggleMode
-            ]
+        ]
+        [ Views.Switch.view isRight ToggleQuirky
+        ]
 
 
-view : ( String, Maybe String ) -> Models.Mode -> Html Msg
-view ( c1, c2 ) mode =
+view : ( String, Maybe String ) -> Bool -> Html Msg
+view ( c1, c2 ) isQuirky =
     div
         [ classList
             [ ( "text-box", True )
-            , ( "text-box--primary-displayed", mode == Conventional || c2 == Nothing )
-            , ( "text-box--secondary-displayed", mode == Real && c2 /= Nothing )
+            , ( "text-box--primary-displayed", not isQuirky || c2 == Nothing )
+            , ( "text-box--secondary-displayed", isQuirky && c2 /= Nothing )
             ]
         ]
-        [ viewNav mode (c2 == Nothing)
+        [ viewNav isQuirky (c2 == Nothing)
         , viewContents
             c1
             (c2 |> Maybe.withDefault "")

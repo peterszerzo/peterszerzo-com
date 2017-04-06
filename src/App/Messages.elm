@@ -6,7 +6,7 @@ import Window
 
 
 type Msg
-    = ToggleMode
+    = ToggleQuirky
     | ChangePath String
     | Tick Time
     | ChangeRoute Route

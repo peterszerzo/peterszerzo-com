@@ -8,7 +8,7 @@ import Window
 
 type alias Model =
     { route : Route
-    , mode : Mode
+    , isQuirky : Bool
     , time : Float
     , isNotificationDismissed : Bool
     , window : Window.Size
@@ -17,7 +17,7 @@ type alias Model =
 
 init : Flags -> Route -> ( Model, Cmd Msg )
 init isNotificationDismissed route =
-    ( Model route Conventional 0 isNotificationDismissed (Window.Size 0 0)
+    ( Model route False 0 isNotificationDismissed (Window.Size 0 0)
     , Task.perform Resize Window.size
     )
 
@@ -43,11 +43,6 @@ type ProjectCategory
 
 type alias Flags =
     Bool
-
-
-type Mode
-    = Conventional
-    | Real
 
 
 type SwitchPosition

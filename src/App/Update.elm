@@ -9,17 +9,10 @@ import Ports
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        ToggleMode ->
-            let
-                newMode =
-                    if model.mode == Conventional then
-                        Real
-                    else
-                        Conventional
-            in
-                ( { model | mode = newMode }
-                , Cmd.none
-                )
+        ToggleQuirky ->
+            ( { model | isQuirky = not model.isQuirky }
+            , Cmd.none
+            )
 
         DismissNotification ->
             ( { model | isNotificationDismissed = True }
