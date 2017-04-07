@@ -4,6 +4,7 @@
   "description": "Source code for my personal website.",
   "main": "index.js",
   "scripts": {
+    "start": "elm-app start",
     "lint": "./node_modules/.bin/stylelint ./src/styles.css && ./node_modules/.bin/standard"
   },
   "author": "Peter Szerzo <szerzo.peter@gmail.com>",

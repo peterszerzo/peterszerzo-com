@@ -55,7 +55,7 @@ view model =
             (toFloat size) / 100
     in
         div
-            [ class "background"
+            [ class "Background"
             , style
                 [ ( "top", "-" ++ (toString top) ++ "px" )
                 , ( "left", "-" ++ (toString left) ++ "px" )

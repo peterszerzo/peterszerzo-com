@@ -6,7 +6,8 @@ import Css.Namespace exposing (namespace)
 
 
 type CssClasses
-    = Banner
+    = Background
+    | Banner
     | BannerLogo
     | Main
     | MainContent
@@ -31,6 +32,8 @@ type CssClasses
     | SwitchButton
     | SwitchLeft
     | SwitchRight
+    | Project
+    | ProjectImage
 
 
 type CssIds
@@ -99,6 +102,18 @@ css =
                 ]
             , h3
                 [ fontSize (Css.rem 2)
+                ]
+            ]
+        , class Background
+            [ position absolute
+            , top (px 0)
+            , left (px 0)
+            , property "z-index" "1"
+            , descendants
+                [ selector "polygon"
+                    [ fill white
+                    , property "opacity" ".05"
+                    ]
                 ]
             ]
         , class Main
@@ -457,6 +472,120 @@ css =
                     ]
                 ]
             ]
+        , class Project
+            [ display block
+            , property "margin" "40px auto"
+            , padding (px 20)
+            , maxWidth (px 640)
+            , width (pct 100)
+            , textDecoration none
+            , textAlign left
+            , color currentColor
+            , property "border" "1px solid transparent"
+            , property "transition" "all .6s"
+            , firstOfType
+                [ marginTop (px 0)
+                ]
+            , lastOfType
+                [ marginBottom (px 0)
+                ]
+            , descendants
+                [ h3
+                    [ property "margin" "1rem 0 0"
+                    ]
+                , p
+                    [ marginTop (px 0)
+                    ]
+                ]
+            , hover standardShadow
+            ]
+        , mediaQuery desktop
+            [ class Project
+                [ property "margin" "80px auto"
+                , padding (px 40)
+                ]
+            ]
+        , class ProjectImage
+            [ width (pct 100)
+            , marginBottom (Css.rem 1)
+            , paddingTop (pct 62.5)
+            , property "border" "1px solid rgba(0, 0, 0, .2)"
+            , backgroundSize cover
+            , backgroundRepeat noRepeat
+            , property "background-position" "50% 50%"
+            ]
+          -- .project-box,
+          -- .text-box {
+          --   background-color: var(--white);
+          --   color: var(--dark-grey);
+          --   width: 100%;
+          --   height: 100%;
+          --   position: fixed;
+          --   left: 0;
+          --   z-index: var(--z-text-box);
+          -- }
+          --
+          -- .project-box__content {
+          --   width: 100%;
+          --   height: 100%;
+          --   overflow-y: scroll;
+          --   -webkit-overflow-scrolling: touch;
+          --   padding: 100px 40px 60px;
+          -- }
+          -- .text-box {
+          --   background-color: var(--white);
+          --   width: 100%;
+          --   height: 100%;
+          --   position: fixed;
+          --   transition: opacity .3s;
+          -- }
+          --
+          -- .text-box--hidden {
+          --   opacity: 0;
+          --   pointer-events: none;
+          -- }
+          --
+          -- .text-box--primary-displayed {
+          --   & .text-box__content:nth-of-type(2) {
+          --     opacity: 0;
+          --     pointer-events: none;
+          --   }
+          -- }
+          --
+          -- .text-box--secondary-displayed {
+          --   & .text-box__content:nth-of-type(1) {
+          --     opacity: 0;
+          --     pointer-events: none;
+          --   }
+          -- }
+          --
+          -- .text-box__contents {
+          --   height: 100%;
+          -- }
+          --
+          -- .text-box__content {
+          --   width: 100%;
+          --   height: 100%;
+          --   position: absolute;
+          --   top: 0;
+          --   left: 0;
+          --   padding: 40px 0;
+          --   overflow-y: scroll;
+          --   -webkit-overflow-scrolling: touch;
+          --   margin: auto;
+          --   transition: all .3s;
+          -- }
+          --
+          -- .text-box__switch {
+          --   position: fixed;
+          --   bottom: 10px;
+          --   left: 5px;
+          --   z-index: 3;
+          -- }
+          --
+          -- .text-box__switch--hidden {
+          --   display: none;
+          -- }
         ]
 
 
