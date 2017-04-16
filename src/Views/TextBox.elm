@@ -10,14 +10,14 @@ import Views.Switch
 viewContents : String -> String -> Html Msg
 viewContents c1 c2 =
     div
-        [ class "text-box__contents" ]
-        [ div [ class "text-box__content" ]
+        [ class "TextBoxContents" ]
+        [ div [ class "TextBoxContent" ]
             [ toHtml
                 [ class "Static" ]
                 c1
             ]
         , div
-            [ class "text-box__content"
+            [ class "TextBoxContent"
             ]
             [ toHtml
                 [ class "Static"
@@ -31,8 +31,8 @@ viewNav : Bool -> Bool -> Html Msg
 viewNav isRight isSwitchHidden =
     div
         [ classList
-            [ ( "text-box__switch", True )
-            , ( "text-box__switch--hidden", isSwitchHidden )
+            [ ( "TextBoxSwitch", True )
+            , ( "TextBoxSwitchHidden", isSwitchHidden )
             ]
         ]
         [ Views.Switch.view isRight ToggleQuirky
@@ -43,9 +43,9 @@ view : ( String, Maybe String ) -> Bool -> Html Msg
 view ( c1, c2 ) isQuirky =
     div
         [ classList
-            [ ( "text-box", True )
-            , ( "text-box--primary-displayed", not isQuirky || c2 == Nothing )
-            , ( "text-box--secondary-displayed", isQuirky && c2 /= Nothing )
+            [ ( "TextBox", True )
+            , ( "TextBoxDisplayPrimary", not isQuirky || c2 == Nothing )
+            , ( "TextBoxDisplaySecondary", isQuirky && c2 /= Nothing )
             ]
         ]
         [ viewNav isQuirky (c2 == Nothing)

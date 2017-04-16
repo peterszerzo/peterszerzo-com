@@ -10,7 +10,7 @@ import Views.Project
 view : List Models.Project -> Html Msg
 view projects =
     div
-        [ class "project-box" ]
-        [ div [ class "project-box__content" ]
+        [ class "ProjectBox" ]
+        [ div [ class "ProjectBoxContent" ]
             (List.map Views.Project.view projects)
         ]

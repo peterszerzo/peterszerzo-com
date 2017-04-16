@@ -15,10 +15,11 @@ svgView attrs polygons =
          ]
             ++ attrs
         )
-        (List.map
-            (\pts ->
+        (List.indexedMap
+            (\index pts ->
                 Svg.polygon
-                    [ points
+                    [ style [ ( "opacity", opacities |> List.drop index |> List.head |> Maybe.map toString |> Maybe.withDefault "0" ) ]
+                    , points
                         (pts
                             |> List.map (\( x, y ) -> (toString x) ++ "," ++ (toString (100 - y)))
                             |> String.join " "
@@ -63,6 +64,11 @@ view model =
             ]
             [ svgView [ width (toString size), height (toString size) ] polygons
             ]
+
+
+opacities : List Float
+opacities =
+    [ 0, 0.03, 0.02, 0.07, 0.1 ]
 
 
 polygons : List (List ( Float, Float ))

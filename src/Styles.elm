@@ -34,6 +34,16 @@ type CssClasses
     | SwitchRight
     | Project
     | ProjectImage
+    | ProjectBox
+    | ProjectBoxContent
+    | TextBox
+    | TextBoxHidden
+    | TextBoxContents
+    | TextBoxContent
+    | TextBoxDisplayPrimary
+    | TextBoxDisplaySecondary
+    | TextBoxSwitch
+    | TextBoxSwitchHidden
 
 
 type CssIds
@@ -63,6 +73,11 @@ mustard =
 black : Color
 black =
     hex "000000"
+
+
+darkGrey : Color
+darkGrey =
+    hex "333333"
 
 
 white : Color
@@ -138,7 +153,7 @@ css =
              , height auto
              , right (px 40)
              , borderRadius (px 3)
-             , property "zIndex" "20"
+             , property "z-index" "20"
              , property "opacity" "0"
              , property "transition" "all 1s"
              , property "pointer-events" "none"
@@ -514,78 +529,77 @@ css =
             , backgroundRepeat noRepeat
             , property "background-position" "50% 50%"
             ]
-          -- .project-box,
-          -- .text-box {
-          --   background-color: var(--white);
-          --   color: var(--dark-grey);
-          --   width: 100%;
-          --   height: 100%;
-          --   position: fixed;
-          --   left: 0;
-          --   z-index: var(--z-text-box);
-          -- }
-          --
-          -- .project-box__content {
-          --   width: 100%;
-          --   height: 100%;
-          --   overflow-y: scroll;
-          --   -webkit-overflow-scrolling: touch;
-          --   padding: 100px 40px 60px;
-          -- }
-          -- .text-box {
-          --   background-color: var(--white);
-          --   width: 100%;
-          --   height: 100%;
-          --   position: fixed;
-          --   transition: opacity .3s;
-          -- }
-          --
-          -- .text-box--hidden {
-          --   opacity: 0;
-          --   pointer-events: none;
-          -- }
-          --
-          -- .text-box--primary-displayed {
-          --   & .text-box__content:nth-of-type(2) {
-          --     opacity: 0;
-          --     pointer-events: none;
-          --   }
-          -- }
-          --
-          -- .text-box--secondary-displayed {
-          --   & .text-box__content:nth-of-type(1) {
-          --     opacity: 0;
-          --     pointer-events: none;
-          --   }
-          -- }
-          --
-          -- .text-box__contents {
-          --   height: 100%;
-          -- }
-          --
-          -- .text-box__content {
-          --   width: 100%;
-          --   height: 100%;
-          --   position: absolute;
-          --   top: 0;
-          --   left: 0;
-          --   padding: 40px 0;
-          --   overflow-y: scroll;
-          --   -webkit-overflow-scrolling: touch;
-          --   margin: auto;
-          --   transition: all .3s;
-          -- }
-          --
-          -- .text-box__switch {
-          --   position: fixed;
-          --   bottom: 10px;
-          --   left: 5px;
-          --   z-index: 3;
-          -- }
-          --
-          -- .text-box__switch--hidden {
-          --   display: none;
-          -- }
+        , each [ class ProjectBox, class TextBox ]
+            [ backgroundColor white
+            , color darkGrey
+            , width (pct 100)
+            , height (pct 100)
+            , position fixed
+            , left (px 0)
+            , property "z-index" "15"
+            ]
+        , class ProjectBoxContent
+            [ width (pct 100)
+            , height (pct 100)
+            , overflowY scroll
+            , property "-webkit-overflow-scrolling" "touch"
+            , property "padding" "100px 40px 60px"
+            ]
+        , class TextBox
+            [ backgroundColor white
+            , width (pct 100)
+            , height (pct 100)
+            , position fixed
+            , property "transition" "opacity .3s"
+            ]
+        , class TextBoxHidden
+            [ property "opacity" "0"
+            , property "pointer-events" "none"
+            ]
+        , class TextBoxDisplayPrimary
+            [ descendants
+                [ class TextBoxContent
+                    [ nthOfType "2"
+                        [ property "opacity" "0"
+                        , property "pointer-events" "none"
+                        ]
+                    ]
+                ]
+            ]
+        , class TextBoxDisplaySecondary
+            [ descendants
+                [ class TextBoxContent
+                    [ nthOfType "1"
+                        [ property "opacity" "0"
+                        , property "pointer-events" "none"
+                        ]
+                    ]
+                ]
+            ]
+        , class TextBoxContents
+            [ height (pct 100)
+            ]
+        , class TextBoxContent
+            [ width (pct 100)
+            , height (pct 100)
+            , position absolute
+            , top (px 0)
+            , left (px 0)
+            , property "padding" "40px 0"
+            , overflowY scroll
+            , property "-webkit-overflow-scrolling" "touch"
+            , margin auto
+            , property "transition" "all .3s"
+            ]
+        , class TextBoxSwitch
+            [ position fixed
+            , bottom (px 10)
+            , left (px 5)
+            , property "z-index" "3"
+            ]
+        , class TextBoxSwitchHidden
+            [ display none
+            ]
         ]
 
 
