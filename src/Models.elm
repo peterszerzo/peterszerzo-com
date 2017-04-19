@@ -11,13 +11,14 @@ type alias Model =
     , isQuirky : Bool
     , time : Float
     , isNotificationDismissed : Bool
+    , isDev : Bool
     , window : Window.Size
     }
 
 
 init : Flags -> Route -> ( Model, Cmd Msg )
-init isNotificationDismissed route =
-    ( Model route False 0 isNotificationDismissed (Window.Size 0 0)
+init { isNotificationRecentlyDismissed, isDev } route =
+    ( Model route False 0 isNotificationRecentlyDismissed isDev (Window.Size 0 0)
     , Task.perform Resize Window.size
     )
 
@@ -42,7 +43,9 @@ type ProjectCategory
 
 
 type alias Flags =
-    Bool
+    { isNotificationRecentlyDismissed : Bool
+    , isDev : Bool
+    }
 
 
 type SwitchPosition

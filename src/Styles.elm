@@ -1,7 +1,7 @@
 module Styles exposing (..)
 
 import Css exposing (..)
-import Css.Elements exposing (a, p, h1, h2, h3, svg, img, li, ul)
+import Css.Elements exposing (a, p, h1, h2, h3, svg, img, li, ul, div, html, body)
 import Css.Namespace exposing (namespace)
 
 
@@ -47,7 +47,7 @@ type CssClasses
 
 
 type CssIds
-    = Page
+    = App
 
 
 sansSerif : String
@@ -98,7 +98,20 @@ standardShadow =
 css : Stylesheet
 css =
     (stylesheet << namespace "")
-        [ a
+        [ everything
+            [ boxSizing borderBox
+            , property "font-family" "'PT Sans', sans-serif"
+            , property "-webkit-font-smoothing" "antialiased"
+            , property "-moz-osx-font-smoothing" "grayscale"
+            ]
+        , each [ html, body ]
+            [ margin (px 0)
+            , padding (px 0)
+            , width (pct 100)
+            , height (pct 100)
+            , overflow hidden
+            ]
+        , a
             [ textDecoration none
             , property "border" "0"
             ]
@@ -118,6 +131,10 @@ css =
             , h3
                 [ fontSize (Css.rem 2)
                 ]
+            ]
+        , id App
+            [ width (pct 100)
+            , height (pct 100)
             ]
         , class Background
             [ position absolute
@@ -225,12 +242,25 @@ css =
                 [ svg
                     [ property "stroke" "white"
                     ]
-                , img
+                , div
                     [ property "background-image" "url(/imgs/portrait-360.jpg)"
+                    , property "background-size" "cover"
+                    , property "background-position" "50% 50%"
                     , position absolute
+                    , top (px 0)
+                    , left (px 0)
                     , width (pct 100)
                     , height (pct 100)
                     , borderRadius (pct 50)
+                    , property "opacity" "0"
+                    , property "transition" "all .5s"
+                    ]
+                ]
+            , hover
+                [ children
+                    [ div
+                        [ property "opacity" "1"
+                        ]
                     ]
                 ]
             ]
@@ -366,7 +396,7 @@ css =
                     , property "background-color" "rgba(255, 255, 255, .1)"
                     , hover
                         [ color blue
-                        , property "background-color" "rgba(255, 255, 255)"
+                        , property "background-color" "rgba(255, 255, 255, 1)"
                         ]
                     ]
                 ]
@@ -553,14 +583,14 @@ css =
             , property "transition" "opacity .3s"
             ]
         , class TextBoxHidden
-            [ property "opacity" "0"
+            [ opacity (int 0)
             , property "pointer-events" "none"
             ]
         , class TextBoxDisplayPrimary
             [ descendants
                 [ class TextBoxContent
                     [ nthOfType "2"
-                        [ property "opacity" "0"
+                        [ opacity (int 0)
                         , property "pointer-events" "none"
                         ]
                     ]
@@ -570,7 +600,7 @@ css =
             [ descendants
                 [ class TextBoxContent
                     [ nthOfType "1"
-                        [ property "opacity" "0"
+                        [ opacity (int 0)
                         , property "pointer-events" "none"
                         ]
                     ]
@@ -593,8 +623,8 @@ css =
             ]
         , class TextBoxSwitch
             [ position fixed
-            , bottom (px 10)
-            , left (px 5)
+            , bottom (px 15)
+            , left (px 15)
             , property "z-index" "3"
             ]
         , class TextBoxSwitchHidden

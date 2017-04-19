@@ -1,21 +1,26 @@
 module Views.Banner exposing (..)
 
 import Html exposing (Html, div, text, h1, p, header, node)
-import Html.Attributes exposing (class, classList, src, href, attribute, style)
+import Html.CssHelpers
 import Content
+import Styles
 import Views.Shapes exposing (logo)
+
+
+{ id, class, classList } =
+    Html.CssHelpers.withNamespace ""
 
 
 view : Html msg
 view =
     div
-        [ class "Banner"
+        [ class [ Styles.Banner ]
         ]
         [ div
-            [ class "BannerLogo"
+            [ class [ Styles.BannerLogo ]
             ]
             [ logo
-            , div [ class "BannerImage" ]
+            , div []
                 []
             ]
         , h1 [] [ text Content.title ]

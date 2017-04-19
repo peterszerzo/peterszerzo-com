@@ -1,43 +1,44 @@
-var attachFastClick = require('fastclick')
+(function() {
+  console.log('Hi, Mom!')
 
-console.log('Hi, Mom!')
-attachFastClick.attach(global.document.body)
+  var IS_DEV = true
+  var LOCAL_STORAGE_KEY = 'peterszerzo.com:notification-last-dismissed'
 
-var Elm = require('./Main.elm')
-
-var LOCAL_STORAGE_KEY = 'peterszerzo-com:notification-last-dismissed'
-
-function notificationLastDismissedFor (localStorage) {
-  var now = new Date().getTime()
-  if (!localStorage) {
-    return now
-  }
-  var lastDismissedAt = Number(localStorage.getItem(LOCAL_STORAGE_KEY))
-  if (isNaN(lastDismissedAt)) {
-    return now
-  }
-  return now - lastDismissedAt
-}
-
-function setNotificationLastDismissed (localStorage) {
-  if (localStorage) {
-    localStorage.setItem(
-      LOCAL_STORAGE_KEY,
-      String(new Date().getTime())
-    )
-  }
-}
-
-function startApp (node, localStorage) {
-  var elmApp
-  var isNotificationRecentlyDismissed = notificationLastDismissedFor(localStorage) < 2 * 24 * 3600 * 1000
-  window.requestAnimationFrame(function () {
-    node.innerHTML = ''
-    elmApp = Elm.Main.embed(node, isNotificationRecentlyDismissed)
-    if (localStorage) {
-      elmApp.ports.notificationDismissed.subscribe(setNotificationLastDismissed)
+  function notificationLastDismissedFor (localStorage) {
+    var now = new Date().getTime()
+    if (!localStorage) {
+      return now
     }
-  })
-}
+    var lastDismissedAt = Number(localStorage.getItem(LOCAL_STORAGE_KEY))
+    if (isNaN(lastDismissedAt)) {
+      return now
+    }
+    return now - lastDismissedAt
+  }
 
-startApp(document.getElementById('app'), global.localStorage)
+  function setNotificationLastDismissed (localStorage) {
+    if (localStorage) {
+      localStorage.setItem(
+        LOCAL_STORAGE_KEY,
+        String(new Date().getTime())
+      )
+    }
+  }
+
+  function startApp (node, localStorage) {
+    var elmApp
+    var isNotificationRecentlyDismissed = notificationLastDismissedFor(localStorage) < 2 * 24 * 3600 * 1000
+    window.requestAnimationFrame(function () {
+      node.innerHTML = ''
+      elmApp = Elm.Main.embed(node, {
+        isNotificationRecentlyDismissed: isNotificationRecentlyDismissed,
+        isDev: IS_DEV
+      })
+      if (localStorage) {
+        elmApp.ports.notificationDismissed.subscribe(setNotificationLastDismissed)
+      }
+    })
+  }
+
+  startApp(document.getElementById('App'), localStorage)
+}())

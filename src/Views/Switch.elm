@@ -1,18 +1,23 @@
 module Views.Switch exposing (..)
 
 import Html exposing (Html, div)
-import Html.Attributes exposing (class, classList)
 import Html.Events exposing (onClick)
+import Html.CssHelpers
+import Styles
+
+
+{ id, class, classList } =
+    Html.CssHelpers.withNamespace ""
 
 
 view : Bool -> msg -> Html msg
 view isRight handleClick =
     div
         [ classList
-            [ ( "Switch", True )
-            , ( "SwitchRight", isRight )
+            [ ( Styles.Switch, True )
+            , ( Styles.SwitchRight, isRight )
             ]
         , onClick handleClick
         ]
-        [ div [ class "SwitchButton" ] []
+        [ div [ class [ Styles.SwitchButton ] ] []
         ]

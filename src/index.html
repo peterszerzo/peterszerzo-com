@@ -3,33 +3,12 @@
   <head>
     <title>Peter Szerzo makes himself a website</title>
     <meta charset='utf-8'>
-    <meta name='description' content='Programmer, designer, language enthusiast, yogi, cook. A friendly, straightforward fellow with eager-to-pedal feet, a green thumb and a curious mind.'>
-    <meta name='keywords' content='programmer, designer, writer'>
-    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-    <link href='https://fonts.googleapis.com/css?family=PT+Sans|PT+Serif:400' rel='stylesheet' type='text/css'>
+    <meta name="description" content="Programmer, designer, language enthusiast, yogi, cook. A friendly, straightforward fellow with eager-to-pedal feet, a green thumb and a curious mind.">
+    <meta name="keywords" content="programmer, designer, writer">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans|PT+Serif:400" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="/styles.css">
     <style>
-      * {
-        box-sizing: border-box;
-        font-family: 'PT Sans', sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-      }
-
-      html,
-      body {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-      }
-
-      #app {
-        width: 100%;
-        height: 100%;
-        position: relative;
-      }
-
       @keyframes fade-in {
         from {
           opacity: 0;
@@ -52,8 +31,8 @@
     </style>
   </head>
   <body>
-    <div id="app">
-      <div class="spinner">
+    <div id="App">
+      <div class="Spinner">
         <svg width="50" height="50" viewBox="0 0 50 50">
           <g transform="translate(25, 25)">
             <circle cx="0" cy="15" r="3"/>
@@ -62,5 +41,7 @@
         </svg>
       </div>
     </div>
+    <script src="/elm.js"></script>
+    <script src="/index.js"></script>
   </body>
 </html>

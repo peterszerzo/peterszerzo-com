@@ -45,21 +45,26 @@ view model =
                     div [] []
     in
         div [ style [ ( "width", "100%" ), ( "height", "100%" ) ] ]
-            [ node "style" [] [ compile [ css ] |> .css |> text ]
-            , div
-                [ class "Main"
-                ]
-                [ div
-                    [ class "MainContent"
-                    ]
-                    [ Views.Banner.view
-                    ]
-                , content
-                , Views.Background.view model
-                , header_ model
-                , notification model
-                ]
-            ]
+            ((if model.isDev then
+                [ node "style" [] [ compile [ css ] |> .css |> text ] ]
+              else
+                []
+             )
+                ++ [ div
+                        [ class "Main"
+                        ]
+                        [ div
+                            [ class "MainContent"
+                            ]
+                            [ Views.Banner.view
+                            ]
+                        , content
+                        , Views.Background.view model
+                        , header_ model
+                        , notification model
+                        ]
+                   ]
+            )
 
 
 header_ : Model -> Html Msg
