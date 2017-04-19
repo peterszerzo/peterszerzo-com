@@ -50,6 +50,11 @@ type CssIds
     = App
 
 
+zIndex : Int -> Mixin
+zIndex i =
+    property "z-index" (i |> toString)
+
+
 sansSerif : String
 sansSerif =
     "'PT Sans', sans-serif"
@@ -140,7 +145,7 @@ css =
             [ position absolute
             , top (px 0)
             , left (px 0)
-            , property "z-index" "1"
+            , zIndex 1
             , descendants
                 [ selector "polygon"
                     [ fill white
@@ -160,7 +165,7 @@ css =
             ]
         , class MainContent
             [ position relative
-            , property "z-index" "10"
+            , zIndex 10
             ]
         , class Notification
             ([ position fixed
@@ -170,8 +175,8 @@ css =
              , height auto
              , right (px 40)
              , borderRadius (px 3)
-             , property "z-index" "20"
-             , property "opacity" "0"
+             , zIndex 20
+             , opacity (int 0)
              , property "transition" "all 1s"
              , property "pointer-events" "none"
              ]
@@ -182,7 +187,7 @@ css =
                 [ width (px 280) ]
             ]
         , class NotificationBody
-            [ property "padding" "20px 60px 20px 20px"
+            [ padding4 (px 20) (px 60) (px 20) (px 20)
             , textAlign left
             , margin auto
             , color white
@@ -226,12 +231,14 @@ css =
                 ]
             ]
         , class NotificationVisible
-            [ property "opacity" "1", property "pointer-events" "all" ]
+            [ opacity (int 1)
+            , property "pointer-events" "all"
+            ]
         , class Banner
             [ color white
             , textAlign center
             , maxWidth (px 300)
-            , property "z-index" "10"
+            , zIndex 10
             ]
         , class BannerLogo
             [ width (px 180)
@@ -252,7 +259,7 @@ css =
                     , width (pct 100)
                     , height (pct 100)
                     , borderRadius (pct 50)
-                    , property "opacity" "0"
+                    , opacity (int 0)
                     , property "transition" "all .5s"
                     ]
                 ]
@@ -273,7 +280,7 @@ css =
             , property "background-color" "rgba(255, 255, 255, .95)"
             , property "transform" "translate3d(0, 0, 0)"
             , property "transition" "transform .3s"
-            , property "z-index" "50"
+            , zIndex 15
             ]
         , class MenuLinks
             [ display block
@@ -288,7 +295,7 @@ css =
             [ cursor pointer
             , display block
             , color blue
-            , property "padding" "10px 0"
+            , padding2 (px 10) (px 0)
             , property "text-decoration" "none"
             , property "font-weight" "300"
             , letterSpacing (Css.rem 0.1)
@@ -303,7 +310,7 @@ css =
             , top (px 0)
             , left (px 0)
             , color blue
-            , property "z-index" "15"
+            , zIndex 16
             ]
         , class HeaderDiscrete
             [ property "border" "none"
@@ -374,13 +381,13 @@ css =
             , display inlineBlock
             , cursor pointer
             , position relative
-            , property "padding" "4px 12px"
+            , padding2 (px 4) (px 12)
             , borderRadius (px 3)
             , property "opacity" "0.6"
             , fontSize (Css.rem 1)
             , letterSpacing (Css.rem 0.05)
             , property "font-kerning" "normal"
-            , property "margin" "0 10px"
+            , margin2 (px 0) (px 10)
             , property "transition" "all .3s"
             , hover
                 [ property "opacity" "1"
@@ -402,7 +409,7 @@ css =
                 ]
             ]
         , class Static
-            [ property "padding" "40px 20px 20px"
+            [ padding3 (px 40) (px 20) (px 20)
             , width (pct 100)
             , maxWidth (px 680)
             , margin auto
@@ -436,7 +443,7 @@ css =
                     , padding (px 0)
                     ]
                 , li
-                    [ property "margin" "10px 0"
+                    [ margin2 (px 10) (px 0)
                     ]
                 , a
                     [ fontFamily inherit
@@ -458,7 +465,7 @@ css =
                         , marginTop (Css.rem 3)
                         ]
                     , p
-                        [ property "margin" "2.05rem 0"
+                        [ margin2 (Css.rem 2.05) (px 0)
                         ]
                     , each [ p, li ]
                         [ fontSize (Css.rem 1.375)
@@ -546,7 +553,7 @@ css =
             ]
         , mediaQuery desktop
             [ class Project
-                [ property "margin" "80px auto"
+                [ margin2 (px 80) auto
                 , padding (px 40)
                 ]
             ]
@@ -566,14 +573,14 @@ css =
             , height (pct 100)
             , position fixed
             , left (px 0)
-            , property "z-index" "15"
+            , zIndex 14
             ]
         , class ProjectBoxContent
             [ width (pct 100)
             , height (pct 100)
             , overflowY scroll
             , property "-webkit-overflow-scrolling" "touch"
-            , property "padding" "100px 40px 60px"
+            , padding3 (px 100) (px 40) (px 60)
             ]
         , class TextBox
             [ backgroundColor white
@@ -615,7 +622,7 @@ css =
             , position absolute
             , top (px 0)
             , left (px 0)
-            , property "padding" "40px 0"
+            , padding2 (px 40) (px 0)
             , overflowY scroll
             , property "-webkit-overflow-scrolling" "touch"
             , margin auto
@@ -625,7 +632,7 @@ css =
             [ position fixed
             , bottom (px 15)
             , left (px 15)
-            , property "z-index" "3"
+            , zIndex 3
             ]
         , class TextBoxSwitchHidden
             [ display none
