@@ -1,7 +1,7 @@
 module Styles exposing (..)
 
 import Css exposing (..)
-import Css.Elements exposing (a, p, h1, h2, h3, svg, img, li, ul, div, html, body)
+import Css.Elements exposing (a, p, h1, h2, h3, svg, img, li, ul, div, html, body, blockquote)
 import Css.Namespace exposing (namespace)
 
 
@@ -50,9 +50,39 @@ type CssIds
     = App
 
 
+calcPctMinusPx : Float -> Float -> String
+calcPctMinusPx percent pixels =
+    "calc(" ++ (percent |> toString) ++ "% - " ++ (pixels |> toString) ++ "px)"
+
+
 zIndex : Int -> Mixin
 zIndex i =
     property "z-index" (i |> toString)
+
+
+lineHeight : Float -> Mixin
+lineHeight lh =
+    property "line-height" (lh |> toString)
+
+
+pointerEventsNone : Mixin
+pointerEventsNone =
+    property "pointer-events" "none"
+
+
+pointerEventsAll : Mixin
+pointerEventsAll =
+    property "pointer-events" "all"
+
+
+regularTransition : Mixin
+regularTransition =
+    property "transition" "all .3s"
+
+
+opacity : Float -> Mixin
+opacity op =
+    property "opacity" (op |> toString)
 
 
 sansSerif : String
@@ -85,6 +115,16 @@ darkGrey =
     hex "333333"
 
 
+grey : Color
+grey =
+    hex "777777"
+
+
+lightGrey : Color
+lightGrey =
+    hex "BBBBBB"
+
+
 white : Color
 white =
     hex "FFFFFF"
@@ -105,7 +145,7 @@ css =
     (stylesheet << namespace "")
         [ everything
             [ boxSizing borderBox
-            , property "font-family" "'PT Sans', sans-serif"
+            , property "font-family" sansSerif
             , property "-webkit-font-smoothing" "antialiased"
             , property "-moz-osx-font-smoothing" "grayscale"
             ]
@@ -118,7 +158,7 @@ css =
             ]
         , a
             [ textDecoration none
-            , property "border" "0"
+            , border (px 0)
             ]
         , each [ h1, h2, h3 ] [ fontWeight normal ]
         , h2
@@ -126,12 +166,12 @@ css =
             ]
         , h3
             [ fontSize (Css.rem 1.5)
-            , property "margin" ".5rem 0"
+            , margin2 (Css.rem 0.5) (Css.rem 0)
             ]
         , mediaQuery desktop
             [ h2
                 [ fontSize (Css.rem 3)
-                , property "margin" "1.4rem 0"
+                , margin2 (Css.rem 1.4) (Css.rem 0)
                 ]
             , h3
                 [ fontSize (Css.rem 2)
@@ -149,7 +189,7 @@ css =
             , descendants
                 [ selector "polygon"
                     [ fill white
-                    , property "opacity" ".05"
+                    , opacity 0.05
                     ]
                 ]
             ]
@@ -157,9 +197,9 @@ css =
             [ width (pct 100)
             , height (pct 100)
             , backgroundColor blue
-            , property "display" "flex"
-            , property "align-items" "center"
-            , property "justify-content" "center"
+            , displayFlex
+            , alignItems center
+            , justifyContent center
             , property "animation" "fade-in ease-out .5s"
             , position relative
             ]
@@ -171,14 +211,14 @@ css =
             ([ position fixed
              , backgroundColor mustard
              , bottom (px 40)
-             , property "width" "calc(100% - 80px)"
+             , property "width" (calcPctMinusPx 100 80)
              , height auto
              , right (px 40)
              , borderRadius (px 3)
              , zIndex 20
-             , opacity (int 0)
+             , opacity 0
              , property "transition" "all 1s"
-             , property "pointer-events" "none"
+             , pointerEventsNone
              ]
                 ++ standardShadow
             )
@@ -198,12 +238,12 @@ css =
                     [ fontSize inherit
                     , margin (px 0)
                     , padding (px 0)
-                    , property "line-height" "1.35"
+                    , lineHeight 1.35
                     ]
                 , a
                     [ fontSize inherit
                     , color inherit
-                    , property "border-bottom" "1px solid white"
+                    , borderBottom3 (px 1) solid white
                     ]
                 ]
             ]
@@ -216,7 +256,7 @@ css =
             , top (px 0)
             , right (px 0)
             , margin (px 0)
-            , property "transition" "transform .3s"
+            , regularTransition
             , descendants
                 [ svg
                     [ width (pct 100)
@@ -227,12 +267,12 @@ css =
                     ]
                 ]
             , hover
-                [ property "transform" "scale(1.15)"
+                [ transform (scale 1.15)
                 ]
             ]
         , class NotificationVisible
-            [ opacity (int 1)
-            , property "pointer-events" "all"
+            [ opacity 1
+            , pointerEventsAll
             ]
         , class Banner
             [ color white
@@ -244,7 +284,7 @@ css =
             [ width (px 180)
             , height (px 180)
             , position relative
-            , property "margin" "auto auto 15px"
+            , margin3 auto auto (px 15)
             , children
                 [ svg
                     [ property "stroke" "white"
@@ -259,14 +299,14 @@ css =
                     , width (pct 100)
                     , height (pct 100)
                     , borderRadius (pct 50)
-                    , opacity (int 0)
-                    , property "transition" "all .5s"
+                    , opacity 0
+                    , regularTransition
                     ]
                 ]
             , hover
                 [ children
                     [ div
-                        [ property "opacity" "1"
+                        [ opacity 1
                         ]
                     ]
                 ]
@@ -278,7 +318,7 @@ css =
             , top (px 0)
             , left (px 0)
             , property "background-color" "rgba(255, 255, 255, .95)"
-            , property "transform" "translate3d(0, 0, 0)"
+            , transform (translate3d (px 0) (px 0) (px 0))
             , property "transition" "transform .3s"
             , zIndex 15
             ]
@@ -287,9 +327,9 @@ css =
             , position absolute
             , top (pct 50)
             , left (pct 50)
-            , property "transform" "translate3d(-50%, -50%, 0)"
+            , transform (translate3d (pct -50) (pct -50) (px 0))
             , height auto
-            , property "text-align" "center"
+            , textAlign center
             ]
         , class MenuLink
             [ cursor pointer
@@ -304,9 +344,8 @@ css =
         , class Header
             [ width (pct 100)
             , height (px 60)
-            , property "display" "flex"
+            , displayFlex
             , position absolute
-            , property "transition" "all .3s"
             , top (px 0)
             , left (px 0)
             , color blue
@@ -341,10 +380,10 @@ css =
             , top (px 0)
             , fill currentColor
             , property "stroke" "currentColor"
-            , property "transition" "opacity .3s"
-            , property "opacity" ".7"
+            , regularTransition
+            , opacity 0.7
             , hover
-                [ property "opacity" "1"
+                [ opacity 1
                 ]
             ]
         , class HeaderFalafel
@@ -383,18 +422,18 @@ css =
             , position relative
             , padding2 (px 4) (px 12)
             , borderRadius (px 3)
-            , property "opacity" "0.6"
+            , opacity 0.6
             , fontSize (Css.rem 1)
             , letterSpacing (Css.rem 0.05)
             , property "font-kerning" "normal"
             , margin2 (px 0) (px 10)
             , property "transition" "all .3s"
             , hover
-                [ property "opacity" "1"
+                [ opacity 1
                 ]
             ]
         , class DesktopLinkActive
-            [ property "opacity" "1"
+            [ opacity 1
             ]
         , class HeaderDiscrete
             [ descendants
@@ -420,7 +459,7 @@ css =
                     [ textAlign center
                     ]
                 , p
-                    [ property "margin" "1.5rem 0"
+                    [ margin2 (Css.rem 1.5) (Css.rem 0)
                     , firstOfType
                         [ paddingTop (px 0)
                         , marginTop (px 0)
@@ -432,14 +471,14 @@ css =
                     ]
                 , each [ p, li ]
                     [ fontSize (Css.rem 1)
-                    , property "line-height" "1.68"
+                    , lineHeight 1.68
                     ]
                 , each [ p, li, ul ]
                     [ fontFamily inherit
                     ]
                 , ul
                     [ margin (px 0)
-                    , property "list-style-position" "inside"
+                    , listStylePosition inside
                     , padding (px 0)
                     ]
                 , li
@@ -448,17 +487,25 @@ css =
                 , a
                     [ fontFamily inherit
                     , color blue
-                    , property "opacity" ".8"
+                    , opacity 0.8
                     , hover
-                        [ property "opacity" "1"
-                        , property "border-bottom" "1px solid currentColor"
+                        [ opacity 1
+                        , borderBottom3 (px 1) solid currentColor
                         ]
+                    ]
+                , blockquote
+                    [ property "font-family" serif
+                    , margin3 (px 40) (px 0) (px 20)
+                    , color grey
+                    , fontStyle italic
+                    , paddingLeft (px 16)
+                    , borderLeft3 (px 3) solid grey
                     ]
                 ]
             ]
         , mediaQuery desktop
             [ class Static
-                [ property "padding" "60px 20px"
+                [ padding2 (px 60) (px 20)
                 , descendants
                     [ h2
                         [ marginBottom (Css.rem 3)
@@ -477,7 +524,7 @@ css =
             [ position absolute
             , top (pct 40)
             , left (pct 50)
-            , property "transform" "translate3d(-50%, -50%, 0)"
+            , transform (translate3d (pct -50) (pct -50) (px 0))
             , descendants
                 [ svg
                     [ fill blue
@@ -491,14 +538,14 @@ css =
             , width (px 26)
             , height (px 12)
             , borderRadius (px 6)
-            , property "opacity" ".6"
+            , opacity 0.6
             , position relative
             , property "transition" "opacity .3s"
             , borderColor blue
             , property "border-width" "1px"
-            , property "border-style" "solid"
+            , borderStyle solid
             , hover
-                [ property "opacity" "1"
+                [ opacity 1
                 ]
             ]
         , class SwitchButton
@@ -509,7 +556,7 @@ css =
             , position absolute
             , top (px -1)
             , left (px -1)
-            , property "transform" "translate3d(0, 0, 0)"
+            , transform (translate3d (px 0) (px 0) (px 0))
             , property "transition" "transform .3s"
             ]
         , class SwitchLeft
@@ -520,21 +567,21 @@ css =
         , class SwitchRight
             [ descendants
                 [ class SwitchButton
-                    [ property "transform" "translate3d(14px, 0, 0)"
+                    [ transform (translate3d (px 14) (px 0) (px 0))
                     ]
                 ]
             ]
         , class Project
             [ display block
-            , property "margin" "40px auto"
+            , margin2 (px 40) auto
             , padding (px 20)
             , maxWidth (px 640)
             , width (pct 100)
             , textDecoration none
             , textAlign left
             , color currentColor
-            , property "border" "1px solid transparent"
-            , property "transition" "all .6s"
+            , regularTransition
+            , border3 (px 1) solid transparent
             , firstOfType
                 [ marginTop (px 0)
                 ]
@@ -543,13 +590,13 @@ css =
                 ]
             , descendants
                 [ h3
-                    [ property "margin" "1rem 0 0"
+                    [ margin3 (Css.rem 1) (Css.rem 0) (Css.rem 0)
                     ]
                 , p
                     [ marginTop (px 0)
                     ]
                 ]
-            , hover standardShadow
+            , hover [ border3 (px 1) solid lightGrey ]
             ]
         , mediaQuery desktop
             [ class Project
@@ -587,18 +634,18 @@ css =
             , width (pct 100)
             , height (pct 100)
             , position fixed
-            , property "transition" "opacity .3s"
+            , regularTransition
             ]
         , class TextBoxHidden
-            [ opacity (int 0)
-            , property "pointer-events" "none"
+            [ opacity 0
+            , pointerEventsNone
             ]
         , class TextBoxDisplayPrimary
             [ descendants
                 [ class TextBoxContent
                     [ nthOfType "2"
-                        [ opacity (int 0)
-                        , property "pointer-events" "none"
+                        [ opacity 0
+                        , pointerEventsNone
                         ]
                     ]
                 ]
@@ -607,8 +654,8 @@ css =
             [ descendants
                 [ class TextBoxContent
                     [ nthOfType "1"
-                        [ opacity (int 0)
-                        , property "pointer-events" "none"
+                        [ opacity 0
+                        , pointerEventsNone
                         ]
                     ]
                 ]
@@ -626,7 +673,7 @@ css =
             , overflowY scroll
             , property "-webkit-overflow-scrolling" "touch"
             , margin auto
-            , property "transition" "all .3s"
+            , regularTransition
             ]
         , class TextBoxSwitch
             [ position fixed
