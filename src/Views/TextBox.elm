@@ -1,28 +1,21 @@
 module Views.TextBox exposing (..)
 
 import Html exposing (..)
-import Html.Attributes exposing (..)
-import Markdown exposing (toHtml)
 import Messages exposing (..)
 import Views.Switch
+import Views.Static
+import Views.TextBox.Styles exposing (CssClasses(..), localClass, localClassList)
 
 
 viewContents : String -> String -> Html Msg
 viewContents c1 c2 =
     div
-        [ class "TextBoxContents" ]
-        [ div [ class "TextBoxContent" ]
-            [ toHtml
-                [ class "Static" ]
-                c1
+        [ localClass [ Contents ] ]
+        [ div [ localClass [ Content ] ]
+            [ Views.Static.view c1
             ]
-        , div
-            [ class "TextBoxContent"
-            ]
-            [ toHtml
-                [ class "Static"
-                ]
-                c2
+        , div [ localClass [ Content ] ]
+            [ Views.Static.view c2
             ]
         ]
 
@@ -30,9 +23,9 @@ viewContents c1 c2 =
 viewNav : Bool -> Bool -> Html Msg
 viewNav isRight isSwitchHidden =
     div
-        [ classList
-            [ ( "TextBoxSwitch", True )
-            , ( "TextBoxSwitchHidden", isSwitchHidden )
+        [ localClassList
+            [ ( Switch, True )
+            , ( SwitchHidden, isSwitchHidden )
             ]
         ]
         [ Views.Switch.view isRight ToggleQuirky
@@ -42,10 +35,10 @@ viewNav isRight isSwitchHidden =
 view : ( String, Maybe String ) -> Bool -> Html Msg
 view ( c1, c2 ) isQuirky =
     div
-        [ classList
-            [ ( "TextBox", True )
-            , ( "TextBoxDisplayPrimary", not isQuirky || c2 == Nothing )
-            , ( "TextBoxDisplaySecondary", isQuirky && c2 /= Nothing )
+        [ localClassList
+            [ ( Root, True )
+            , ( DisplayPrimary, not isQuirky || c2 == Nothing )
+            , ( DisplaySecondary, isQuirky && c2 /= Nothing )
             ]
         ]
         [ viewNav isQuirky (c2 == Nothing)

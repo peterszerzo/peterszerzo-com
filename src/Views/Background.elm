@@ -6,6 +6,7 @@ import Svg exposing (svg)
 import Svg.Attributes exposing (viewBox, points, width, height, transform)
 import Models exposing (Model)
 import Messages exposing (Msg)
+import Views.Background.Styles exposing (CssClasses(..), localClass)
 
 
 svgView : List (Attribute Msg) -> List (List ( Float, Float )) -> Html Msg
@@ -56,7 +57,7 @@ view model =
             (toFloat size) / 100
     in
         div
-            [ class "Background"
+            [ localClass [ Root ]
             , style
                 [ ( "top", "-" ++ (toString top) ++ "px" )
                 , ( "left", "-" ++ (toString left) ++ "px" )

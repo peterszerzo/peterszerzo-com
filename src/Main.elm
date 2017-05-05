@@ -2,7 +2,7 @@ module Main exposing (..)
 
 import Navigation exposing (Location, programWithFlags)
 import Messages exposing (Msg(..))
-import Views.Main exposing (view)
+import Views exposing (view)
 import Models exposing (Model, Flags)
 import Subscriptions exposing (subscriptions)
 import Update exposing (update)
