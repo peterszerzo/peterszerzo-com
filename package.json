@@ -4,16 +4,21 @@
   "description": "Source code for my personal website.",
   "main": "index.js",
   "scripts": {
-    "lint": "./node_modules/.bin/stylelint ./src/styles.css && ./node_modules/.bin/standard"
+    "start": "elm-live ./src/Main.elm --dir=./src --output src/elm.js --open --pushstate --debug",
+    "build:elm": "./node_modules/.bin/elm-make src/Main.elm --output dist/elm.js && ./node_modules/.bin/uglifyjs dist/elm.js --output dist/elm.js --compress --mangle",
+    "build:elmcss": "./node_modules/.bin/elm-css src/Stylesheets.elm && ./node_modules/.bin/postcss dist/styles.css --output dist/styles.css",
+    "build:assets": "cp -r src/imgs dist && cp src/favicon.ico dist && cp src/index.js dist && sed -ie \"s/var IS_DEV = true/var IS_DEV = false/\" dist/index.js",
+    "build:html": "cp src/index.html dist/index.html && cp dist/index.html dist/200.html",
+    "build": "rm -rf dist && mkdir dist && npm run build:elm && npm run build:elmcss && npm run build:assets && npm run build:html",
+    "lint": "./node_modules/.bin/standard src"
   },
   "author": "Peter Szerzo <szerzo.peter@gmail.com>",
   "license": "ISC",
-  "dependencies": {
-    "fastclick": "^1.0.6"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "min-document": "^2.19.0",
+    "autoprefixer": "^6.7.7",
+    "postcss-cli": "^3.1.1",
     "standard": "^8.6.0",
-    "stylelint": "^7.6.0"
+    "uglify-js": "^2.8.22"
   }
 }
