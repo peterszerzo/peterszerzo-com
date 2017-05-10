@@ -1,11 +1,8 @@
-api
-media
 .env
 .DS_Store
 node_modules
 elm-stuff
-build
 dist
-src/styles.compiled.css
+src/elm.js
 *.log
 tmp

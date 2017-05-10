@@ -3,14 +3,36 @@
   <head>
     <title>Peter Szerzo makes himself a website</title>
     <meta charset='utf-8'>
-    <meta name='description' content='Programmer, designer, language enthusiast, yogi, cook. A friendly, straightforward fellow with eager-to-pedal feet, a green thumb and a curious mind.'>
-    <meta name='keywords' content='programmer, designer, writer'>
-    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-    <link href='https://fonts.googleapis.com/css?family=PT+Sans|PT+Serif:400' rel='stylesheet' type='text/css'>
+    <meta name="description" content="Programmer, designer, language enthusiast, yogi, cook. A friendly, straightforward fellow with eager-to-pedal feet, a green thumb and a curious mind.">
+    <meta name="keywords" content="programmer, designer, writer">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans|PT+Serif:400" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="/styles.css?1">
+    <style>
+      @keyframes fade-in {
+        from {
+          opacity: 0;
+        }
+
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0turn);
+        }
+
+        100% {
+          transform: rotate(1turn);
+        }
+      }
+    </style>
   </head>
   <body>
-    <div id="app">
-      <div class="spinner">
+    <div id="App">
+      <div class="Spinner">
         <svg width="50" height="50" viewBox="0 0 50 50">
           <g transform="translate(25, 25)">
             <circle cx="0" cy="15" r="3"/>
@@ -19,5 +41,7 @@
         </svg>
       </div>
     </div>
+    <script src="/elm.js?1"></script>
+    <script src="/index.js?1"></script>
   </body>
 </html>
