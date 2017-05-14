@@ -4,12 +4,12 @@
   "description": "Source code for my personal website.",
   "main": "index.js",
   "scripts": {
-    "start": "elm-live ./src/Main.elm --dir=./src --output src/elm.js --open --pushstate --debug",
-    "build:elm": "./node_modules/.bin/elm-make src/Main.elm --output dist/elm.js && ./node_modules/.bin/uglifyjs dist/elm.js --output dist/elm.js --compress --mangle",
-    "build:elmcss": "./node_modules/.bin/elm-css src/Stylesheets.elm && ./node_modules/.bin/postcss dist/styles.css --output dist/styles.css",
-    "build:assets": "cp -r src/imgs dist && cp src/favicon.ico dist && cp src/index.js dist && sed -ie \"s/var IS_DEV = true/var IS_DEV = false/\" dist/index.js",
-    "build:html": "cp src/index.html dist/index.html && cp dist/index.html dist/200.html",
-    "build": "rm -rf dist && mkdir dist && npm run build:elm && npm run build:elmcss && npm run build:assets && npm run build:html",
+    "start": "elm-app start",
+    "build:main": "NODE_ENV=production elm-app build",
+    "build:elmcss": "elm-css src/Stylesheets.elm && ./node_modules/.bin/postcss dist/styles.css --output dist/styles.css",
+    "build:assets": "cp -r imgs dist && cp src/favicon.ico dist",
+    "build:html": "cp dist/index.html dist/200.html",
+    "build": "rm -rf dist && mkdir dist && npm run build:main && npm run build:elmcss && npm run build:assets && npm run build:html",
     "lint": "./node_modules/.bin/standard src"
   },
   "author": "Peter Szerzo <szerzo.peter@gmail.com>",
