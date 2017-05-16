@@ -3,6 +3,10 @@ module Styles.Constants exposing (..)
 import Css exposing (Color, hex)
 
 
+-- Dimensions
+-- Fonts
+
+
 sansSerif : String
 sansSerif =
     "'PT Sans', sans-serif"
@@ -11,6 +15,10 @@ sansSerif =
 serif : String
 serif =
     "'PT Serif', serif"
+
+
+
+-- Colors
 
 
 blue : Color

@@ -1,8 +1,9 @@
-module Views.TextBox.Styles exposing (..)
+module Views.ContentBox.Styles exposing (..)
 
 import Html
 import Html.CssHelpers
 import Css exposing (..)
+import Css.Elements exposing (h2)
 import Css.Namespace exposing (namespace)
 import Styles.Constants exposing (..)
 import Styles.Mixins as Mixins
@@ -10,7 +11,7 @@ import Styles.Mixins as Mixins
 
 cssNamespace : String
 cssNamespace =
-    "textbox"
+    "contentbox"
 
 
 type CssClasses
@@ -45,6 +46,11 @@ styles =
         , left (px 0)
         , Mixins.zIndex 14
         , Mixins.regularTransition
+        , descendants
+            [ h2
+                [ textAlign center
+                ]
+            ]
         ]
     , class Hidden
         [ opacity (num 0)
@@ -76,14 +82,19 @@ styles =
     , class Content
         [ width (pct 100)
         , height (pct 100)
+        , padding2 (px 60) (px 20)
         , position absolute
         , top (px 0)
         , left (px 0)
-        , padding2 (px 40) (px 0)
         , overflowY scroll
         , property "-webkit-overflow-scrolling" "touch"
         , margin auto
         , Mixins.regularTransition
+        ]
+    , mediaQuery desktop
+        [ class Content
+            [ padding2 (px 120) (px 20)
+            ]
         ]
     , class Switch
         [ position fixed

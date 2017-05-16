@@ -56,7 +56,7 @@ styles =
                 [ marginTop (px 0)
                 ]
             ]
-        , hover [ border3 (px 1) solid lightGrey ]
+        , hover [ property "background-color" "#f4f4f5" ]
         ]
     , mediaQuery desktop
         [ class Root

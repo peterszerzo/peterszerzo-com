@@ -1,23 +1,9 @@
-module Views.TextBox exposing (..)
+module Views.ContentBox exposing (..)
 
 import Html exposing (..)
 import Messages exposing (..)
 import Views.Switch
-import Views.Static
-import Views.TextBox.Styles exposing (CssClasses(..), localClass, localClassList)
-
-
-viewContents : String -> String -> Html Msg
-viewContents c1 c2 =
-    div
-        [ localClass [ Contents ] ]
-        [ div [ localClass [ Content ] ]
-            [ Views.Static.view c1
-            ]
-        , div [ localClass [ Content ] ]
-            [ Views.Static.view c2
-            ]
-        ]
+import Views.ContentBox.Styles exposing (CssClasses(..), localClass, localClassList)
 
 
 viewNav : Bool -> Bool -> Html Msg
@@ -32,7 +18,7 @@ viewNav isRight isSwitchHidden =
         ]
 
 
-view : ( String, Maybe String ) -> Bool -> Html Msg
+view : ( List (Html Msg), Maybe (List (Html Msg)) ) -> Bool -> Html Msg
 view ( c1, c2 ) isQuirky =
     div
         [ localClassList
@@ -42,7 +28,11 @@ view ( c1, c2 ) isQuirky =
             ]
         ]
         [ viewNav isQuirky (c2 == Nothing)
-        , viewContents
-            c1
-            (c2 |> Maybe.withDefault "")
+        , div
+            [ localClass [ Contents ] ]
+            [ div [ localClass [ Content ] ] c1
+            , c2
+                |> Maybe.map (div [ localClass [ Content ] ])
+                |> Maybe.withDefault (div [ localClass [ Content ] ] [])
+            ]
         ]

@@ -31,8 +31,7 @@ localClassList =
 styles : List Css.Snippet
 styles =
     [ class Root
-        [ padding3 (px 40) (px 20) (px 20)
-        , width (pct 100)
+        [ width (pct 100)
         , maxWidth (px 680)
         , margin auto
         , color black
@@ -88,11 +87,9 @@ styles =
         ]
     , mediaQuery desktop
         [ class Root
-            [ padding2 (px 60) (px 20)
-            , descendants
+            [ descendants
                 [ h2
                     [ marginBottom (Css.rem 3)
-                    , marginTop (Css.rem 3)
                     ]
                 , p
                     [ margin2 (Css.rem 2.05) (px 0)
