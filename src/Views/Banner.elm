@@ -19,5 +19,5 @@ view =
                 []
             ]
         , h1 [] [ text Content.title ]
-        , p [] [ text Content.subtitle ]
+        , p [ localClass [ Subtitle ] ] [ text Content.subtitle ]
         ]

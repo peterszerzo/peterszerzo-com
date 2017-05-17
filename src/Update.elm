@@ -4,6 +4,7 @@ import Messages exposing (Msg(..))
 import Models exposing (Model)
 import Navigation exposing (..)
 import Ports
+import Constants
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -36,7 +37,27 @@ update msg model =
 
         Tick time ->
             ( { model
-                | time = model.time + 1
+                | time = model.time + Constants.tick
               }
             , Cmd.none
             )
+
+        AnimationTick time ->
+            let
+                direction =
+                    (model.time - Constants.transitionStartingAt)
+                        / Constants.transitionEvery
+                        |> floor
+                        |> (\i ->
+                                if rem i 2 == 0 then
+                                    1
+                                else
+                                    -1
+                           )
+            in
+                ( { model
+                    | transitionFactor =
+                        clamp 0 1 (model.transitionFactor + direction * 0.008)
+                  }
+                , Cmd.none
+                )

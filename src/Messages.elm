@@ -8,7 +8,8 @@ import Window
 type Msg
     = ToggleQuirky
     | ChangePath String
-    | Tick Time
     | ChangeRoute Route
     | DismissNotification
+    | Tick Time
+    | AnimationTick Time
     | Resize Window.Size

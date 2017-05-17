@@ -14,7 +14,9 @@
   },
   "author": "Peter Szerzo <szerzo.peter@gmail.com>",
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "elm": "^0.18.0"
+  },
   "devDependencies": {
     "autoprefixer": "^6.7.7",
     "postcss-cli": "^3.1.1",

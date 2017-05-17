@@ -9,27 +9,10 @@ import Messages exposing (Msg)
 import Views.Background.Styles exposing (CssClasses(..), localClass)
 
 
-svgView : List (Attribute Msg) -> List (List ( Float, Float )) -> Html Msg
-svgView attrs polygons =
-    svg
-        ([ viewBox "0 0 100 100"
-         ]
-            ++ attrs
-        )
-        (List.indexedMap
-            (\index pts ->
-                Svg.polygon
-                    [ style [ ( "opacity", opacities |> List.drop index |> List.head |> Maybe.map toString |> Maybe.withDefault "0" ) ]
-                    , points
-                        (pts
-                            |> List.map (\( x, y ) -> (toString x) ++ "," ++ (toString (100 - y)))
-                            |> String.join " "
-                        )
-                    ]
-                    []
-            )
-            polygons
-        )
+type alias Polygon =
+    { coordinates : List ( Float, Float )
+    , opacities : ( Float, Float )
+    }
 
 
 view : Model -> Html Msg
@@ -63,59 +46,94 @@ view model =
                 , ( "left", "-" ++ (toString left) ++ "px" )
                 ]
             ]
-            [ svgView [ width (toString size), height (toString size) ] polygons
+            [ svg
+                [ viewBox "0 0 100 100"
+                , width (toString size)
+                , height (toString size)
+                ]
+                (List.indexedMap
+                    (\index polygon_ ->
+                        let
+                            ( opacity1, opacity2 ) =
+                                polygon_.opacities
+
+                            opacity_ =
+                                model.transitionFactor * opacity1 + (1 - model.transitionFactor) * opacity2
+                        in
+                            Svg.polygon
+                                [ style [ ( "opacity", opacity_ |> toString ) ]
+                                , points
+                                    (polygon_.coordinates
+                                        |> List.map (\( x, y ) -> (toString x) ++ "," ++ (toString (100 - y)))
+                                        |> String.join " "
+                                    )
+                                ]
+                                []
+                    )
+                    polygons
+                )
             ]
 
 
-opacities : List Float
-opacities =
-    [ 0, 0.03, 0.02, 0.07, 0.1 ]
-
-
-polygons : List (List ( Float, Float ))
+polygons : List Polygon
 polygons =
-    [ [ ( 24.56, 50.52 )
-      , ( 28.67, 50.92 )
-      , ( 46.53, 72.32 )
-      , ( 60.66, 61.27 )
-      , ( 74.35, 62.62 )
-      , ( 75.09, 55.01 )
-      , ( 52.24, 27.02 )
-      , ( 24.56, 50.52 )
-      ]
-    , [ ( -0.0, 53.4 )
-      , ( 18.98, 55.26 )
-      , ( 24.56, 50.52 )
-      , ( 28.67, 50.92 )
-      , ( 46.53, 72.32 )
-      , ( 38.19, 78.85 )
-      , ( 36.11, 100.0 )
-      , ( 0.0, 100.0 )
-      , ( -0.0, 53.4 )
-      ]
-    , [ ( 100.0, 66.97 )
-      , ( 76.15, 64.63 )
-      , ( 74.35, 62.62 )
-      , ( 75.09, 55.01 )
-      , ( 52.24, 27.02 )
-      , ( 54.86, 0.0 )
-      , ( 100.0, 0.0 )
-      , ( 100.0, 66.97 )
-      ]
-    , [ ( -0.0, 53.4 )
-      , ( 18.98, 55.26 )
-      , ( 52.24, 27.02 )
-      , ( 54.86, 0.0 )
-      , ( 0.0, 0.0 )
-      , ( -0.0, 53.4 )
-      ]
-    , [ ( 36.11, 100.0 )
-      , ( 100.0, 100.0 )
-      , ( 100.0, 66.97 )
-      , ( 76.15, 64.63 )
-      , ( 74.35, 62.62 )
-      , ( 60.66, 61.27 )
-      , ( 38.19, 78.85 )
-      , ( 36.11, 100.0 )
-      ]
+    [ { coordinates =
+            [ ( 24.56, 50.52 )
+            , ( 28.67, 50.92 )
+            , ( 46.53, 72.32 )
+            , ( 60.66, 61.27 )
+            , ( 74.35, 62.62 )
+            , ( 75.09, 55.01 )
+            , ( 52.24, 27.02 )
+            , ( 24.56, 50.52 )
+            ]
+      , opacities = ( 0, 0 )
+      }
+    , { coordinates =
+            [ ( -0.0, 53.4 )
+            , ( 18.98, 55.26 )
+            , ( 24.56, 50.52 )
+            , ( 28.67, 50.92 )
+            , ( 46.53, 72.32 )
+            , ( 38.19, 78.85 )
+            , ( 36.11, 100.0 )
+            , ( 0.0, 100.0 )
+            , ( -0.0, 53.4 )
+            ]
+      , opacities = ( 0.04, 0.11 )
+      }
+    , { coordinates =
+            [ ( 100.0, 66.97 )
+            , ( 76.15, 64.63 )
+            , ( 74.35, 62.62 )
+            , ( 75.09, 55.01 )
+            , ( 52.24, 27.02 )
+            , ( 54.86, 0.0 )
+            , ( 100.0, 0.0 )
+            , ( 100.0, 66.97 )
+            ]
+      , opacities = ( 0.035, 0.09 )
+      }
+    , { coordinates =
+            [ ( -0.0, 53.4 )
+            , ( 18.98, 55.26 )
+            , ( 52.24, 27.02 )
+            , ( 54.86, 0.0 )
+            , ( 0.0, 0.0 )
+            , ( -0.0, 53.4 )
+            ]
+      , opacities = ( 0.08, 0.035 )
+      }
+    , { coordinates =
+            [ ( 36.11, 100.0 )
+            , ( 100.0, 100.0 )
+            , ( 100.0, 66.97 )
+            , ( 76.15, 64.63 )
+            , ( 74.35, 62.62 )
+            , ( 60.66, 61.27 )
+            , ( 38.19, 78.85 )
+            , ( 36.11, 100.0 )
+            ]
+      , opacities = ( 0.11, 0.0325 )
+      }
     ]

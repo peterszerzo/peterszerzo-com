@@ -1,6 +1,7 @@
 module Models exposing (..)
 
 import Task
+import Time
 import Messages exposing (Msg(..))
 import Router exposing (Route(..))
 import Window
@@ -9,16 +10,17 @@ import Window
 type alias Model =
     { route : Route
     , isQuirky : Bool
-    , time : Float
+    , time : Time.Time
     , isNotificationDismissed : Bool
     , isDev : Bool
     , window : Window.Size
+    , transitionFactor : Float
     }
 
 
 init : Flags -> Route -> ( Model, Cmd Msg )
 init { isNotificationRecentlyDismissed, isDev } route =
-    ( Model route False 0 isNotificationRecentlyDismissed isDev (Window.Size 0 0)
+    ( Model route False 0 isNotificationRecentlyDismissed isDev (Window.Size 0 0) 0
     , Task.perform Resize Window.size
     )
 

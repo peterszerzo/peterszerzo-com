@@ -17,6 +17,7 @@ cssNamespace =
 type CssClasses
     = Root
     | Logo
+    | Subtitle
 
 
 localClass : List class -> Html.Attribute msg
@@ -62,6 +63,9 @@ styles =
                     ]
                 ]
             ]
+        ]
+    , class Subtitle
+        [ width (px 220)
         ]
     ]
         |> namespace cssNamespace
