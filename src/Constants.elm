@@ -10,7 +10,7 @@ tick =
 
 showNotificationAt : Time.Time
 showNotificationAt =
-    2 * Time.second
+    30 * Time.second
 
 
 hideNotificationAt : Time.Time
