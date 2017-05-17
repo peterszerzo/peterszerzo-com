@@ -34,6 +34,7 @@ styles =
         [ width (pct 100)
         , maxWidth (px 680)
         , margin auto
+        , textAlign left
         , color black
         , property "font-family" Styles.Constants.serif
         , descendants
