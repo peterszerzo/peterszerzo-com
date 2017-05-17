@@ -36,3 +36,17 @@ regularTransition =
 standardShadow : List Mixin
 standardShadow =
     [ property "box-shadow" "0 0 12px rgba(20, 20, 20, .3)" ]
+
+
+bodyType : List Mixin
+bodyType =
+    [ fontSize (Css.rem 1)
+    , lineHeight 1.68
+    ]
+
+
+highlightedBodyType : List Mixin
+highlightedBodyType =
+    [ fontSize (Css.rem 1)
+    , property "font-weight" "600"
+    ]

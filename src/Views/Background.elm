@@ -20,7 +20,7 @@ view model =
     let
         expand =
             if (model.window.width < 800) then
-                200
+                240
             else
                 20
 

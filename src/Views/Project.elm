@@ -16,6 +16,9 @@ view project =
                 ]
             ]
             []
-        , h3 [] [ text project.title ]
-        , p [] [ text project.description ]
+        , div []
+            [ h3 [ localClass [ Title ] ] [ text project.title ]
+            , text " | "
+            , p [ localClass [ Body ] ] [ text project.description ]
+            ]
         ]

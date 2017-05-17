@@ -39,6 +39,7 @@ styles : List Css.Snippet
 styles =
     [ class Root
         [ backgroundColor white
+        , textAlign center
         , color darkGrey
         , width (pct 100)
         , height (pct 100)

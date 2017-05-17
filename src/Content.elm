@@ -38,7 +38,7 @@ projects =
       }
     , { id = "airtame"
       , title = "Airtame"
-      , description = "Product and e-commerce website"
+      , description = "Floaty things"
       , url = "https://airtame.com"
       , roles = [ "dev" ]
       , technologies = [ "React", "Express" ]

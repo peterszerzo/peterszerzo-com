@@ -17,6 +17,8 @@ cssNamespace =
 type CssClasses
     = Root
     | Image
+    | Title
+    | Body
 
 
 localClass : List class -> Html.Attribute msg
@@ -32,19 +34,15 @@ localClassList =
 styles : List Css.Snippet
 styles =
     [ class Root
-        [ display block
-        , margin2 (px 40) auto
+        [ display inlineBlock
         , padding (px 20)
-        , maxWidth (px 640)
+        , maxWidth (px 520)
         , width (pct 100)
         , textDecoration none
         , textAlign left
         , color currentColor
         , Mixins.regularTransition
         , border3 (px 1) solid transparent
-        , firstOfType
-            [ marginTop (px 0)
-            ]
         , lastOfType
             [ marginBottom (px 0)
             ]
@@ -60,13 +58,18 @@ styles =
         ]
     , mediaQuery desktop
         [ class Root
-            [ margin2 (px 80) auto
-            , padding (px 40)
+            [ padding (px 40)
             ]
         ]
+    , each [ class Title, class Body ]
+        [ display inlineBlock
+        , margin (px 0)
+        , lineHeight (num 1)
+        ]
+    , class Title Mixins.highlightedBodyType
+    , class Body Mixins.bodyType
     , class Image
         [ width (pct 100)
-        , marginBottom (Css.rem 1)
         , paddingTop (pct 62.5)
         , property "border" "1px solid rgba(0, 0, 0, .2)"
         , backgroundSize cover

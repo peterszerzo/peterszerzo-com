@@ -52,9 +52,7 @@ styles =
                     ]
                 ]
             , each [ p, li ]
-                [ fontSize (Css.rem 1)
-                , Mixins.lineHeight 1.68
-                ]
+                Mixins.bodyType
             , each [ p, li, ul ]
                 [ fontFamily inherit
                 ]
