@@ -11,7 +11,7 @@ viewMainLink : Maybe String -> String -> ( String, String ) -> Html Msg
 viewMainLink currentSlug className ( label, url ) =
     let
         isExternalLink =
-            String.slice 0 4 url == "http"
+            String.slice 0 4 url == "http" || String.slice 0 6 url == "mailto"
 
         slug =
             String.dropLeft 1 url

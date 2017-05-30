@@ -11,6 +11,7 @@ mainLinks =
     , ( "CV", "https://represent.io/peterszerzo" )
     , ( "About", "/about" )
     , ( "Now", "/now" )
+    , ( "Contact", "mailto:szerzo.peter@gmail.com" )
     ]
 
 
