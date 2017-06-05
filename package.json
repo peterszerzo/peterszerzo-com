@@ -10,7 +10,8 @@
     "build:assets": "cp -r imgs dist && cp src/favicon.ico dist",
     "build:html": "cp dist/index.html dist/200.html",
     "build": "rm -rf dist && mkdir dist && npm run build:main && npm run build:elmcss && npm run build:assets && npm run build:html",
-    "lint": "./node_modules/.bin/standard src"
+    "lint": "./node_modules/.bin/standard src",
+    "deploy": "surge dist peterszerzo.com"
   },
   "author": "Peter Szerzo <szerzo.peter@gmail.com>",
   "license": "ISC",
