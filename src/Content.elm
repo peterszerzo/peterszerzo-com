@@ -17,34 +17,22 @@ mainLinks =
 
 projects : List Models.Project
 projects =
-    [ { id = "splytlight"
+    [ { id = "elm-gameroom"
+      , title = "elm-gameroom"
+      , description = "Framework for custom multiplayer games"
+      , url = "https://elm-gameroom.firebaseapp.com"
+      , roles = [ "dev" ]
+      , technologies = [ "Elm", "Google Firebase" ]
+      , imageUrl = "/imgs/projects/elm-gameroom.jpg"
+      , gifUrl = ""
+      }
+    , { id = "splytlight"
       , title = "Splyt Light"
       , description = "3d product interface"
       , url = "http://splytlight.surge.sh"
       , roles = [ "dev", "design" ]
       , technologies = [ "React", "Three.js" ]
-      , category = Models.Featured
       , imageUrl = "/imgs/projects/splytlight.jpg"
-      , gifUrl = ""
-      }
-    , { id = "lettero"
-      , title = "Lettero"
-      , description = "Multiplayer wordgame"
-      , url = "https://lettero.co"
-      , roles = [ "dev" ]
-      , technologies = [ "Elm", "Google Firebase" ]
-      , category = Models.Featured
-      , imageUrl = "/imgs/projects/lettero.jpg"
-      , gifUrl = ""
-      }
-    , { id = "airtame"
-      , title = "Airtame"
-      , description = "Floaty things"
-      , url = "https://airtame.com"
-      , roles = [ "dev" ]
-      , technologies = [ "React", "Express" ]
-      , category = Models.Featured
-      , imageUrl = "/imgs/projects/airtame.jpg"
       , gifUrl = ""
       }
     , { id = "atlas"
@@ -53,7 +41,6 @@ projects =
       , url = "http://atlas.newamerica.org"
       , roles = [ "dev" ]
       , technologies = [ "React", "Express", "Mapbox" ]
-      , category = Models.Featured
       , imageUrl = "/imgs/projects/atlas.jpg"
       , gifUrl = ""
       }
@@ -63,7 +50,6 @@ projects =
       , url = "http://albatross.peterszerzo.com"
       , roles = [ "dev", "design" ]
       , technologies = [ "Elm", "Mapbox" ]
-      , category = Models.Featured
       , imageUrl = "/imgs/projects/albatross.jpg"
       , gifUrl = ""
       }
@@ -73,53 +59,7 @@ projects =
       , url = "http://peterszerzo.github.io/ripsaw"
       , roles = [ "dev", "design" ]
       , technologies = [ "Vanilla JS", "Canvas" ]
-      , category = Models.Featured
       , imageUrl = "/imgs/projects/ripsaw.jpg"
-      , gifUrl = ""
-      }
-    ]
-
-
-archivedProjects : List Models.Project
-archivedProjects =
-    [ { id = "pendants"
-      , title = "Pendants"
-      , description = "Jewelry experiments"
-      , url = "/imgs/projects/pendants.jpg"
-      , roles = [ "design" ]
-      , technologies = []
-      , category = Models.Side
-      , imageUrl = ""
-      , gifUrl = ""
-      }
-    , { id = "rotary-phone"
-      , title = "Rotary Phone"
-      , description = "First ever web app"
-      , url = "http://rotary-phone.peterszerzo.com/"
-      , roles = [ "dev" ]
-      , technologies = [ "Vanilla JS", "Canvas" ]
-      , category = Models.Archive
-      , imageUrl = "/imgs/projects/rotary-phone.jpg"
-      , gifUrl = ""
-      }
-    , { id = "helicopter-ride"
-      , title = "Helicopter Ride"
-      , description = ""
-      , url = "http://helicopter-ride.peterszerzo.com/"
-      , roles = [ "dev" ]
-      , technologies = [ "Elm", "Borland Pascal" ]
-      , category = Models.Archive
-      , imageUrl = ""
-      , gifUrl = ""
-      }
-    , { id = "pba"
-      , title = "Pascal Basketball Association"
-      , description = ""
-      , url = "http://pba.peterszerzo.com/"
-      , roles = [ "dev" ]
-      , technologies = [ "Processing", "Borland Pascal" ]
-      , category = Models.Archive
-      , imageUrl = "/imgs/projects/pba.jpg"
       , gifUrl = ""
       }
     ]
@@ -158,7 +98,7 @@ I make websites and web apps, spending most of my time on the frontend, sprinkle
 
 I previously studied and dabbled with algorithmic approaches to architectural design, and love to use code outside of the browser from architectural and jewelry design to animation and computational art. And to get a break of them all, I read, write, do yoga and garden. All great things!
 
-You can find me on my bike on the streets of Copenhagen, sitting around in a coffee shop, at the local frontend, React and Elm meetups, [here](https://twitter.com/peterszerzo) and [there](https://medium.com/@peterszerzo) online. Let’s talk!
+You can find me on my bike on the streets of Bucharest and New York, sitting around in a coffee shop, various frontend, React and Elm meetups, [here](https://twitter.com/peterszerzo) and [there](https://medium.com/@peterszerzo) online. Let’s talk!
 """
 
 
@@ -187,11 +127,11 @@ now =
 
 ## What am I doing now?
 
-A fair bit of ad-hoc programming and design, including [a game](https://lettero.co/) and a [lamp design tool](http://splytlight.surge.sh). I do it partly for fun, partly to shed some new light on what I like to do and what feels right to focus on, and partly to iron out my next step towards ever more fulfilling work. Reading [So good they can’t ignore you](https://sivers.org/book/SoGood) for some extra inspiration.
+WebGL, [games](https://elm-gameroom.firebaseapp.com). Been fortunate to speak at [Elm-Europe](https://elmeurope.org/) not so long ago, met some amazing people, and felt at home.
 
-Also writing some blog posts, such as [this one](http://blog.peterszerzo.com/im-depressed-and-my-coworkers-love-it/) and [this one](http://blog.peterszerzo.com/high-school-newsletter-interview/), and boy does it feel amazing to write again. What is even more astonishing is that I’m having a much easier time letting go and putting stuff up online.
+I have also been on a long, steady streak of New Yorker articles, and wonderful books like Extremely Loud and Incredibly Close and 1Q84.
 
-Doing more yoga, taking more frequent and longer walks. Eating more pastries.
+Still taking ever more frequent and longer walks, and eating more pastries.
 
 > The /now page is Derek Sivers’ [brilliant idea](https://sivers.org/nowff). Cheers, Derek!
 """

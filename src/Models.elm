@@ -29,19 +29,12 @@ type alias Project =
     { id : String
     , title : String
     , description : String
-    , category : ProjectCategory
     , roles : List String
     , technologies : List String
     , url : String
     , imageUrl : String
     , gifUrl : String
     }
-
-
-type ProjectCategory
-    = Featured
-    | Side
-    | Archive
 
 
 type alias Flags =
