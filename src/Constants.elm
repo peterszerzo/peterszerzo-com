@@ -20,9 +20,9 @@ hideNotificationAt =
 
 transitionEvery : Time.Time
 transitionEvery =
-    12 * Time.second
+    8 * Time.second
 
 
-transitionStartingAt : Time.Time
-transitionStartingAt =
-    3 * Time.second
+transitionFor : Time.Time
+transitionFor =
+    1.5 * Time.second

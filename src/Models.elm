@@ -1,26 +1,25 @@
 module Models exposing (..)
 
 import Task
-import Time
 import Messages exposing (Msg(..))
 import Router exposing (Route(..))
 import Window
+import Models.AppTime as AppTime
 
 
 type alias Model =
     { route : Route
     , isQuirky : Bool
-    , time : Time.Time
+    , time : AppTime.AppTime
     , isNotificationDismissed : Bool
     , isDev : Bool
     , window : Window.Size
-    , transitionFactor : Float
     }
 
 
 init : Flags -> Route -> ( Model, Cmd Msg )
 init { isNotificationRecentlyDismissed, isDev } route =
-    ( Model route False 0 isNotificationRecentlyDismissed isDev (Window.Size 0 0) 0
+    ( Model route False AppTime.init isNotificationRecentlyDismissed isDev (Window.Size 0 0)
     , Task.perform Resize Window.size
     )
 
@@ -41,9 +40,3 @@ type alias Flags =
     { isNotificationRecentlyDismissed : Bool
     , isDev : Bool
     }
-
-
-type SwitchPosition
-    = Left
-    | Center
-    | Right

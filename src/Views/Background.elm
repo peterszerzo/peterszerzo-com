@@ -2,11 +2,18 @@ module Views.Background exposing (..)
 
 import Html exposing (Html, Attribute, div)
 import Html.Attributes exposing (class, style)
+import Constants
 import Svg exposing (svg)
 import Svg.Attributes exposing (viewBox, points, width, height, transform)
 import Models exposing (Model)
+import Models.AppTime as AppTime
 import Messages exposing (Msg)
 import Views.Background.Styles exposing (CssClasses(..), localClass)
+
+
+floatRem : Float -> Float -> Float
+floatRem a b =
+    ((a / b) - (a / b |> floor |> toFloat)) * b
 
 
 type alias Polygon =
@@ -18,6 +25,28 @@ type alias Polygon =
 view : Model -> Html Msg
 view model =
     let
+        timeSinceStart =
+            AppTime.sinceStart model.time
+
+        timeRem =
+            floatRem timeSinceStart Constants.transitionEvery
+
+        isOdd =
+            (timeSinceStart / Constants.transitionEvery |> floor) % 2 == 1
+
+        transitionFactor =
+            (if (timeRem > Constants.transitionFor) then
+                1.0
+             else
+                timeRem / Constants.transitionFor
+            )
+                |> (\f ->
+                        if isOdd then
+                            1 - f
+                        else
+                            f
+                   )
+
         expand =
             if (model.window.width < 800) then
                 240
@@ -58,7 +87,7 @@ view model =
                                 polygon_.opacities
 
                             opacity_ =
-                                model.transitionFactor * opacity1 + (1 - model.transitionFactor) * opacity2
+                                transitionFactor * opacity1 + (1 - transitionFactor) * opacity2
                         in
                             Svg.polygon
                                 [ style [ ( "opacity", opacity_ |> toString ) ]
@@ -100,7 +129,7 @@ polygons =
             , ( 0.0, 100.0 )
             , ( -0.0, 53.4 )
             ]
-      , opacities = ( 0.04, 0.11 )
+      , opacities = ( 0.05, 0.15 )
       }
     , { coordinates =
             [ ( 100.0, 66.97 )
@@ -112,7 +141,7 @@ polygons =
             , ( 100.0, 0.0 )
             , ( 100.0, 66.97 )
             ]
-      , opacities = ( 0.035, 0.09 )
+      , opacities = ( 0.045, 0.16 )
       }
     , { coordinates =
             [ ( -0.0, 53.4 )
@@ -122,7 +151,7 @@ polygons =
             , ( 0.0, 0.0 )
             , ( -0.0, 53.4 )
             ]
-      , opacities = ( 0.08, 0.035 )
+      , opacities = ( 0.12, 0.055 )
       }
     , { coordinates =
             [ ( 36.11, 100.0 )
@@ -134,6 +163,6 @@ polygons =
             , ( 38.19, 78.85 )
             , ( 36.11, 100.0 )
             ]
-      , opacities = ( 0.11, 0.0325 )
+      , opacities = ( 0.135, 0.0425 )
       }
     ]

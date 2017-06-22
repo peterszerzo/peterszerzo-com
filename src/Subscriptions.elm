@@ -1,6 +1,7 @@
 module Subscriptions exposing (..)
 
 import Window
+import Router
 import Time exposing (Time, every, millisecond)
 import Messages exposing (Msg(..))
 import Models exposing (Model)
@@ -8,18 +9,14 @@ import Constants
 import AnimationFrame
 
 
-floatRem : Float -> Float -> Float
-floatRem a b =
-    (a / b) - (a / b |> floor |> toFloat)
-
-
 subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.batch
-        [ every Constants.tick Tick
-        , Window.resizes Resize
-        , if (floatRem (model.time - Constants.transitionStartingAt) Constants.transitionEvery) < 0.2 then
-            AnimationFrame.times AnimationTick
-          else
-            Sub.none
+        [ Window.resizes Resize
+        , case model.route of
+            Router.Home ->
+                AnimationFrame.times AnimationTick
+
+            _ ->
+                every Constants.tick Tick
         ]
