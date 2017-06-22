@@ -49,7 +49,7 @@ view model =
 
         expand =
             if (model.window.width < 800) then
-                240
+                260
             else
                 20
 
