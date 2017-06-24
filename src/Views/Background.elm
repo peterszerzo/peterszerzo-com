@@ -1,14 +1,18 @@
 module Views.Background exposing (..)
 
 import Html exposing (Html, Attribute, div)
-import Html.Attributes exposing (class, style)
-import Constants
-import Svg exposing (svg)
-import Svg.Attributes exposing (viewBox, points, width, height, transform)
+import Html.Attributes exposing (class, style, width, height)
 import Models exposing (Model)
 import Models.AppTime as AppTime
 import Messages exposing (Msg)
+import Math.Vector2 exposing (Vec2, vec2)
+import WebGL
 import Views.Background.Styles exposing (CssClasses(..), localClass)
+
+
+type alias Vertex =
+    { position : Vec2
+    }
 
 
 floatRem : Float -> Float -> Float
@@ -28,30 +32,11 @@ view model =
         timeSinceStart =
             AppTime.sinceStart model.time
 
-        timeRem =
-            floatRem timeSinceStart Constants.transitionEvery
-
-        isOdd =
-            (timeSinceStart / Constants.transitionEvery |> floor) % 2 == 1
-
-        transitionFactor =
-            (if (timeRem > Constants.transitionFor) then
-                1.0
-             else
-                timeRem / Constants.transitionFor
-            )
-                |> (\f ->
-                        if isOdd then
-                            1 - f
-                        else
-                            f
-                   )
-
         expand =
             if (model.window.width < 800) then
-                260
+                60
             else
-                20
+                0
 
         size =
             (max model.window.width model.window.height) + 2 * expand
@@ -68,101 +53,109 @@ view model =
         scale =
             (toFloat size) / 100
     in
-        div
+        WebGL.toHtml
             [ localClass [ Root ]
+            , width size
+            , height size
             , style
                 [ ( "top", "-" ++ (toString top) ++ "px" )
                 , ( "left", "-" ++ (toString left) ++ "px" )
                 ]
             ]
-            [ svg
-                [ viewBox "0 0 100 100"
-                , width (toString size)
-                , height (toString size)
-                ]
-                (List.indexedMap
-                    (\index polygon_ ->
-                        let
-                            ( opacity1, opacity2 ) =
-                                polygon_.opacities
-
-                            opacity_ =
-                                transitionFactor * opacity1 + (1 - transitionFactor) * opacity2
-                        in
-                            Svg.polygon
-                                [ style [ ( "opacity", opacity_ |> toString ) ]
-                                , points
-                                    (polygon_.coordinates
-                                        |> List.map (\( x, y ) -> (toString x) ++ "," ++ (toString (100 - y)))
-                                        |> String.join " "
-                                    )
-                                ]
-                                []
-                    )
-                    polygons
-                )
+            [ WebGL.entity vertexShader
+                fragmentShader
+                mesh
+                { resolution = vec2 (toFloat size) (toFloat size)
+                , time = timeSinceStart
+                }
             ]
 
 
-polygons : List Polygon
-polygons =
-    [ { coordinates =
-            [ ( 24.56, 50.52 )
-            , ( 28.67, 50.92 )
-            , ( 46.53, 72.32 )
-            , ( 60.66, 61.27 )
-            , ( 74.35, 62.62 )
-            , ( 75.09, 55.01 )
-            , ( 52.24, 27.02 )
-            , ( 24.56, 50.52 )
-            ]
-      , opacities = ( 0, 0 )
-      }
-    , { coordinates =
-            [ ( -0.0, 53.4 )
-            , ( 18.98, 55.26 )
-            , ( 24.56, 50.52 )
-            , ( 28.67, 50.92 )
-            , ( 46.53, 72.32 )
-            , ( 38.19, 78.85 )
-            , ( 36.11, 100.0 )
-            , ( 0.0, 100.0 )
-            , ( -0.0, 53.4 )
-            ]
-      , opacities = ( 0.05, 0.15 )
-      }
-    , { coordinates =
-            [ ( 100.0, 66.97 )
-            , ( 76.15, 64.63 )
-            , ( 74.35, 62.62 )
-            , ( 75.09, 55.01 )
-            , ( 52.24, 27.02 )
-            , ( 54.86, 0.0 )
-            , ( 100.0, 0.0 )
-            , ( 100.0, 66.97 )
-            ]
-      , opacities = ( 0.045, 0.16 )
-      }
-    , { coordinates =
-            [ ( -0.0, 53.4 )
-            , ( 18.98, 55.26 )
-            , ( 52.24, 27.02 )
-            , ( 54.86, 0.0 )
-            , ( 0.0, 0.0 )
-            , ( -0.0, 53.4 )
-            ]
-      , opacities = ( 0.12, 0.055 )
-      }
-    , { coordinates =
-            [ ( 36.11, 100.0 )
-            , ( 100.0, 100.0 )
-            , ( 100.0, 66.97 )
-            , ( 76.15, 64.63 )
-            , ( 74.35, 62.62 )
-            , ( 60.66, 61.27 )
-            , ( 38.19, 78.85 )
-            , ( 36.11, 100.0 )
-            ]
-      , opacities = ( 0.135, 0.0425 )
-      }
+mesh : WebGL.Mesh Vertex
+mesh =
+    [ ( vec2 -1.0 -1.0 |> Vertex, vec2 1.0 -1.0 |> Vertex, vec2 -1.0 1.0 |> Vertex )
+    , ( vec2 -1.0 1.0 |> Vertex, vec2 1.0 -1.0 |> Vertex, vec2 1.0 1.0 |> Vertex )
     ]
+        |> WebGL.triangles
+
+
+type alias Uniforms =
+    { resolution : Vec2
+    , time : Float
+    }
+
+
+type alias Varyings =
+    {}
+
+
+vertexShader : WebGL.Shader Vertex Uniforms Varyings
+vertexShader =
+    [glsl|
+attribute vec2 position;
+
+void main() {
+  gl_Position = vec4(position, 0.0, 1.0);
+}
+|]
+
+
+fragmentShader : WebGL.Shader {} Uniforms Varyings
+fragmentShader =
+    [glsl|
+precision mediump float;
+
+uniform vec2 resolution;
+uniform float time;
+
+const float transition_every = 8000.0;
+const float transition_for = 1500.0;
+
+void main() {
+  vec2 st = gl_FragCoord.xy / resolution.xy;
+  st.x *= resolution.x / resolution.y;
+
+  const float rotateAngle = 0.0;
+  const mat2 rotate = mat2(cos(rotateAngle), -sin(rotateAngle), sin(rotateAngle), cos(rotateAngle));
+
+  bool is_odd_transition = fract(time / transition_every / 2.0) < 0.5;
+  float transition_ratio = smoothstep(0.0, transition_for, mod(time, transition_every));
+  if (is_odd_transition) {
+    transition_ratio = 1.0 - transition_ratio;
+  }
+
+  // Cell positions
+  vec2 point[5];
+  float sinTime = sin(0.3 * time / 1000.0);
+  float cosTime = cos(0.3 * time / 1000.0);
+  float d = 0.025;
+  point[0] = vec2(0.15, 0.25) + vec2(d * sinTime, d * cosTime);
+  point[1] = vec2(0.1, 0.9) + vec2(d * cosTime, d * sinTime);
+  point[2] = vec2(0.8, 0.75) + vec2(d * sinTime, d * cosTime);
+  point[3] = vec2(0.9, 0.15) + vec2(d * cosTime, d * sinTime);
+  point[4] = vec2(0.5, 0.5);
+
+  // Cell colors
+  vec4 base_color = vec4(21.0 / 255.0, 72.0 / 255.0, 127.0 / 255.0, 1.0);
+  vec4 colors[5];
+  colors[0] = base_color + (0.18 - transition_ratio * 0.13) * vec4(1.0, 1.0, 1.0, 0.0);
+  colors[1] = base_color + (0.05 + transition_ratio * 0.13) * vec4(1.0, 1.0, 1.0, 0.0);
+  colors[2] = base_color + (0.18 - transition_ratio * 0.13) * vec4(1.0, 1.0, 1.0, 0.0);
+  colors[3] = base_color + (0.05 + transition_ratio * 0.13) * vec4(1.0, 1.0, 1.0, 0.0);
+  colors[4] = base_color;
+
+  float min_dist = 1000.0;
+  vec4 min_color;
+
+  for (int i = 0; i < 5; i++) {
+    vec2 diff = rotate * (st - point[i]);
+    float dist = abs(diff.x) + abs(diff.y);
+    if (dist < min_dist) {
+      min_dist = dist;
+      min_color = colors[i];
+    }
+  }
+
+  gl_FragColor = min_color;
+}
+|]
