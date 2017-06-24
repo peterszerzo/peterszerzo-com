@@ -34,7 +34,7 @@ view model =
 
         expand =
             if (model.window.width < 800) then
-                60
+                80
             else
                 0
 
@@ -67,6 +67,7 @@ view model =
                 mesh
                 { resolution = vec2 (toFloat size) (toFloat size)
                 , time = timeSinceStart
+                , horizontal = model.window.width > model.window.height
                 }
             ]
 
@@ -82,6 +83,7 @@ mesh =
 type alias Uniforms =
     { resolution : Vec2
     , time : Float
+    , horizontal : Bool
     }
 
 
@@ -107,6 +109,7 @@ precision mediump float;
 
 uniform vec2 resolution;
 uniform float time;
+uniform bool horizontal;
 
 const float transition_every = 8000.0;
 const float transition_for = 1500.0;
@@ -114,6 +117,10 @@ const float transition_for = 1500.0;
 void main() {
   vec2 st = gl_FragCoord.xy / resolution.xy;
   st.x *= resolution.x / resolution.y;
+
+  if (!horizontal) {
+    st = vec2(st.y, st.x);
+  }
 
   const float rotateAngle = 0.0;
   const mat2 rotate = mat2(cos(rotateAngle), -sin(rotateAngle), sin(rotateAngle), cos(rotateAngle));
@@ -138,10 +145,10 @@ void main() {
   // Cell colors
   vec4 base_color = vec4(21.0 / 255.0, 72.0 / 255.0, 127.0 / 255.0, 1.0);
   vec4 colors[5];
-  colors[0] = base_color + (0.18 - transition_ratio * 0.13) * vec4(1.0, 1.0, 1.0, 0.0);
-  colors[1] = base_color + (0.05 + transition_ratio * 0.13) * vec4(1.0, 1.0, 1.0, 0.0);
-  colors[2] = base_color + (0.18 - transition_ratio * 0.13) * vec4(1.0, 1.0, 1.0, 0.0);
-  colors[3] = base_color + (0.05 + transition_ratio * 0.13) * vec4(1.0, 1.0, 1.0, 0.0);
+  colors[0] = base_color + (0.15 - transition_ratio * 0.10) * vec4(1.0, 1.0, 1.0, 0.0);
+  colors[1] = base_color + (0.05 + transition_ratio * 0.10) * vec4(1.0, 1.0, 1.0, 0.0);
+  colors[2] = base_color + (0.15 - transition_ratio * 0.10) * vec4(1.0, 1.0, 1.0, 0.0);
+  colors[3] = base_color + (0.05 + transition_ratio * 0.10) * vec4(1.0, 1.0, 1.0, 0.0);
   colors[4] = base_color;
 
   float min_dist = 1000.0;
