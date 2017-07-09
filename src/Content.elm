@@ -44,15 +44,6 @@ projects =
       , imageUrl = "/imgs/projects/atlas.jpg"
       , gifUrl = ""
       }
-    , { id = "albatross"
-      , title = "Albatross"
-      , description = "Immersive sound diary"
-      , url = "http://albatross.peterszerzo.com"
-      , roles = [ "dev", "design" ]
-      , technologies = [ "Elm", "Mapbox" ]
-      , imageUrl = "/imgs/projects/albatross.jpg"
-      , gifUrl = ""
-      }
     , { id = "ripsaw"
       , title = "ripsaw.js"
       , description = "Interactive product design for the browser"
