@@ -3,6 +3,7 @@
 node_modules
 elm-stuff
 dist
+build
 src/elm.js
 *.log
 tmp

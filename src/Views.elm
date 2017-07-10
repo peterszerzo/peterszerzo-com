@@ -15,6 +15,7 @@ import Views.Menu
 import Views.Static
 import Views.Styles exposing (CssClasses(..), localClass)
 import Styles exposing (css)
+import Styles.Raw exposing (raw)
 import Css.File exposing (compile)
 
 
@@ -64,7 +65,11 @@ view model =
     in
         div [ localClass [ Root ] ]
             ((if model.isDev then
-                [ node "style" [] [ compile [ css ] |> .css |> text ] ]
+                [ node "style"
+                    []
+                    [ text (raw ++ (compile [ css ] |> .css))
+                    ]
+                ]
               else
                 []
              )

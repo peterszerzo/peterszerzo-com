@@ -4,15 +4,13 @@
   "description": "Source code for my personal website.",
   "main": "index.js",
   "scripts": {
-    "start": "elm-app start",
+    "start": "NODE_ENV=development elm-app start",
     "build:main": "NODE_ENV=production elm-app build",
-    "build:elmcss": "elm-css src/Stylesheets.elm && ./node_modules/.bin/postcss dist/styles.css --output dist/styles.css",
-    "build:assets": "cp -r imgs dist",
-    "build:html": "mv dist/index.html dist/200.html",
-    "build": "rm -rf dist && mkdir dist && npm run build:main && npm run build:elmcss && npm run build:assets && npm run build:html",
+    "build:elmcss": "elm-css src/Stylesheets.elm && ./node_modules/.bin/postcss build/styles.css --output build/styles.css",
+    "build:html": "mv build/index.html build/200.html",
+    "build": "rm -rf dist && mkdir dist && npm run build:main && npm run build:elmcss && npm run build:html",
     "lint": "./node_modules/.bin/standard src",
-    "deploy": "npm run build && echo '\\n\\n ⚠⚠⚠ Nothing deployed yet.. fix html paths in /dist, then run npm run deploy2.'",
-    "deploy2": "surge dist peterszerzo.com"
+    "deploy": "npm run build && surge build peterszerzo.com"
   },
   "author": "Peter Szerzo <szerzo.peter@gmail.com>",
   "license": "ISC",
