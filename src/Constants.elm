@@ -16,13 +16,3 @@ showNotificationAt =
 hideNotificationAt : Time.Time
 hideNotificationAt =
     48 * Time.second
-
-
-transitionEvery : Time.Time
-transitionEvery =
-    8 * Time.second
-
-
-transitionFor : Time.Time
-transitionFor =
-    1.5 * Time.second

@@ -19,7 +19,13 @@ type alias Model =
 
 init : Flags -> Route -> ( Model, Cmd Msg )
 init { isNotificationRecentlyDismissed, isDev } route =
-    ( Model route False AppTime.init isNotificationRecentlyDismissed isDev (Window.Size 0 0)
+    ( Model
+        route
+        False
+        AppTime.init
+        isNotificationRecentlyDismissed
+        isDev
+        (Window.Size 0 0)
     , Task.perform Resize Window.size
     )
 

@@ -4,7 +4,6 @@ import Html exposing (Html, Attribute, div)
 import Html.Attributes exposing (class, style, width, height)
 import Models exposing (Model)
 import Models.AppTime as AppTime
-import Messages exposing (Msg)
 import Math.Vector2 exposing (Vec2, vec2)
 import WebGL
 import Views.Background.Styles exposing (CssClasses(..), localClass)
@@ -26,7 +25,7 @@ type alias Polygon =
     }
 
 
-view : Model -> Html Msg
+view : Model -> Html msg
 view model =
     let
         timeSinceStart =

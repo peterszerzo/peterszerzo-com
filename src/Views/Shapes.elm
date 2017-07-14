@@ -5,7 +5,7 @@ import Svg exposing (svg, g, path, polyline, rect, line)
 import Svg.Attributes exposing (viewBox, stroke, fill, strokeWidth, strokeLinecap, strokeLinejoin, d, points, transform, textRendering, x, y, width, height, rx, x1, x2, y1, y2)
 
 
-arrow : Html a
+arrow : Html msg
 arrow =
     svg
         [ viewBox "0 0 100 100"
@@ -25,7 +25,7 @@ arrow =
         ]
 
 
-falafel : Bool -> Html a
+falafel : Bool -> Html msg
 falafel showAll =
     let
         height_ =
@@ -67,7 +67,7 @@ falafel showAll =
             ]
 
 
-close : Html a
+close : Html msg
 close =
     svg
         [ viewBox "0 0 100 100"
@@ -95,7 +95,7 @@ close =
         ]
 
 
-logo : Html a
+logo : Html msg
 logo =
     svg [ viewBox "0 0 250 250" ]
         [ g
@@ -109,7 +109,7 @@ logo =
         ]
 
 
-smallLogo : Html a
+smallLogo : Html msg
 smallLogo =
     svg [ viewBox "0 0 100 100" ]
         [ g [ transform "translate(14.000000, 7.000000)" ]
