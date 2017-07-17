@@ -14,15 +14,27 @@ type alias Vertex =
     }
 
 
-floatRem : Float -> Float -> Float
-floatRem a b =
-    ((a / b) - (a / b |> floor |> toFloat)) * b
+type alias Uniforms =
+    { resolution : Vec2
+    , time : Float
+    , horizontal : Bool
+    , mobile : Bool
+    }
+
+
+type alias Varyings =
+    {}
 
 
 type alias Polygon =
     { coordinates : List ( Float, Float )
     , opacities : ( Float, Float )
     }
+
+
+floatRem : Float -> Float -> Float
+floatRem a b =
+    ((a / b) - (a / b |> floor |> toFloat)) * b
 
 
 view : Model -> Html msg
@@ -33,7 +45,7 @@ view model =
 
         expand =
             if (model.window.width < 800) then
-                80
+                100
             else
                 0
 
@@ -67,6 +79,7 @@ view model =
                 { resolution = vec2 (toFloat size) (toFloat size)
                 , time = timeSinceStart
                 , horizontal = model.window.width > model.window.height
+                , mobile = model.window.width < 600
                 }
             ]
 
@@ -77,17 +90,6 @@ mesh =
     , ( vec2 -1.0 1.0 |> Vertex, vec2 1.0 -1.0 |> Vertex, vec2 1.0 1.0 |> Vertex )
     ]
         |> WebGL.triangles
-
-
-type alias Uniforms =
-    { resolution : Vec2
-    , time : Float
-    , horizontal : Bool
-    }
-
-
-type alias Varyings =
-    {}
 
 
 vertexShader : WebGL.Shader Vertex Uniforms Varyings
@@ -109,6 +111,7 @@ precision highp float;
 uniform vec2 resolution;
 uniform float time;
 uniform bool horizontal;
+uniform bool mobile;
 
 const float transition_every = 8000.0;
 const float transition_for = 1500.0;
@@ -134,7 +137,7 @@ void main() {
   vec2 point[5];
   float sinTime = sin(0.3 * time / 1000.0);
   float cosTime = cos(0.3 * time / 1000.0);
-  float d = 0.025;
+  float d = mobile ? 0.035 : 0.025;
   point[0] = vec2(0.15, 0.25) + vec2(d * sinTime, d * cosTime);
   point[1] = vec2(0.1, 0.9) + vec2(d * cosTime, d * sinTime);
   point[2] = vec2(0.8, 0.75) + vec2(d * sinTime, d * cosTime);
