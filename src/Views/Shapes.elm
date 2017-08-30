@@ -25,48 +25,6 @@ arrow =
         ]
 
 
-falafel : Bool -> Html msg
-falafel showAll =
-    let
-        height_ =
-            6
-
-        spacing =
-            18
-
-        startY =
-            50 - spacing - 1.5 * height_
-    in
-        svg [ viewBox "0 0 100 100" ]
-            [ g []
-                [ rect
-                    [ x "0"
-                    , y (toString startY)
-                    , width "100"
-                    , height (toString height_)
-                    , rx "3"
-                    ]
-                    []
-                , rect
-                    [ x "0"
-                    , y (toString (startY + height_ + spacing))
-                    , width "100"
-                    , height (toString height_)
-                    , rx "3"
-                    ]
-                    []
-                , rect
-                    [ x "0"
-                    , y (toString (startY + 2 * height_ + 2 * spacing))
-                    , width "100"
-                    , height (toString height_)
-                    , rx "3"
-                    ]
-                    []
-                ]
-            ]
-
-
 close : Html msg
 close =
     svg

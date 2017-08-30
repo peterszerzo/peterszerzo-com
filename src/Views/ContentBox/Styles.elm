@@ -21,6 +21,7 @@ type CssClasses
     | DisplaySecondary
     | Content
     | Contents
+    | BackLink
     | Switch
     | SwitchHidden
 
@@ -83,7 +84,7 @@ styles =
     , class Content
         [ width (pct 100)
         , height (pct 100)
-        , padding2 (px 60) (px 20)
+        , padding2 (px 40) (px 20)
         , position absolute
         , top (px 0)
         , left (px 0)
@@ -94,14 +95,34 @@ styles =
         ]
     , mediaQuery desktop
         [ class Content
-            [ padding2 (px 120) (px 20)
+            [ padding2 (px 80) (px 20)
+            ]
+        ]
+    , each [ class Switch, class BackLink ]
+        [ width (px 60)
+        , height (px 60)
+        , padding (px 15)
+        , left (px 0)
+        , Mixins.zIndex 3
+        , opacity (num 0.6)
+        , property "transition" "opacity 0.3s"
+        , position fixed
+        , cursor pointer
+        , hover
+            [ opacity (num 1)
             ]
         ]
     , class Switch
-        [ position fixed
-        , bottom (px 15)
-        , left (px 15)
-        , Mixins.zIndex 3
+        [ bottom (px 0)
+        , children
+            [ everything
+                [ top (pct 50)
+                , transform (translate3d (px 0) (pct -50) (px 0))
+                ]
+            ]
+        ]
+    , class BackLink
+        [ property "stroke" "#15487F"
         ]
     , class SwitchHidden
         [ display none

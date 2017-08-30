@@ -1,14 +1,15 @@
-module Views.Links exposing (..)
+module Views.Nav exposing (..)
 
-import Html exposing (Html, div, a, text)
-import Html.Attributes exposing (..)
+import Html exposing (Html, div, text, h1, p, nav, node, a)
+import Html.Attributes exposing (href)
 import Html.Events exposing (onClick)
 import Messages exposing (Msg(..))
-import Content exposing (mainLinks)
+import Content
+import Views.Nav.Styles exposing (CssClasses(..), localClass, localClassList)
 
 
-viewMainLink : Maybe String -> String -> ( String, String ) -> Html Msg
-viewMainLink currentSlug className ( label, url ) =
+viewMainLink : ( String, String ) -> Html Msg
+viewMainLink ( label, url ) =
     let
         isExternalLink =
             String.slice 0 4 url == "http" || String.slice 0 6 url == "mailto"
@@ -17,11 +18,7 @@ viewMainLink currentSlug className ( label, url ) =
             String.dropLeft 1 url
     in
         a
-            ([ (classList
-                    [ ( className, True )
-                    , ( className ++ "Active", currentSlug == Just slug )
-                    ]
-               )
+            ([ localClass [ DesktopLink ]
              , href
                 (if isExternalLink then
                     url
@@ -40,9 +37,20 @@ viewMainLink currentSlug className ( label, url ) =
             [ text label ]
 
 
-viewMainLinks : Maybe String -> String -> String -> Html Msg
-viewMainLinks currentPath containerClassName linkClassName =
+viewMainLinks : Html Msg
+viewMainLinks =
     div
-        [ class containerClassName
+        [ localClass [ DesktopLinks ]
         ]
-        (List.map (viewMainLink currentPath linkClassName) Content.mainLinks)
+        (List.map (viewMainLink) Content.mainLinks)
+
+
+view : Html Msg
+view =
+    nav
+        [ localClass
+            [ Root
+            ]
+        ]
+        [ viewMainLinks
+        ]

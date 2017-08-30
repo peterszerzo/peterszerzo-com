@@ -6,7 +6,8 @@ import Window
 
 
 type Msg
-    = ToggleQuirky
+    = NoOp
+    | ToggleQuirky
     | ChangePath String
     | ChangeRoute Route
     | DismissNotification

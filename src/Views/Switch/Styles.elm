@@ -32,20 +32,16 @@ localClassList =
 styles : List Css.Snippet
 styles =
     [ class Root
-        [ cursor pointer
-        , display inlineBlock
+        [ display inlineBlock
         , width (px 26)
         , height (px 12)
         , borderRadius (px 6)
-        , opacity (num 0.6)
+        , opacity (num 1)
         , position relative
         , property "transition" "opacity .3s"
         , borderColor blue
         , property "border-width" "1px"
         , borderStyle solid
-        , hover
-            [ opacity (num 1)
-            ]
         ]
     , class Button
         [ width (px 12)

@@ -10,9 +10,8 @@ import Views.Notification.Styles
 import Views.Switch.Styles
 import Views.Project.Styles
 import Views.Static.Styles
-import Views.Header.Styles
+import Views.Nav.Styles
 import Views.Background.Styles
-import Views.Menu.Styles
 import Views.Styles
 
 
@@ -86,5 +85,4 @@ css =
             ++ Views.Switch.Styles.styles
             ++ Views.Project.Styles.styles
             ++ Views.Static.Styles.styles
-            ++ Views.Header.Styles.styles
-            ++ Views.Menu.Styles.styles
+            ++ Views.Nav.Styles.styles

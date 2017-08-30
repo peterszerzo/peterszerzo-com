@@ -53,7 +53,13 @@ view model =
             (max model.window.width model.window.height) + 2 * expand
 
         top =
-            (toFloat (size - model.window.height)) / 2
+            (toFloat (size - model.window.height))
+                / 2
+                + (if model.window.width < 800 then
+                    70
+                   else
+                    0
+                  )
 
         left =
             (toFloat (size - model.window.width)) / 2

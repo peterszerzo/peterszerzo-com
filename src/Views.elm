@@ -10,8 +10,6 @@ import Content
 import Views.Banner
 import Views.Notification
 import Views.Project
-import Views.Header
-import Views.Menu
 import Views.Static
 import Views.Styles exposing (CssClasses(..), localClass)
 import Styles exposing (css)
@@ -50,9 +48,6 @@ view model =
                         )
                         model.isQuirky
 
-                Router.Menu ->
-                    Views.Menu.view model
-
                 Router.Talks ->
                     Views.ContentBox.view
                         ( [ Views.Static.view Content.talks ]
@@ -76,14 +71,9 @@ view model =
                 ++ [ div
                         [ localClass [ Container ]
                         ]
-                        [ div
-                            [ localClass [ Content ]
-                            ]
-                            [ Views.Banner.view
-                            ]
+                        [ Views.Banner.view
                         , content
                         , Views.Background.view model
-                        , Views.Header.view model
                         , Views.Notification.view model
                         ]
                    ]

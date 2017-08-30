@@ -5,7 +5,6 @@ import Html.CssHelpers
 import Css exposing (..)
 import Css.Namespace exposing (namespace)
 import Styles.Constants exposing (..)
-import Styles.Mixins as Mixins
 
 
 cssNamespace : String
@@ -44,10 +43,6 @@ styles =
         , justifyContent center
         , property "animation" "fade-in ease-out .5s"
         , position relative
-        ]
-    , class Content
-        [ position relative
-        , Mixins.zIndex 10
         ]
     ]
         |> namespace cssNamespace

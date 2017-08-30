@@ -32,6 +32,9 @@ main =
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
+        NoOp ->
+            ( model, Cmd.none )
+
         ToggleQuirky ->
             ( { model | isQuirky = not model.isQuirky }
             , Cmd.none
