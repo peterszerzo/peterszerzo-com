@@ -6,9 +6,8 @@ import Css.Namespace exposing (namespace)
 import Styles.Constants exposing (..)
 import Views.Banner.Styles
 import Views.ContentBox.Styles
-import Views.Notification.Styles
-import Views.Switch.Styles
-import Views.Project.Styles
+import Views.Notification
+import Views.Switch
 import Views.Static.Styles
 import Views.Nav.Styles
 import Views.Background.Styles
@@ -81,8 +80,7 @@ css =
             ++ Views.Background.Styles.styles
             ++ Views.Banner.Styles.styles
             ++ Views.ContentBox.Styles.styles
-            ++ Views.Notification.Styles.styles
-            ++ Views.Switch.Styles.styles
-            ++ Views.Project.Styles.styles
+            ++ Views.Notification.styles
+            ++ Views.Switch.styles
             ++ Views.Static.Styles.styles
             ++ Views.Nav.Styles.styles

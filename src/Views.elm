@@ -9,7 +9,6 @@ import Views.Background
 import Content
 import Views.Banner
 import Views.Notification
-import Views.Project
 import Views.Static
 import Views.Styles exposing (CssClasses(..), localClass)
 import Styles exposing (css)
@@ -24,15 +23,6 @@ view model =
             case model.route of
                 Router.Home ->
                     div [] []
-
-                Router.Projects ->
-                    Views.ContentBox.view
-                        ( [ h2 [] [ text "Recent works" ]
-                          ]
-                            ++ (List.map Views.Project.view Content.projects)
-                        , Nothing
-                        )
-                        model.isQuirky
 
                 Router.Now ->
                     Views.ContentBox.view

@@ -5,54 +5,13 @@ import Models
 
 mainLinks : List ( String, String )
 mainLinks =
-    [ ( "Recent works", "/projects" )
+    [ ( "Work", "https://overeasy.sh#projects" )
     , ( "Playground", "http://codepen.io/peterszerzo/" )
     , ( "Blog", "http://blog.peterszerzo.com" )
     , ( "CV", "https://represent.io/peterszerzo" )
     , ( "About", "/about" )
     , ( "Now", "/now" )
     , ( "Contact", "mailto:szerzo.peter@gmail.com" )
-    ]
-
-
-projects : List Models.Project
-projects =
-    [ { id = "elm-gameroom"
-      , title = "elm-gameroom"
-      , description = "Framework for custom multiplayer games"
-      , url = "https://elm-gameroom.firebaseapp.com"
-      , roles = [ "dev" ]
-      , technologies = [ "Elm", "Google Firebase" ]
-      , imageUrl = "/imgs/projects/elm-gameroom.jpg"
-      , gifUrl = ""
-      }
-    , { id = "splytlight"
-      , title = "Splyt Light"
-      , description = "3d product interface"
-      , url = "http://splytlight.surge.sh"
-      , roles = [ "dev", "design" ]
-      , technologies = [ "React", "Three.js" ]
-      , imageUrl = "/imgs/projects/splytlight.jpg"
-      , gifUrl = ""
-      }
-    , { id = "atlas"
-      , title = "Atlas"
-      , description = "Data visualization CMS"
-      , url = "http://atlas.newamerica.org"
-      , roles = [ "dev" ]
-      , technologies = [ "React", "Express", "Mapbox" ]
-      , imageUrl = "/imgs/projects/atlas.jpg"
-      , gifUrl = ""
-      }
-    , { id = "ripsaw"
-      , title = "ripsaw.js"
-      , description = "Interactive product design for the browser"
-      , url = "http://peterszerzo.github.io/ripsaw"
-      , roles = [ "dev", "design" ]
-      , technologies = [ "Vanilla JS", "Canvas" ]
-      , imageUrl = "/imgs/projects/ripsaw.jpg"
-      , gifUrl = ""
-      }
     ]
 
 
@@ -113,10 +72,9 @@ It means a lot to me that you’ve read this.
 now : String
 now =
     """
-
 ## What am I doing now?
 
-WebGL, [games](https://elm-gameroom.firebaseapp.com). Been fortunate to speak at [Elm-Europe](https://elmeurope.org/) not so long ago, met some amazing people, and felt at home.
+Data viz, WebGL, and a really interesting startup idea. Started really warming up to the idea of going back to school for some added creative edge. CIID in good old Copenhagen especially.
 
 I have also been on a long, steady streak of New Yorker articles, and wonderful books like Extremely Loud and Incredibly Close and 1Q84.
 

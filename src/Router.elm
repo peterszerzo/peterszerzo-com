@@ -6,7 +6,6 @@ import String
 
 type Route
     = Home
-    | Projects
     | Now
     | About
     | Talks
@@ -16,7 +15,6 @@ type Route
 simpleRouteDefs : List ( Route, String )
 simpleRouteDefs =
     [ ( Home, "" )
-    , ( Projects, "projects" )
     , ( Now, "now" )
     , ( About, "about" )
     , ( Talks, "talks" )
