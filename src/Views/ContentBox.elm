@@ -21,7 +21,7 @@ view ( c1, c2 ) isQuirky =
             [ localClass [ BackLink ]
             , onClick (ChangePath "")
             ]
-            [ Views.Shapes.smallLogo
+            [ Views.Shapes.arrow
             ]
         , div
             [ localClassList

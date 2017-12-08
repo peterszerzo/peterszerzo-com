@@ -2,8 +2,8 @@ module Views.Background exposing (..)
 
 import Html exposing (Html, Attribute, div)
 import Html.Attributes exposing (class, style, width, height)
-import Models exposing (Model)
-import Models.AppTime as AppTime
+import Data.State exposing (State)
+import Data.AppTime as AppTime
 import Math.Vector2 exposing (Vec2, vec2)
 import WebGL
 import Views.Background.Styles exposing (CssClasses(..), localClass)
@@ -37,7 +37,7 @@ floatRem a b =
     ((a / b) - (a / b |> floor |> toFloat)) * b
 
 
-view : Model -> Html msg
+view : State -> Html msg
 view model =
     let
         timeSinceStart =
@@ -153,10 +153,10 @@ void main() {
   // Cell colors
   vec4 base_color = vec4(21.0 / 255.0, 72.0 / 255.0, 127.0 / 255.0, 1.0);
   vec4 colors[5];
-  colors[0] = base_color + (0.15 - transition_ratio * 0.1) * vec4(1.0, 1.0, 1.0, 0.0);
-  colors[1] = base_color + (0.05 + transition_ratio * 0.1) * vec4(1.0, 1.0, 1.0, 0.0);
-  colors[2] = base_color + (0.15 - transition_ratio * 0.1) * vec4(1.0, 1.0, 1.0, 0.0);
-  colors[3] = base_color + (0.05 + transition_ratio * 0.1) * vec4(1.0, 1.0, 1.0, 0.0);
+  colors[0] = base_color + (0.07 - transition_ratio * 0.05) * vec4(1.0, 1.0, 1.0, 0.0);
+  colors[1] = base_color + (0.02 + transition_ratio * 0.05) * vec4(1.0, 1.0, 1.0, 0.0);
+  colors[2] = base_color + (0.07 - transition_ratio * 0.05) * vec4(1.0, 1.0, 1.0, 0.0);
+  colors[3] = base_color + (0.02 + transition_ratio * 0.05) * vec4(1.0, 1.0, 1.0, 0.0);
   colors[4] = base_color;
 
   float min_dist = 1000.0;

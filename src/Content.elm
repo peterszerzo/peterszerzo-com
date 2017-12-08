@@ -1,11 +1,11 @@
 module Content exposing (..)
 
-import Models
+import Data.Project exposing (Project)
 
 
 mainLinks : List ( String, String )
 mainLinks =
-    [ ( "Work", "https://overeasy.sh#projects" )
+    [ ( "Work", "/projects" )
     , ( "Playground", "http://codepen.io/peterszerzo/" )
     , ( "Blog", "http://blog.peterszerzo.com" )
     , ( "CV", "https://represent.io/peterszerzo" )
@@ -13,6 +13,11 @@ mainLinks =
     , ( "Now", "/now" )
     , ( "Contact", "mailto:szerzo.peter@gmail.com" )
     ]
+
+
+projects : List Project
+projects =
+    []
 
 
 title : String

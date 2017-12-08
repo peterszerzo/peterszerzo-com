@@ -1,24 +1,35 @@
 module Main exposing (..)
 
+import Task
 import AnimationFrame
 import Window
 import Constants
 import Time
 import Navigation exposing (Location, programWithFlags)
 import Messages exposing (Msg(..))
-import Models.AppTime as AppTime
+import Data.AppTime as AppTime
+import Data.State exposing (State)
 import Ports
 import Views exposing (view)
-import Models exposing (Model, Flags)
+import Data.Flags exposing (Flags)
 import Router exposing (Route, parse)
+import Window
 
 
-init : Flags -> Location -> ( Model, Cmd Msg )
-init flags location =
-    Models.init flags (parse location)
+init : Flags -> Location -> ( State, Cmd Msg )
+init { isNotificationRecentlyDismissed, isDev } location =
+    ( State
+        (parse location)
+        False
+        AppTime.init
+        isNotificationRecentlyDismissed
+        isDev
+        (Window.Size 0 0)
+    , Task.perform Resize Window.size
+    )
 
 
-main : Program Flags Model Msg
+main : Program Flags State Msg
 main =
     programWithFlags
         (ChangeRoute << parse)
@@ -29,7 +40,7 @@ main =
         }
 
 
-update : Msg -> Model -> ( Model, Cmd Msg )
+update : Msg -> State -> ( State, Cmd Msg )
 update msg model =
     case msg of
         NoOp ->
@@ -75,7 +86,7 @@ update msg model =
             )
 
 
-subscriptions : Model -> Sub Msg
+subscriptions : State -> Sub Msg
 subscriptions model =
     Sub.batch
         [ Window.resizes Resize

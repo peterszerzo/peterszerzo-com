@@ -1,4 +1,7 @@
 var Elm = require('./Main.elm')
+var d3 = require('d3-hierarchy')
+
+console.log(d3)
 
 var isDev = process.env.NODE_ENV === 'development'
 var LOCAL_STORAGE_KEY = 'peterszerzo.com:notification-last-dismissed'

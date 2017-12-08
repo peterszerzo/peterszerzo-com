@@ -1,7 +1,7 @@
 module Views exposing (..)
 
 import Html exposing (Html, div, text, h1, h2, p, header, node)
-import Models exposing (Model)
+import Data.State exposing (State)
 import Router
 import Messages exposing (Msg(..))
 import Views.ContentBox
@@ -16,13 +16,20 @@ import Styles.Raw exposing (raw)
 import Css.File exposing (compile)
 
 
-view : Model -> Html Msg
+view : State -> Html Msg
 view model =
     let
         content =
             case model.route of
                 Router.Home ->
                     div [] []
+
+                Router.Projects ->
+                    Views.ContentBox.view
+                        ( []
+                        , Nothing
+                        )
+                        model.isQuirky
 
                 Router.Now ->
                     Views.ContentBox.view

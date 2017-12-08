@@ -8,8 +8,8 @@ import Css.Elements as Elements
 import Css.Namespace exposing (namespace)
 import Views.Shapes exposing (close)
 import Content
-import Models
-import Models.AppTime as AppTime
+import Data.State exposing (State)
+import Data.AppTime as AppTime
 import Messages exposing (Msg(..))
 import Markdown exposing (toHtml)
 import Constants
@@ -17,7 +17,7 @@ import Styles.Constants exposing (..)
 import Styles.Mixins as Mixins
 
 
-view : Models.Model -> Html Msg
+view : State -> Html Msg
 view model =
     let
         timeSinceStart =

@@ -1,4 +1,4 @@
-module Models.AppTime exposing (AppTime, init, set, sinceStart)
+module Data.AppTime exposing (AppTime, init, set, sinceStart)
 
 import Time exposing (Time)
 

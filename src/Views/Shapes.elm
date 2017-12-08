@@ -13,7 +13,6 @@ arrow =
         , strokeLinejoin "round"
         , strokeWidth "7"
         , fill "none"
-        , textRendering "geometricPrecision"
         ]
         [ g [ transform "translate(16, 30)" ]
             [ polyline [ points "68.0398236 11 59.7022701 18.0675195 15 18.0675195" ] []
@@ -32,7 +31,6 @@ close =
         , strokeLinecap "round"
         , strokeLinejoin "round"
         , strokeWidth "8"
-        , textRendering "geometricPrecision"
         ]
         [ g []
             [ line
@@ -58,7 +56,7 @@ logo =
     svg [ viewBox "0 0 250 250" ]
         [ g
             [ fill "none"
-            , strokeWidth "3.5"
+            , strokeWidth "4"
             , strokeLinecap "round"
             , strokeLinejoin "round"
             ]
