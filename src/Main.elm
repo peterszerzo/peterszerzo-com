@@ -5,10 +5,14 @@ import AnimationFrame
 import Window
 import Constants
 import Time
+import Json.Encode as Encode
+import Json.Decode as Decode
 import Navigation exposing (Location, programWithFlags)
 import Messages exposing (Msg(..))
+import Content
 import Data.AppTime as AppTime
 import Data.State exposing (State)
+import Data.PackBubble as PackBubble
 import Ports
 import Views exposing (view)
 import Data.Flags exposing (Flags)
@@ -18,13 +22,14 @@ import Window
 
 init : Flags -> Location -> ( State, Cmd Msg )
 init { isNotificationRecentlyDismissed, isDev } location =
-    ( State
-        (parse location)
-        False
-        AppTime.init
-        isNotificationRecentlyDismissed
-        isDev
-        (Window.Size 0 0)
+    ( { route = (parse location)
+      , isQuirky = False
+      , time = AppTime.init
+      , isNotificationDismissed = isNotificationRecentlyDismissed
+      , isDev = isDev
+      , window = (Window.Size 0 0)
+      , projectPackBubbles = []
+      }
     , Task.perform Resize Window.size
     )
 
@@ -68,7 +73,12 @@ update msg model =
 
         Resize window ->
             ( { model | window = window }
-            , Cmd.none
+            , Ports.packLayoutReq <|
+                Encode.object
+                    [ ( "width", Encode.int window.width )
+                    , ( "height", Encode.int <| window.height - 60 )
+                    , ( "sizes", Encode.list <| List.map Encode.int (List.map .size Content.projects) )
+                    ]
             )
 
         Tick time ->
@@ -85,11 +95,22 @@ update msg model =
             , Cmd.none
             )
 
+        PackLayoutResponse value ->
+            ( { model
+                | projectPackBubbles =
+                    value
+                        |> Decode.decodeValue (Decode.list PackBubble.decoder)
+                        |> Result.withDefault []
+              }
+            , Cmd.none
+            )
+
 
 subscriptions : State -> Sub Msg
 subscriptions model =
     Sub.batch
         [ Window.resizes Resize
+        , Ports.packLayoutRes PackLayoutResponse
         , case model.route of
             Router.Home ->
                 AnimationFrame.times AnimationTick

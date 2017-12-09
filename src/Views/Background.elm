@@ -154,9 +154,9 @@ void main() {
   vec4 base_color = vec4(21.0 / 255.0, 72.0 / 255.0, 127.0 / 255.0, 1.0);
   vec4 colors[5];
   colors[0] = base_color + (0.07 - transition_ratio * 0.05) * vec4(1.0, 1.0, 1.0, 0.0);
-  colors[1] = base_color + (0.02 + transition_ratio * 0.05) * vec4(1.0, 1.0, 1.0, 0.0);
+  colors[1] = base_color + (0.03 + transition_ratio * 0.05) * vec4(1.0, 1.0, 1.0, 0.0);
   colors[2] = base_color + (0.07 - transition_ratio * 0.05) * vec4(1.0, 1.0, 1.0, 0.0);
-  colors[3] = base_color + (0.02 + transition_ratio * 0.05) * vec4(1.0, 1.0, 1.0, 0.0);
+  colors[3] = base_color + (0.03 + transition_ratio * 0.05) * vec4(1.0, 1.0, 1.0, 0.0);
   colors[4] = base_color;
 
   float min_dist = 1000.0;

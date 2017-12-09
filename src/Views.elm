@@ -10,6 +10,7 @@ import Content
 import Views.Banner
 import Views.Notification
 import Views.Static
+import Views.Projects
 import Views.Styles exposing (CssClasses(..), localClass)
 import Styles exposing (css)
 import Styles.Raw exposing (raw)
@@ -26,31 +27,41 @@ view model =
 
                 Router.Projects ->
                     Views.ContentBox.view
-                        ( []
-                        , Nothing
-                        )
-                        model.isQuirky
+                        { content =
+                            [ Views.Projects.view
+                                { packBubbles = model.projectPackBubbles
+                                , projects = Content.projects
+                                , active = Nothing
+                                }
+                            ]
+                        , title = "Projects"
+                        , quirkyContent = Nothing
+                        , isQuirky = model.isQuirky
+                        }
 
                 Router.Now ->
                     Views.ContentBox.view
-                        ( [ Views.Static.view Content.now ]
-                        , Nothing
-                        )
-                        model.isQuirky
+                        { content = [ Views.Static.view Content.now ]
+                        , quirkyContent = Nothing
+                        , title = "Now"
+                        , isQuirky = model.isQuirky
+                        }
 
                 Router.About ->
                     Views.ContentBox.view
-                        ( [ Views.Static.view Content.aboutConventional ]
-                        , Just [ Views.Static.view Content.aboutReal ]
-                        )
-                        model.isQuirky
+                        { content = [ Views.Static.view Content.aboutConventional ]
+                        , title = "About"
+                        , quirkyContent = Just [ Views.Static.view Content.aboutReal ]
+                        , isQuirky = model.isQuirky
+                        }
 
                 Router.Talks ->
                     Views.ContentBox.view
-                        ( [ Views.Static.view Content.talks ]
-                        , Nothing
-                        )
-                        model.isQuirky
+                        { content = [ Views.Static.view Content.talks ]
+                        , quirkyContent = Nothing
+                        , title = "Talks"
+                        , isQuirky = model.isQuirky
+                        }
 
                 Router.NotFound ->
                     div [] []

@@ -8,7 +8,7 @@ import Css.Namespace exposing (namespace)
 import Styles.Constants exposing (..)
 import Styles.Mixins as Mixins
 import Content
-import Views.Shapes exposing (logo)
+import Views.Shapes as Shapes
 import Views.Nav
 import Messages exposing (Msg)
 
@@ -22,11 +22,11 @@ view =
             [ div
                 [ localClass [ Logo ]
                 ]
-                [ logo
+                [ Shapes.logo
                 , div []
                     []
                 ]
-            , h1 [] [ Html.text Content.title ]
+            , h1 [ localClass [ Title ] ] [ Html.text Content.title ]
             , p [ localClass [ Subtitle ] ] [ Html.text Content.subtitle ]
             ]
         , Views.Nav.view
@@ -43,6 +43,7 @@ type CssClasses
     | Content
     | Logo
     | Subtitle
+    | Title
 
 
 localClass : List class -> Html.Attribute msg
@@ -61,6 +62,9 @@ styles =
         , height (pct 100)
         , Mixins.zIndex 10
         ]
+    , class Title
+        [ margin2 (px 10) auto
+        ]
     , class Content
         [ color white
         , textAlign center
@@ -68,10 +72,10 @@ styles =
         , transform (translate3d (px 0) (px -50) (px 0))
         ]
     , class Logo
-        [ width (px 150)
-        , height (px 150)
+        [ width (px 120)
+        , height (px 120)
         , position relative
-        , margin3 auto auto (px 15)
+        , margin3 auto auto (px 0)
         , children
             [ Elements.svg
                 [ property "stroke" "white"
@@ -100,11 +104,12 @@ styles =
         ]
     , class Subtitle
         [ width (px 220)
+        , marginTop (px 0)
         ]
     , mediaQuery desktop
         [ class Logo
-            [ width (px 180)
-            , height (px 180)
+            [ width (px 160)
+            , height (px 160)
             ]
         , class Content
             [ transform (translate3d (px 0) (px 0) (px 0))

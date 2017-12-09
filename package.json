@@ -20,8 +20,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^6.7.7",
-    "postcss-cli": "^3.1.1",
-    "standard": "^8.6.0",
-    "uglify-js": "^2.8.22"
+    "create-elm-app": "^1.10.0",
+    "postcss-cli": "^3.1.1"
   }
 }

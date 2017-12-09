@@ -17,7 +17,35 @@ mainLinks =
 
 projects : List Project
 projects =
-    []
+    [ { name = "elm-gameroom"
+      , description = ""
+      , technologies = [ "Elm", "WebGL" ]
+      , url = "https://elm-gameroom.firebaseapp.com"
+      , roles = [ "Developer", "Designer" ]
+      , size = 1200
+      }
+    , { name = "ripsaw"
+      , description = ""
+      , technologies = [ "Elm", "WebGL" ]
+      , url = "http://ripsaw.surge.sh"
+      , roles = [ "Developer", "Designer" ]
+      , size = 800
+      }
+    , { name = "nlx"
+      , description = ""
+      , technologies = [ "Elm", "WebGL" ]
+      , url = "https://nlx.ai"
+      , roles = [ "Frontend lead", "UX designer" ]
+      , size = 600
+      }
+    , { name = "The Seed"
+      , description = ""
+      , technologies = [ "Elm" ]
+      , url = "https://theseed.eu"
+      , roles = []
+      , size = 600
+      }
+    ]
 
 
 title : String
@@ -27,15 +55,14 @@ title =
 
 subtitle : String
 subtitle =
-    "Your friendly neighborhood creative programmer."
+    "Your friendly neighborhood creative programmer"
 
 
 talks : String
 talks =
     """
-## Talks
-
-Speaking in public I enjoy - here are the few I did so far:
+Speaking and workshopping I enjoy. Here are the few I was fortunate to have done so far:
+* [Making a multiplayer game framework](https://www.youtube.com/watch?v=sBCz6atTRZk)
 * [CSS by the fireplace](https://peterszerzo.github.io/css-by-the-fireplace/)
 * [Practical Elm. And friends](https://peterszerzo.github.io/practical-elm-and-friends/)
 * [Copenhagen React Workshop](https://www.eventbrite.com/e/copenhagen-react-workshop-1-tickets-25344956447#)
@@ -45,8 +72,6 @@ Speaking in public I enjoy - here are the few I did so far:
 aboutConventional : String
 aboutConventional =
     """
-## Hello :)
-
 This is Peter, programmer, designer and natural language enthusiast. A friendly, straightforward fellow with eager-to-pedal feet, a green thumb and a curious mind.
 
 I make web apps, visualizations and games, spending most of my time on the frontend, sprinkled with some spent designing and some on the backend. I enjoy deleting code, shortening variable names and changing my mind about tools and frameworks. Even more so, I enjoy collaborating, [giving talks](https://www.youtube.com/watch?v=sBCz6atTRZk) and running workshops.
@@ -60,9 +85,7 @@ You can find me on my bike on the streets of Berlin and New York, sitting around
 aboutReal : String
 aboutReal =
     """
-## Oh, good!
-
-You hit the magic switch. Let me balance out the somewhat conformist professionalism on the other page with some real Peter Szerzo.
+Oh, good, you hit the magic switch. Let me balance out the somewhat conformist professionalism on the other page with some real Peter Szerzo.
 
 I’m a great guy: caring, fun, passionate. That said, when I’m wrapped up in anxiety or self-judgement (which is often), then I can be a bit too much. Ramble ramble ramble.
 

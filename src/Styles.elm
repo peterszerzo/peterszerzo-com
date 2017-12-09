@@ -5,11 +5,12 @@ import Css.Elements exposing (a, p, h1, h2, h3, svg, img, li, ul, div, html, bod
 import Css.Namespace exposing (namespace)
 import Styles.Constants exposing (..)
 import Views.Banner
-import Views.ContentBox.Styles
+import Views.ContentBox
 import Views.Notification
 import Views.Switch
-import Views.Static.Styles
+import Views.Static
 import Views.Nav
+import Views.Projects
 import Views.Background.Styles
 import Views.Styles
 
@@ -79,8 +80,9 @@ css =
             ++ Views.Styles.styles
             ++ Views.Background.Styles.styles
             ++ Views.Banner.styles
-            ++ Views.ContentBox.Styles.styles
+            ++ Views.ContentBox.styles
             ++ Views.Notification.styles
             ++ Views.Switch.styles
-            ++ Views.Static.Styles.styles
+            ++ Views.Projects.styles
+            ++ Views.Static.styles
             ++ Views.Nav.styles

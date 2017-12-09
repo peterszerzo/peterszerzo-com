@@ -7,6 +7,5 @@ type alias Project =
     , description : String
     , roles : List String
     , technologies : List String
-    , iconId : String
     , size : Int
     }

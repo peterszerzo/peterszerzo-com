@@ -1,24 +1,22 @@
-var Elm = require('./Main.elm')
-var d3 = require('d3-hierarchy')
+import Elm from "./Main.elm"
+import * as d3 from "d3-hierarchy"
 
-console.log(d3)
+const isDev = process.env.NODE_ENV === "development"
+const LOCAL_STORAGE_KEY = "peterszerzo.com:notification-last-dismissed"
 
-var isDev = process.env.NODE_ENV === 'development'
-var LOCAL_STORAGE_KEY = 'peterszerzo.com:notification-last-dismissed'
-
-function notificationLastDismissedSince (localStorage) {
-  var now = new Date().getTime()
+const notificationLastDismissedSince = localStorage => {
+  const now = new Date().getTime()
   if (!localStorage) {
     return now
   }
-  var lastDismissedAt = Number(localStorage.getItem(LOCAL_STORAGE_KEY))
+  const lastDismissedAt = Number(localStorage.getItem(LOCAL_STORAGE_KEY))
   if (isNaN(lastDismissedAt)) {
     return now
   }
   return now - lastDismissedAt
 }
 
-function setNotificationLastDismissedSince (localStorage) {
+const setNotificationLastDismissedSince = localStorage => {
   if (localStorage) {
     localStorage.setItem(
       LOCAL_STORAGE_KEY,
@@ -27,21 +25,39 @@ function setNotificationLastDismissedSince (localStorage) {
   }
 }
 
-function startApp (node, localStorage) {
-  var elmApp
-  var isNotificationRecentlyDismissed = notificationLastDismissedSince(localStorage) < 2 * 24 * 3600 * 1000
-  window.requestAnimationFrame(function () {
-    node.innerHTML = ''
-    elmApp = Elm.Main.embed(node, {
-      isNotificationRecentlyDismissed: isNotificationRecentlyDismissed,
-      isDev: isDev
-    })
-    if (localStorage) {
-      elmApp.ports.notificationDismissed.subscribe(function () {
-        setNotificationLastDismissedSince(localStorage)
-      })
-    }
+const startApp = (node, localStorage) => {
+  const isNotificationRecentlyDismissed = notificationLastDismissedSince(localStorage) < 2 * 24 * 3600 * 1000
+  node.innerHTML = "" 
+  const elmApp = Elm.Main.embed(node, {
+    isNotificationRecentlyDismissed: isNotificationRecentlyDismissed,
+    isDev: isDev
   })
+  elmApp.ports.packLayoutReq.subscribe(msg => {
+    const pack = d3.pack()
+      .size([msg.width, msg.height])
+      .padding(20)
+    const nodes = {
+      children: msg.sizes.map(size => ({
+        name: "name",
+        size: size
+      })),
+      name: "name"
+    }
+    const root = d3.hierarchy(nodes)
+    root.sum(d => d.size)
+    const rootNode = pack(root)
+    const packedCoordinates = rootNode.children.map(child => ({
+      x: child.x,
+      y: child.y,
+      r: child.r
+    }))
+    elmApp.ports.packLayoutRes.send(packedCoordinates)
+  })
+  if (localStorage) {
+    elmApp.ports.notificationDismissed.subscribe(() => {
+      setNotificationLastDismissedSince(localStorage)
+    })
+  }
 }
 
-startApp(document.getElementById('App'), localStorage)
+startApp(document.getElementById("App"), localStorage)
