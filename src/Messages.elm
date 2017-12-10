@@ -16,3 +16,4 @@ type Msg
     | AnimationTick Time
     | Resize Window.Size
     | PackLayoutResponse Decode.Value
+    | SetActiveProject (Maybe String)

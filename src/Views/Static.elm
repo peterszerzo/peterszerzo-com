@@ -48,6 +48,9 @@ styles =
             [ Elements.h2
                 [ textAlign center
                 ]
+            , selector "iframe"
+                [ margin2 (px 10) (px 0)
+                ]
             , Elements.p
                 [ margin2 (Css.rem 1.5) (Css.rem 0)
                 , firstOfType
@@ -83,11 +86,11 @@ styles =
                 ]
             , Elements.blockquote
                 [ property "font-family" Styles.Constants.serif
-                , margin3 (px 40) (px 0) (px 20)
-                , color grey
-                , fontStyle italic
+                , margin3 (px 20) (px 0) (px 20)
                 , paddingLeft (px 16)
-                , borderLeft3 (px 3) solid grey
+                , padding2 (px 8) (px 16)
+                , backgroundColor (rgba 0 0 0 0.03)
+                , borderLeft3 (px 3) solid currentColor
                 ]
             ]
         ]

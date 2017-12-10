@@ -35,7 +35,7 @@ const startApp = (node, localStorage) => {
   elmApp.ports.packLayoutReq.subscribe(msg => {
     const pack = d3.pack()
       .size([msg.width, msg.height])
-      .padding(20)
+      .padding(30)
     const nodes = {
       children: msg.sizes.map(size => ({
         name: "name",

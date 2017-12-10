@@ -31,7 +31,7 @@ view model =
                             [ Views.Projects.view
                                 { packBubbles = model.projectPackBubbles
                                 , projects = Content.projects
-                                , active = Nothing
+                                , activeProject = model.activeProject
                                 }
                             ]
                         , title = "Projects"
@@ -43,7 +43,7 @@ view model =
                     Views.ContentBox.view
                         { content = [ Views.Static.view Content.now ]
                         , quirkyContent = Nothing
-                        , title = "Now"
+                        , title = "Now!"
                         , isQuirky = model.isQuirky
                         }
 

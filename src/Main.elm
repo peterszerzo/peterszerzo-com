@@ -29,6 +29,7 @@ init { isNotificationRecentlyDismissed, isDev } location =
       , isDev = isDev
       , window = (Window.Size 0 0)
       , projectPackBubbles = []
+      , activeProject = Nothing
       }
     , Task.perform Resize Window.size
     )
@@ -68,6 +69,11 @@ update msg model =
 
         ChangeRoute newRoute ->
             ( { model | route = newRoute }
+            , Cmd.none
+            )
+
+        SetActiveProject newActiveProject ->
+            ( { model | activeProject = newActiveProject }
             , Cmd.none
             )
 

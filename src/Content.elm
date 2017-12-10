@@ -5,8 +5,9 @@ import Data.Project exposing (Project)
 
 mainLinks : List ( String, String )
 mainLinks =
-    [ ( "Work", "/projects" )
+    [ ( "Projects", "/projects" )
     , ( "Playground", "http://codepen.io/peterszerzo/" )
+    , ( "Talks", "/talks" )
     , ( "Blog", "http://blog.peterszerzo.com" )
     , ( "CV", "https://represent.io/peterszerzo" )
     , ( "About", "/about" )
@@ -18,15 +19,15 @@ mainLinks =
 projects : List Project
 projects =
     [ { name = "elm-gameroom"
-      , description = ""
+      , description = "elm-gameroom is an API design experiment that allows developers to make highly custom multiplayer guessing games in less than 200 lines of code."
       , technologies = [ "Elm", "WebGL" ]
       , url = "https://elm-gameroom.firebaseapp.com"
       , roles = [ "Developer", "Designer" ]
       , size = 1200
       }
     , { name = "ripsaw"
-      , description = ""
-      , technologies = [ "Elm", "WebGL" ]
+      , description = "Design interface for creating 3d bezier shapes"
+      , technologies = [ "Elm", "SVG" ]
       , url = "http://ripsaw.surge.sh"
       , roles = [ "Developer", "Designer" ]
       , size = 800
@@ -42,6 +43,27 @@ projects =
       , description = ""
       , technologies = [ "Elm" ]
       , url = "https://theseed.eu"
+      , roles = []
+      , size = 600
+      }
+    , { name = "SplytLight"
+      , description = "Design interface for SplytLight, a modular lighting system."
+      , technologies = [ "React", "SVG", "Three.js" ]
+      , url = "http://splytlight.surge.sh"
+      , roles = []
+      , size = 600
+      }
+    , { name = "Atlas"
+      , description = "Data visualization CMS"
+      , technologies = [ "React", "SVG", "Leaflet.js", "Mapbox" ]
+      , url = "http://atlas.newamerica.org"
+      , roles = []
+      , size = 600
+      }
+    , { name = "OverEasy"
+      , description = "Fictitious webshop."
+      , technologies = [ "React", "WebGL" ]
+      , url = "https://overeasy.sh"
       , roles = []
       , size = 600
       }
@@ -62,10 +84,11 @@ talks : String
 talks =
     """
 Speaking and workshopping I enjoy. Here are the few I was fortunate to have done so far:
-* [Making a multiplayer game framework](https://www.youtube.com/watch?v=sBCz6atTRZk)
-* [CSS by the fireplace](https://peterszerzo.github.io/css-by-the-fireplace/)
-* [Practical Elm. And friends](https://peterszerzo.github.io/practical-elm-and-friends/)
-* [Copenhagen React Workshop](https://www.eventbrite.com/e/copenhagen-react-workshop-1-tickets-25344956447#)
+* Multiplayer Games by the Boatloads (Paris, June 2017)
+<iframe width="560" height="315" src="https://www.youtube.com/embed/sBCz6atTRZk" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+* [Copenhagen React Workshop](https://www.eventbrite.com/e/copenhagen-react-workshop-1-tickets-25344956447#), co-run with my good friend [Andreas](http://larsenwork.com)
+* [Practical Elm. And Friends](https://peterszerzo.github.io/practical-elm-and-friends/) (June 2016, Copenhagen)
+* [CSS by the Fireplace](https://peterszerzo.github.io/css-by-the-fireplace/) (April 2016, Copenhagen)
   """
 
 
@@ -76,7 +99,7 @@ This is Peter, programmer, designer and natural language enthusiast. A friendly,
 
 I make web apps, visualizations and games, spending most of my time on the frontend, sprinkled with some spent designing and some on the backend. I enjoy deleting code, shortening variable names and changing my mind about tools and frameworks. Even more so, I enjoy collaborating, [giving talks](https://www.youtube.com/watch?v=sBCz6atTRZk) and running workshops.
 
-I previously studied and dabbled with algorithmic approaches to architectural design, and love to use code outside of the browser from architectural and jewelry design to animation and computational art. And to get a break of them all, I read, write, do yoga and garden. All great things!
+Coming to tech after exploring algorithmic/computational design strategies in architecture, I love poking around across disciplines, and use code for [architecture/product design](http://splytlight.surge.sh), jewelry, [animation](https://www.youtube.com/watch?v=mwExBCCFdZw) and computational art. And to get a break of them all, I read, write, do yoga and garden. All great things!
 
 You can find me on my bike on the streets of Berlin and New York, sitting around in a coffee shop, various frontend, React and Elm meetups, [here](https://twitter.com/peterszerzo) and [there](https://medium.com/@peterszerzo) online. Let’s talk!
 """
@@ -100,15 +123,13 @@ It means a lot to me that you’ve read this.
 now : String
 now =
     """
-## What am I doing now?
+> The /now page is Derek Sivers’ [brilliant idea](https://sivers.org/nowff). Thank you, Derek!
 
-Data viz, WebGL, and a really interesting startup idea. Started really warming up to the idea of going back to school for some added creative edge. CIID in good old Copenhagen especially.
+Data visualizations/frontend for [data science](https://contiamo.com) and [chatbots](https://nlx.ai). Started really warming up to the idea of going back to school for some added creative edge. CIID in good old Copenhagen especially.
 
 I have also been on a long, steady streak of New Yorker articles, and wonderful books like Extremely Loud and Incredibly Close and 1Q84.
 
 Still taking ever more frequent and longer walks, and eating more pastries.
-
-> The /now page is Derek Sivers’ [brilliant idea](https://sivers.org/nowff). Cheers, Derek!
 """
 
 

@@ -13,6 +13,20 @@ ripsaw =
         ]
 
 
+newamerica : Html msg
+newamerica =
+    svg [ viewBox "0 -25 170 170" ]
+        [ rect [ height "22.6", width "164.6", x "0.1", y "96.4" ]
+            []
+        , rect [ height "23.9", width "164.6", x "0.1", y "48.6" ]
+            []
+        , rect [ height "23.9", width "124.4", x "40.3", y "0.9" ]
+            []
+        , path [ d "M13.2,26.4c7.3,0,13.2-5.9,13.2-13.2C26.4,5.9,20.5,0,13.2,0C5.9,0,0,5.9,0,13.2C0,20.5,5.9,26.4,13.2,26.4" ]
+            []
+        ]
+
+
 theseed : Html msg
 theseed =
     svg [ viewBox "0 0 200 200" ]
@@ -56,8 +70,8 @@ overeasy =
         ]
 
 
-splytLight : Html msg
-splytLight =
+splytlight : Html msg
+splytlight =
     svg [ viewBox "0 0 500 500" ]
         [ g [ stroke "none", transform "translate(239.500000, 276.500000) rotate(10.000000) translate(-239.500000, -276.500000) translate(50.000000, 17.000000)" ]
             [ g [ transform "translate(163.237814, 302.480884) rotate(15.000000) translate(-163.237814, -302.480884) translate(46.237814, 109.980884)" ]
@@ -82,8 +96,8 @@ splytLight =
         ]
 
 
-elmGameroom : Html msg
-elmGameroom =
+elmgameroom : Html msg
+elmgameroom =
     svg [ viewBox "-30 -30 60 60" ]
         [ polygon
             [ points "30,30 30,-3.33 13.33,13.33", stroke "#15487F", strokeWidth "1.5" ]

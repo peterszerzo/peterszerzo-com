@@ -14,4 +14,5 @@ type alias State =
     , isDev : Bool
     , window : Window.Size
     , projectPackBubbles : List PackBubble.PackBubble
+    , activeProject : Maybe String
     }
