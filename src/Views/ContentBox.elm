@@ -126,7 +126,7 @@ styles =
         , Mixins.zIndex 15
         , displayFlex
         , backgroundColor (rgba 255 255 255 0.92)
-        , padding2 (px 0) (px 20)
+        , padding (px 0)
         , alignItems center
         , justifyContent spaceBetween
         , borderBottom3 (px 1) solid (rgba 0 0 0 0.1)
@@ -195,14 +195,12 @@ styles =
             ]
         ]
     , class Switch
-        [ children
-            [ everything
-                [ marginTop (px 9)
-                ]
-            ]
+        [ displayFlex
+        , alignItems center
+        , justifyContent center
         ]
     , class BackLink
-        [ property "stroke" "#15487F"
+        [ property "stroke" "#000"
         ]
     , class SwitchHidden
         [ opacity (num 0.01)

@@ -18,12 +18,13 @@ view isRight handleClick =
         , onClick handleClick
         ]
         [ div [ localClass [ Button ] ] []
+        , div [ localClass [ Fill ] ] []
         ]
 
 
 cssNamespace : String
 cssNamespace =
-    "switch"
+    "Switch"
 
 
 type CssClasses
@@ -31,6 +32,7 @@ type CssClasses
     | Button
     | Left
     | Right
+    | Fill
 
 
 ( localClass, localClassList ) =
@@ -42,36 +44,51 @@ styles : List Css.Snippet
 styles =
     [ class Root
         [ display inlineBlock
-        , width (px 26)
-        , height (px 12)
-        , borderRadius (px 6)
+        , width (px 28)
+        , height (px 16)
+        , borderRadius (px 8)
+        , overflow hidden
         , opacity (num 1)
         , position relative
         , property "transition" "opacity .3s"
-        , borderColor blue
+        , borderColor black
         , property "border-width" "1px"
         , borderStyle solid
         ]
+    , each [ class Button, class Fill ]
+        [ property "transition" "transform .3s"
+        ]
     , class Button
-        [ width (px 12)
-        , height (px 12)
-        , borderRadius (px 6)
-        , backgroundColor blue
+        [ width (px 16)
+        , height (px 16)
+        , borderRadius (pct 50)
+        , boxSizing borderBox
+        , border3 (px 1) solid black
+        , backgroundColor white
         , position absolute
         , top (px -1)
         , left (px -1)
         , transform (translate3d (px 0) (px 0) (px 0))
-        , property "transition" "transform .3s"
+        , property "z-index" "1"
+        ]
+    , class Fill
+        [ width (px 30)
+        , height (px 16)
+        , backgroundColor black
+        , position absolute
+        , top (px 0)
+        , left (px -22)
+        , property "z-index" "0"
         ]
     , class Left
         [ descendants
-            [ class Button []
+            [ each [ class Button, class Fill ] []
             ]
         ]
     , class Right
         [ descendants
-            [ class Button
-                [ transform (translate3d (px 14) (px 0) (px 0))
+            [ each [ class Button, class Fill ]
+                [ transform (translate3d (px 12) (px 0) (px 0))
                 ]
             ]
         ]

@@ -72,9 +72,12 @@ styles =
     [ class Root
         ([ position fixed
          , backgroundColor mustard
-         , top (px 40)
-         , property "width" (Mixins.calcPctMinusPx 100 80)
-         , height auto
+         , top (px 64)
+         , property "width" (Mixins.calcPctMinusPx 100 40)
+         , height (px 40)
+         , displayFlex
+         , alignItems center
+         , justifyContent spaceBetween
          , left (pct 50)
          , borderRadius (px 3)
          , transform (translate3d (pct -50) (px 0) (px 0))
@@ -87,11 +90,10 @@ styles =
         )
     , mediaQuery desktop
         [ class Root
-            [ width (px 360) ]
+            [ width (px 440) ]
         ]
     , class Body
-        [ padding4 (px 12) (px 60) (px 12) (px 20)
-        , textAlign left
+        [ textAlign left
         , margin auto
         , color white
         , fontSize (Css.rem 1)
@@ -111,19 +113,17 @@ styles =
             ]
         ]
     , class Close
-        [ width (px 48)
-        , height (px 48)
-        , padding (px 16)
-        , display inlineBlock
-        , position absolute
+        [ width (px 40)
+        , height (px 40)
+        , padding (px 10)
         , top (px 0)
         , right (px 0)
         , margin (px 0)
         , Mixins.regularTransition
         , descendants
             [ Elements.svg
-                [ width (pct 100)
-                , height (pct 100)
+                [ width (px 20)
+                , height (px 20)
                 ]
             , selector "g"
                 [ property "stroke" "white"

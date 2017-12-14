@@ -106,7 +106,7 @@ styles =
         , cursor pointer
         , position relative
         , padding2 (px 4) (px 12)
-        , borderRadius (px 4)
+        , borderRadius (px 3)
         , opacity (num 0.9)
         , fontSize (Css.rem 1)
         , letterSpacing (Css.rem 0.05)

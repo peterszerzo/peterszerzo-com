@@ -83,7 +83,27 @@ view { projects, packBubbles, activeProject } =
                                 |> List.filter (\p -> p.name == activeProject)
                                 |> List.head
                         )
-                    |> Maybe.map (\p -> [ div [ localClass [ Overlay ] ] [ Html.text (toString p) ] ])
+                    |> Maybe.map
+                        (\project ->
+                            [ div
+                                [ localClass [ Overlay ]
+                                ]
+                                [ div
+                                    [ localClass [ OverlayClose ]
+                                    , onClick (SetActiveProject Nothing)
+                                    ]
+                                    [ Shapes.close
+                                    ]
+                                , div [ localClass [ OverlaySection ] ]
+                                    [ h1 [] [ Html.text project.name ]
+                                    , p [] [ Html.text project.description ]
+                                    , p [] [ Html.text ("Roles: " ++ (String.join ", " project.roles)) ]
+                                    , p [] [ Html.text ("Technologies: " ++ (String.join ", " project.technologies)) ]
+                                    ]
+                                , div [ localClass [ OverlaySection ] ] []
+                                ]
+                            ]
+                        )
                     |> Maybe.withDefault []
                )
 
@@ -98,6 +118,8 @@ type CssClasses
     | Bubble
     | Bubbles
     | Overlay
+    | OverlayClose
+    | OverlaySection
 
 
 localClass : List class -> Html.Attribute msg
@@ -135,10 +157,31 @@ styles =
         [ backgroundColor (rgba 255 255 255 0.92)
         , position absolute
         , top (px 0)
+        , displayFlex
         , left (px 0)
         , width (pct 100)
         , height (pct 100)
         , property "z-index" "18"
+        ]
+    , class OverlaySection
+        [ width (pct 50)
+        , property "height" (Mixins.calcPctMinusPx 100 40)
+        , padding (px 15)
+        , margin2 (px 20) (px 0)
+        , textAlign left
+        ]
+    , class OverlayClose
+        [ width (px 60)
+        , height (px 60)
+        , padding (px 18)
+        , position absolute
+        , top (px 0)
+        , left (px 0)
+        , descendants
+            [ Elements.svg
+                [ property "stroke" "#000"
+                ]
+            ]
         ]
     ]
         |> namespace cssNamespace
