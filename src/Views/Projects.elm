@@ -1,7 +1,7 @@
 module Views.Projects exposing (..)
 
-import Html exposing (Html, div, h1, p, header, node)
-import Html.Attributes exposing (style)
+import Html exposing (Html, div, h1, p, a, header, node)
+import Html.Attributes exposing (style, href)
 import Html.Events exposing (onClick)
 import Html.CssHelpers
 import Css exposing (..)
@@ -13,6 +13,7 @@ import Data.Project as Project
 import Data.PackBubble as PackBubble
 import Content
 import Views.Shapes as Shapes
+import Views.Static as Static
 import Views.Nav
 import Messages exposing (Msg(..))
 
@@ -94,13 +95,23 @@ view { projects, packBubbles, activeProject } =
                                     ]
                                     [ Shapes.close
                                     ]
-                                , div [ localClass [ OverlaySection ] ]
-                                    [ h1 [] [ Html.text project.name ]
-                                    , p [] [ Html.text project.description ]
-                                    , p [] [ Html.text ("Roles: " ++ (String.join ", " project.roles)) ]
-                                    , p [] [ Html.text ("Technologies: " ++ (String.join ", " project.technologies)) ]
+                                , div
+                                    [ localClass [ OverlaySection ]
                                     ]
-                                , div [ localClass [ OverlaySection ] ] []
+                                    [ div
+                                        [ localClass [ ImageContainer ]
+                                        , style
+                                            [ ( "background-image", "url(" ++ project.image ++ ")" )
+                                            , ( "background-size", "cover" )
+                                            , ( "background-position", "50% 50%" )
+                                            , ( "background-clip", "content-box" )
+                                            ]
+                                        ]
+                                        []
+                                    ]
+                                , div [ localClass [ OverlaySection ] ]
+                                    [ Static.view ("# " ++ project.name ++ "\n\n" ++ project.description)
+                                    ]
                                 ]
                             ]
                         )
@@ -120,6 +131,8 @@ type CssClasses
     | Overlay
     | OverlayClose
     | OverlaySection
+    | Link
+    | ImageContainer
 
 
 localClass : List class -> Html.Attribute msg
@@ -133,10 +146,12 @@ styles =
         [ position relative
         , width (pct 100)
         , height (pct 100)
+        , overflow hidden
         ]
     , class Bubble
         [ position absolute
         , borderRadius (pct 50)
+        , cursor pointer
         , backgroundColor blue
         , property "box-shadow" "3px 6px 18px rgba(0, 0, 0, 0.3)"
         , property "transition" "box-shadow 0.3s"
@@ -154,33 +169,63 @@ styles =
             ]
         ]
     , class Overlay
-        [ backgroundColor (rgba 255 255 255 0.92)
+        [ backgroundColor (rgba 255 255 255 0.96)
         , position absolute
         , top (px 0)
         , displayFlex
         , left (px 0)
+        , overflow hidden
         , width (pct 100)
         , height (pct 100)
+        , property "animation" "fade-in 0.2s"
         , property "z-index" "18"
         ]
     , class OverlaySection
         [ width (pct 50)
-        , property "height" (Mixins.calcPctMinusPx 100 40)
-        , padding (px 15)
-        , margin2 (px 20) (px 0)
+        , height (pct 100)
+        , padding (px 0)
+        , overflowY auto
+        , overflowX hidden
         , textAlign left
         ]
     , class OverlayClose
         [ width (px 60)
         , height (px 60)
-        , padding (px 18)
+        , cursor pointer
+        , padding (px 14)
+        , top (px 20)
+        , backgroundColor blue
+        , borderRadius (pct 50)
+        , right (px 20)
+        , property "z-index" "20"
         , position absolute
-        , top (px 0)
-        , left (px 0)
         , descendants
             [ Elements.svg
-                [ property "stroke" "#000"
+                [ property "stroke" "#FFF"
                 ]
+            ]
+        , property "box-shadow" "3px 6px 12px rgba(0, 0, 0, 0.1)"
+        , property "transition" "all 0.3s"
+        , hover
+            [ property "box-shadow" "3px 6px 20px rgba(0, 0, 0, 0.2)"
+            ]
+        ]
+    , class ImageContainer
+        [ margin (px 20)
+        , property "width" "calc(100% - 40px)"
+        , property "height" "calc(100% - 40px)"
+        , border3 (px 1) solid (rgba 0 0 0 0.1)
+        , property "box-shadow" "0px 0px 8px rgba(0, 0, 0, 0.15)"
+        ]
+    , class Link
+        [ backgroundColor blue
+        , color white
+        , textDecoration none
+        , padding2 (px 8) (px 12)
+        , borderRadius (px 3)
+        , margin (px 20)
+        , hover
+            [ backgroundColor lightBlue
             ]
         ]
     ]

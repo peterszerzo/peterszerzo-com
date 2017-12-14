@@ -204,6 +204,10 @@ styles =
         ]
     , class SwitchHidden
         [ opacity (num 0.01)
+        , property "pointer-events" "none"
+        , hover
+            [ opacity (num 0.01)
+            ]
         ]
     ]
         |> namespace cssNamespace

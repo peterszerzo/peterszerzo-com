@@ -18,53 +18,139 @@ mainLinks =
 
 projects : List Project
 projects =
-    [ { name = "elm-gameroom"
-      , description = "elm-gameroom is an API design experiment that allows developers to make highly custom multiplayer guessing games in less than 200 lines of code."
-      , technologies = [ "Elm", "WebGL" ]
+    [ { id = "elm-gameroom"
+      , name = "elm-gameroom"
+      , image = "/imgs/projects/elm-gameroom.png"
+      , description = """
+How easily can we create multiplayer games, and how custom can these games be?
+
+> (answer: 200 lines of code, any single-step competitive guessing game, any graphics the browser can handle)
+
+elm-gameroom is an API design experiment that balances the experience of the developer with the creative freedom of the game designer, delivering a framework that clocks the simplest game in just under 150 lines of code. Replacing the back-end with peer-to-peer communication running on the frontend in the trusted, type-safe hands of the Elm programming language, elm-gameroom spawns a number of robust games that can be programed within the hour.
+
+Care to play? Head to the [elm-gameroom website](https://elm-gameroom-firebaseapp.com) for a few samples you can try out with your friends.
+
+**Info:** Paris // 2017 // [Website](https://elm-gameroom.firebaseapp.com)
+
+**Role:** *`Developer`*, *`Designer`*
+
+**Technologies:** `Elm`, `WebGL`
+    """
       , url = "https://elm-gameroom.firebaseapp.com"
-      , roles = [ "Developer", "Designer" ]
       , size = 1200
       }
-    , { name = "ripsaw"
-      , description = "Design interface for creating 3d bezier shapes"
-      , technologies = [ "Elm", "SVG" ]
+    , { id = "ripsaw"
+      , name = "ripsaw"
+      , image = "/imgs/projects/ripsaw.jpg"
+      , description = """
+Design interface for creating 3d bezier shapes.
+
+**Info:** Brooklyn, NY // 2014 // [Website](http://ripsaw.surge.sh)
+
+**Role:** *`Developer`*, *`Designer`*
+
+**Technologies:** `Elm`, `SVG`
+      """
       , url = "http://ripsaw.surge.sh"
-      , roles = [ "Developer", "Designer" ]
       , size = 800
       }
-    , { name = "nlx"
-      , description = ""
-      , technologies = [ "Elm", "WebGL" ]
+    , { id = "nlx"
+      , name = "nlx"
+      , image = "/imgs/projects/nlx.png"
+      , description = """
+
+NLX is an online design studio for custom chatbots. Users can design their very own chatbots down to the finest technical details of natural language understanding, then model the experience using a highly custom [tree structure editor](http://elm-arborist.peterszerzo.com) I made specifically for this project.
+
+NLX is a company built with great care in collaboration with [Andrei Papancea](https://www.linkedin.com/in/andreipapancea/) and [Vlad Papancea](https://www.linkedin.com/in/vlad-papancea-613b96a6/).
+
+**Info:** New York + Berlin // 2017 // [Website](https://nlx.ai)
+
+**Role:** *`Co-Founder`*, *`Frontend Lead`*, *`UX Designer`*
+
+**Technologies:** `Elm`, `d3`
+      """
       , url = "https://nlx.ai"
-      , roles = [ "Frontend lead", "UX designer" ]
       , size = 600
       }
-    , { name = "The Seed"
-      , description = ""
-      , technologies = [ "Elm" ]
+    , { id = "theseed"
+      , name = "The Seed"
+      , image = "/imgs/projects/theseed.png"
+      , description = """
+A learning app aiming to make labor market entry for refugees easier.
+
+**Info:** Copenhagen // 2017 // [Website](https://theseed.eu)
+
+**Role:** *`Frontend Developer`*
+
+**Technologies:** `Elm`, `Firebase`
+      """
       , url = "https://theseed.eu"
-      , roles = []
       , size = 600
       }
-    , { name = "SplytLight"
-      , description = "Design interface for SplytLight, a modular lighting system."
-      , technologies = [ "React", "SVG", "Three.js" ]
+    , { id = "splytlight"
+      , name = "SplytLight"
+      , image = "/imgs/projects/splytlight.png"
+      , description = """
+Design interface for SplytLight, a modular lighting system.
+
+An interface made with my friend [Scott Leinweber](http://scottleinweber.com), based on a the [SplytLight]() project he developer with [Jason Krugman](http://www.jasonkrugman.com).
+
+**Info:** Copenhagen // 2016 // [Website](http://splytlight.surge.sh)
+
+**Role:** *`Developer`*, *`UX Designer`*.
+
+**Technologies:** `React`, `SVG`, `Three.js`.
+      """
       , url = "http://splytlight.surge.sh"
-      , roles = []
       , size = 600
       }
-    , { name = "Atlas"
-      , description = "Data visualization CMS"
-      , technologies = [ "React", "SVG", "Leaflet.js", "Mapbox" ]
+    , { id = "atlas"
+      , name = "Atlas"
+      , image = "/imgs/projects/atlas.jpg"
+      , description = """
+Atlas is a data visualization CMS made for the Education Policy Program at [New America](http://newamerica.org). It allows policy analysts to create their own custom interactive maps based on a spreadsheet template.
+
+**Info:** Washington, DC // 2015 // [Website](http://atlas.newamerica.org)
+
+**Role:** *`Full-stack Developer`*, *`UX Designer`*
+
+**Technologies:** `React`, `SVG`, `Leaflet.js`, `Mapbox`
+      """
       , url = "http://atlas.newamerica.org"
-      , roles = []
       , size = 600
       }
-    , { name = "OverEasy"
-      , description = "Fictitious webshop."
-      , technologies = [ "React", "WebGL" ]
+    , { id = "overeasy"
+      , name = "OverEasy"
+      , image = "/imgs/projects/overeasy.png"
+      , description = """
+OverEasy is my fake-it-till-you-make-it freelance webshop. It has no clients, just a website with some experimentation on how to showcase design approach, technical aptitude and character without trashing a design.
+
+**Info:** Berlin // 2017 // [Website](https://overeasy.sh)
+
+**Role:** *`Developer`*, *`Designer`*
+
+**Technologies:** `React`, `WebGL`
+      """
       , url = "https://overeasy.sh"
-      , roles = []
+      , size = 600
+      }
+    , { id = "peterszerzo-com"
+      , name = "peterszerzo.com"
+      , image = "/imgs/projects/peterszerzo.png"
+      , description = """
+The very website you are on right now is the first personal website I feel truly good about. And believe me, it took me a while to get here. But why is this personal website thing so difficult?
+
+I believe that presenting my professional skills/background/interests must never obscure a sense of kindness and vulnerability. The pop-up with my all-time-favorite short film, and the two different modes of my `/about` description make sure you can always find the person behind the creative programmer, whatever that even means.
+
+That said, providing this underlayer should not make life harder for folks who are, and quite understandably, not interested in any of it.
+
+**Info:** Copenhagen // 2016 // [Website](http://peterszerzo.com)
+
+**Role:** *`Developer`*, *`Designer`*
+
+**Technologies:** `React`, `WebGL`
+      """
+      , url = "https://overeasy.sh"
       , size = 600
       }
     ]

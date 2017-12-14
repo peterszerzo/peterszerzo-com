@@ -2,10 +2,10 @@ module Data.Project exposing (..)
 
 
 type alias Project =
-    { name : String
+    { id : String
+    , name : String
     , url : String
+    , image : String
     , description : String
-    , roles : List String
-    , technologies : List String
     , size : Int
     }

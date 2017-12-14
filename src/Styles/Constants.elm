@@ -1,6 +1,6 @@
 module Styles.Constants exposing (..)
 
-import Css exposing (Color, hex)
+import Css exposing (Color, hex, rgba, rgb)
 
 
 -- Dimensions
@@ -26,9 +26,24 @@ blue =
     hex "15487F"
 
 
+lightBlue : Color
+lightBlue =
+    rgb 31 82 137
+
+
+faintBlue : Color
+faintBlue =
+    rgba 21 72 127 0.08
+
+
 mustard : Color
 mustard =
-    hex "DBA700"
+    hex "EEB902"
+
+
+faintMustard : Color
+faintMustard =
+    rgba 238 185 2 0.2
 
 
 black : Color
