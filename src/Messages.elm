@@ -9,11 +9,10 @@ import Json.Decode as Decode
 type Msg
     = NoOp
     | ToggleQuirky
-    | ChangePath String
+    | Navigate String
     | ChangeRoute Route
     | DismissNotification
     | Tick Time
     | AnimationTick Time
     | Resize Window.Size
     | PackLayoutResponse Decode.Value
-    | SetActiveProject (Maybe String)

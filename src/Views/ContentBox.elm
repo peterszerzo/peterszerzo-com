@@ -1,6 +1,6 @@
 module Views.ContentBox exposing (..)
 
-import Html exposing (Html, div, h1)
+import Html exposing (Html, div, h1, span)
 import Html.CssHelpers
 import Html.Events exposing (onClick)
 import Css exposing (..)
@@ -15,7 +15,7 @@ import Views.Shapes
 
 type alias Config =
     { content : List (Html Msg)
-    , title : String
+    , breadcrumbs : List { url : Maybe String, label : String }
     , quirkyContent : Maybe (List (Html Msg))
     , isQuirky : Bool
     }
@@ -26,9 +26,6 @@ view config =
     let
         c1 =
             config.content
-
-        title =
-            config.title
 
         c2 =
             config.quirkyContent
@@ -46,11 +43,15 @@ view config =
             [ div [ localClass [ Header ] ]
                 [ div
                     [ localClass [ BackLink ]
-                    , onClick (ChangePath "")
+                    , onClick (Navigate "/")
                     ]
                     [ Views.Shapes.arrow
                     ]
-                , h1 [] [ Html.text title ]
+                , h1 []
+                    (config.breadcrumbs
+                        |> List.map (\b -> span [ localClass [ HeaderText ] ] [ Html.text b.label ])
+                        |> List.intersperse (span [ localClass [ HeaderDivider ] ] [ Html.text "//" ])
+                    )
                 , div
                     [ localClassList
                         [ ( Switch, True )
@@ -79,6 +80,8 @@ cssNamespace =
 type CssClasses
     = Root
     | Header
+    | HeaderDivider
+    | HeaderText
     | Hidden
     | DisplayPrimary
     | DisplaySecondary
@@ -133,10 +136,18 @@ styles =
         , descendants
             [ Elements.h1
                 [ fontSize (Css.rem 1.25)
-                , property "font-family" Styles.Constants.serif
-                , borderBottom3 (px 1) solid currentColor
                 ]
             ]
+        ]
+    , class HeaderDivider
+        [ display inlineBlock
+        , marginLeft (px 8)
+        , marginRight (px 8)
+        , property "font-family" Styles.Constants.serif
+        ]
+    , class HeaderText
+        [ borderBottom3 (px 1) solid currentColor
+        , property "font-family" Styles.Constants.serif
         ]
     , class Hidden
         [ opacity (num 0)

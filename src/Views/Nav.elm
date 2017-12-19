@@ -34,7 +34,7 @@ viewMainLink ( label, url ) =
                         []
                     else
                         [ onClick
-                            (ChangePath slug)
+                            (Navigate slug)
                         ]
                    )
             )

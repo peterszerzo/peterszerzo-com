@@ -64,7 +64,7 @@ view { projects, packBubbles, activeProject } =
                 (\project { x, y, r } ->
                     div
                         [ localClass [ Bubble ]
-                        , onClick (SetActiveProject (Just project.name))
+                        , onClick (Navigate ("/projects/" ++ project.id))
                         , style
                             [ ( "width", (floor (2 * r) |> toString) ++ "px" )
                             , ( "height", (floor (2 * r) |> toString) ++ "px" )
@@ -81,7 +81,7 @@ view { projects, packBubbles, activeProject } =
                     |> Maybe.andThen
                         (\activeProject ->
                             projects
-                                |> List.filter (\p -> p.name == activeProject)
+                                |> List.filter (\p -> p.id == activeProject)
                                 |> List.head
                         )
                     |> Maybe.map
@@ -89,11 +89,8 @@ view { projects, packBubbles, activeProject } =
                             [ div
                                 [ localClass [ Overlay ]
                                 ]
-                                [ div
-                                    [ localClass [ OverlayClose ]
-                                    , onClick (SetActiveProject Nothing)
-                                    ]
-                                    [ Shapes.close
+                                [ div [ localClass [ OverlaySection ] ]
+                                    [ Static.view project.description
                                     ]
                                 , div
                                     [ localClass [ OverlaySection ]
@@ -102,15 +99,9 @@ view { projects, packBubbles, activeProject } =
                                         [ localClass [ ImageContainer ]
                                         , style
                                             [ ( "background-image", "url(" ++ project.image ++ ")" )
-                                            , ( "background-size", "cover" )
-                                            , ( "background-position", "50% 50%" )
-                                            , ( "background-clip", "content-box" )
                                             ]
                                         ]
                                         []
-                                    ]
-                                , div [ localClass [ OverlaySection ] ]
-                                    [ Static.view ("# " ++ project.name ++ "\n\n" ++ project.description)
                                     ]
                                 ]
                             ]
@@ -129,7 +120,6 @@ type CssClasses
     | Bubble
     | Bubbles
     | Overlay
-    | OverlayClose
     | OverlaySection
     | Link
     | ImageContainer
@@ -169,7 +159,7 @@ styles =
             ]
         ]
     , class Overlay
-        [ backgroundColor (rgba 255 255 255 0.96)
+        [ backgroundColor white
         , position absolute
         , top (px 0)
         , displayFlex
@@ -188,34 +178,13 @@ styles =
         , overflowX hidden
         , textAlign left
         ]
-    , class OverlayClose
-        [ width (px 60)
-        , height (px 60)
-        , cursor pointer
-        , padding (px 14)
-        , top (px 20)
-        , backgroundColor blue
-        , borderRadius (pct 50)
-        , right (px 20)
-        , property "z-index" "20"
-        , position absolute
-        , descendants
-            [ Elements.svg
-                [ property "stroke" "#FFF"
-                ]
-            ]
-        , property "box-shadow" "3px 6px 12px rgba(0, 0, 0, 0.1)"
-        , property "transition" "all 0.3s"
-        , hover
-            [ property "box-shadow" "3px 6px 20px rgba(0, 0, 0, 0.2)"
-            ]
-        ]
     , class ImageContainer
         [ margin (px 20)
         , property "width" "calc(100% - 40px)"
-        , property "height" "calc(100% - 40px)"
-        , border3 (px 1) solid (rgba 0 0 0 0.1)
-        , property "box-shadow" "0px 0px 8px rgba(0, 0, 0, 0.15)"
+        , paddingTop (pct 65)
+        , backgroundSize cover
+        , backgroundRepeat noRepeat
+        , property "background-position" "50% 50%"
         ]
     , class Link
         [ backgroundColor blue

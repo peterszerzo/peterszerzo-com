@@ -70,22 +70,7 @@ NLX is a company built with great care in collaboration with [Andrei Papancea](h
 **Technologies:** `Elm`, `d3`
       """
       , url = "https://nlx.ai"
-      , size = 600
-      }
-    , { id = "theseed"
-      , name = "The Seed"
-      , image = "/imgs/projects/theseed.png"
-      , description = """
-A learning app aiming to make labor market entry for refugees easier.
-
-**Info:** Copenhagen // 2017 // [Website](https://theseed.eu)
-
-**Role:** *`Frontend Developer`*
-
-**Technologies:** `Elm`, `Firebase`
-      """
-      , url = "https://theseed.eu"
-      , size = 600
+      , size = 1500
       }
     , { id = "splytlight"
       , name = "SplytLight"
@@ -102,7 +87,7 @@ An interface made with my friend [Scott Leinweber](http://scottleinweber.com), b
 **Technologies:** `React`, `SVG`, `Three.js`.
       """
       , url = "http://splytlight.surge.sh"
-      , size = 600
+      , size = 1400
       }
     , { id = "atlas"
       , name = "Atlas"
@@ -117,7 +102,7 @@ Atlas is a data visualization CMS made for the Education Policy Program at [New 
 **Technologies:** `React`, `SVG`, `Leaflet.js`, `Mapbox`
       """
       , url = "http://atlas.newamerica.org"
-      , size = 600
+      , size = 400
       }
     , { id = "overeasy"
       , name = "OverEasy"
@@ -132,7 +117,7 @@ OverEasy is my fake-it-till-you-make-it freelance webshop. It has no clients, ju
 **Technologies:** `React`, `WebGL`
       """
       , url = "https://overeasy.sh"
-      , size = 600
+      , size = 900
       }
     , { id = "peterszerzo-com"
       , name = "peterszerzo.com"
@@ -151,7 +136,7 @@ That said, providing this underlayer should not make life harder for folks who a
 **Technologies:** `React`, `WebGL`
       """
       , url = "https://overeasy.sh"
-      , size = 600
+      , size = 500
       }
     ]
 

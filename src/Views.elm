@@ -31,10 +31,27 @@ view model =
                             [ Views.Projects.view
                                 { packBubbles = model.projectPackBubbles
                                 , projects = Content.projects
-                                , activeProject = model.activeProject
+                                , activeProject = Nothing
                                 }
                             ]
-                        , title = "Projects"
+                        , breadcrumbs = [ { label = "Projects", url = Nothing } ]
+                        , quirkyContent = Nothing
+                        , isQuirky = model.isQuirky
+                        }
+
+                Router.Project prj ->
+                    Views.ContentBox.view
+                        { content =
+                            [ Views.Projects.view
+                                { packBubbles = model.projectPackBubbles
+                                , projects = Content.projects
+                                , activeProject = Just prj
+                                }
+                            ]
+                        , breadcrumbs =
+                            [ { label = "Projects", url = Nothing }
+                            , { label = prj, url = Nothing }
+                            ]
                         , quirkyContent = Nothing
                         , isQuirky = model.isQuirky
                         }
@@ -43,14 +60,14 @@ view model =
                     Views.ContentBox.view
                         { content = [ Views.Static.view Content.now ]
                         , quirkyContent = Nothing
-                        , title = "Now!"
+                        , breadcrumbs = [ { label = "Now!", url = Nothing } ]
                         , isQuirky = model.isQuirky
                         }
 
                 Router.About ->
                     Views.ContentBox.view
                         { content = [ Views.Static.view Content.aboutConventional ]
-                        , title = "About"
+                        , breadcrumbs = [ { label = "About", url = Nothing } ]
                         , quirkyContent = Just [ Views.Static.view Content.aboutReal ]
                         , isQuirky = model.isQuirky
                         }
@@ -59,7 +76,7 @@ view model =
                     Views.ContentBox.view
                         { content = [ Views.Static.view Content.talks ]
                         , quirkyContent = Nothing
-                        , title = "Talks"
+                        , breadcrumbs = [ { label = "Talks", url = Nothing } ]
                         , isQuirky = model.isQuirky
                         }
 

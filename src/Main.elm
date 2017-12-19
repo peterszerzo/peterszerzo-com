@@ -29,7 +29,6 @@ init { isNotificationRecentlyDismissed, isDev } location =
       , isDev = isDev
       , window = (Window.Size 0 0)
       , projectPackBubbles = []
-      , activeProject = Nothing
       }
     , Task.perform Resize Window.size
     )
@@ -62,18 +61,13 @@ update msg model =
             , Ports.notificationDismissed ()
             )
 
-        ChangePath newPath ->
+        Navigate newPath ->
             ( model
-            , Navigation.newUrl ("/" ++ newPath)
+            , Navigation.newUrl newPath
             )
 
         ChangeRoute newRoute ->
             ( { model | route = newRoute }
-            , Cmd.none
-            )
-
-        SetActiveProject newActiveProject ->
-            ( { model | activeProject = newActiveProject }
             , Cmd.none
             )
 
