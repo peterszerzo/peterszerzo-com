@@ -40,21 +40,35 @@ view model =
                         }
 
                 Router.Project prj ->
-                    Views.ContentBox.view
-                        { content =
-                            [ Views.Projects.view
-                                { packBubbles = model.projectPackBubbles
-                                , projects = Content.projects
-                                , activeProject = Just prj
-                                }
-                            ]
-                        , breadcrumbs =
-                            [ { label = "Projects", url = Nothing }
-                            , { label = prj, url = Nothing }
-                            ]
-                        , quirkyContent = Nothing
-                        , isQuirky = model.isQuirky
-                        }
+                    let
+                        project =
+                            Content.projects
+                                |> List.filter (\p -> p.id == prj)
+                                |> List.head
+                                |> Maybe.withDefault
+                                    { id = ""
+                                    , name = ""
+                                    , description = ""
+                                    , image = ""
+                                    , size = 0
+                                    , url = ""
+                                    }
+                    in
+                        Views.ContentBox.view
+                            { content =
+                                [ Views.Projects.view
+                                    { packBubbles = model.projectPackBubbles
+                                    , projects = Content.projects
+                                    , activeProject = Just prj
+                                    }
+                                ]
+                            , breadcrumbs =
+                                [ { label = "Projects", url = Just "/projects" }
+                                , { label = project.name, url = Nothing }
+                                ]
+                            , quirkyContent = Nothing
+                            , isQuirky = model.isQuirky
+                            }
 
                 Router.Now ->
                     Views.ContentBox.view

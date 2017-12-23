@@ -49,6 +49,9 @@ projectLogo name =
         "OverEasy" ->
             Shapes.overeasy
 
+        "peterszerzo.com" ->
+            Shapes.smallLogo
+
         _ ->
             Shapes.ripsaw
 
@@ -143,10 +146,11 @@ styles =
         , borderRadius (pct 50)
         , cursor pointer
         , backgroundColor blue
-        , property "box-shadow" "3px 6px 18px rgba(0, 0, 0, 0.3)"
-        , property "transition" "box-shadow 0.3s"
+        , property "box-shadow" "3px 6px 16px rgba(0, 0, 0, 0.2)"
+        , property "transition" "all 0.3s"
         , hover
-            [ property "box-shadow" "3px 6px 28px rgba(0, 0, 0, 0.5)"
+            [ property "box-shadow" "3px 6px 24px rgba(0, 0, 0, 0.5)"
+            , property "transform" "scale(1.03)"
             ]
         , descendants
             [ Elements.svg

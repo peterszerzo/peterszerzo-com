@@ -23,7 +23,7 @@ serif =
 
 blue : Color
 blue =
-    hex "15487F"
+    hex "325891"
 
 
 lightBlue : Color

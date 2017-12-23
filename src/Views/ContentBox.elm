@@ -45,11 +45,25 @@ view config =
                     [ localClass [ BackLink ]
                     , onClick (Navigate "/")
                     ]
-                    [ Views.Shapes.arrow
+                    [ Views.Shapes.smallLogo
                     ]
                 , h1 []
                     (config.breadcrumbs
-                        |> List.map (\b -> span [ localClass [ HeaderText ] ] [ Html.text b.label ])
+                        |> List.map
+                            (\b ->
+                                span
+                                    ([ localClassList
+                                        [ ( HeaderText, True )
+                                        , ( HeaderTextLink, b.url /= Nothing )
+                                        ]
+                                     ]
+                                        ++ (b.url
+                                                |> Maybe.map (\url -> [ onClick (Navigate url) ])
+                                                |> Maybe.withDefault []
+                                           )
+                                    )
+                                    [ Html.text b.label ]
+                            )
                         |> List.intersperse (span [ localClass [ HeaderDivider ] ] [ Html.text "//" ])
                     )
                 , div
@@ -82,6 +96,7 @@ type CssClasses
     | Header
     | HeaderDivider
     | HeaderText
+    | HeaderTextLink
     | Hidden
     | DisplayPrimary
     | DisplaySecondary
@@ -135,7 +150,16 @@ styles =
         , borderBottom3 (px 1) solid (rgba 0 0 0 0.1)
         , descendants
             [ Elements.h1
-                [ fontSize (Css.rem 1.25)
+                [ fontSize (Css.rem 1)
+                ]
+            ]
+        ]
+    , mediaQuery desktop
+        [ class Header
+            [ descendants
+                [ Elements.h1
+                    [ fontSize (Css.rem 1.25)
+                    ]
                 ]
             ]
         ]
@@ -146,8 +170,11 @@ styles =
         , property "font-family" Styles.Constants.serif
         ]
     , class HeaderText
+        [ property "font-family" Styles.Constants.serif
+        ]
+    , class HeaderTextLink
         [ borderBottom3 (px 1) solid currentColor
-        , property "font-family" Styles.Constants.serif
+        , cursor pointer
         ]
     , class Hidden
         [ opacity (num 0)
@@ -198,11 +225,11 @@ styles =
         , height (px 60)
         , padding (px 15)
         , Mixins.zIndex 3
-        , opacity (num 0.8)
-        , property "transition" "opacity 0.3s"
+        , property "transition" "all 0.3s"
         , cursor pointer
         , hover
             [ opacity (num 1)
+            , property "transform" "scale(1.1)"
             ]
         ]
     , class Switch

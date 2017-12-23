@@ -73,8 +73,7 @@ styles =
                 [ fontFamily inherit
                 ]
             , Elements.strong
-                [ borderBottom3 (px 1) solid currentColor
-                , fontWeight normal
+                [ fontWeight bolder
                 ]
             , Elements.ul
                 [ margin (px 0)
@@ -100,10 +99,8 @@ styles =
                 ]
             , Elements.a
                 [ fontFamily inherit
-                , color blue
-                , hover
-                    [ borderBottom3 (px 1) solid currentColor
-                    ]
+                , color currentColor
+                , borderBottom3 (px 1) solid currentColor
                 ]
             , Elements.blockquote
                 [ property "font-family" Styles.Constants.serif
