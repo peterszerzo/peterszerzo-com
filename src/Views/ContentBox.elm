@@ -225,9 +225,15 @@ styles =
         , height (px 60)
         , padding (px 15)
         , Mixins.zIndex 3
-        , property "transition" "all 0.3s"
         , cursor pointer
+        , opacity (num 0.8)
+        , property "transition" "all 0.3s"
         , hover
+            [ opacity (num 1)
+            ]
+        ]
+    , class BackLink
+        [ hover
             [ opacity (num 1)
             , property "transform" "scale(1.1)"
             ]

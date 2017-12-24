@@ -115,7 +115,7 @@ styles =
     , class Close
         [ width (px 40)
         , height (px 40)
-        , padding (px 10)
+        , padding (px 12)
         , top (px 0)
         , right (px 0)
         , margin (px 0)

@@ -1,7 +1,7 @@
 module Views.Projects exposing (..)
 
-import Html exposing (Html, div, h1, p, a, header, node)
-import Html.Attributes exposing (style, href)
+import Html exposing (Html, div, h1, p, a, header, node, img)
+import Html.Attributes exposing (style, href, src)
 import Html.Events exposing (onClick)
 import Html.CssHelpers
 import Css exposing (..)
@@ -92,19 +92,17 @@ view { projects, packBubbles, activeProject } =
                             [ div
                                 [ localClass [ Overlay ]
                                 ]
-                                [ div [ localClass [ OverlaySection ] ]
-                                    [ Static.view project.description
-                                    ]
-                                , div
+                                [ div
                                     [ localClass [ OverlaySection ]
                                     ]
-                                    [ div
-                                        [ localClass [ ImageContainer ]
-                                        , style
-                                            [ ( "background-image", "url(" ++ project.image ++ ")" )
-                                            ]
+                                    [ img
+                                        [ localClass [ Image ]
+                                        , Html.Attributes.src project.image
                                         ]
                                         []
+                                    ]
+                                , div [ localClass [ OverlaySection ] ]
+                                    [ Static.view project.description
                                     ]
                                 ]
                             ]
@@ -125,7 +123,7 @@ type CssClasses
     | Overlay
     | OverlaySection
     | Link
-    | ImageContainer
+    | Image
 
 
 localClass : List class -> Html.Attribute msg
@@ -166,29 +164,33 @@ styles =
         [ backgroundColor white
         , position absolute
         , top (px 0)
-        , displayFlex
         , left (px 0)
-        , overflow hidden
         , width (pct 100)
         , height (pct 100)
+        , overflow auto
         , property "animation" "fade-in 0.2s"
         , property "z-index" "18"
         ]
     , class OverlaySection
-        [ width (pct 50)
-        , height (pct 100)
-        , padding (px 0)
+        [ padding (px 0)
         , overflowY auto
         , overflowX hidden
         , textAlign left
         ]
-    , class ImageContainer
-        [ margin (px 20)
+    , mediaQuery desktop
+        [ class Overlay
+            [ overflow hidden
+            , displayFlex
+            ]
+        , class OverlaySection
+            [ height (pct 100)
+            , width (pct 50)
+            ]
+        ]
+    , class Image
+        [ margin4 (px 20) (px 20) (px 0) (px 20)
+        , border3 (px 1) solid (rgba 0 0 0 0.1)
         , property "width" "calc(100% - 40px)"
-        , paddingTop (pct 65)
-        , backgroundSize cover
-        , backgroundRepeat noRepeat
-        , property "background-position" "50% 50%"
         ]
     , class Link
         [ backgroundColor blue

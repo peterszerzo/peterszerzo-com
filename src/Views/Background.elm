@@ -6,7 +6,6 @@ import Data.State exposing (State)
 import Data.AppTime as AppTime
 import Math.Vector2 exposing (Vec2, vec2)
 import WebGL
-import Views.Background.Styles exposing (CssClasses(..), localClass)
 
 
 type alias Vertex =
@@ -45,7 +44,7 @@ view model =
 
         expand =
             if (model.window.width < 800) then
-                100
+                80
             else
                 0
 
@@ -56,7 +55,7 @@ view model =
             (toFloat (size - model.window.height))
                 / 2
                 + (if model.window.width < 800 then
-                    70
+                    60
                    else
                     0
                   )
@@ -71,12 +70,13 @@ view model =
             (toFloat size) / 100
     in
         WebGL.toHtml
-            [ localClass [ Root ]
-            , width size
+            [ width size
             , height size
             , style
                 [ ( "top", "-" ++ (toString top) ++ "px" )
                 , ( "left", "-" ++ (toString left) ++ "px" )
+                , ( "z-index", "1" )
+                , ( "position", "absolute" )
                 ]
             ]
             [ WebGL.entity vertexShader
@@ -151,7 +151,8 @@ void main() {
   point[4] = vec2(0.5, 0.5);
 
   // Cell colors
-  vec4 base_color = vec4(50.0 / 255.0, 88.0 / 255.0, 145.0 / 255.0, 1.0);
+  float b = 0.92;
+  vec4 base_color = vec4(50.0 / 255.0 * b, 88.0 / 255.0 * b, 145.0 / 255.0 * b, 1.0);
   vec4 colors[5];
   float r1 = 0.07 - transition_ratio * 0.05;
   float r2 = 0.03 + transition_ratio * 0.05;

@@ -9,7 +9,7 @@ import Styles.Constants exposing (..)
 
 cssNamespace : String
 cssNamespace =
-    "main"
+    "Main"
 
 
 type CssClasses

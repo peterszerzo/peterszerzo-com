@@ -11,7 +11,6 @@ import Views.Switch
 import Views.Static
 import Views.Nav
 import Views.Projects
-import Views.Background.Styles
 import Views.Styles
 
 
@@ -78,7 +77,6 @@ css =
             ]
         ]
             ++ Views.Styles.styles
-            ++ Views.Background.Styles.styles
             ++ Views.Banner.styles
             ++ Views.ContentBox.styles
             ++ Views.Notification.styles

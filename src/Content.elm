@@ -22,13 +22,11 @@ projects =
       , name = "elm-gameroom"
       , image = "/imgs/projects/elm-gameroom.png"
       , description = """
-How easily can we create multiplayer games, and how custom can these games be?
+How easily can we create multiplayer games, and how custom can these games be? (answer: under 200 lines of code, any single-step competitive guessing game, any graphics the browser can handle)
 
-> (answer: 200 lines of code, any single-step competitive guessing game, any graphics the browser can handle)
+elm-gameroom is an API design experiment that balances the experience of the developer with the creative freedom of the game designer, delivering a framework that ‘clocks’ the simplest game in just under 150 lines of code. Replacing the back-end with peer-to-peer communication running on the frontend in the trusted, type-safe hands of the Elm programming language, elm-gameroom spawns a number of robust games that can be programed within the hour.
 
-elm-gameroom is an API design experiment that balances the experience of the developer with the creative freedom of the game designer, delivering a framework that clocks the simplest game in just under 150 lines of code. Replacing the back-end with peer-to-peer communication running on the frontend in the trusted, type-safe hands of the Elm programming language, elm-gameroom spawns a number of robust games that can be programed within the hour.
-
-Care to play? Head to the [elm-gameroom website](https://elm-gameroom-firebaseapp.com) for a few samples you can try out with your friends.
+Care to play? Head to the [website](https://elm-gameroom-firebaseapp.com) for a few samples you can try out with your friends.
 
 **Info:** Paris / 2017 / [Website](https://elm-gameroom.firebaseapp.com)
 
@@ -61,7 +59,7 @@ Design interface for creating 3d bezier shapes.
 
 NLX is an online design studio for custom chatbots. Users can design their very own chatbots down to the finest technical details of natural language understanding, then model the experience using a [tree structure editor](http://elm-arborist.peterszerzo.com) I made specifically for this project.
 
-NLX is a company built with great care in collaboration with [Andrei Papancea](https://www.linkedin.com/in/andreipapancea/) and [Vlad Papancea](https://www.linkedin.com/in/vlad-papancea-613b96a6/).
+NLX is a company built in collaboration with [Andrei Papancea](https://www.linkedin.com/in/andreipapancea/) and [Vlad Papancea](https://www.linkedin.com/in/vlad-papancea-613b96a6/).
 
 **Info:** New York + Berlin / 2017 / [Website](https://nlx.ai)
 
@@ -84,7 +82,7 @@ An interface made with my friend [Scott Leinweber](http://scottleinweber.com), b
 
 **Role:** Developer / UX Designer
 
-**Technologies:** React / SVG / Three.js.
+**Technologies:** React / SVG / Three.js
       """
       , url = "http://splytlight.surge.sh"
       , size = 1400
@@ -125,9 +123,7 @@ OverEasy is my fake-it-till-you-make-it freelance webshop. It has no clients, ju
       , description = """
 The very website you are on right now is the first personal website I feel truly good about. And believe me, it took me a while to get here. But why is this personal website thing so difficult?
 
-I believe that presenting my professional skills/background/interests must never obscure a sense of kindness and vulnerability. The pop-up with my all-time-favorite short film, and the two different modes of my /about description make sure you can always find the person behind the creative programmer, whatever that even means.
-
-That said, providing this underlayer should not make life harder for folks who are, and quite understandably, not interested in any of it.
+I always had the feeling that presenting my professional skills/background/interests should not stand in the way of presenting myself as kind and vulnerable. The pop-up with my all-time-favorite short film, and the two different modes of my [about page](/about) make sure you can always find the person behind the creative programmer, whatever that even means.
 
 **Info:** Copenhagen / 2016 / [Website](http://peterszerzo.com)
 
@@ -155,11 +151,15 @@ talks : String
 talks =
     """
 Speaking and workshopping I enjoy. Here are the few I was fortunate to have done so far:
-* Multiplayer Games by the Boatloads (Paris, June 2017)
-<iframe width="560" height="315" src="https://www.youtube.com/embed/sBCz6atTRZk" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
-* [Copenhagen React Workshop](https://www.eventbrite.com/e/copenhagen-react-workshop-1-tickets-25344956447#), co-run with my good friend [Andreas](http://larsenwork.com)
-* [Practical Elm. And Friends](https://peterszerzo.github.io/practical-elm-and-friends/) (June 2016, Copenhagen)
-* [CSS by the Fireplace](https://peterszerzo.github.io/css-by-the-fireplace/) (April 2016, Copenhagen)
+* Multiplayer Games by the Boatloads / Paris / June 2017 / [Slides](http://elmeu.peterszerzo.com/#1)
+
+<div style="position: relative; padding-bottom: 56%; height: 0; overflow: hidden">
+  <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%" src="https://www.youtube.com/embed/sBCz6atTRZk" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+</div>
+
+* Copenhagen React Workshop / Copenhagen / April 2016 / [Website](https://www.eventbrite.com/e/copenhagen-react-workshop-1-tickets-25344956447#)
+* Practical Elm. And Friends / Copenhagen / June 2016 / [Slides](https://peterszerzo.github.io/practical-elm-and-friends/)
+* CSS by the Fireplace / Copenhagen / April 2016 / [Slides](https://peterszerzo.github.io/css-by-the-fireplace/)
   """
 
 

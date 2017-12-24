@@ -72,8 +72,8 @@ styles =
         , transform (translate3d (px 0) (px -50) (px 0))
         ]
     , class Logo
-        [ width (px 120)
-        , height (px 120)
+        [ width (px 140)
+        , height (px 140)
         , position relative
         , margin3 auto auto (px 0)
         , children
