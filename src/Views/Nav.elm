@@ -111,7 +111,7 @@ styles =
         , fontSize (Css.rem 1)
         , letterSpacing (Css.rem 0.05)
         , property "font-kerning" "normal"
-        , property "background-color" "rgba(255, 255, 255, .2)"
+        , property "background-color" "rgba(255, 255, 255, .23)"
         , margin (px 8)
         , property "transition" "all .3s"
         , hover

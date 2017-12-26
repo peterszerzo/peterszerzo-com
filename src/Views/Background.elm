@@ -151,8 +151,8 @@ void main() {
   point[4] = vec2(0.5, 0.5);
 
   // Cell colors
-  float b = 0.92;
-  vec4 base_color = vec4(50.0 / 255.0 * b, 88.0 / 255.0 * b, 145.0 / 255.0 * b, 1.0);
+  float b = 0.8;
+  vec4 base_color = vec4(45.0 / 255.0 * b, 81.0 / 255.0 * b, 135.0 / 255.0 * b, 1.0);
   vec4 colors[5];
   float r1 = 0.07 - transition_ratio * 0.05;
   float r2 = 0.03 + transition_ratio * 0.05;

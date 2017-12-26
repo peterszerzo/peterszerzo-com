@@ -22,14 +22,15 @@ view model =
     let
         timeSinceStart =
             AppTime.sinceStart model.time
+
+        isVisible =
+            (not model.isNotificationDismissed)
+                && (timeSinceStart > Constants.showNotificationAt && timeSinceStart < Constants.hideNotificationAt)
     in
         div
             [ localClassList
                 [ ( Root, True )
-                , ( Visible
-                  , (not model.isNotificationDismissed)
-                        && (timeSinceStart > Constants.showNotificationAt && timeSinceStart < Constants.hideNotificationAt)
-                  )
+                , ( Visible, isVisible )
                 ]
             ]
             [ toHtml
@@ -72,8 +73,9 @@ styles =
     [ class Root
         ([ position fixed
          , backgroundColor mustard
-         , top (px 64)
+         , top (px 72)
          , property "width" (Mixins.calcPctMinusPx 100 40)
+         , maxWidth (px 400)
          , height (px 40)
          , displayFlex
          , alignItems center
@@ -88,28 +90,32 @@ styles =
          ]
             ++ Mixins.standardShadow
         )
-    , mediaQuery desktop
-        [ class Root
-            [ width (px 440) ]
-        ]
     , class Body
         [ textAlign left
-        , margin auto
-        , color white
-        , fontSize (Css.rem 1)
-        , letterSpacing (Css.rem 0.04)
+        , margin (px 0)
+        , color black
+        , property "font-family" Styles.Constants.serif
+        , paddingLeft (px 20)
+        , fontSize (Css.rem 0.75)
         , descendants
             [ Elements.p
                 [ fontSize inherit
+                , fontFamily inherit
                 , margin (px 0)
                 , padding (px 0)
                 , Mixins.lineHeight 1.35
                 ]
             , Elements.a
                 [ fontSize inherit
+                , fontFamily inherit
                 , color inherit
-                , borderBottom3 (px 1) solid white
+                , borderBottom3 (px 1) solid currentColor
                 ]
+            ]
+        ]
+    , mediaQuery desktop
+        [ class Body
+            [ fontSize (Css.rem 1)
             ]
         ]
     , class Close
@@ -122,11 +128,11 @@ styles =
         , Mixins.regularTransition
         , descendants
             [ Elements.svg
-                [ width (px 20)
-                , height (px 20)
+                [ width (px 16)
+                , height (px 16)
                 ]
             , selector "g"
-                [ property "stroke" "white"
+                [ property "stroke" "black"
                 ]
             ]
         , hover

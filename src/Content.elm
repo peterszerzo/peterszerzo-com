@@ -43,21 +43,36 @@ Care to play? Head to the [website](https://elm-gameroom-firebaseapp.com) for a 
       , description = """
 Design interface for creating 3d bezier shapes.
 
-**Info:** Brooklyn, NY / 2014 / [Website](http://ripsaw.surge.sh)
+**Info:** Brooklyn, NY / 2014 / [Website](https://codepen.io/peterszerzo/full/Wpdxyd/)
 
 **Role:** Developer / Designer
 
 **Technologies:** Elm / SVG
       """
-      , url = "http://ripsaw.surge.sh"
-      , size = 800
+      , url = "https://codepen.io/peterszerzo/full/Wpdxyd/"
+      , size = 500
+      }
+    , { id = "twisty-donut-racer"
+      , name = "Twisty Donut Racer"
+      , image = "/imgs/projects/twisty-donut-racer.png"
+      , description = """
+Immersing myself into [Alto's Adventure](http://altosadventure.com) in the past few months, I have discovered the tremendous calming effect the right game design can have. Twisty Donut Racer is an exploration of what the Alto's secret is. Incidentally, it also revives an old [Moebius strip fascination](https://www.youtube.com/watch?v=MAYWsyDcAPQ).
+
+**Info:** Berlin / 2017 / In development
+
+**Role:** Developer / Designer
+
+**Technologies:** React / WebGL / SVG
+      """
+      , url = "/"
+      , size = 1400
       }
     , { id = "nlx"
       , name = "nlx"
       , image = "/imgs/projects/nlx.png"
       , description = """
 
-NLX is an online design studio for custom chatbots. Users can design their very own chatbots down to the finest technical details of natural language understanding, then model the experience using a [tree structure editor](http://elm-arborist.peterszerzo.com) I made specifically for this project.
+NLX is an online design studio for custom chatbots. Users can design their very own chatbots down to low-level technical details of natural language understanding, then model the conversational experience using a [tree structure editor](http://elm-arborist.peterszerzo.com) I made specifically for this project.
 
 NLX is a company built in collaboration with [Andrei Papancea](https://www.linkedin.com/in/andreipapancea/) and [Vlad Papancea](https://www.linkedin.com/in/vlad-papancea-613b96a6/).
 
@@ -106,7 +121,7 @@ Atlas is a data visualization CMS made for the Education Policy Program at [New 
       , name = "OverEasy"
       , image = "/imgs/projects/overeasy.png"
       , description = """
-OverEasy is my fake-it-till-you-make-it freelance webshop. It has no clients, just a website with some experimentation on how to showcase design approach, technical aptitude and character without trashing a design.
+OverEasy is my fake-it-till-you-make-it freelance webshop. It has no clients, just a website with a bunch of graphics experiments trying very hard not to stand in the way of content.
 
 **Info:** Berlin / 2017 / [Website](https://overeasy.sh)
 
@@ -115,15 +130,13 @@ OverEasy is my fake-it-till-you-make-it freelance webshop. It has no clients, ju
 **Technologies:** React / WebGL
       """
       , url = "https://overeasy.sh"
-      , size = 900
+      , size = 1100
       }
     , { id = "peterszerzo-com"
       , name = "peterszerzo.com"
       , image = "/imgs/projects/peterszerzo.png"
       , description = """
-The very website you are on right now is the first personal website I feel truly good about. And believe me, it took me a while to get here. But why is this personal website thing so difficult?
-
-I always had the feeling that presenting my professional skills/background/interests should not stand in the way of presenting myself as kind and vulnerable. The pop-up with my all-time-favorite short film, and the two different modes of my [about page](/about) make sure you can always find the person behind the creative programmer, whatever that even means.
+The very website you are on right now is the first personal website I feel truly good about. I always had the feeling that presenting my professional skills/background/interests should not stand in the way of the vulnerability that is often so missing in the professional world. The pop-up with my favorite short film on loss, and the two different modes of my [about page](/about) make sure you can always find a person behind the creative programmer, whatever that even means.
 
 **Info:** Copenhagen / 2016 / [Website](http://peterszerzo.com)
 
@@ -132,7 +145,7 @@ I always had the feeling that presenting my professional skills/background/inter
 **Technologies:** React / WebGL
       """
       , url = "https://overeasy.sh"
-      , size = 500
+      , size = 800
       }
     ]
 

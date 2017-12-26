@@ -40,8 +40,8 @@ projectLogo name =
         "nlx" ->
             Shapes.nlx
 
-        "The Seed" ->
-            Shapes.theseed
+        "Twisty Donut Racer" ->
+            Shapes.twistydonutracer
 
         "SplytLight" ->
             Shapes.splytlight
