@@ -31,6 +31,9 @@ projectLogo name =
         "elm-gameroom" ->
             Shapes.elmgameroom
 
+        "elm-arborist" ->
+            Shapes.elmArborist
+
         "Atlas" ->
             Shapes.newamerica
 

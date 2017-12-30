@@ -13,6 +13,15 @@ ripsaw =
         ]
 
 
+elmArborist : Html msg
+elmArborist =
+    svg [ viewBox "0 0 1000 1000" ]
+        [ path [ d "M520,720l220,-220l220,220l-440,0Z" ] []
+        , path [ d "M40,720l220,-220l220,220l-440,0Z" ] []
+        , path [ d "M280,480l220,-220l220,220l-440,0Z" ] []
+        ]
+
+
 smallLogo : Html msg
 smallLogo =
     svg [ viewBox "0 0 1000 1000" ]
