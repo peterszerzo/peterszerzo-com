@@ -177,6 +177,12 @@ talks : String
 talks =
     """
 Speaking and workshopping I enjoy. Here are the few I was fortunate to have done so far:
+* Take your Framework Dancing / Berlin / February 2018 / [Slides](https://peterszerzo.github.io/talks/take-your-framework-dancing)
+
+<div style="position: relative; padding-bottom: 56%; height: 0; overflow: hidden">
+  <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%" src="https://www.youtube.com/embed/0ASvEzfuH7g" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+</div>
+
 * Multiplayer Games by the Boatloads / Paris / June 2017 / [Slides](http://elmeu.peterszerzo.com/#1)
 
 <div style="position: relative; padding-bottom: 56%; height: 0; overflow: hidden">
