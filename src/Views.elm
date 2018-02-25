@@ -8,7 +8,6 @@ import Views.ContentBox
 import Views.Background
 import Content
 import Views.Banner
-import Views.Notification
 import Views.Static
 import Views.Projects
 import Views.Styles exposing (CssClasses(..), localClass)
@@ -113,7 +112,6 @@ view model =
                         [ Views.Banner.view
                         , content
                         , Views.Background.view model
-                        , Views.Notification.view model
                         ]
                    ]
             )

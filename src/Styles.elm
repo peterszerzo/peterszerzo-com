@@ -6,7 +6,6 @@ import Css.Namespace exposing (namespace)
 import Styles.Constants exposing (..)
 import Views.Banner
 import Views.ContentBox
-import Views.Notification
 import Views.Switch
 import Views.Static
 import Views.Nav
@@ -79,7 +78,6 @@ css =
             ++ Views.Styles.styles
             ++ Views.Banner.styles
             ++ Views.ContentBox.styles
-            ++ Views.Notification.styles
             ++ Views.Switch.styles
             ++ Views.Projects.styles
             ++ Views.Static.styles

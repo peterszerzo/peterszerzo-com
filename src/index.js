@@ -4,33 +4,10 @@ import * as d3 from "d3-hierarchy"
 const isDev = process.env.NODE_ENV === "development"
 const LOCAL_STORAGE_KEY = "peterszerzo.com:notification-last-dismissed"
 
-const notificationLastDismissedSince = localStorage => {
-  const now = new Date().getTime()
-  if (!localStorage) {
-    return now
-  }
-  const lastDismissedAt = Number(localStorage.getItem(LOCAL_STORAGE_KEY))
-  if (isNaN(lastDismissedAt)) {
-    return now
-  }
-  return now - lastDismissedAt
-}
-
-const setNotificationLastDismissedSince = localStorage => {
-  if (localStorage) {
-    localStorage.setItem(
-      LOCAL_STORAGE_KEY,
-      String(new Date().getTime())
-    )
-  }
-}
-
-const startApp = (node, localStorage) => {
-  const isNotificationRecentlyDismissed = notificationLastDismissedSince(localStorage) < 2 * 24 * 3600 * 1000
+const startApp = (node) => {
   node.innerHTML = "" 
   const elmApp = Elm.Main.embed(node, {
-    isNotificationRecentlyDismissed: isNotificationRecentlyDismissed,
-    isDev: isDev
+    isDev
   })
   elmApp.ports.packLayoutReq.subscribe(msg => {
     const pack = d3.pack()
@@ -60,4 +37,4 @@ const startApp = (node, localStorage) => {
   }
 }
 
-startApp(document.getElementById("App"), localStorage)
+startApp(document.getElementById("App"))

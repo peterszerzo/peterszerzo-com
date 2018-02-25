@@ -10,7 +10,6 @@ type alias State =
     { route : Route
     , isQuirky : Bool
     , time : AppTime.AppTime
-    , isNotificationDismissed : Bool
     , isDev : Bool
     , window : Window.Size
     , projectPackBubbles : List PackBubble.PackBubble

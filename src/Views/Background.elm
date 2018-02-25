@@ -44,7 +44,7 @@ view model =
 
         expand =
             if (model.window.width < 800) then
-                80
+                100
             else
                 0
 
@@ -52,13 +52,7 @@ view model =
             (max model.window.width model.window.height) + 2 * expand
 
         top =
-            (toFloat (size - model.window.height))
-                / 2
-                + (if model.window.width < 800 then
-                    60
-                   else
-                    0
-                  )
+            (toFloat (size - model.window.height)) / 2
 
         left =
             (toFloat (size - model.window.width)) / 2

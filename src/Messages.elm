@@ -11,8 +11,6 @@ type Msg
     | ToggleQuirky
     | Navigate String
     | ChangeRoute Route
-    | DismissNotification
-    | Tick Time
     | AnimationTick Time
     | Resize Window.Size
     | PackLayoutResponse Decode.Value

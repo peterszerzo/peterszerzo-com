@@ -24,12 +24,12 @@ view =
                 ]
                 [ Shapes.logo
                 , div []
-                    []
+                    [ h1 [ localClass [ Title ] ] [ Html.text Content.title ]
+                    , p [ localClass [ Subtitle ] ] [ Html.text Content.subtitle ]
+                    ]
                 ]
-            , h1 [ localClass [ Title ] ] [ Html.text Content.title ]
-            , p [ localClass [ Subtitle ] ] [ Html.text Content.subtitle ]
+            , Views.Nav.view
             ]
-        , Views.Nav.view
         ]
 
 
@@ -63,57 +63,33 @@ styles =
         , Mixins.zIndex 10
         ]
     , class Title
-        [ margin2 (px 10) auto
+        [ margin3 (px 20) auto (px 10)
         ]
     , class Content
         [ color white
         , textAlign center
-        , maxWidth (px 300)
-        , transform (translate3d (px 0) (px -50) (px 0))
         ]
     , class Logo
-        [ width (px 140)
-        , height (px 140)
+        [ width (px 240)
+        , height (px 240)
         , position relative
+        , displayFlex
+        , alignItems center
+        , justifyContent center
+        , borderRadius (pct 50)
         , margin3 auto auto (px 0)
         , children
             [ Elements.svg
-                [ property "stroke" "white"
-                ]
-            , Elements.div
-                [ property "background-image" "url(/imgs/portrait-360.jpg)"
-                , property "background-size" "cover"
-                , property "background-position" "50% 50%"
+                [ property "stroke" "rgba(255, 255, 255, 0.08)"
                 , position absolute
                 , top (px 0)
                 , left (px 0)
-                , width (pct 100)
-                , height (pct 100)
-                , borderRadius (pct 50)
-                , opacity (num 0)
-                , Mixins.regularTransition
-                ]
-            ]
-        , hover
-            [ children
-                [ Elements.div
-                    [ opacity (num 1)
-                    ]
                 ]
             ]
         ]
     , class Subtitle
         [ width (px 220)
         , marginTop (px 0)
-        ]
-    , mediaQuery desktop
-        [ class Logo
-            [ width (px 160)
-            , height (px 160)
-            ]
-        , class Content
-            [ transform (translate3d (px 0) (px 0) (px 0))
-            ]
         ]
     ]
         |> namespace cssNamespace

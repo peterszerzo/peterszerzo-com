@@ -41,14 +41,6 @@ viewMainLink ( label, url ) =
             [ Html.text label ]
 
 
-viewMainLinks : Html Msg
-viewMainLinks =
-    div
-        [ localClass [ DesktopLinks ]
-        ]
-        (List.map (viewMainLink) Content.mainLinks)
-
-
 view : Html Msg
 view =
     nav
@@ -56,7 +48,14 @@ view =
             [ Root
             ]
         ]
-        [ viewMainLinks
+        [ div
+            [ localClass [ DesktopLinks ]
+            ]
+            (List.map (viewMainLink) Content.mainLinks)
+        , div []
+            [ viewMainLink ( "Twitter", "https://twitter.com/peterszerzo" )
+            , viewMainLink ( "GitHub", "https://github.com/peterszerzo" )
+            ]
         ]
 
 
@@ -69,7 +68,7 @@ type CssClasses
     = Root
     | DesktopLinks
     | DesktopLink
-    | DesktopLinkActive
+    | SimpleLink
 
 
 localClass : List class -> Html.Attribute msg
@@ -86,18 +85,14 @@ styles : List Css.Snippet
 styles =
     [ class Root
         [ width (pct 100)
-        , displayFlex
-        , position absolute
-        , left (px 0)
-        , bottom (px 36)
-        , color blue
+        , padding2 (px 0) (px 20)
+        , maxWidth (px 420)
+        , marginTop (px -55)
         , Mixins.zIndex 9
         , color white
         ]
     , class DesktopLinks
         [ width (pct 100)
-        , margin2 (px 0) (px 10)
-        , paddingTop (px 17)
         , textAlign center
         ]
     , class DesktopLink
@@ -119,6 +114,12 @@ styles =
             , opacity (num 1)
             , property "background-color" "rgba(255, 255, 255, 1)"
             ]
+        ]
+    , class SimpleLink
+        [ textDecoration none
+        , display inlineBlock
+        , color inherit
+        , margin2 (px 0) (px 10)
         ]
     ]
         |> namespace cssNamespace

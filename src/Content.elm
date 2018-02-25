@@ -149,7 +149,7 @@ OverEasy is my fake-it-till-you-make-it freelance webshop. It has no clients, ju
       , name = "peterszerzo.com"
       , image = "/imgs/projects/peterszerzo.png"
       , description = """
-The very website you are on right now is the first personal website I feel truly good about. I always had the feeling that presenting my professional skills/background/interests should not stand in the way of the vulnerability that is often so missing in the professional world. The pop-up with my favorite short film on loss, and the two different modes of my [about page](/about) make sure you can always find a person behind the creative programmer, whatever that even means.
+The very website you are on right now is the first personal website I feel truly good about. I always had the feeling that presenting my professional skills/background/interests should not stand in the way of the vulnerability that is often so missing in the professional world. The short film recommendation, and the two different modes of my [about page](/about) make sure you can always find a person behind the creative programmer, whatever that even means.
 
 **Info:** Copenhagen / 2016 / [Website](http://peterszerzo.com)
 
@@ -233,9 +233,8 @@ Data visualizations/frontend for [data science](https://contiamo.com) and [chatb
 I have also been on a long, steady streak of New Yorker articles, and wonderful books like Extremely Loud and Incredibly Close and 1Q84.
 
 Still taking ever more frequent and longer walks, and eating more pastries.
+
+Also, a quote:
+
+> Levi, your life is your story. [Make it a good one](https://www.shortoftheweek.com/2014/12/10/the-moped-diaries/)
 """
-
-
-notification : String
-notification =
-    "Levi, your life is your story. [Make it a good one](https://www.shortoftheweek.com/2014/12/10/the-moped-diaries/)"

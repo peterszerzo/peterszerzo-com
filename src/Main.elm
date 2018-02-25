@@ -3,7 +3,6 @@ module Main exposing (..)
 import Task
 import AnimationFrame
 import Window
-import Constants
 import Time
 import Json.Encode as Encode
 import Json.Decode as Decode
@@ -15,18 +14,21 @@ import Data.State exposing (State)
 import Data.PackBubble as PackBubble
 import Ports
 import Views exposing (view)
-import Data.Flags exposing (Flags)
 import Router exposing (Route, parse)
 import Window
 
 
+type alias Flags =
+    { isDev : Bool
+    }
+
+
 init : Flags -> Location -> ( State, Cmd Msg )
-init { isNotificationRecentlyDismissed, isDev } location =
+init { isDev } location =
     ( { route = (parse location)
       , isQuirky = False
-      , time = AppTime.init
-      , isNotificationDismissed = isNotificationRecentlyDismissed
       , isDev = isDev
+      , time = AppTime.init
       , window = (Window.Size 0 0)
       , projectPackBubbles = []
       }
@@ -56,11 +58,6 @@ update msg model =
             , Cmd.none
             )
 
-        DismissNotification ->
-            ( { model | isNotificationDismissed = True }
-            , Ports.notificationDismissed ()
-            )
-
         Navigate newPath ->
             ( model
             , Navigation.newUrl newPath
@@ -79,13 +76,6 @@ update msg model =
                     , ( "height", Encode.int <| window.height - 60 )
                     , ( "sizes", Encode.list <| List.map Encode.int (List.map .size Content.projects) )
                     ]
-            )
-
-        Tick time ->
-            ( { model
-                | time = AppTime.set time model.time
-              }
-            , Cmd.none
             )
 
         AnimationTick time ->
@@ -116,5 +106,5 @@ subscriptions model =
                 AnimationFrame.times AnimationTick
 
             _ ->
-                Time.every Constants.tick Tick
+                Sub.none
         ]
