@@ -9,8 +9,8 @@ import Styles.Constants exposing (..)
 import Styles.Mixins as Mixins
 import Content
 import Views.Shapes as Shapes
-import Views.Nav
 import Messages exposing (Msg)
+import Views.Nav
 
 
 view : Html Msg

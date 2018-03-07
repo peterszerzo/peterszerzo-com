@@ -1,8 +1,9 @@
 module Views.Nav exposing (..)
 
+import Json.Decode as Decode
 import Html exposing (Html, div, h1, p, nav, node, a)
 import Html.Attributes exposing (href)
-import Html.Events exposing (onClick)
+import Html.Events exposing (onClick, onWithOptions)
 import Html.CssHelpers
 import Css exposing (..)
 import Css.Namespace exposing (namespace)
@@ -23,18 +24,14 @@ viewMainLink ( label, url ) =
     in
         a
             ([ localClass [ DesktopLink ]
-             , href
-                (if isExternalLink then
-                    url
-                 else
-                    "javascript:void(0)"
-                )
+             , href url
              ]
                 ++ (if isExternalLink then
                         []
                     else
-                        [ onClick
-                            (Navigate slug)
+                        [ onWithOptions "click"
+                            { preventDefault = True, stopPropagation = False }
+                            (Navigate slug |> Decode.succeed)
                         ]
                    )
             )
@@ -51,24 +48,19 @@ view =
         [ div
             [ localClass [ DesktopLinks ]
             ]
-            (List.map (viewMainLink) Content.mainLinks)
-        , div []
-            [ viewMainLink ( "Twitter", "https://twitter.com/peterszerzo" )
-            , viewMainLink ( "GitHub", "https://github.com/peterszerzo" )
-            ]
+            (List.map viewMainLink Content.mainLinks)
         ]
 
 
 cssNamespace : String
 cssNamespace =
-    "nav"
+    "Nav"
 
 
 type CssClasses
     = Root
     | DesktopLinks
     | DesktopLink
-    | SimpleLink
 
 
 localClass : List class -> Html.Attribute msg
@@ -108,18 +100,16 @@ styles =
         , property "font-kerning" "normal"
         , property "background-color" "rgba(255, 255, 255, .23)"
         , margin (px 8)
-        , property "transition" "all .3s"
+        , property "transition" "all .2s"
         , hover
             [ color blue
             , opacity (num 1)
             , property "background-color" "rgba(255, 255, 255, 1)"
             ]
-        ]
-    , class SimpleLink
-        [ textDecoration none
-        , display inlineBlock
-        , color inherit
-        , margin2 (px 0) (px 10)
+        , focus
+            [ outline none
+            , property "box-shadow" "0 0 0 3px rgba(255, 255, 255, 0.5)"
+            ]
         ]
     ]
         |> namespace cssNamespace

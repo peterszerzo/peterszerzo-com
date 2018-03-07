@@ -6,13 +6,12 @@ import Data.Project exposing (Project)
 mainLinks : List ( String, String )
 mainLinks =
     [ ( "Projects", "/projects" )
-    , ( "Playground", "http://codepen.io/peterszerzo/" )
     , ( "Talks", "/talks" )
     , ( "Blog", "http://blog.peterszerzo.com" )
     , ( "CV", "https://represent.io/peterszerzo" )
     , ( "About", "/about" )
-    , ( "Now", "/now" )
-    , ( "Contact", "mailto:szerzo.peter@gmail.com" )
+    , ( "Twitter", "https://twitter.com/peterszerzo" )
+    , ( "GitHub", "https://github.com/peterszerzo" )
     ]
 
 
