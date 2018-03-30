@@ -3,7 +3,7 @@ module Views.Nav exposing (..)
 import Json.Decode as Decode
 import Html exposing (Html, div, h1, p, nav, node, a)
 import Html.Attributes exposing (href)
-import Html.Events exposing (onClick, onWithOptions)
+import Html.Events exposing (onWithOptions)
 import Html.CssHelpers
 import Css exposing (..)
 import Css.Namespace exposing (namespace)

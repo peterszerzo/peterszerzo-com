@@ -8,14 +8,20 @@ import Json.Encode as Encode
 import Json.Decode as Decode
 import Navigation exposing (Location, programWithFlags)
 import Messages exposing (Msg(..))
+import Html exposing (Html, div, text, h1, h2, p, header, node)
 import Content
-import Data.AppTime as AppTime
-import Data.State exposing (State)
 import Data.PackBubble as PackBubble
 import Ports
-import Views exposing (view)
 import Router exposing (Route, parse)
-import Window
+import Views.ContentBox
+import Views.Background
+import Views.Banner
+import Views.Static
+import Views.Projects
+import Views.Styles exposing (CssClasses(..), localClass)
+import Styles exposing (css)
+import Styles.Raw exposing (raw)
+import Css.File exposing (compile)
 
 
 type alias Flags =
@@ -23,12 +29,24 @@ type alias Flags =
     }
 
 
-init : Flags -> Location -> ( State, Cmd Msg )
+type alias Model =
+    { route : Route
+    , isQuirky : Bool
+    , time : Time.Time
+    , startTime : Time.Time
+    , isDev : Bool
+    , window : Window.Size
+    , projectPackBubbles : List PackBubble.PackBubble
+    }
+
+
+init : Flags -> Location -> ( Model, Cmd Msg )
 init { isDev } location =
     ( { route = (parse location)
       , isQuirky = False
       , isDev = isDev
-      , time = AppTime.init
+      , time = 0
+      , startTime = 0
       , window = (Window.Size 0 0)
       , projectPackBubbles = []
       }
@@ -36,7 +54,7 @@ init { isDev } location =
     )
 
 
-main : Program Flags State Msg
+main : Program Flags Model Msg
 main =
     programWithFlags
         (ChangeRoute << parse)
@@ -47,7 +65,7 @@ main =
         }
 
 
-update : Msg -> State -> ( State, Cmd Msg )
+update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         NoOp ->
@@ -80,7 +98,12 @@ update msg model =
 
         AnimationTick time ->
             ( { model
-                | time = AppTime.set time model.time
+                | time = time
+                , startTime =
+                    if model.startTime == 0 then
+                        time
+                    else
+                        model.startTime
               }
             , Cmd.none
             )
@@ -96,7 +119,7 @@ update msg model =
             )
 
 
-subscriptions : State -> Sub Msg
+subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.batch
         [ Window.resizes Resize
@@ -108,3 +131,104 @@ subscriptions model =
             _ ->
                 Sub.none
         ]
+
+
+view : Model -> Html Msg
+view model =
+    let
+        content =
+            case model.route of
+                Router.Home ->
+                    div [] []
+
+                Router.Projects ->
+                    Views.ContentBox.view
+                        { content =
+                            [ Views.Projects.view
+                                { packBubbles = model.projectPackBubbles
+                                , projects = Content.projects
+                                , activeProject = Nothing
+                                }
+                            ]
+                        , breadcrumbs = [ { label = "Projects", url = Nothing } ]
+                        , quirkyContent = Nothing
+                        , isQuirky = model.isQuirky
+                        }
+
+                Router.Project prj ->
+                    let
+                        project =
+                            Content.projects
+                                |> List.filter (\p -> p.id == prj)
+                                |> List.head
+                                |> Maybe.withDefault
+                                    { id = ""
+                                    , name = ""
+                                    , description = ""
+                                    , image = ""
+                                    , size = 0
+                                    , url = ""
+                                    }
+                    in
+                        Views.ContentBox.view
+                            { content =
+                                [ Views.Projects.view
+                                    { packBubbles = model.projectPackBubbles
+                                    , projects = Content.projects
+                                    , activeProject = Just prj
+                                    }
+                                ]
+                            , breadcrumbs =
+                                [ { label = "Projects", url = Just "/projects" }
+                                , { label = project.name, url = Nothing }
+                                ]
+                            , quirkyContent = Nothing
+                            , isQuirky = model.isQuirky
+                            }
+
+                Router.Now ->
+                    Views.ContentBox.view
+                        { content = [ Views.Static.view Content.now ]
+                        , quirkyContent = Nothing
+                        , breadcrumbs = [ { label = "Now!", url = Nothing } ]
+                        , isQuirky = model.isQuirky
+                        }
+
+                Router.About ->
+                    Views.ContentBox.view
+                        { content = [ Views.Static.view Content.aboutConventional ]
+                        , breadcrumbs = [ { label = "About", url = Nothing } ]
+                        , quirkyContent = Just [ Views.Static.view Content.aboutReal ]
+                        , isQuirky = model.isQuirky
+                        }
+
+                Router.Talks ->
+                    Views.ContentBox.view
+                        { content = [ Views.Static.view Content.talks ]
+                        , quirkyContent = Nothing
+                        , breadcrumbs = [ { label = "Talks", url = Nothing } ]
+                        , isQuirky = model.isQuirky
+                        }
+
+                Router.NotFound ->
+                    div [] []
+    in
+        div [ localClass [ Root ] ]
+            ((if model.isDev then
+                [ node "style"
+                    []
+                    [ text (raw ++ (compile [ css ] |> .css))
+                    ]
+                ]
+              else
+                []
+             )
+                ++ [ div
+                        [ localClass [ Container ]
+                        ]
+                        [ Views.Banner.view
+                        , content
+                        , Views.Background.view model.window (model.time - model.startTime)
+                        ]
+                   ]
+            )

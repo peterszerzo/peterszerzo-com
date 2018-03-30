@@ -127,6 +127,7 @@ styles =
         , height (pct 100)
         , position fixed
         , left (px 0)
+        , top (px 0)
         , Mixins.zIndex 14
         , Mixins.regularTransition
         , descendants

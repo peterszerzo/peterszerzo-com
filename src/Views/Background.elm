@@ -2,10 +2,10 @@ module Views.Background exposing (..)
 
 import Html exposing (Html, Attribute, div)
 import Html.Attributes exposing (class, style, width, height)
-import Data.State exposing (State)
-import Data.AppTime as AppTime
 import Math.Vector2 exposing (Vec2, vec2)
 import WebGL
+import Window
+import Time
 
 
 type alias Vertex =
@@ -36,29 +36,26 @@ floatRem a b =
     ((a / b) - (a / b |> floor |> toFloat)) * b
 
 
-view : State -> Html msg
-view model =
+view : Window.Size -> Time.Time -> Html msg
+view window timeSinceStart =
     let
-        timeSinceStart =
-            AppTime.sinceStart model.time
-
         expand =
-            if (model.window.width < 800) then
+            if (window.width < 800) then
                 100
             else
                 0
 
         size =
-            (max model.window.width model.window.height) + 2 * expand
+            (max window.width window.height) + 2 * expand
 
         top =
-            (toFloat (size - model.window.height)) / 2
+            (toFloat (size - window.height)) / 2
 
         left =
-            (toFloat (size - model.window.width)) / 2
+            (toFloat (size - window.width)) / 2
 
         isTop =
-            model.window.width > model.window.height
+            window.width > window.height
 
         scale =
             (toFloat size) / 100
@@ -77,9 +74,9 @@ view model =
                 fragmentShader
                 mesh
                 { resolution = vec2 (toFloat size) (toFloat size)
-                , time = timeSinceStart
-                , horizontal = model.window.width > model.window.height
-                , mobile = model.window.width < 600
+                , time = timeSinceStart / 1000
+                , horizontal = window.width > window.height
+                , mobile = window.width < 600
                 }
             ]
 
@@ -106,68 +103,49 @@ void main() {
 fragmentShader : WebGL.Shader {} Uniforms Varyings
 fragmentShader =
     [glsl|
-precision highp float;
+precision mediump float;
 
 uniform vec2 resolution;
 uniform float time;
-uniform bool horizontal;
-uniform bool mobile;
 
-const float transition_every = 8000.0;
-const float transition_for = 1500.0;
+float rand(float x) {
+  return fract(sin(x) * 43758.5453123);
+}
+
+float perlin(float x) {
+  float i = floor(x);  // integer
+  float f = fract(x);  // fraction
+  return mix(rand(i), rand(i + 1.0), smoothstep(0.,1.,f));
+}
+
+const float pi = 3.14159265358979323;
 
 void main() {
   vec2 st = gl_FragCoord.xy / resolution.xy;
-  st.x *= resolution.x / resolution.y;
 
-  if (!horizontal) {
-    st = vec2(st.y, st.x);
+  vec2 stc = st * 10.0;
+  vec2 ipos = floor(stc);
+  vec2 fpos = fract(stc);
+
+  vec2 fromCenter = st - vec2(0.5, 0.5);
+  float d = length(fromCenter);
+
+  float dot = dot(fromCenter / d, vec2(1.0, 0.0));
+
+  float angle = acos(dot);
+
+  if (fromCenter.y < 0.0) {
+    angle = 2.0 * pi - acos(dot);
+  } else {
+    angle = acos(dot);
   }
 
-  const float rotateAngle = 0.0;
-  const mat2 rotate = mat2(cos(rotateAngle), -sin(rotateAngle), sin(rotateAngle), cos(rotateAngle));
+  float randomArgument = sin(8.0 * angle / pi + time / 6.0);
 
-  bool is_odd_transition = fract(time / transition_every / 2.0) < 0.5;
-  float transition_ratio = smoothstep(0.0, transition_for, mod(time, transition_every));
-  if (is_odd_transition) {
-    transition_ratio = 1.0 - transition_ratio;
+  if (d < 0.22 + 0.12 * perlin(randomArgument)) {
+    discard;
+  } else {
+    gl_FragColor = vec4(0.0, 0.0, 0.0, 0.04);
   }
-
-  // Cell positions
-  vec2 point[5];
-  float sinTime = sin(0.3 * time / 1000.0);
-  float cosTime = cos(0.3 * time / 1000.0);
-  float d = mobile ? 0.035 : 0.025;
-  point[0] = vec2(0.15, 0.25) + vec2(d * sinTime, d * cosTime);
-  point[1] = vec2(0.1, 0.9) + vec2(d * cosTime, d * sinTime);
-  point[2] = vec2(0.8, 0.75) + vec2(d * sinTime, d * cosTime);
-  point[3] = vec2(0.9, 0.15) + vec2(d * cosTime, d * sinTime);
-  point[4] = vec2(0.5, 0.5);
-
-  // Cell colors
-  float b = 0.8;
-  vec4 base_color = vec4(45.0 / 255.0 * b, 81.0 / 255.0 * b, 135.0 / 255.0 * b, 1.0);
-  vec4 colors[5];
-  float r1 = 0.07 - transition_ratio * 0.05;
-  float r2 = 0.03 + transition_ratio * 0.05;
-  colors[0] = base_color + r1 * vec4(1.0, 1.0, 1.0, 0.0);
-  colors[1] = base_color + r2 * vec4(1.0, 1.0, 1.0, 0.0);
-  colors[2] = base_color + r1 * vec4(1.0, 1.0, 1.0, 0.0);
-  colors[3] = base_color + r2 * vec4(1.0, 1.0, 1.0, 0.0);
-  colors[4] = base_color;
-
-  float min_dist = 1000.0;
-  vec4 min_color;
-
-  for (int i = 0; i < 5; i++) {
-    vec2 diff = rotate * (st - point[i]);
-    float dist = abs(diff.x) + abs(diff.y);
-    if (dist < min_dist) {
-      min_dist = dist;
-      min_color = colors[i];
-    }
-  }
-
-  gl_FragColor = min_color;
 }
 |]

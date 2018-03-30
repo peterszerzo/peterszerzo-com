@@ -1,8 +1,9 @@
 module Views.Projects exposing (..)
 
+import Json.Decode as Decode
 import Html exposing (Html, div, h1, p, a, header, node, img)
 import Html.Attributes exposing (style, href, src)
-import Html.Events exposing (onClick)
+import Html.Events exposing (onClick, onWithOptions)
 import Html.CssHelpers
 import Css exposing (..)
 import Css.Elements as Elements
@@ -68,9 +69,14 @@ view { projects, packBubbles, activeProject } =
         [ div [ localClass [ Bubbles ] ] <|
             List.map2
                 (\project { x, y, r } ->
-                    div
+                    a
                         [ localClass [ Bubble ]
-                        , onClick (Navigate ("/projects/" ++ project.id))
+                        , href ("/projects/" ++ project.id)
+                        , onWithOptions "click"
+                            { preventDefault = True
+                            , stopPropagation = False
+                            }
+                            (Decode.succeed <| Navigate ("/projects/" ++ project.id))
                         , style
                             [ ( "width", (floor (2 * r) |> toString) ++ "px" )
                             , ( "height", (floor (2 * r) |> toString) ++ "px" )
