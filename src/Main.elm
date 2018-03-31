@@ -126,7 +126,10 @@ subscriptions model =
         , Ports.packLayoutRes PackLayoutResponse
         , case model.route of
             Router.Home ->
-                AnimationFrame.times AnimationTick
+                if (model.time - model.startTime > 30000) then
+                    Sub.none
+                else
+                    AnimationFrame.times AnimationTick
 
             _ ->
                 Sub.none

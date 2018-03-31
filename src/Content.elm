@@ -133,11 +133,9 @@ Atlas is a data visualization CMS made for the Education Policy Program at [New 
       , name = "OverEasy"
       , image = "/imgs/projects/overeasy.png"
       , description = """
-OverEasy is my fake-it-till-you-make-it freelance webshop. It has no clients, just a website with a bunch of graphics experiments trying very hard not to stand in the way of content.
+A silly playground for my computational art experiments.
 
-**Info:** Berlin / 2017 / [Website](https://overeasy.sh)
-
-**Role:** Developer / Designer
+**Info:** Berlin / 2017-2018 / [Website](http://overeasy.sh)
 
 **Technologies:** React / WebGL
       """

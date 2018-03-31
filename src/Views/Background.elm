@@ -74,7 +74,7 @@ view window timeSinceStart =
                 fragmentShader
                 mesh
                 { resolution = vec2 (toFloat size) (toFloat size)
-                , time = timeSinceStart / 1000
+                , time = timeSinceStart / 4000
                 , horizontal = window.width > window.height
                 , mobile = window.width < 600
                 }
@@ -118,10 +118,21 @@ float perlin(float x) {
   return mix(rand(i), rand(i + 1.0), smoothstep(0.,1.,f));
 }
 
+const float n = 26.0;
+
+float gridFloor(float x) {
+  return floor(n * x) / n + 0.5 / n;
+}
+
 const float pi = 3.14159265358979323;
+const float rotateAngle = 0.3 * pi;
+const mat2 rotate = mat2(cos(rotateAngle), sin(rotateAngle), -sin(rotateAngle), cos(rotateAngle));
 
 void main() {
-  vec2 st = gl_FragCoord.xy / resolution.xy;
+
+  vec2 st_original = (gl_FragCoord.xy / resolution.xy - vec2(0.5, 0.5)) * rotate + vec2(0.5, 0.5);
+
+  vec2 st = vec2(gridFloor(st_original.x), gridFloor(st_original.y));
 
   vec2 stc = st * 10.0;
   vec2 ipos = floor(stc);
@@ -140,12 +151,16 @@ void main() {
     angle = acos(dot);
   }
 
-  float randomArgument = sin(8.0 * angle / pi + time / 6.0);
+  float randomArgument = sin(6.0 * angle / pi + 0.8 * time);
 
-  if (d < 0.22 + 0.12 * perlin(randomArgument)) {
+  float maxDistance = 0.22 + 0.18 * perlin(randomArgument);
+
+  if (d < maxDistance) {
     discard;
+  } else if (d < maxDistance + 0.08) {
+    gl_FragColor = vec4(0.0, 0.0, 0.0, 0.08 * (d - maxDistance) / 0.08);
   } else {
-    gl_FragColor = vec4(0.0, 0.0, 0.0, 0.04);
+    gl_FragColor = vec4(0.0, 0.0, 0.0, 0.08);
   }
 }
 |]
