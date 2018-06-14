@@ -70,7 +70,7 @@ Immersing myself into [Alto's Adventure](http://altosadventure.com) in the past 
       , name = "elm-arborist"
       , image = "/imgs/projects/elm-arborist.png"
       , description = """
-A drag-and-drop tree structure visualizer and editor that is agnostic about the data structure that sits in each node. It grew out of a need to model conversation flows for [NLX](/projects/nlx)'s chatbots, but has since generalized itself a fair bit. The latest experiment in the working: write pieces of JavaScript in each node, and compose user interfaces visually - a refreshing escape from file-based IDE's.
+A drag-and-drop tree structure visualizer and editor that is agnostic about the data structure that sits in each node. It grew out of a need to model conversation flows, but has since generalized itself a fair bit. The latest experiment in the working: write pieces of JavaScript in each node, and compose user interfaces visually - a refreshing escape from file-based IDE's.
 
 **Info:** Berlin / 2017 / [Website](https://peterszerzo.github.io/elm-arborist/)
 
@@ -80,24 +80,6 @@ A drag-and-drop tree structure visualizer and editor that is agnostic about the 
       """
       , url = "/"
       , size = 800
-      }
-    , { id = "nlx"
-      , name = "nlx"
-      , image = "/imgs/projects/nlx.png"
-      , description = """
-
-NLX is an online design studio for custom chatbots. Users can design their very own chatbots down to low-level technical details of natural language understanding, then model the conversational experience using a [tree structure editor](http://elm-arborist.peterszerzo.com) I made specifically for this project.
-
-NLX is a company built in collaboration with [Andrei Papancea](https://www.linkedin.com/in/andreipapancea/) and [Vlad Papancea](https://www.linkedin.com/in/vlad-papancea-613b96a6/).
-
-**Info:** New York + Berlin / 2017 / [Website](https://nlx.ai)
-
-**Role:** Co-Founder / Frontend Lead / UX Designer
-
-**Technologies:** Elm / d3
-      """
-      , url = "https://nlx.ai"
-      , size = 1600
       }
     , { id = "splytlight"
       , name = "SplytLight"
@@ -225,7 +207,7 @@ now =
     """
 > The /now page is Derek Sivers’ [brilliant idea](https://sivers.org/nowff). Thank you, Derek!
 
-Data visualizations/frontend for [data science](https://contiamo.com) and [chatbots](https://nlx.ai). Started really warming up to the idea of going back to school for some added creative edge. CIID in good old Copenhagen especially.
+Data visualizations/frontend for [data science](https://contiamo.com). Started really warming up to the idea of going back to school for some added creative edge. CIID in good old Copenhagen especially.
 
 I have also been on a long, steady streak of New Yorker articles, and wonderful books like Extremely Loud and Incredibly Close and 1Q84.
 
