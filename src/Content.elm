@@ -124,21 +124,6 @@ A silly playground for my computational art experiments.
       , url = "https://overeasy.sh"
       , size = 1200
       }
-    , { id = "peterszerzo-com"
-      , name = "peterszerzo.com"
-      , image = "/imgs/projects/peterszerzo.png"
-      , description = """
-The very website you are on right now is the first personal website I feel truly good about. I always had the feeling that presenting my professional skills/background/interests should not stand in the way of the vulnerability that is often so missing in the professional world. The short film recommendation, and the two different modes of my [about page](/about) make sure you can always find a person behind the creative programmer, whatever that even means.
-
-**Info:** Copenhagen / 2016 / [Website](http://peterszerzo.com)
-
-**Role:** Developer / Designer
-
-**Technologies:** React / WebGL
-      """
-      , url = "https://overeasy.sh"
-      , size = 800
-      }
     ]
 
 
