@@ -8,7 +8,9 @@ import Json.Encode as Encode
 import Json.Decode as Decode
 import Navigation exposing (Location, programWithFlags)
 import Messages exposing (Msg(..))
-import Html exposing (Html, div, text, h1, h2, p, header, node)
+import Html.Styled exposing (Html, div, text, h1, h2, p, header, node, toUnstyled, fromUnstyled)
+import Html.Styled.Attributes exposing (css)
+import Css exposing (..)
 import Content
 import Data.PackBubble as PackBubble
 import Ports
@@ -18,10 +20,9 @@ import Views.Background
 import Views.Banner
 import Views.Static
 import Views.Projects
-import Views.Styles exposing (CssClasses(..), localClass)
-import Styles exposing (css)
+import Styles.Constants exposing (..)
+import Styles exposing (globalStyles)
 import Styles.Raw exposing (raw)
-import Css.File exposing (compile)
 
 
 type alias Flags =
@@ -59,7 +60,7 @@ main =
     programWithFlags
         (ChangeRoute << parse)
         { init = init
-        , view = view
+        , view = view >> toUnstyled
         , update = update
         , subscriptions = subscriptions
         }
@@ -216,22 +217,37 @@ view model =
                 Router.NotFound ->
                     div [] []
     in
-        div [ localClass [ Root ] ]
+        div
+            [ css
+                [ width (pct 100)
+                , height (pct 100)
+                ]
+            ]
             ((if model.isDev then
                 [ node "style"
                     []
-                    [ text (raw ++ (compile [ css ] |> .css))
+                    [ text (raw)
                     ]
                 ]
               else
                 []
              )
-                ++ [ div
-                        [ localClass [ Container ]
+                ++ [ globalStyles
+                   , div
+                        [ css
+                            [ width (pct 100)
+                            , height (pct 100)
+                            , backgroundColor blue
+                            , displayFlex
+                            , alignItems center
+                            , justifyContent center
+                            , property "animation" "fade-in ease-out .5s"
+                            , position relative
+                            ]
                         ]
                         [ Views.Banner.view
                         , content
-                        , Views.Background.view model.window (model.time - model.startTime)
+                        , Views.Background.view model.window (model.time - model.startTime) |> fromUnstyled
                         ]
                    ]
             )

@@ -1,7 +1,6 @@
 module Router exposing (..)
 
 import Navigation
-import String
 import UrlParser exposing (..)
 
 

@@ -1,6 +1,11 @@
 module Styles.Mixins exposing (..)
 
 import Css exposing (..)
+import Css.Media as Media
+
+
+desktop =
+    Media.withMediaQuery [ "screen and (min-width: 600px)" ]
 
 
 calcPctMinusPx : Float -> Float -> String
@@ -8,44 +13,44 @@ calcPctMinusPx percent pixels =
     "calc(" ++ (percent |> toString) ++ "% - " ++ (pixels |> toString) ++ "px)"
 
 
-zIndex : Int -> Mixin
+zIndex : Int -> Style
 zIndex i =
     property "z-index" (i |> toString)
 
 
-lineHeight : Float -> Mixin
+lineHeight : Float -> Style
 lineHeight lh =
     property "line-height" (lh |> toString)
 
 
-pointerEventsNone : Mixin
+pointerEventsNone : Style
 pointerEventsNone =
     property "pointer-events" "none"
 
 
-pointerEventsAll : Mixin
+pointerEventsAll : Style
 pointerEventsAll =
     property "pointer-events" "all"
 
 
-regularTransition : Mixin
+regularTransition : Style
 regularTransition =
     property "transition" "all .3s"
 
 
-standardShadow : List Mixin
+standardShadow : List Style
 standardShadow =
     [ property "box-shadow" "0 0 12px rgba(20, 20, 20, .3)" ]
 
 
-bodyType : List Mixin
+bodyType : List Style
 bodyType =
     [ fontSize (Css.rem 1)
     , lineHeight 1.68
     ]
 
 
-highlightedBodyType : List Mixin
+highlightedBodyType : List Style
 highlightedBodyType =
     [ fontSize (Css.rem 1)
     , property "font-weight" "600"

@@ -6,10 +6,8 @@
   "scripts": {
     "start": "NODE_ENV=development elm-app start",
     "build:main": "NODE_ENV=production elm-app build",
-    "build:elmcss": "elm-css src/Stylesheets.elm && ./node_modules/.bin/postcss build/styles.css --output build/styles.css",
     "build:html": "mv build/index.html build/200.html",
-    "build": "rm -rf dist && mkdir dist && npm run build:main && npm run build:elmcss && npm run build:html",
-    "lint": "./node_modules/.bin/standard src",
+    "build": "rm -rf dist && mkdir dist && npm run build:main && npm run build:html",
     "deploy": "npm run build && surge build peterszerzo.com"
   },
   "author": "Peter Szerzo <szerzo.peter@gmail.com>",

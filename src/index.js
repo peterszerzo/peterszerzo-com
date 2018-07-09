@@ -30,11 +30,6 @@ const startApp = (node) => {
     }))
     elmApp.ports.packLayoutRes.send(packedCoordinates)
   })
-  if (localStorage) {
-    elmApp.ports.notificationDismissed.subscribe(() => {
-      setNotificationLastDismissedSince(localStorage)
-    })
-  }
 }
 
 startApp(document.getElementById("App"))

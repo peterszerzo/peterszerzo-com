@@ -1,21 +1,17 @@
 module Views.Projects exposing (..)
 
 import Json.Decode as Decode
-import Html exposing (Html, div, h1, p, a, header, node, img)
-import Html.Attributes exposing (style, href, src)
-import Html.Events exposing (onClick, onWithOptions)
-import Html.CssHelpers
+import Html.Styled exposing (Html, div, h1, p, a, header, node, img, text, fromUnstyled)
+import Html.Styled.Attributes exposing (style, href, src, css)
+import Html.Styled.Events exposing (onClick, onWithOptions)
 import Css exposing (..)
-import Css.Elements as Elements
-import Css.Namespace exposing (namespace)
+import Css.Foreign as Foreign
 import Styles.Constants exposing (..)
 import Styles.Mixins as Mixins
 import Data.Project as Project
 import Data.PackBubble as PackBubble
-import Content
 import Views.Shapes as Shapes
 import Views.Static as Static
-import Views.Nav
 import Messages exposing (Msg(..))
 
 
@@ -28,7 +24,7 @@ type alias Config =
 
 projectLogo : String -> Html msg
 projectLogo name =
-    case name of
+    (case name of
         "elm-gameroom" ->
             Shapes.elmgameroom
 
@@ -58,19 +54,46 @@ projectLogo name =
 
         _ ->
             Shapes.ripsaw
+    )
+        |> fromUnstyled
 
 
 view : Config -> Html Msg
 view { projects, packBubbles, activeProject } =
     div
-        [ localClass [ Root ]
+        [ css
+            [ position relative
+            , width (pct 100)
+            , height (pct 100)
+            , overflow hidden
+            ]
         ]
     <|
-        [ div [ localClass [ Bubbles ] ] <|
+        [ div [] <|
             List.map2
                 (\project { x, y, r } ->
                     a
-                        [ localClass [ Bubble ]
+                        [ css
+                            [ position absolute
+                            , borderRadius (pct 50)
+                            , cursor pointer
+                            , backgroundColor blue
+                            , property "box-shadow" "3px 6px 16px rgba(0, 0, 0, 0.2)"
+                            , property "transition" "all 0.3s"
+                            , hover
+                                [ property "box-shadow" "3px 6px 24px rgba(0, 0, 0, 0.5)"
+                                , property "transform" "scale(1.03)"
+                                ]
+                            , Foreign.descendants
+                                [ Foreign.svg
+                                    [ width (pct 60)
+                                    , height (pct 60)
+                                    , marginTop (pct 20)
+                                    , marginLeft (pct 0)
+                                    , fill white
+                                    ]
+                                ]
+                            ]
                         , href ("/projects/" ++ project.id)
                         , onWithOptions "click"
                             { preventDefault = True
@@ -99,18 +122,36 @@ view { projects, packBubbles, activeProject } =
                     |> Maybe.map
                         (\project ->
                             [ div
-                                [ localClass [ Overlay ]
+                                [ css
+                                    [ backgroundColor white
+                                    , position absolute
+                                    , top (px 0)
+                                    , left (px 0)
+                                    , width (pct 100)
+                                    , height (pct 100)
+                                    , overflow auto
+                                    , property "animation" "fade-in 0.2s"
+                                    , property "z-index" "18"
+                                    , Mixins.desktop
+                                        [ overflow hidden
+                                        , displayFlex
+                                        ]
+                                    ]
                                 ]
                                 [ div
-                                    [ localClass [ OverlaySection ]
+                                    [ css [ overlaySectionStyles ]
                                     ]
                                     [ img
-                                        [ localClass [ Image ]
-                                        , Html.Attributes.src project.image
+                                        [ css
+                                            [ margin4 (px 20) (px 20) (px 0) (px 20)
+                                            , border3 (px 1) solid (rgba 0 0 0 0.1)
+                                            , property "width" "calc(100% - 40px)"
+                                            ]
+                                        , src project.image
                                         ]
                                         []
                                     ]
-                                , div [ localClass [ OverlaySection ] ]
+                                , div [ css [ overlaySectionStyles ] ]
                                     [ Static.view project.description
                                     ]
                                 ]
@@ -120,97 +161,14 @@ view { projects, packBubbles, activeProject } =
                )
 
 
-cssNamespace : String
-cssNamespace =
-    "Projects"
-
-
-type CssClasses
-    = Root
-    | Bubble
-    | Bubbles
-    | Overlay
-    | OverlaySection
-    | Link
-    | Image
-
-
-localClass : List class -> Html.Attribute msg
-localClass =
-    Html.CssHelpers.withNamespace cssNamespace |> .class
-
-
-styles : List Css.Snippet
-styles =
-    [ class Root
-        [ position relative
-        , width (pct 100)
-        , height (pct 100)
-        , overflow hidden
-        ]
-    , class Bubble
-        [ position absolute
-        , borderRadius (pct 50)
-        , cursor pointer
-        , backgroundColor blue
-        , property "box-shadow" "3px 6px 16px rgba(0, 0, 0, 0.2)"
-        , property "transition" "all 0.3s"
-        , hover
-            [ property "box-shadow" "3px 6px 24px rgba(0, 0, 0, 0.5)"
-            , property "transform" "scale(1.03)"
-            ]
-        , descendants
-            [ Elements.svg
-                [ width (pct 60)
-                , height (pct 60)
-                , marginTop (pct 20)
-                , marginLeft (pct 0)
-                , fill white
-                ]
-            ]
-        ]
-    , class Overlay
-        [ backgroundColor white
-        , position absolute
-        , top (px 0)
-        , left (px 0)
-        , width (pct 100)
-        , height (pct 100)
-        , overflow auto
-        , property "animation" "fade-in 0.2s"
-        , property "z-index" "18"
-        ]
-    , class OverlaySection
+overlaySectionStyles =
+    Css.batch
         [ padding (px 0)
         , overflowY auto
         , overflowX hidden
         , textAlign left
-        ]
-    , mediaQuery desktop
-        [ class Overlay
-            [ overflow hidden
-            , displayFlex
-            ]
-        , class OverlaySection
+        , Mixins.desktop
             [ height (pct 100)
             , width (pct 50)
             ]
         ]
-    , class Image
-        [ margin4 (px 20) (px 20) (px 0) (px 20)
-        , border3 (px 1) solid (rgba 0 0 0 0.1)
-        , property "width" "calc(100% - 40px)"
-        ]
-    , class Link
-        [ backgroundColor blue
-        , color white
-        , textDecoration none
-        , padding2 (px 8) (px 12)
-        , borderRadius (px 3)
-        , margin (px 20)
-        , hover
-            [ backgroundColor lightBlue
-            ]
-        ]
-    ]
-        |> namespace cssNamespace

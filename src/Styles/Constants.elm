@@ -3,7 +3,6 @@ module Styles.Constants exposing (..)
 import Css exposing (Color, hex, rgba, rgb)
 
 
--- Dimensions
 -- Fonts
 
 
