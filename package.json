@@ -17,9 +17,6 @@
     "elm": "^0.18.0"
   },
   "devDependencies": {
-    "autoprefixer": "^6.7.7",
-    "create-elm-app": "^1.10.0",
-    "elm-css": "^0.6.1",
-    "postcss-cli": "^3.1.1"
+    "create-elm-app": "^1.10.0"
   }
 }
