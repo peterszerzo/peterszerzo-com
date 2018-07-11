@@ -1,4 +1,4 @@
-module Styles.Constants exposing (..)
+module Site.Styles.Constants exposing (..)
 
 import Css exposing (Color, hex, rgba, rgb)
 

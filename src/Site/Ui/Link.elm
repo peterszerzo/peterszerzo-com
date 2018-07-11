@@ -1,11 +1,15 @@
-module Views.Link exposing (..)
+module Site.Ui.Link exposing (..)
 
 import Json.Decode as Decode
 import Html.Styled exposing (Html, div, h1, p, nav, node, a, text)
 import Html.Styled.Attributes exposing (href, css)
 import Html.Styled.Events exposing (onWithOptions)
 import Css exposing (..)
-import Messages exposing (Msg(..))
+
+
+--
+
+import Site.Messages exposing (Msg(..))
 
 
 link : { url : String, css : List Style, children : List (Html Msg) } -> Html Msg

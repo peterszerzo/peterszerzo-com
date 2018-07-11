@@ -1,4 +1,4 @@
-module Views.Background exposing (..)
+module Site.Ui.Background exposing (..)
 
 import Html exposing (Html, Attribute, div)
 import Html.Attributes exposing (class, style, width, height)

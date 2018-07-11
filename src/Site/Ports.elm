@@ -1,4 +1,4 @@
-port module Ports exposing (..)
+port module Site.Ports exposing (..)
 
 import Json.Encode as Encode
 import Json.Decode as Decode

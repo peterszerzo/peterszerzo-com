@@ -1,13 +1,17 @@
-module Views.Nav exposing (..)
+module Site.Ui.Nav exposing (..)
 
 import Html.Styled exposing (Html, div, h1, p, nav, node, a, text)
 import Html.Styled.Attributes exposing (href, css)
 import Css exposing (..)
-import Styles.Constants exposing (..)
-import Styles.Mixins as Mixins
-import Messages exposing (Msg(..))
-import Views.Link as Link
-import Content
+
+
+--
+
+import Site.Styles.Constants exposing (..)
+import Site.Styles.Mixins as Mixins
+import Site.Messages exposing (Msg(..))
+import Site.Ui.Link as Link
+import Site.Content as Content
 
 
 viewMainLink : ( String, String ) -> Html Msg

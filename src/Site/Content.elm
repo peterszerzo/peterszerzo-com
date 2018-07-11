@@ -1,6 +1,6 @@
-module Content exposing (..)
+module Site.Content exposing (..)
 
-import Data.Project exposing (Project)
+import Site.Data.Project exposing (Project)
 
 
 mainLinks : List ( String, String )

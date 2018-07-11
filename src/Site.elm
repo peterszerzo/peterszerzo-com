@@ -1,4 +1,4 @@
-module Main exposing (..)
+module Site exposing (..)
 
 import Task
 import AnimationFrame
@@ -6,28 +6,25 @@ import Window
 import Time
 import Json.Encode as Encode
 import Json.Decode as Decode
-import Navigation exposing (Location, programWithFlags)
-import Messages exposing (Msg(..))
+import Navigation exposing (Location, program)
 import Html.Styled exposing (Html, div, text, h1, h2, p, header, node, toUnstyled, fromUnstyled)
 import Html.Styled.Attributes exposing (css)
 import Css exposing (..)
-import Content
-import Data.PackBubble as PackBubble
-import Ports
-import Router exposing (Route, parse)
-import Views.ContentBox
-import Views.Background
-import Views.Banner
-import Views.Static
-import Views.Projects
-import Styles.Constants exposing (..)
-import Styles exposing (globalStyles)
-import Styles.Raw exposing (raw)
 
 
-type alias Flags =
-    { isDev : Bool
-    }
+--
+
+import Site.Messages exposing (Msg(..))
+import Site.Ports as Ports
+import Site.Content as Content
+import Site.Data.PackBubble as PackBubble
+import Site.Router as Router exposing (Route, parse)
+import Site.Ui as Ui
+import Site.Ui.Background
+import Site.Ui.Projects
+import Site.Styles.Constants exposing (..)
+import Site.Styles exposing (globalStyles)
+import Site.Styles.Raw exposing (raw)
 
 
 type alias Model =
@@ -35,17 +32,15 @@ type alias Model =
     , isQuirky : Bool
     , time : Time.Time
     , startTime : Time.Time
-    , isDev : Bool
     , window : Window.Size
     , projectPackBubbles : List PackBubble.PackBubble
     }
 
 
-init : Flags -> Location -> ( Model, Cmd Msg )
-init { isDev } location =
+init : Location -> ( Model, Cmd Msg )
+init location =
     ( { route = (parse location)
       , isQuirky = False
-      , isDev = isDev
       , time = 0
       , startTime = 0
       , window = (Window.Size 0 0)
@@ -55,9 +50,9 @@ init { isDev } location =
     )
 
 
-main : Program Flags Model Msg
+main : Program Never Model Msg
 main =
-    programWithFlags
+    program
         (ChangeRoute << parse)
         { init = init
         , view = view >> toUnstyled
@@ -146,9 +141,9 @@ view model =
                     div [] []
 
                 Router.Projects ->
-                    Views.ContentBox.view
+                    Ui.contentBox
                         { content =
-                            [ Views.Projects.view
+                            [ Site.Ui.Projects.view
                                 { packBubbles = model.projectPackBubbles
                                 , projects = Content.projects
                                 , activeProject = Nothing
@@ -174,9 +169,9 @@ view model =
                                     , url = ""
                                     }
                     in
-                        Views.ContentBox.view
+                        Ui.contentBox
                             { content =
-                                [ Views.Projects.view
+                                [ Site.Ui.Projects.view
                                     { packBubbles = model.projectPackBubbles
                                     , projects = Content.projects
                                     , activeProject = Just prj
@@ -191,24 +186,24 @@ view model =
                             }
 
                 Router.Now ->
-                    Views.ContentBox.view
-                        { content = [ Views.Static.view Content.now ]
+                    Ui.contentBox
+                        { content = [ Ui.static Content.now ]
                         , quirkyContent = Nothing
                         , breadcrumbs = [ { label = "Now!", url = Nothing } ]
                         , isQuirky = model.isQuirky
                         }
 
                 Router.About ->
-                    Views.ContentBox.view
-                        { content = [ Views.Static.view Content.aboutConventional ]
+                    Ui.contentBox
+                        { content = [ Ui.static Content.aboutConventional ]
                         , breadcrumbs = [ { label = "About", url = Nothing } ]
-                        , quirkyContent = Just [ Views.Static.view Content.aboutReal ]
+                        , quirkyContent = Just [ Ui.static Content.aboutReal ]
                         , isQuirky = model.isQuirky
                         }
 
                 Router.Talks ->
-                    Views.ContentBox.view
-                        { content = [ Views.Static.view Content.talks ]
+                    Ui.contentBox
+                        { content = [ Ui.static Content.talks ]
                         , quirkyContent = Nothing
                         , breadcrumbs = [ { label = "Talks", url = Nothing } ]
                         , isQuirky = model.isQuirky
@@ -223,31 +218,25 @@ view model =
                 , height (pct 100)
                 ]
             ]
-            ((if model.isDev then
-                [ node "style"
-                    []
-                    [ text (raw)
+            [ node "style"
+                []
+                [ text (raw)
+                ]
+            , globalStyles
+            , div
+                [ css
+                    [ width (pct 100)
+                    , height (pct 100)
+                    , backgroundColor blue
+                    , displayFlex
+                    , alignItems center
+                    , justifyContent center
+                    , property "animation" "fade-in ease-out .5s"
+                    , position relative
                     ]
                 ]
-              else
-                []
-             )
-                ++ [ globalStyles
-                   , div
-                        [ css
-                            [ width (pct 100)
-                            , height (pct 100)
-                            , backgroundColor blue
-                            , displayFlex
-                            , alignItems center
-                            , justifyContent center
-                            , property "animation" "fade-in ease-out .5s"
-                            , position relative
-                            ]
-                        ]
-                        [ Views.Banner.view
-                        , content
-                        , Views.Background.view model.window (model.time - model.startTime) |> fromUnstyled
-                        ]
-                   ]
-            )
+                [ Ui.banner
+                , content
+                , Site.Ui.Background.view model.window (model.time - model.startTime) |> fromUnstyled
+                ]
+            ]

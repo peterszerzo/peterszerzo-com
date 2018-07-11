@@ -1,4 +1,4 @@
-module Views.Projects exposing (..)
+module Site.Ui.Projects exposing (..)
 
 import Json.Decode as Decode
 import Html.Styled exposing (Html, div, h1, p, a, header, node, img, text, fromUnstyled)
@@ -6,13 +6,17 @@ import Html.Styled.Attributes exposing (style, href, src, css)
 import Html.Styled.Events exposing (onClick, onWithOptions)
 import Css exposing (..)
 import Css.Foreign as Foreign
-import Styles.Constants exposing (..)
-import Styles.Mixins as Mixins
-import Data.Project as Project
-import Data.PackBubble as PackBubble
-import Views.Shapes as Shapes
-import Views.Static as Static
-import Messages exposing (Msg(..))
+
+
+--
+
+import Site.Styles.Constants exposing (..)
+import Site.Styles.Mixins as Mixins
+import Site.Data.Project as Project
+import Site.Data.PackBubble as PackBubble
+import Site.Ui.Shapes as Shapes
+import Site.Ui as Ui
+import Site.Messages exposing (Msg(..))
 
 
 type alias Config =
@@ -152,7 +156,7 @@ view { projects, packBubbles, activeProject } =
                                         []
                                     ]
                                 , div [ css [ overlaySectionStyles ] ]
-                                    [ Static.view project.description
+                                    [ Ui.static project.description
                                     ]
                                 ]
                             ]

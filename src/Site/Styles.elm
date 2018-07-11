@@ -1,10 +1,14 @@
-module Styles exposing (..)
+module Site.Styles exposing (..)
 
 import Html.Styled exposing (Html)
 import Css exposing (..)
 import Css.Foreign as Foreign
-import Styles.Constants exposing (..)
-import Styles.Mixins as Mixins
+
+
+--
+
+import Site.Styles.Constants as Constants exposing (..)
+import Site.Styles.Mixins as Mixins
 
 
 globalStyles : Html msg
@@ -12,7 +16,7 @@ globalStyles =
     Foreign.global
         [ Foreign.everything
             [ boxSizing borderBox
-            , property "font-family" Styles.Constants.sansSerif
+            , property "font-family" Constants.sansSerif
             , property "-webkit-font-smoothing" "antialiased"
             , property "-moz-osx-font-smoothing" "grayscale"
             ]

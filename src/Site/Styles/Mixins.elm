@@ -1,4 +1,4 @@
-module Styles.Mixins exposing (..)
+module Site.Styles.Mixins exposing (..)
 
 import Css exposing (..)
 import Css.Media as Media

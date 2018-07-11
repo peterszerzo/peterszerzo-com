@@ -1,9 +1,15 @@
-module Messages exposing (..)
+module Site.Messages exposing (..)
+
+--
 
 import Time exposing (Time)
-import Router exposing (Route)
 import Window
 import Json.Decode as Decode
+
+
+--
+
+import Site.Router exposing (Route)
 
 
 type Msg

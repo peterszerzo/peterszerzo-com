@@ -1,4 +1,4 @@
-module Styles.Raw exposing (..)
+module Site.Styles.Raw exposing (..)
 
 
 raw : String

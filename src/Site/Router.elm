@@ -1,4 +1,4 @@
-module Router exposing (..)
+module Site.Router exposing (..)
 
 import Navigation
 import UrlParser exposing (..)
