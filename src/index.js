@@ -1,12 +1,9 @@
-import Elm from "./OverEasy.elm"
 import * as d3 from "d3-hierarchy"
-
-const isDev = process.env.NODE_ENV === "development"
-const LOCAL_STORAGE_KEY = "peterszerzo.com:notification-last-dismissed"
+const Elm = require(`./${process.env.ELM_APP_MAIN}.elm`)
 
 const startApp = (node) => {
   node.innerHTML = "" 
-  const elmApp = Elm.OverEasy.embed(node)
+  const elmApp = Elm[process.env.ELM_APP_MAIN].embed(node)
   elmApp.ports && elmApp.ports.packLayoutReq.subscribe(msg => {
     const pack = d3.pack()
       .size([msg.width, msg.height])
