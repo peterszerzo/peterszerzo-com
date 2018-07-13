@@ -245,14 +245,28 @@ projectScale window =
 
 transitionCss : NavState -> List Style
 transitionCss navState =
-    [ opacity
-        (if navState == Rest then
-            num 1
-         else
-            num 0
-        )
-    , property "transition" "opacity 0.2s"
-    ]
+    (case navState of
+        Rest ->
+            [ opacity (num 1)
+            , transform (translate3d (px 0) (px 0) (px 0))
+            ]
+
+        Outbound ->
+            [ opacity (num 0)
+            , transform (translate3d (px 8) (px 8) (px 0))
+            ]
+
+        Inbound ->
+            [ opacity (num 0)
+            , transform (translate3d (px -8) (px -8) (px 0))
+            ]
+
+        Clear ->
+            []
+    )
+        ++ ([ property "transition" "all 0.2s"
+            ]
+           )
 
 
 view : Model -> Html Msg
@@ -261,20 +275,10 @@ view model =
         scale =
             projectScale model.window
 
-        transitionCss =
-            [ opacity
-                (if model.navState == Rest then
-                    num 1
-                 else
-                    num 0
-                )
-            , property "transition" "opacity 0.2s"
-            ]
-
         viewPrj project =
             viewProject
                 { project = project
-                , css = transitionCss
+                , css = transitionCss model.navState
                 , scale = scale
                 }
     in
@@ -284,6 +288,9 @@ view model =
             div
                 [ css
                     [ height (pct 100)
+                    , width (pct 100)
+                    , position relative
+                    , overflow hidden
                     ]
                 ]
                 [ Foreign.global
@@ -321,7 +328,7 @@ view model =
                                 , page = page
                                 , window = model.window
                                 , time = model.time - model.startTime
-                                , css = transitionCss
+                                , css = transitionCss model.navState
                                 }
 
                         NotFound ->
