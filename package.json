@@ -10,9 +10,7 @@
     "start:overeasy": "npm run prep:overeasy && NODE_ENV=development ELM_APP_MAIN=OverEasy elm-app start",
     "build:site": "npm run prep:site && NODE_ENV=production ELM_APP_MAIN=Site elm-app build",
     "build:overeasy": "npm run prep:overeasy && NODE_ENV=production ELM_APP_MAIN=OverEasy elm-app build",
-    "build:html": "mv build/index.html build/200.html",
-    "build": "rm -rf dist && mkdir dist && npm run build:main && npm run build:html",
-    "deploy": "npm run build && surge build peterszerzo.com"
+    "deploy:overeasy": "npm run build:overeasy && surge build overeasy.sh"
   },
   "author": "Peter Szerzo <szerzo.peter@gmail.com>",
   "license": "ISC",

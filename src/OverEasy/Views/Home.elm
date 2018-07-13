@@ -175,7 +175,7 @@ view config =
                 [ css
                     [ textAlign center
                     , position relative
-                    , top (px 20)
+                    , top (px 40)
                     , padding (px 20)
                     ]
                 ]
