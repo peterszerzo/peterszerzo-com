@@ -6,7 +6,12 @@ import Css.Media as Media
 import Html.Styled exposing (Html, text, div, a)
 import Html.Styled.Attributes exposing (css, href)
 import Html.Styled.Events exposing (onWithOptions)
+
+
+--
+
 import OverEasy.Views.Icons as Icons
+import OverEasy.Constants exposing (..)
 
 
 view : msg -> Html msg
@@ -22,14 +27,14 @@ view onClick =
             , left (px 6)
             , padding (px 12)
             , property "z-index" "102"
-            , backgroundColor (hex "000000")
-            , color (hex "FFFFFF")
+            , backgroundColor black
+            , color white
             , property "transition" "all 0.3s"
             , hover
-                [ backgroundColor (hex "ffc235")
+                [ backgroundColor yellow
                 , color (hex "000")
                 ]
-            , Media.withMediaQuery [ "screen and (min-width: 600px)" ]
+            , desktop
                 [ width (px 60)
                 , height (px 60)
                 , top (px 15)

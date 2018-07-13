@@ -21,6 +21,10 @@ type Route
     | WalkWithMe WalkWithMe.Model
 
 
+
+-- ROUTE MATCHERS START --
+
+
 matchers : Parser (Route -> a) a
 matchers =
     oneOf
@@ -30,6 +34,10 @@ matchers =
         , s "borders-are-lenient" |> map (BordersAreLenient.init |> Tuple.first |> BordersAreLenient)
         , s "walk-with-me" |> map (WalkWithMe.init |> Tuple.first |> WalkWithMe)
         ]
+
+
+
+-- ROUTE MATCHERS END --
 
 
 type Msg

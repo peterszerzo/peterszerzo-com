@@ -9,12 +9,17 @@ import Css.Foreign as Foreign
 import Html exposing (Html)
 import Html.Styled exposing (fromUnstyled, toUnstyled, text, div, img)
 import Html.Styled.Attributes exposing (css)
-import OverEasy.Pieces as Pieces
 import Navigation
 import Window
 import UrlParser exposing (..)
+
+
+--
+
 import OverEasy.Views.Home
+import OverEasy.Pieces as Pieces
 import OverEasy.Views.Nav
+import OverEasy.Constants exposing (..)
 
 
 type Route
@@ -129,7 +134,7 @@ update msg model =
                     if model.navState == Outbound then
                         Inbound
                     else
-                        model.navState
+                        Rest
                 , lastHomePage =
                     case route of
                         Home page ->
@@ -141,7 +146,7 @@ update msg model =
             , Cmd.batch
                 [ routeInitCmd route
                 , if model.navState == Outbound then
-                    Process.sleep (0 * Time.millisecond) |> Task.attempt (\res -> RestRoute)
+                    Process.sleep (50 * Time.millisecond) |> Task.attempt (\res -> RestRoute)
                   else
                     Cmd.none
                 ]
@@ -259,7 +264,7 @@ view model =
                     , margin (px 0)
                     ]
                 , Foreign.body
-                    [ backgroundColor (hex "000")
+                    [ backgroundColor black
                     ]
                 , Foreign.everything
                     [ property "font-family" "Moon, sans-serif"
@@ -270,7 +275,7 @@ view model =
                     text ""
 
                 _ ->
-                    OverEasy.Views.Nav.view (DelayedNavigate <| "/?p=" ++ (toString model.lastHomePage))
+                    OverEasy.Views.Nav.view (Navigate <| "/?p=" ++ (toString model.lastHomePage))
             , case model.route of
                 Home page ->
                     OverEasy.Views.Home.view
@@ -284,7 +289,7 @@ view model =
                         }
 
                 NotFound ->
-                    Html.Styled.text "Not found"
+                    text "Not found"
 
                 Pieces piece ->
                     Pieces.view piece

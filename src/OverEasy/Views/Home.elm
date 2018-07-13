@@ -3,13 +3,17 @@ module OverEasy.Views.Home exposing (..)
 import Time
 import Json.Decode as Decode
 import Css exposing (..)
-import Css.Media as Media
 import Html.Styled exposing (Html, text, div, img, h2, a, p, fromUnstyled, br)
 import Html.Styled.Attributes exposing (class, css, src, href)
 import Html.Styled.Events exposing (onWithOptions)
+import Window
+
+
+--
+
 import OverEasy.Views.Icons as Icons
 import OverEasy.Views.Home.Bg
-import Window
+import OverEasy.Constants exposing (..)
 
 
 type alias Config msg =
@@ -65,7 +69,7 @@ link { navigate, url, label, discrete } =
             , fontSize (Css.rem 0.875)
             , property "transform-origin" "center center"
             , property "-webkit-font-smoothing" "subpixel-antialiased"
-            , Media.withMediaQuery [ "screen and (min-width: 600px)" ]
+            , desktop
                 [ fontSize (Css.rem 1)
                 ]
             ]
@@ -88,18 +92,18 @@ tiltedSubtitleStyle =
         , firstOfType
             [ left (px -110)
             , property "transform" "rotateZ(-45deg)"
-            , Media.withMediaQuery [ "screen and (min-width: 600px)" ]
+            , desktop
                 [ left (px -150)
                 ]
             ]
         , lastOfType
             [ right (px -110)
             , property "transform" "rotateZ(+45deg)"
-            , Media.withMediaQuery [ "screen and (min-width: 600px)" ]
+            , desktop
                 [ right (px -150)
                 ]
             ]
-        , Media.withMediaQuery [ "screen and (min-width: 600px)" ]
+        , desktop
             [ fontSize (Css.rem 1)
             , top (px -60)
             , width (px 200)
@@ -114,10 +118,10 @@ view config =
             [ width (pct 100)
             , height (pct 100)
             , position absolute
-            , Css.top (px 0)
-            , Css.left (px 0)
+            , top (px 0)
+            , left (px 0)
             , overflow hidden
-            , backgroundColor (hex "ffc235")
+            , backgroundColor yellow
             , Css.batch config.css
             ]
         ]
@@ -131,7 +135,7 @@ view config =
                 , displayFlex
                 , alignItems center
                 , justifyContent center
-                , color (hex "000000")
+                , color black
                 , property "z-index" "10"
                 ]
             ]
@@ -150,7 +154,7 @@ view config =
                         , margin auto
                         , position relative
                         , fontSize (Css.rem 0.875)
-                        , Media.withMediaQuery [ "screen and (min-width: 600px)" ]
+                        , desktop
                             [ width (px 140)
                             , height (px 140)
                             ]
