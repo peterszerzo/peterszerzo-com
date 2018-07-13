@@ -1,4 +1,4 @@
-module OverEasy.Concepts.SimpleWebGL exposing (..)
+module Shared.SimpleWebGL exposing (..)
 
 import Html exposing (Html)
 import Html.Attributes exposing (style)

@@ -4,7 +4,7 @@ import Html.Styled exposing (Html, fromUnstyled)
 import Time
 import WebGL
 import Window
-import OverEasy.Concepts.SimpleWebGL as SimpleWebGL
+import Shared.SimpleWebGL as SimpleWebGL
 
 
 view : Window.Size -> Time.Time -> Html msg
@@ -14,7 +14,7 @@ view window time =
         , window = window
         , styles =
             if window.width < 600 then
-                [ ( "transform", "scale(1.25)" ) ]
+                [ ( "transform", "scale(1.35)" ) ]
             else
                 []
         , makeUniforms =
@@ -50,18 +50,24 @@ void main() {
   st.x *= resolution.x / resolution.y;
   vec2 coord = st - vec2(0.5, 0.5);
   float angle = polarAngle(coord);
-  vec4 color;
+  // Fixes an edge case where points close to the center horizontal line are colored black
+  if (abs(coord.y) < 0.05 && abs(coord.x) < 0.3) {
+    discard;
+  }
+
   float wave1 = 0.030 * sin(5.0 * angle - time * 0.00012);
   float wave2 = 0.007 * sin(2.0 * angle - time * 0.0006);
+  if (length(coord) < 0.36 + wave1 + wave2) {
+    discard;
+  }
+
   float wave3 = 0.035 * sin(5.0 * angle + 3.14159 / 2.25 - time * 0.00012);
   float wave4 = 0.012 * sin(3.0 * angle + time * 0.0003);
-  if (length(coord) < 0.36 + wave1 + wave2) {
-    color = vec4(0.0, 0.0, 0.0, 0.0);
-  } else if (length(coord) < 0.38 + wave3 + wave4) {
-    color = vec4(0.0, 0.0, 0.0, 0.32);
-  } else {
-    color = vec4(0.0, 0.0, 0.0, 1.0);
+  if (length(coord) < 0.38 + wave3 + wave4) {
+    gl_FragColor = vec4(0.0, 0.0, 0.0, 0.32);
+    return;
   }
-  gl_FragColor = color;
+
+   gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
 }
 |]

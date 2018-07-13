@@ -5,7 +5,7 @@ import Math.Vector2 exposing (Vec2, vec2)
 import WebGL
 import Window
 import Time
-import OverEasy.Concepts.SimpleWebGL as SimpleWebGL
+import Shared.SimpleWebGL as SimpleWebGL
 
 
 type alias Vertex =

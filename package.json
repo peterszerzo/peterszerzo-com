@@ -4,9 +4,12 @@
   "description": "Source code for my personal website.",
   "main": "index.js",
   "scripts": {
-    "start:site": "NODE_ENV=development ELM_APP_MAIN=Site elm-app start",
-    "start:overeasy": "NODE_ENV=development ELM_APP_MAIN=OverEasy elm-app start",
-    "build:main": "NODE_ENV=production elm-app build",
+    "prep:site": "cp public/index-site.html public/index.html",
+    "prep:overeasy": "cp public/index-overeasy.html public/index.html",
+    "start:site": "npm run prep:site && NODE_ENV=development ELM_APP_MAIN=Site elm-app start",
+    "start:overeasy": "npm run prep:overeasy && NODE_ENV=development ELM_APP_MAIN=OverEasy elm-app start",
+    "build:site": "npm run prep:site && NODE_ENV=production ELM_APP_MAIN=Site elm-app build",
+    "build:overeasy": "npm run prep:overeasy && NODE_ENV=production ELM_APP_MAIN=OverEasy elm-app build",
     "build:html": "mv build/index.html build/200.html",
     "build": "rm -rf dist && mkdir dist && npm run build:main && npm run build:html",
     "deploy": "npm run build && surge build peterszerzo.com"

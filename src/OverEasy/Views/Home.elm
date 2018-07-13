@@ -27,53 +27,83 @@ type alias Config msg =
     }
 
 
-link : { navigate : String -> msg, url : String, label : String, discrete : Bool } -> Html msg
-link { navigate, url, label, discrete } =
-    a
-        [ href url
-        , onWithOptions "click"
-            { preventDefault = True
-            , stopPropagation = False
-            }
-            (navigate url |> Decode.succeed)
-        , css
-            [ textDecoration none
-            , color inherit
-            , display inlineBlock
-            , margin (px 6)
-            , borderBottom3 (px 1) solid (transparent)
-            , padding2 (px 4) (px 12)
-            , borderRadius (px 16)
-            , backgroundColor <|
-                if discrete then
-                    (rgba 0 0 0 0)
-                else
-                    (rgba 0 0 0 0.06)
-            , border2 (px 1) solid
-            , borderColor transparent
-            , property "transition" "all 0.2s"
-            , hover <|
-                if discrete then
-                    [ backgroundColor (rgba 0 0 0 0.04)
-                    ]
-                else
-                    [ backgroundColor (hex "000")
-                    , color (hex "ffc235")
-                    ]
-            , opacity
-                (if url == "" then
-                    (num 0.4)
-                 else
-                    (num 1.0)
-                )
-            , fontSize (Css.rem 0.875)
-            , property "transform-origin" "center center"
-            , property "-webkit-font-smoothing" "subpixel-antialiased"
-            , desktop
-                [ fontSize (Css.rem 1)
-                ]
+textStyles : Style
+textStyles =
+    Css.batch
+        [ fontSize (Css.rem 0.875)
+        , desktop
+            [ fontSize (Css.rem 1)
             ]
         ]
+
+
+smallTextStyles : Style
+smallTextStyles =
+    Css.batch
+        [ fontSize (Css.rem 0.5)
+        , desktop
+            [ fontSize (Css.rem 0.625)
+            ]
+        ]
+
+
+link : { navigate : String -> msg, url : Maybe String, label : String, discrete : Bool } -> Html msg
+link { navigate, url, label, discrete } =
+    a
+        ((case url of
+            Just linkUrl ->
+                [ href linkUrl
+                , onWithOptions "click"
+                    { preventDefault = True
+                    , stopPropagation = False
+                    }
+                    (navigate linkUrl |> Decode.succeed)
+                ]
+
+            Nothing ->
+                []
+         )
+            ++ [ css
+                    [ textDecoration none
+                    , color inherit
+                    , display inlineBlock
+                    , borderBottom3 (px 1) solid (transparent)
+                    , if url /= Nothing then
+                        Css.batch [ opacity (num 1.0) ]
+                      else
+                        Css.batch
+                            [ opacity (num 0.6)
+                            , pointerEvents none
+                            ]
+                    , if discrete then
+                        Css.batch
+                            [ padding2 (px 2) (px 6)
+                            , margin (px 2)
+                            , backgroundColor (rgba 0 0 0 0)
+                            , smallTextStyles
+                            ]
+                      else
+                        Css.batch
+                            [ padding2 (px 4) (px 12)
+                            , margin (px 6)
+                            , backgroundColor (rgba 0 0 0 0.06)
+                            , textStyles
+                            ]
+                    , borderRadius (px 16)
+                    , border2 (px 1) solid
+                    , borderColor transparent
+                    , property "transition" "all 0.2s"
+                    , hover <|
+                        if discrete then
+                            [ backgroundColor (rgba 0 0 0 0.04)
+                            ]
+                        else
+                            [ backgroundColor black
+                            , color yellow
+                            ]
+                    ]
+               ]
+        )
         [ text label ]
 
 
@@ -86,9 +116,12 @@ tiltedSubtitleStyle =
         , lineHeight (num 1.4)
         , textAlign center
         , letterSpacing (Css.rem 0.08)
-        , fontSize (Css.rem 0.875)
+        , padding2 (px 2) (px 6)
+        , borderRadius (px 16)
+        , backgroundColor yellow
         , property "transform-origin" "center center"
-        , property "-webkit-font-smoothing" "subpixel-antialiased"
+        , textStyles
+        , fontWeight bold
         , firstOfType
             [ left (px -110)
             , property "transform" "rotateZ(-45deg)"
@@ -104,8 +137,7 @@ tiltedSubtitleStyle =
                 ]
             ]
         , desktop
-            [ fontSize (Css.rem 1)
-            , top (px -60)
+            [ top (px -60)
             , width (px 200)
             ]
         ]
@@ -172,8 +204,7 @@ view config =
                             [ tiltedSubtitleStyle
                             ]
                         ]
-                        [ br [] []
-                        , text "~ bryhllaupp with "
+                        [ text "~ bryhllaupp with "
                         , a
                             [ css
                                 [ textDecoration none
@@ -191,19 +222,32 @@ view config =
                 , div
                     [ css
                         [ maxWidth (px 480)
-                        , minHeight (px 160)
+                        , minHeight (px 180)
                         , marginTop (px 30)
                         ]
                     ]
-                    [ if config.page > 0 then
-                        link
+                    [ div [ css [ marginBottom (px 10) ] ]
+                        [ link
                             { navigate = config.navigate
-                            , url = "/?p=" ++ (toString <| config.page - 1)
-                            , label = "Newer.."
+                            , url =
+                                if config.page > 0 then
+                                    "/?p=" ++ (toString <| config.page - 1) |> Just
+                                else
+                                    Nothing
+                            , label = "<- Newer.."
                             , discrete = True
                             }
-                      else
-                        text ""
+                        , link
+                            { navigate = config.navigate
+                            , url =
+                                if (config.page + 1) * 3 < List.length config.links then
+                                    "/?p=" ++ (toString <| config.page + 1) |> Just
+                                else
+                                    Nothing
+                            , label = "Older ->"
+                            , discrete = True
+                            }
+                        ]
                     , config.links
                         |> List.reverse
                         |> List.drop (config.page * 3)
@@ -212,21 +256,12 @@ view config =
                             (\( url, label ) ->
                                 link
                                     { navigate = config.delayedNavigate
-                                    , url = url
+                                    , url = Just url
                                     , label = label
                                     , discrete = False
                                     }
                             )
                         |> div []
-                    , if (config.page + 1) * 3 < List.length config.links then
-                        link
-                            { navigate = config.navigate
-                            , url = "/?p=" ++ (toString <| config.page + 1)
-                            , label = "..Older"
-                            , discrete = True
-                            }
-                      else
-                        text ""
                     ]
                 ]
             ]

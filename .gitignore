@@ -7,3 +7,4 @@ build
 src/elm.js
 *.log
 tmp
+public/index.html

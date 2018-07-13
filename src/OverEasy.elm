@@ -56,6 +56,7 @@ type NavState
     = Rest
     | Outbound
     | Inbound
+    | Clear
 
 
 type Msg
@@ -63,10 +64,13 @@ type Msg
     | Navigate String
     | RestRoute
     | DelayedNavigate String
+    | DelayedNavigate2 String
+    | DelayedNavigate3 String
     | PieceMsg Pieces.Msg
     | Resize Window.Size
     | Tick Time.Time
     | StartTime Time.Time
+    | NoOp
 
 
 type alias Model =
@@ -116,6 +120,9 @@ init location =
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
+        NoOp ->
+            ( model, Cmd.none )
+
         Navigate newPath ->
             ( model
             , Navigation.newUrl newPath
@@ -124,17 +131,28 @@ update msg model =
         DelayedNavigate newPath ->
             ( { model | navState = Outbound }
             , Process.sleep (200 * Time.millisecond)
-                |> Task.attempt (\res -> Navigate newPath)
+                |> Task.attempt (\res -> DelayedNavigate2 newPath)
+            )
+
+        DelayedNavigate2 newPath ->
+            ( { model | navState = Clear }
+            , Process.sleep (20 * Time.millisecond)
+                |> Task.attempt (\res -> DelayedNavigate3 newPath)
+            )
+
+        DelayedNavigate3 newPath ->
+            ( model
+            , Navigation.newUrl newPath
             )
 
         ChangeRoute route ->
             ( { model
                 | route = route
                 , navState =
-                    if model.navState == Outbound then
+                    if model.navState == Clear then
                         Inbound
                     else
-                        Rest
+                        model.navState
                 , lastHomePage =
                     case route of
                         Home page ->
@@ -145,7 +163,7 @@ update msg model =
               }
             , Cmd.batch
                 [ routeInitCmd route
-                , if model.navState == Outbound then
+                , if model.navState == Clear then
                     Process.sleep (50 * Time.millisecond) |> Task.attempt (\res -> RestRoute)
                   else
                     Cmd.none
@@ -225,6 +243,18 @@ projectScale window =
             |> min 1
 
 
+transitionCss : NavState -> List Style
+transitionCss navState =
+    [ opacity
+        (if navState == Rest then
+            num 1
+         else
+            num 0
+        )
+    , property "transition" "opacity 0.2s"
+    ]
+
+
 view : Model -> Html Msg
 view model =
     let
@@ -233,12 +263,12 @@ view model =
 
         transitionCss =
             [ opacity
-                (if model.navState == Inbound || model.navState == Outbound then
-                    (num 0)
+                (if model.navState == Rest then
+                    num 1
                  else
-                    (num 1)
+                    num 0
                 )
-            , property "transition" "opacity 0.3s"
+            , property "transition" "opacity 0.2s"
             ]
 
         viewPrj project =
@@ -248,55 +278,62 @@ view model =
                 , scale = scale
                 }
     in
-        div
-            [ css
-                [ height (pct 100)
-                ]
-            ]
-            [ Foreign.global
-                [ Foreign.each
-                    [ Foreign.body
-                    , Foreign.html
-                    ]
-                    [ width (pct 100)
-                    , height (pct 100)
-                    , padding (px 0)
-                    , margin (px 0)
-                    ]
-                , Foreign.body
-                    [ backgroundColor black
-                    ]
-                , Foreign.everything
-                    [ property "font-family" "Moon, sans-serif"
+        if (model.window.width == 0 && model.window.height == 0) then
+            text "" |> toUnstyled
+        else
+            div
+                [ css
+                    [ height (pct 100)
                     ]
                 ]
-            , case model.route of
-                Home _ ->
+                [ Foreign.global
+                    [ Foreign.each
+                        [ Foreign.body
+                        , Foreign.html
+                        ]
+                        [ width (pct 100)
+                        , height (pct 100)
+                        , padding (px 0)
+                        , margin (px 0)
+                        ]
+                    , Foreign.body
+                        [ backgroundColor black
+                        ]
+                    , Foreign.everything
+                        [ property "font-family" "Moon, sans-serif"
+                        ]
+                    ]
+                , case model.route of
+                    Home _ ->
+                        text ""
+
+                    _ ->
+                        OverEasy.Views.Nav.view (DelayedNavigate <| "/?p=" ++ (toString model.lastHomePage))
+                , if model.navState == Clear then
                     text ""
+                  else
+                    (case model.route of
+                        Home page ->
+                            OverEasy.Views.Home.view
+                                { delayedNavigate = DelayedNavigate
+                                , navigate = Navigate
+                                , links = links
+                                , page = page
+                                , window = model.window
+                                , time = model.time - model.startTime
+                                , css = transitionCss
+                                }
 
-                _ ->
-                    OverEasy.Views.Nav.view (Navigate <| "/?p=" ++ (toString model.lastHomePage))
-            , case model.route of
-                Home page ->
-                    OverEasy.Views.Home.view
-                        { delayedNavigate = DelayedNavigate
-                        , navigate = Navigate
-                        , links = links
-                        , page = page
-                        , window = model.window
-                        , time = model.time - model.startTime
-                        , css = transitionCss
-                        }
+                        NotFound ->
+                            text "Not found"
 
-                NotFound ->
-                    text "Not found"
-
-                Pieces piece ->
-                    Pieces.view piece
-                        |> Html.map PieceMsg
-                        |> viewPrj
-            ]
-            |> toUnstyled
+                        Pieces piece ->
+                            Pieces.view piece
+                                |> Html.map PieceMsg
+                                |> viewPrj
+                    )
+                ]
+                |> toUnstyled
 
 
 subscriptions : Model -> Sub Msg
@@ -307,12 +344,13 @@ subscriptions model =
                 Pieces.subscriptions pieces |> Sub.map PieceMsg
 
             Home _ ->
-                Sub.none
+                Sub.batch
+                    [ AnimationFrame.times Tick
+                    , Window.resizes Resize
+                    ]
 
             NotFound ->
                 Sub.none
-        , Window.resizes Resize
-        , AnimationFrame.times Tick
         ]
 
 

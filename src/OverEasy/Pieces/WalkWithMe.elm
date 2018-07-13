@@ -5,7 +5,7 @@ import AnimationFrame
 import Html exposing (Html, Attribute, div, program)
 import Html.Attributes exposing (style)
 import WebGL
-import OverEasy.Concepts.SimpleWebGL as SimpleWebGL
+import Shared.SimpleWebGL as SimpleWebGL
 
 
 type alias Model =
