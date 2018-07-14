@@ -100,7 +100,7 @@ init location =
             parse location
     in
         ( { route = route
-          , navState = Rest
+          , navState = Inbound
           , window =
                 { width = 0
                 , height = 0
@@ -113,6 +113,7 @@ init location =
             [ routeInitCmd route
             , Window.size |> Task.perform Resize
             , Time.now |> Task.perform StartTime
+            , Process.sleep (50 * Time.millisecond) |> Task.attempt (\res -> RestRoute)
             ]
         )
 
@@ -281,6 +282,9 @@ view model =
                 , css = transitionCss model.navState
                 , scale = scale
                 }
+
+        transitionCss_ =
+            transitionCss model.navState
     in
         if (model.window.width == 0 && model.window.height == 0) then
             text "" |> toUnstyled
@@ -315,7 +319,10 @@ view model =
                         text ""
 
                     _ ->
-                        OverEasy.Views.Nav.view (DelayedNavigate <| "/?p=" ++ (toString model.lastHomePage))
+                        OverEasy.Views.Nav.view
+                            { onClick = (DelayedNavigate <| "/?p=" ++ (toString model.lastHomePage))
+                            , css = transitionCss_
+                            }
                 , if model.navState == Clear then
                     text ""
                   else
@@ -328,7 +335,7 @@ view model =
                                 , page = page
                                 , window = model.window
                                 , time = model.time - model.startTime
-                                , css = transitionCss model.navState
+                                , css = transitionCss_
                                 }
 
                         NotFound ->

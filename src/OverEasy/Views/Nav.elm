@@ -14,8 +14,8 @@ import OverEasy.Views.Icons as Icons
 import OverEasy.Constants exposing (..)
 
 
-view : msg -> Html msg
-view onClick =
+view : { onClick : msg, css : List Style } -> Html msg
+view config =
     a
         [ css
             [ width (px 48)
@@ -40,12 +40,13 @@ view onClick =
                 , top (px 15)
                 , left (px 15)
                 ]
+            , Css.batch config.css
             ]
         , href "/"
         , onWithOptions "click"
             { preventDefault = True
             , stopPropagation = False
             }
-            (Decode.succeed onClick)
+            (Decode.succeed config.onClick)
         ]
         [ Icons.smallLogo ]

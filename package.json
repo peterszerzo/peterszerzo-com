@@ -8,8 +8,8 @@
     "prep:overeasy": "cp public/index-overeasy.html public/index.html",
     "start:site": "npm run prep:site && NODE_ENV=development ELM_APP_MAIN=Site elm-app start",
     "start:overeasy": "npm run prep:overeasy && NODE_ENV=development ELM_APP_MAIN=OverEasy elm-app start",
-    "build:site": "npm run prep:site && NODE_ENV=production ELM_APP_MAIN=Site elm-app build",
-    "build:overeasy": "npm run prep:overeasy && NODE_ENV=production ELM_APP_MAIN=OverEasy elm-app build",
+    "build:site": "npm run prep:site && NODE_ENV=production ELM_APP_MAIN=Site elm-app build && mv build/index.html build/200.html",
+    "build:overeasy": "npm run prep:overeasy && NODE_ENV=production ELM_APP_MAIN=OverEasy elm-app build && mv build/index.html build/200.html",
     "deploy:overeasy": "npm run build:overeasy && surge build overeasy.sh"
   },
   "author": "Peter Szerzo <szerzo.peter@gmail.com>",
