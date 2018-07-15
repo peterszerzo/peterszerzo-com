@@ -29,7 +29,11 @@ view : Window.Size -> Time.Time -> Html msg
 view window timeSinceStart =
     SimpleWebGL.view
         { window = window
-        , styles = []
+        , styles =
+            if window.width < 600 then
+                [ ( "transform", "scale(1.35)" ) ]
+            else
+                []
         , makeUniforms =
             (\resolution ->
                 { resolution = resolution
@@ -66,7 +70,7 @@ float gridFloor(float x) {
   return floor(n * x) / n + 0.5 / n;
 }
 
-const float pi = 3.1415926535897;
+const float pi = 3.1415926535;
 const float rotateAngle = 0.3 * pi;
 const mat2 rotate = mat2(cos(rotateAngle), sin(rotateAngle), -sin(rotateAngle), cos(rotateAngle));
 
@@ -100,9 +104,9 @@ void main() {
   if (d < maxDistance) {
     discard;
   } else if (d < maxDistance + 0.08) {
-    gl_FragColor = vec4(0.0, 0.0, 0.0, 0.12 * (d - maxDistance) / 0.08);
+    gl_FragColor = vec4(0.0, 0.0, 0.0, 0.16 * (d - maxDistance) / 0.08);
   } else {
-    gl_FragColor = vec4(0.0, 0.0, 0.0, 0.12);
+    gl_FragColor = vec4(0.0, 0.0, 0.0, 0.16);
   }
 }
 |]

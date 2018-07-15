@@ -138,10 +138,12 @@ view model =
         content =
             case model.route of
                 Router.Home ->
-                    div [] []
+                    [ Ui.banner
+                    , Site.Ui.Background.view model.window (model.time - model.startTime) |> fromUnstyled
+                    ]
 
                 Router.Projects ->
-                    Ui.contentBox
+                    [ Ui.contentBox
                         { content =
                             [ Site.Ui.Projects.view
                                 { packBubbles = model.projectPackBubbles
@@ -153,6 +155,7 @@ view model =
                         , quirkyContent = Nothing
                         , isQuirky = model.isQuirky
                         }
+                    ]
 
                 Router.Project prj ->
                     let
@@ -169,7 +172,7 @@ view model =
                                     , url = ""
                                     }
                     in
-                        Ui.contentBox
+                        [ Ui.contentBox
                             { content =
                                 [ Site.Ui.Projects.view
                                     { packBubbles = model.projectPackBubbles
@@ -184,33 +187,38 @@ view model =
                             , quirkyContent = Nothing
                             , isQuirky = model.isQuirky
                             }
+                        ]
 
                 Router.Now ->
-                    Ui.contentBox
+                    [ Ui.contentBox
                         { content = [ Ui.static Content.now ]
                         , quirkyContent = Nothing
                         , breadcrumbs = [ { label = "Now!", url = Nothing } ]
                         , isQuirky = model.isQuirky
                         }
+                    ]
 
                 Router.About ->
-                    Ui.contentBox
+                    [ Ui.contentBox
                         { content = [ Ui.static Content.aboutConventional ]
                         , breadcrumbs = [ { label = "About", url = Nothing } ]
                         , quirkyContent = Just [ Ui.static Content.aboutReal ]
                         , isQuirky = model.isQuirky
                         }
+                    ]
 
                 Router.Talks ->
-                    Ui.contentBox
+                    [ Ui.contentBox
                         { content = [ Ui.static Content.talks ]
                         , quirkyContent = Nothing
                         , breadcrumbs = [ { label = "Talks", url = Nothing } ]
                         , isQuirky = model.isQuirky
                         }
+                    ]
 
                 Router.NotFound ->
-                    div [] []
+                    [ div [] []
+                    ]
     in
         div
             [ css
@@ -235,8 +243,5 @@ view model =
                     , position relative
                     ]
                 ]
-                [ Ui.banner
-                , content
-                , Site.Ui.Background.view model.window (model.time - model.startTime) |> fromUnstyled
-                ]
+                content
             ]
