@@ -142,7 +142,6 @@ view model =
                         , ( "position", "relative" )
                         , ( "background-color", "#FFF" )
                         , ( "overflow", "hidden" )
-                        , ( "border", "2px solid black" )
                         ]
                     ]
                     [ ball model.time model.ball
