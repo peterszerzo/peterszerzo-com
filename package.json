@@ -6,11 +6,16 @@
   "scripts": {
     "prep:site": "cp public/index-site.html public/index.html",
     "prep:overeasy": "cp public/index-overeasy.html public/index.html",
+    "prep:maddi": "cp public/index-maddi.html public/index.html",
     "start:site": "npm run prep:site && NODE_ENV=development ELM_APP_MAIN=Site elm-app start",
     "start:overeasy": "npm run prep:overeasy && NODE_ENV=development ELM_APP_MAIN=OverEasy elm-app start",
+    "start:maddi": "npm run prep:maddi && NODE_ENV=development ELM_APP_MAIN=Maddi elm-app start",
     "build:site": "npm run prep:site && NODE_ENV=production ELM_APP_MAIN=Site elm-app build && mv build/index.html build/200.html",
     "build:overeasy": "npm run prep:overeasy && NODE_ENV=production ELM_APP_MAIN=OverEasy elm-app build && mv build/index.html build/200.html",
-    "deploy:overeasy": "npm run build:overeasy && surge build overeasy.sh"
+    "build:maddi": "npm run prep:maddi && NODE_ENV=production ELM_APP_MAIN=Maddi elm-app build && mv build/index.html build/200.html",
+    "deploy:overeasy": "npm run build:overeasy && surge build overeasy.sh",
+    "deploy:site": "npm run build:site && surge build peterszerzo.com",
+    "deploy:maddi": "npm run build:maddi && surge build annacingi.com"
   },
   "author": "Peter Szerzo <szerzo.peter@gmail.com>",
   "license": "ISC",
