@@ -2,7 +2,6 @@ module OverEasy exposing (..)
 
 import Time
 import Task
-import Process
 import AnimationFrame
 import Css exposing (..)
 import Css.Foreign as Foreign
@@ -20,6 +19,7 @@ import OverEasy.Views.Home
 import OverEasy.Pieces as Pieces
 import OverEasy.Views.Nav
 import OverEasy.Constants exposing (..)
+import Shared.SmoothNav as SmoothNav
 
 
 type Route
@@ -52,20 +52,10 @@ links =
     ]
 
 
-type NavState
-    = Rest
-    | Outbound
-    | Inbound
-    | Clear
-
-
 type Msg
-    = ChangeRoute Route
+    = SmoothNav (SmoothNav.Msg Route)
     | Navigate String
-    | RestRoute
     | DelayedNavigate String
-    | DelayedNavigate2 String
-    | DelayedNavigate3 String
     | PieceMsg Pieces.Msg
     | Resize Window.Size
     | Tick Time.Time
@@ -74,8 +64,7 @@ type Msg
 
 
 type alias Model =
-    { route : Route
-    , navState : NavState
+    { smoothNav : SmoothNav.Model Route
     , window : Window.Size
     , startTime : Time.Time
     , time : Time.Time
@@ -98,9 +87,11 @@ init location =
     let
         route =
             parse location
+
+        ( smoothNav, smoothNavCmd ) =
+            SmoothNav.init route
     in
-        ( { route = route
-          , navState = Inbound
+        ( { smoothNav = smoothNav
           , window =
                 { width = 0
                 , height = 0
@@ -113,7 +104,7 @@ init location =
             [ routeInitCmd route
             , Window.size |> Task.perform Resize
             , Time.now |> Task.perform StartTime
-            , Process.sleep (50 * Time.millisecond) |> Task.attempt (\res -> RestRoute)
+            , smoothNavCmd |> Cmd.map SmoothNav
             ]
         )
 
@@ -124,58 +115,25 @@ update msg model =
         NoOp ->
             ( model, Cmd.none )
 
-        Navigate newPath ->
-            ( model
-            , Navigation.newUrl newPath
-            )
-
-        DelayedNavigate newPath ->
-            ( { model | navState = Outbound }
-            , Process.sleep (200 * Time.millisecond)
-                |> Task.attempt (\res -> DelayedNavigate2 newPath)
-            )
-
-        DelayedNavigate2 newPath ->
-            ( { model | navState = Clear }
-            , Process.sleep (20 * Time.millisecond)
-                |> Task.attempt (\res -> DelayedNavigate3 newPath)
-            )
-
-        DelayedNavigate3 newPath ->
-            ( model
-            , Navigation.newUrl newPath
-            )
-
-        ChangeRoute route ->
-            ( { model
-                | route = route
-                , navState =
-                    if model.navState == Clear then
-                        Inbound
-                    else
-                        model.navState
-                , lastHomePage =
-                    case route of
-                        Home page ->
-                            page
-
-                        _ ->
-                            model.lastHomePage
-              }
-            , Cmd.batch
-                [ routeInitCmd route
-                , if model.navState == Clear then
-                    Process.sleep (50 * Time.millisecond) |> Task.attempt (\res -> RestRoute)
-                  else
-                    Cmd.none
-                ]
-            )
-
-        RestRoute ->
-            ( { model | navState = Rest }, Cmd.none )
-
         Resize window ->
             ( { model | window = window }, Cmd.none )
+
+        SmoothNav smoothNavMsg ->
+            let
+                ( smoothNav, smoothNavCmd ) =
+                    SmoothNav.update smoothNavMsg model.smoothNav
+            in
+                ( { model | smoothNav = smoothNav }
+                , Cmd.batch
+                    [ smoothNavCmd |> Cmd.map SmoothNav
+                    , case smoothNavMsg of
+                        SmoothNav.ChangeRoute route ->
+                            routeInitCmd route
+
+                        _ ->
+                            Cmd.none
+                    ]
+                )
 
         Tick time ->
             ( { model | time = time }, Cmd.none )
@@ -184,17 +142,23 @@ update msg model =
             ( { model | startTime = time }, Cmd.none )
 
         PieceMsg pageMsg ->
-            case model.route of
+            case SmoothNav.route model.smoothNav of
                 Pieces pieces ->
                     Pieces.update pageMsg pieces
                         |> (\( route, cmd ) ->
-                                ( { model | route = Pieces route }
+                                ( { model | smoothNav = SmoothNav.setRoute (Pieces route) model.smoothNav }
                                 , Cmd.map PieceMsg cmd
                                 )
                            )
 
                 _ ->
                     ( model, Cmd.none )
+
+        Navigate newUrl ->
+            ( model, SmoothNav.newUrl newUrl |> Cmd.map SmoothNav )
+
+        DelayedNavigate newUrl ->
+            ( model, SmoothNav.delayedNewUrl newUrl |> Cmd.map SmoothNav )
 
 
 viewProject :
@@ -244,25 +208,25 @@ projectScale window =
             |> min 1
 
 
-transitionCss : NavState -> List Style
+transitionCss : SmoothNav.NavState -> List Style
 transitionCss navState =
     (case navState of
-        Rest ->
+        SmoothNav.Rest ->
             [ opacity (num 1)
             , transform (translate3d (px 0) (px 0) (px 0))
             ]
 
-        Outbound ->
+        SmoothNav.Outbound ->
             [ opacity (num 0)
             , transform (translate3d (px 8) (px 8) (px 0))
             ]
 
-        Inbound ->
+        SmoothNav.Inbound ->
             [ opacity (num 0)
             , transform (translate3d (px -8) (px -8) (px 0))
             ]
 
-        Clear ->
+        SmoothNav.Clear ->
             []
     )
         ++ ([ property "transition" "all 0.2s"
@@ -273,18 +237,24 @@ transitionCss navState =
 view : Model -> Html Msg
 view model =
     let
+        navState =
+            SmoothNav.navState model.smoothNav
+
+        route =
+            SmoothNav.route model.smoothNav
+
         scale =
             projectScale model.window
 
         viewPrj project =
             viewProject
                 { project = project
-                , css = transitionCss model.navState
+                , css = transitionCss navState
                 , scale = scale
                 }
 
         transitionCss_ =
-            transitionCss model.navState
+            transitionCss navState
     in
         if (model.window.width == 0 && model.window.height == 0) then
             text "" |> toUnstyled
@@ -314,7 +284,7 @@ view model =
                         [ property "font-family" "Moon, sans-serif"
                         ]
                     ]
-                , case model.route of
+                , case route of
                     Home _ ->
                         text ""
 
@@ -323,10 +293,10 @@ view model =
                             { onClick = (DelayedNavigate <| "/?p=" ++ (toString model.lastHomePage))
                             , css = transitionCss_
                             }
-                , if model.navState == Clear then
+                , if navState == SmoothNav.Clear then
                     text ""
                   else
-                    (case model.route of
+                    (case route of
                         Home page ->
                             OverEasy.Views.Home.view
                                 { delayedNavigate = DelayedNavigate
@@ -353,7 +323,7 @@ view model =
 subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.batch
-        [ case model.route of
+        [ case SmoothNav.route model.smoothNav of
             Pieces pieces ->
                 Pieces.subscriptions pieces |> Sub.map PieceMsg
 
@@ -371,7 +341,7 @@ subscriptions model =
 main : Program Never Model Msg
 main =
     Navigation.program
-        (ChangeRoute << parse)
+        ((SmoothNav << SmoothNav.ChangeRoute) << parse)
         { view = view
         , init = init
         , update = update
