@@ -1,107 +1,16 @@
 module Maddi.Views exposing (..)
 
 import Css exposing (..)
-import String.Future
 import Css.Foreign as Foreign
-import Css.Media as Media
 import Json.Decode as Decode
 import Html.Styled exposing (Html, text, div, a, p, br, header, h2, fromUnstyled)
 import Html.Styled.Attributes exposing (css, href)
 import Html.Styled.Events exposing (onWithOptions, onClick)
 import Svg.Styled exposing (svg, path, line)
 import Svg.Styled.Attributes exposing (d, viewBox, x1, x2, y1, y2)
-import Math.Matrix4 as Matrix4
-import Math.Vector3 as Vector3
 import Markdown
-
-
---
-
-import Maddi.Data.Project as Project
-
-
-mobile : List Style -> Style
-mobile =
-    Media.withMedia
-        [ Media.only Media.screen
-            [ Media.maxWidth (px 600) ]
-        ]
-
-
-black : Color
-black =
-    hex "000000"
-
-
-white : Color
-white =
-    hex "FFFFFF"
-
-
-yellow : Color
-yellow =
-    hex "F7CE00"
-
-
-borderColor_ : Color
-borderColor_ =
-    hex "#CECECE"
-
-
-bodyType : Style
-bodyType =
-    Css.batch
-        [ fontSize (Css.rem 1)
-        , lineHeight (num 1.6)
-        , mobile
-            [ fontSize (Css.rem 1)
-            ]
-        ]
-
-
-headingType : Style
-headingType =
-    Css.batch
-        [ fontSize (Css.rem 1.25)
-        , textDecoration none
-        , color inherit
-        ]
-
-
-linkType : Style
-linkType =
-    Css.batch
-        [ display inlineBlock
-        , color inherit
-        , bodyType
-        , paddingLeft (px 1)
-        , paddingRight (px 1)
-        , borderRadius (px 2)
-        , textDecoration underline
-        , property "transition" "all 0.15s"
-        , hover
-            [ backgroundColor yellow
-            ]
-        , focus
-            [ outline none
-            , backgroundColor (rgb 250 250 250)
-            ]
-        ]
-
-
-titleType : Style
-titleType =
-    Css.batch
-        [ property "font-family" "Quicksand"
-        , textTransform uppercase
-        , fontSize (Css.rem 2)
-        , lineHeight (num 1.15)
-        , margin (px 0)
-        , property "font-weight" "600"
-        , mobile
-            [ fontSize (Css.rem 2)
-            ]
-        ]
+import Maddi.Views.Mixins exposing (..)
+import Maddi.Views.CustomLink exposing (customLink)
 
 
 largeLogo : Html msg
@@ -181,21 +90,6 @@ homeLink navigate =
         ]
 
 
-customLink : { navigate : String -> msg, url : String, css : Style } -> List (Html msg) -> Html msg
-customLink config children =
-    a
-        ([ href config.url
-         , css [ config.css ]
-         ]
-            ++ (if List.member (String.left 4 config.url) [ "http", "mail" ] then
-                    []
-                else
-                    [ onWithOptions "click" { preventDefault = True, stopPropagation = False } (config.navigate config.url |> Decode.succeed) ]
-               )
-        )
-        children
-
-
 link : (String -> msg) -> String -> List (Html msg) -> Html msg
 link navigate url children =
     customLink { navigate = navigate, url = url, css = linkType } children
@@ -219,179 +113,6 @@ intro navigate =
             [ text "I studied at Accademia di Brera, trained at Teatro alla Scala, currently based in Reggio Emilia and Milan, traveling across Italy with brief escapades to New York, Sydney, and wherever next."
             ]
         ]
-
-
-wingTransform : { skewAngle : Float, scale : Float, w : Float, offset : Int } -> Style
-wingTransform { skewAngle, scale, w, offset } =
-    [ "skewX(" ++ (String.Future.fromFloat skewAngle) ++ "rad)"
-    , "rotate(" ++ (String.Future.fromFloat skewAngle) ++ "rad)"
-    , "scale(" ++ (String.Future.fromFloat scale) ++ ")"
-    , "translate3d("
-        ++ (String.Future.fromFloat (w * (toFloat offset) - (scale - 1) * 40))
-        ++ "px, "
-        ++ (String.Future.fromFloat
-                (if skewAngle > 0 then
-                    w * (tan (-skewAngle)) + (scale - 1) * 16
-                 else
-                    0
-                )
-           )
-        ++ "px, 0)"
-    ]
-        |> String.join " "
-        |> property "transform"
-
-
-wing :
-    { navigate : String -> msg
-    , order : Int
-    , project : Project.Project
-    , selected : Maybe String
-    }
-    -> Html msg
-wing { navigate, order, project, selected } =
-    let
-        translation =
-            Matrix4.makeTranslate (Vector3.vec3 0 0 0)
-
-        rotation =
-            Matrix4.makeRotate 0.9 (Vector3.vec3 0 1 0)
-
-        perspective =
-            Matrix4.makeLookAt
-                (Vector3.vec3 0 0.05 0.1)
-                (Vector3.vec3 0 0 0)
-                (Vector3.vec3 0 0 -1)
-
-        matrix =
-            rotation
-                |> Matrix4.mul translation
-                |> Matrix4.mul perspective
-
-        skewAngle =
-            -20 * pi / 180
-
-        width_ =
-            140
-    in
-        customLink
-            { css =
-                Css.batch
-                    [ display block
-                    , textDecoration none
-                    , color inherit
-                    , position absolute
-                    , left (px ((2 * width_ * 1.06417) * (toFloat order)))
-                    , overflow visible
-                    , property "z-index" "100"
-                    , property "transition" "all 0.2s"
-                    , case selected of
-                        Just projectId ->
-                            Css.batch <|
-                                if projectId == project.id then
-                                    []
-                                else
-                                    [ opacity (num 0.3)
-                                    ]
-
-                        Nothing ->
-                            Css.batch []
-                    , Foreign.children
-                        [ Foreign.div
-                            [ width (px width_)
-                            , height (px 240)
-                            , position absolute
-                            , stickoutStyles { hover = False }
-                            , property "word-break" "break-all"
-                            , property "transition" "all 0.2s ease-in-out"
-                            ]
-                        ]
-                    , hover
-                        [ property "z-index" "101"
-                        , Foreign.children
-                            [ Foreign.div
-                                [ stickoutStyles { hover = True }
-                                ]
-                            ]
-                        ]
-                    ]
-            , navigate = navigate
-            , url = "/projects/" ++ project.id
-            }
-            [ div
-                [ css
-                    [ wingTransform
-                        (if selected == Just project.id then
-                            { skewAngle = skewAngle * 0.65
-                            , w = width_
-                            , offset = 0
-                            , scale = 1.15
-                            }
-                         else
-                            { skewAngle = skewAngle
-                            , w = width_
-                            , offset = 0
-                            , scale = 1
-                            }
-                        )
-                    , padding (px 10)
-                    , displayFlex
-                    , flexDirection column
-                    , justifyContent spaceBetween
-                    ]
-                ]
-                [ h2
-                    [ css
-                        [ fontSize (Css.rem 1.5)
-                        , textTransform uppercase
-                        , margin (px 0)
-                        , fontWeight normal
-                        ]
-                    ]
-                    [ text (project.title) ]
-                , p
-                    [ css
-                        [ fontSize (Css.rem 1.5)
-                        , color (hex "ADADAD")
-                        , margin (px 0)
-                        ]
-                    ]
-                    [ project.openedAt
-                        |> (\( year, month, day ) ->
-                                text (String.Future.fromInt month ++ " / " ++ String.Future.fromInt year)
-                           )
-                    ]
-                ]
-            , div
-                [ css
-                    [ padding (px 6)
-                    , wingTransform
-                        (if selected == Just project.id then
-                            { skewAngle = -skewAngle * 0.65
-                            , scale = 1.15
-                            , w = width_
-                            , offset = 1
-                            }
-                         else
-                            { skewAngle = -skewAngle
-                            , scale = 1
-                            , w = width_
-                            , offset = 1
-                            }
-                        )
-                    , property "background-size" "cover"
-                    , property "background-position" "50% 50%"
-                    , property "background-clip" "content-box"
-                    , property "background-image"
-                        (project.imgs
-                            |> List.head
-                            |> Maybe.map (\( img, alt ) -> "linear-gradient(45deg, rgba(255, 255, 255, 0.30), rgba(255, 255, 255, 0.15)), url(" ++ img ++ ")")
-                            |> Maybe.withDefault ""
-                        )
-                    ]
-                ]
-                []
-            ]
 
 
 iconContainer : { handleClick : msg, css : Style } -> List (Html msg) -> Html msg
@@ -529,7 +250,7 @@ siteHeader { navigate, mobileNav, setMobileNav } =
                             , left (px 0)
                             , width (vw 100)
                             , height (vh 100)
-                            , padding2 (px 45) (px 20)
+                            , padding2 (px 35) (px 20)
                             , textAlign right
                             , backgroundColor (rgba 255 255 255 0.9)
                             , display none
@@ -585,48 +306,6 @@ siteHeader { navigate, mobileNav, setMobileNav } =
             ]
 
 
-stickoutStyles : { hover : Bool } -> Style
-stickoutStyles { hover } =
-    let
-        stickout =
-            10
-
-        common =
-            Css.batch
-                [ position absolute
-                , property "content" "' '"
-                , property "z-index" "9"
-                , property "transition" "border-color 0.2s"
-                , borderColor
-                    (if hover then
-                        (hex "444")
-                     else
-                        borderColor_
-                    )
-                ]
-    in
-        Css.batch
-            [ before
-                [ top (px -stickout)
-                , bottom (px -stickout)
-                , left (px 0)
-                , right (px 0)
-                , borderLeft2 (px 1) solid
-                , borderRight2 (px 1) solid
-                , common
-                ]
-            , after
-                [ left (px -stickout)
-                , right (px -stickout)
-                , top (px 0)
-                , bottom (px 0)
-                , borderTop2 (px 1) solid
-                , borderBottom2 (px 1) solid
-                , common
-                ]
-            ]
-
-
 layout : List (Html msg) -> Html msg
 layout children =
     let
@@ -638,20 +317,47 @@ layout children =
                 [ padding (px 20)
                 , position relative
                 , width (pct 100)
-                , margin2 (px 60) auto
                 , height (px 400)
                 , property "animation" "fadein 0.5s ease-in-out forwards"
                 , mobile
                     [ height auto
+                    , margin3 (px 60) auto (px 0)
                     ]
                 , stickoutStyles { hover = False }
                 ]
             ]
             ([ div
                 [ css
+                    [ mobile
+                        [ display none
+                        ]
+                    ]
+                ]
+                [ div
+                    [ css
+                        [ position absolute
+                        , top (px -stickout)
+                        , left (pct 50)
+                        , height (px (2 * stickout))
+                        , borderLeft3 (px 1) solid borderColor_
+                        ]
+                    ]
+                    []
+                , div
+                    [ css
+                        [ position absolute
+                        , bottom (px -stickout)
+                        , left (pct 50)
+                        , height (px (2 * stickout))
+                        , borderLeft3 (px 1) solid borderColor_
+                        ]
+                    ]
+                    []
+                ]
+             , div
+                [ css
                     [ position absolute
                     , property "z-index" "9"
-                    , borderRight3 (px 1) solid borderColor_
                     , flex (num 0)
                     , width (px 1)
                     , top (px -stickout)
@@ -676,7 +382,6 @@ layout children =
                         [ Foreign.everything
                             [ property "width" "calc(50% - 20px)"
                             , position relative
-                            , height (pct 100)
                             , property "z-index" "10"
                             , overflow visible
                             , mobile

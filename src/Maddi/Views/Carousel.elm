@@ -4,10 +4,6 @@ import Html.Styled exposing (Html, div, img, button)
 import Html.Styled.Attributes exposing (alt, css)
 import Html.Styled.Events exposing (onClick)
 import Css exposing (..)
-
-
---
-
 import Maddi.Views as Views
 
 
@@ -66,6 +62,7 @@ view config =
         div
             [ css
                 [ borderRadius (px 3)
+                , height (px 360)
                 , position relative
                 , overflow visible
                 ]
@@ -73,7 +70,12 @@ view config =
             [ div
                 [ css
                     [ maxWidth (pct 100)
+                    , backgroundColor (rgba 0 0 0 0.08)
+                    , height (pct 100)
                     , margin auto
+                    , displayFlex
+                    , alignItems center
+                    , justifyContent center
                     , position relative
                     ]
                 ]
@@ -81,7 +83,7 @@ view config =
                 [ img
                     [ css
                         [ maxWidth (pct 100)
-                        , maxHeight (px 300)
+                        , maxHeight (pct 100)
                         , display block
                         , margin auto
                         ]
@@ -115,19 +117,19 @@ view config =
                                                     [ property "content" "' '"
                                                     , display block
                                                     , width (px 10)
-                                                    , boxSizing borderBox
                                                     , height (px 10)
+                                                    , boxSizing borderBox
                                                     , borderRadius (pct 50)
                                                     , property "transition" "all 0.1s"
                                                     , backgroundColor <|
                                                         if index == config.state.active then
-                                                            Views.yellow
+                                                            hex "898989"
                                                         else
-                                                            hex "adadad"
+                                                            hex "CECECE"
                                                     ]
                                                 , hover
                                                     [ after
-                                                        [ backgroundColor Views.yellow
+                                                        [ backgroundColor (hex "898989")
                                                         ]
                                                     ]
                                                 ]

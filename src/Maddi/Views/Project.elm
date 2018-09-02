@@ -1,13 +1,6 @@
 module Maddi.Views.Project exposing (init, State, view, Data)
 
 import Html.Styled as Html exposing (Html, div)
-import Html.Styled.Attributes exposing (css)
-import Css exposing (..)
-import Css.Foreign as Foreign
-
-
---
-
 import Maddi.Data.Project as Project
 import Maddi.Views.Carousel as Carousel
 import Maddi.Views as Views

@@ -10,13 +10,11 @@ import Css.Foreign as Foreign
 import Html exposing (Html)
 import Html.Styled exposing (div, toUnstyled, h1, text)
 import Html.Styled.Attributes exposing (css)
-
-
---
-
 import Maddi.Views.Carousel as CarouselView
 import Maddi.Views.Project as ProjectView
+import Maddi.Views.Wing as Wing
 import Maddi.Views as Views
+import Maddi.Views.Mixins exposing (mobile)
 import Maddi.Content as Content
 import Maddi.Data.Project as Project
 
@@ -166,7 +164,7 @@ view model =
                 , displayFlex
                 , alignItems center
                 , justifyContent center
-                , Views.mobile
+                , mobile
                     [ overflow auto
                     ]
                 ]
@@ -193,10 +191,9 @@ view model =
                 , Foreign.each [ Foreign.html, Foreign.body ]
                     [ margin (px 0)
                     , height (pct 100)
-                    , overflow hidden
                     ]
                 , Foreign.body
-                    [ Views.mobile
+                    [ mobile
                         [ overflow auto
                         , height auto
                         ]
@@ -204,7 +201,7 @@ view model =
                 , Foreign.selector "#App"
                     [ width (pct 100)
                     , height (pct 100)
-                    , Views.mobile
+                    , mobile
                         [ height auto
                         ]
                     ]
@@ -239,7 +236,7 @@ view model =
                           <|
                             List.indexedMap
                                 (\index project ->
-                                    Views.wing
+                                    Wing.wing
                                         { order = index
                                         , project = project
                                         , navigate = DelayedNavigate
