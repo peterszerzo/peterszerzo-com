@@ -10,10 +10,6 @@ import Navigation exposing (Location, program)
 import Html.Styled exposing (Html, div, text, h1, h2, p, header, node, toUnstyled, fromUnstyled)
 import Html.Styled.Attributes exposing (css)
 import Css exposing (..)
-
-
---
-
 import Site.Messages exposing (Msg(..))
 import Site.Ports as Ports
 import Site.Content as Content
@@ -161,7 +157,7 @@ view model =
                     let
                         project =
                             Content.projects
-                                |> List.filter (\p -> p.id == prj)
+                                |> List.filter (\currentProject -> currentProject.id == prj)
                                 |> List.head
                                 |> Maybe.withDefault
                                     { id = ""

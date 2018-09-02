@@ -62,7 +62,7 @@ initWith { outbound, inbound } route =
         , outbound = outbound
         }
     , Process.sleep (20 * Time.millisecond)
-        |> Task.attempt (\res -> RestRoute)
+        |> Task.attempt (\_ -> RestRoute)
     )
 
 
@@ -84,13 +84,13 @@ navState (Model model) =
 newUrl : String -> Cmd (Msg route)
 newUrl newPath =
     Process.sleep (0 * Time.millisecond)
-        |> Task.attempt (\res -> Navigate newPath)
+        |> Task.attempt (\_ -> Navigate newPath)
 
 
 delayedNewUrl : String -> Cmd (Msg route)
 delayedNewUrl newPath =
     Process.sleep (0 * Time.millisecond)
-        |> Task.attempt (\res -> DelayedNavigate newPath)
+        |> Task.attempt (\_ -> DelayedNavigate newPath)
 
 
 update : Msg route -> Model route -> ( Model route, Cmd (Msg route) )
@@ -107,13 +107,13 @@ update msg (Model model) =
         DelayedNavigate newPath ->
             ( Model { model | navState = Outbound }
             , Process.sleep model.outbound
-                |> Task.attempt (\res -> DelayedNavigate2 newPath)
+                |> Task.attempt (\_ -> DelayedNavigate2 newPath)
             )
 
         DelayedNavigate2 newPath ->
             ( Model { model | navState = Clear }
             , Process.sleep (20 * Time.millisecond)
-                |> Task.attempt (\res -> DelayedNavigate3 newPath)
+                |> Task.attempt (\_ -> DelayedNavigate3 newPath)
             )
 
         DelayedNavigate3 newPath ->
@@ -136,7 +136,7 @@ update msg (Model model) =
                 }
             , Cmd.batch
                 [ if model.navState == Clear then
-                    Process.sleep model.inbound |> Task.attempt (\res -> RestRoute)
+                    Process.sleep model.inbound |> Task.attempt (\_ -> RestRoute)
                   else
                     Cmd.none
                 ]

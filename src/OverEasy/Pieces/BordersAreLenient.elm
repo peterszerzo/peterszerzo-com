@@ -1,5 +1,6 @@
 module OverEasy.Pieces.BordersAreLenient exposing (..)
 
+import String.Future
 import Html exposing (Html, div, program, node, text)
 import Html.Attributes exposing (style)
 import OverEasy.Pieces.BordersAreLenient.P12 as P02
@@ -37,8 +38,8 @@ view : Model -> Html Msg
 view model =
     div
         [ style
-            [ ( "width", (toString w) ++ "px" )
-            , ( "height", (toString h) ++ "px" )
+            [ ( "width", (String.Future.fromFloat w) ++ "px" )
+            , ( "height", (String.Future.fromFloat h) ++ "px" )
             ]
         ]
         [ node "style" [] [ text """

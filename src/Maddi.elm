@@ -253,7 +253,7 @@ view model =
                         [ Views.layout
                             [ Views.static Content.about
                             , CarouselView.view
-                                { data = [ ( "/imgs/cover.jpg", "Anna Cingi" ) ]
+                                { data = [ ( "/maddi/cover.jpg", "Anna Cingi" ) ]
                                 , state = CarouselView.init
                                 , toMsg = \_ _ -> NoOp
                                 }

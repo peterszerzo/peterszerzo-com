@@ -1,6 +1,7 @@
 module Maddi.Views exposing (..)
 
 import Css exposing (..)
+import String.Future
 import Css.Foreign as Foreign
 import Css.Media as Media
 import Json.Decode as Decode
@@ -220,36 +221,15 @@ intro navigate =
         ]
 
 
-matrixTransform : Matrix4.Mat4 -> Style
-matrixTransform matrix =
-    let
-        r =
-            Matrix4.toRecord matrix
-    in
-        property "transform"
-            ("matrix3d("
-                ++ ([ [ r.m11, r.m12, r.m13, r.m14 ]
-                    , [ r.m21, r.m22, r.m23, r.m24 ]
-                    , [ r.m31, r.m32, r.m33, r.m34 ]
-                    , [ r.m41, r.m42, r.m43, r.m44 ]
-                    ]
-                        |> List.foldr (++) []
-                        |> List.map toString
-                        |> String.join ","
-                   )
-                ++ ")"
-            )
-
-
 wingTransform : { skewAngle : Float, scale : Float, w : Float, offset : Int } -> Style
 wingTransform { skewAngle, scale, w, offset } =
-    [ "skewX(" ++ (toString skewAngle) ++ "rad)"
-    , "rotate(" ++ (toString skewAngle) ++ "rad)"
-    , "scale(" ++ (toString scale) ++ ")"
+    [ "skewX(" ++ (String.Future.fromFloat skewAngle) ++ "rad)"
+    , "rotate(" ++ (String.Future.fromFloat skewAngle) ++ "rad)"
+    , "scale(" ++ (String.Future.fromFloat scale) ++ ")"
     , "translate3d("
-        ++ (toString (w * (toFloat offset) - (scale - 1) * 40))
+        ++ (String.Future.fromFloat (w * (toFloat offset) - (scale - 1) * 40))
         ++ "px, "
-        ++ (toString
+        ++ (String.Future.fromFloat
                 (if skewAngle > 0 then
                     w * (tan (-skewAngle)) + (scale - 1) * 16
                  else
@@ -378,7 +358,7 @@ wing { navigate, order, project, selected } =
                     ]
                     [ project.openedAt
                         |> (\( year, month, day ) ->
-                                text (toString month ++ " / " ++ toString year)
+                                text (String.Future.fromInt month ++ " / " ++ String.Future.fromInt year)
                            )
                     ]
                 ]

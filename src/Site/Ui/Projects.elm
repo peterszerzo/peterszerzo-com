@@ -1,15 +1,12 @@
 module Site.Ui.Projects exposing (..)
 
+import String.Future
 import Json.Decode as Decode
 import Html.Styled exposing (Html, div, h1, p, a, header, node, img, text, fromUnstyled)
 import Html.Styled.Attributes exposing (style, href, src, css)
 import Html.Styled.Events exposing (onClick, onWithOptions)
 import Css exposing (..)
 import Css.Foreign as Foreign
-
-
---
-
 import Site.Styles.Constants exposing (..)
 import Site.Styles.Mixins as Mixins
 import Site.Data.Project as Project
@@ -105,10 +102,10 @@ view { projects, packBubbles, activeProject } =
                             }
                             (Decode.succeed <| Navigate ("/projects/" ++ project.id))
                         , style
-                            [ ( "width", (floor (2 * r) |> toString) ++ "px" )
-                            , ( "height", (floor (2 * r) |> toString) ++ "px" )
-                            , ( "top", (floor (y - r) |> toString) ++ "px" )
-                            , ( "left", (floor (x - r) |> toString) ++ "px" )
+                            [ ( "width", (floor (2 * r) |> String.Future.fromInt) ++ "px" )
+                            , ( "height", (floor (2 * r) |> String.Future.fromInt) ++ "px" )
+                            , ( "top", (floor (y - r) |> String.Future.fromInt) ++ "px" )
+                            , ( "left", (floor (x - r) |> String.Future.fromInt) ++ "px" )
                             ]
                         ]
                         [ projectLogo project.name ]
@@ -118,9 +115,9 @@ view { projects, packBubbles, activeProject } =
         ]
             ++ (activeProject
                     |> Maybe.andThen
-                        (\activeProject ->
+                        (\justActiveProject ->
                             projects
-                                |> List.filter (\p -> p.id == activeProject)
+                                |> List.filter (\project -> project.id == justActiveProject)
                                 |> List.head
                         )
                     |> Maybe.map

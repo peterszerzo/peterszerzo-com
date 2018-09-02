@@ -1,6 +1,7 @@
 module OverEasy.Pieces.BureaucracyIsDistracting.Stamp exposing (..)
 
 import Time
+import String.Future
 import Html exposing (Html, text)
 import Svg exposing (svg, path, line, rect, g, defs, linearGradient, stop)
 import Svg.Attributes exposing (id, viewBox, x, y, x1, x2, y1, y2, width, height, rx, ry, stroke, fill, strokeWidth, strokeLinecap, strokeLinejoin, d, offset, stopColor)
@@ -9,7 +10,7 @@ import OverEasy.Pieces.BureaucracyIsDistracting.Constants as Constants
 
 toPx : Float -> String
 toPx =
-    toString
+    String.Future.fromFloat
         >> (\p -> p ++ "%")
 
 

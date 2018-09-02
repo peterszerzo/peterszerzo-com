@@ -1,5 +1,6 @@
 module OverEasy.Pieces.MoreSimpleLessSimple exposing (..)
 
+import String.Future
 import Html exposing (Html, div, text, span, program)
 import Html.Attributes exposing (style)
 import Svg exposing (svg, line, g)
@@ -31,7 +32,7 @@ update msg model =
 
 toPx : Float -> String
 toPx x =
-    (toString x) ++ "px"
+    (String.Future.fromFloat x) ++ "px"
 
 
 moresimple : String
@@ -52,9 +53,9 @@ viewGrid =
                 |> List.map
                     (\v ->
                         line
-                            [ v * 20 |> toString |> x1
+                            [ v * 20 |> String.Future.fromInt |> x1
                             , y1 "0"
-                            , v * 20 |> toString |> x2
+                            , v * 20 |> String.Future.fromInt |> x2
                             , y2 "480"
                             , stroke "#F8F8EB"
                             , stroke "#E7EFF2"
@@ -68,9 +69,9 @@ viewGrid =
                 |> List.map
                     (\v ->
                         line
-                            [ v * 20 |> toString |> y1
+                            [ v * 20 |> String.Future.fromInt |> y1
                             , x1 "0"
-                            , v * 20 |> toString |> y2
+                            , v * 20 |> String.Future.fromInt |> y2
                             , x2 "800"
                             , stroke "#f1f1f1"
                             , strokeWidth "1"
@@ -136,7 +137,7 @@ view model =
                                         [ ( "position", "absolute" )
                                         , ( "top", toPx y )
                                         , ( "left", toPx x )
-                                        , ( "transform", "translate3d(-50%, -50%, 0) rotate(" ++ (toString (angle + pi / 2)) ++ "rad)" )
+                                        , ( "transform", "translate3d(-50%, -50%, 0) rotate(" ++ (String.Future.fromFloat (angle + pi / 2)) ++ "rad)" )
                                         , ( "opacity", "1" )
                                         ]
                                     ]

@@ -2,14 +2,9 @@ module OverEasy.Views.Nav exposing (..)
 
 import Json.Decode as Decode
 import Css exposing (..)
-import Css.Media as Media
 import Html.Styled exposing (Html, text, div, a)
 import Html.Styled.Attributes exposing (css, href)
 import Html.Styled.Events exposing (onWithOptions)
-
-
---
-
 import OverEasy.Views.Icons as Icons
 import OverEasy.Constants exposing (..)
 

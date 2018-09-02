@@ -1,5 +1,6 @@
 module OverEasy.Pieces.OurBearingsAreFragile exposing (..)
 
+import String.Future
 import Time
 import Random
 import AnimationFrame
@@ -82,8 +83,8 @@ subscriptions model =
 star : Int -> Html msg
 star size =
     svg
-        [ Svg.Attributes.width (toString size)
-        , Svg.Attributes.height (toString size)
+        [ Svg.Attributes.width (String.Future.fromInt size)
+        , Svg.Attributes.height (String.Future.fromInt size)
         , viewBox "0 0 100 100"
         ]
         [ path
@@ -110,8 +111,8 @@ view model =
             [ style
                 [ ( "overflow", "hidden" )
                 , ( "position", "relative" )
-                , ( "width", (toString w) ++ "px" )
-                , ( "height", (toString h) ++ "px" )
+                , ( "width", String.Future.fromFloat w ++ "px" )
+                , ( "height", String.Future.fromFloat h ++ "px" )
                 , ( "background-color", "#FFFFFF" )
                 , ( "border", "2px solid #000" )
                 ]
@@ -128,8 +129,8 @@ view model =
                     , ( "top", "50%" )
                     , ( "left", "50%" )
                     , ( "transform", "translate3d(-50%, -50%, 0)" )
-                    , ( "width", (toString size) ++ "px" )
-                    , ( "height", (toString size) ++ "px" )
+                    , ( "width", String.Future.fromInt size ++ "px" )
+                    , ( "height", String.Future.fromInt size ++ "px" )
                     , ( "z-index", "10" )
                     ]
                 ]
@@ -141,8 +142,8 @@ view model =
                                 [ style
                                     [ ( "position", "absolute" )
                                     , ( "opacity", "0.4" )
-                                    , ( "top", ((toFloat size) * x |> toString) ++ "px" )
-                                    , ( "left", ((toFloat size) * y |> toString) ++ "px" )
+                                    , ( "top", ((toFloat size) * x |> String.Future.fromFloat) ++ "px" )
+                                    , ( "left", ((toFloat size) * y |> String.Future.fromFloat) ++ "px" )
                                     , ( "z-index", "9" )
                                     ]
                                 ]

@@ -1,5 +1,6 @@
 module OverEasy exposing (..)
 
+import String.Future
 import Time
 import Task
 import AnimationFrame
@@ -11,10 +12,6 @@ import Html.Styled.Attributes exposing (css)
 import Navigation
 import Window
 import UrlParser exposing (..)
-
-
---
-
 import OverEasy.Views.Home
 import OverEasy.Pieces as Pieces
 import OverEasy.Views.Nav
@@ -182,7 +179,12 @@ viewProject config =
             [ css
                 [ width (px 800)
                 , height (px 480)
-                , property "transform" <| "scale(" ++ (toString config.scale) ++ "," ++ (toString config.scale) ++ ")"
+                , property "transform" <|
+                    "scale("
+                        ++ (String.Future.fromFloat config.scale)
+                        ++ ","
+                        ++ (String.Future.fromFloat config.scale)
+                        ++ ")"
                 ]
             ]
             [ fromUnstyled config.project ]
@@ -290,7 +292,7 @@ view model =
 
                     _ ->
                         OverEasy.Views.Nav.view
-                            { onClick = (DelayedNavigate <| "/?p=" ++ (toString model.lastHomePage))
+                            { onClick = (DelayedNavigate <| "/?p=" ++ (String.Future.fromInt model.lastHomePage))
                             , css = transitionCss_
                             }
                 , if navState == SmoothNav.Clear then

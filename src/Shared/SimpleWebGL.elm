@@ -1,10 +1,10 @@
 module Shared.SimpleWebGL exposing (..)
 
+import String.Future
 import Html exposing (Html)
 import Html.Attributes exposing (style)
 import Math.Vector2 as Vector2 exposing (Vec2, vec2)
 import WebGL
-import WebGL.Settings.Blend
 import Window
 
 
@@ -54,8 +54,8 @@ view { window, makeUniforms, fragmentShader, styles } =
             [ Html.Attributes.width size
             , Html.Attributes.height size
             , Html.Attributes.style <|
-                [ ( "top", (toString top) ++ "px" )
-                , ( "left", (toString left) ++ "px" )
+                [ ( "top", (String.Future.fromFloat top) ++ "px" )
+                , ( "left", (String.Future.fromFloat left) ++ "px" )
                 , ( "z-index", "1" )
                 , ( "position", "absolute" )
                 ]

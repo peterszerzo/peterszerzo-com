@@ -1,5 +1,6 @@
 module OverEasy.Views.Home exposing (..)
 
+import String.Future
 import Time
 import Json.Decode as Decode
 import Css exposing (..)
@@ -231,7 +232,7 @@ view config =
                             { navigate = config.navigate
                             , url =
                                 if config.page > 0 then
-                                    "/?p=" ++ (toString <| config.page - 1) |> Just
+                                    "/?p=" ++ (String.Future.fromInt <| config.page - 1) |> Just
                                 else
                                     Nothing
                             , label = "<- Newer.."
@@ -241,7 +242,7 @@ view config =
                             { navigate = config.navigate
                             , url =
                                 if (config.page + 1) * 3 < List.length config.links then
-                                    "/?p=" ++ (toString <| config.page + 1) |> Just
+                                    "/?p=" ++ (String.Future.fromInt <| config.page + 1) |> Just
                                 else
                                     Nothing
                             , label = "Older ->"

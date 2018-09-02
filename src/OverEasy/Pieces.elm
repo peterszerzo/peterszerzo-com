@@ -2,15 +2,12 @@ module OverEasy.Pieces exposing (..)
 
 import UrlParser exposing (..)
 import Html
-
-
---
-
 import OverEasy.Pieces.MoreSimpleLessSimple as MoreSimpleLessSimple
 import OverEasy.Pieces.OurBearingsAreFragile as OurBearingsAreFragile
 import OverEasy.Pieces.BureaucracyIsDistracting as BureaucracyIsDistracting
 import OverEasy.Pieces.BordersAreLenient as BordersAreLenient
 import OverEasy.Pieces.WalkWithMe as WalkWithMe
+import OverEasy.Pieces.UnderstandMe as UnderstandMe
 
 
 type Route
@@ -19,6 +16,7 @@ type Route
     | BureaucracyIsDistracting BureaucracyIsDistracting.Model
     | BordersAreLenient BordersAreLenient.Model
     | WalkWithMe WalkWithMe.Model
+    | UnderstandMe UnderstandMe.Model
 
 
 
@@ -33,6 +31,7 @@ matchers =
         , s "bureaucracy-is-distracting" |> map (BureaucracyIsDistracting.init |> Tuple.first |> BureaucracyIsDistracting)
         , s "borders-are-lenient" |> map (BordersAreLenient.init |> Tuple.first |> BordersAreLenient)
         , s "walk-with-me" |> map (WalkWithMe.init |> Tuple.first |> WalkWithMe)
+        , s "understand-me" |> map (UnderstandMe.init |> Tuple.first |> UnderstandMe)
         ]
 
 
@@ -46,6 +45,7 @@ type Msg
     | BureaucracyIsDistractingMsg BureaucracyIsDistracting.Msg
     | BordersAreLenientMsg BordersAreLenient.Msg
     | WalkWithMeMsg WalkWithMe.Msg
+    | UnderstandMeMsg UnderstandMe.Msg
 
 
 routeInitCmd : Route -> Cmd Msg
@@ -66,55 +66,68 @@ routeInitCmd route =
         WalkWithMe _ ->
             WalkWithMe.init |> Tuple.second |> Cmd.map WalkWithMeMsg
 
+        UnderstandMe _ ->
+            UnderstandMe.init |> Tuple.second |> Cmd.map UnderstandMeMsg
+
 
 update : Msg -> Route -> ( Route, Cmd Msg )
 update msg route =
     case msg of
-        MoreSimpleLessSimpleMsg msg ->
+        MoreSimpleLessSimpleMsg localMsg ->
             case route of
                 MoreSimpleLessSimple model_ ->
-                    ( MoreSimpleLessSimple (MoreSimpleLessSimple.update msg model_ |> Tuple.first)
-                    , MoreSimpleLessSimple.update msg model_ |> Tuple.second |> Cmd.map MoreSimpleLessSimpleMsg
+                    ( MoreSimpleLessSimple (MoreSimpleLessSimple.update localMsg model_ |> Tuple.first)
+                    , MoreSimpleLessSimple.update localMsg model_ |> Tuple.second |> Cmd.map MoreSimpleLessSimpleMsg
                     )
 
                 _ ->
                     ( route, Cmd.none )
 
-        OurBearingsAreFragileMsg msg ->
+        OurBearingsAreFragileMsg localMsg ->
             case route of
                 OurBearingsAreFragile model_ ->
-                    ( OurBearingsAreFragile (OurBearingsAreFragile.update msg model_ |> Tuple.first)
-                    , OurBearingsAreFragile.update msg model_ |> Tuple.second |> Cmd.map OurBearingsAreFragileMsg
+                    ( OurBearingsAreFragile (OurBearingsAreFragile.update localMsg model_ |> Tuple.first)
+                    , OurBearingsAreFragile.update localMsg model_ |> Tuple.second |> Cmd.map OurBearingsAreFragileMsg
                     )
 
                 _ ->
                     ( route, Cmd.none )
 
-        BureaucracyIsDistractingMsg msg ->
+        BureaucracyIsDistractingMsg localMsg ->
             case route of
                 BureaucracyIsDistracting model_ ->
-                    ( BureaucracyIsDistracting (BureaucracyIsDistracting.update msg model_ |> Tuple.first)
-                    , BureaucracyIsDistracting.update msg model_ |> Tuple.second |> Cmd.map BureaucracyIsDistractingMsg
+                    ( BureaucracyIsDistracting (BureaucracyIsDistracting.update localMsg model_ |> Tuple.first)
+                    , BureaucracyIsDistracting.update localMsg model_ |> Tuple.second |> Cmd.map BureaucracyIsDistractingMsg
                     )
 
                 _ ->
                     ( route, Cmd.none )
 
-        BordersAreLenientMsg msg ->
+        BordersAreLenientMsg localMsg ->
             case route of
                 BordersAreLenient model_ ->
-                    ( BordersAreLenient (BordersAreLenient.update msg model_ |> Tuple.first)
-                    , BordersAreLenient.update msg model_ |> Tuple.second |> Cmd.map BordersAreLenientMsg
+                    ( BordersAreLenient (BordersAreLenient.update localMsg model_ |> Tuple.first)
+                    , BordersAreLenient.update localMsg model_ |> Tuple.second |> Cmd.map BordersAreLenientMsg
                     )
 
                 _ ->
                     ( route, Cmd.none )
 
-        WalkWithMeMsg msg ->
+        WalkWithMeMsg localMsg ->
             case route of
                 WalkWithMe model_ ->
-                    ( WalkWithMe (WalkWithMe.update msg model_ |> Tuple.first)
-                    , WalkWithMe.update msg model_ |> Tuple.second |> Cmd.map WalkWithMeMsg
+                    ( WalkWithMe (WalkWithMe.update localMsg model_ |> Tuple.first)
+                    , WalkWithMe.update localMsg model_ |> Tuple.second |> Cmd.map WalkWithMeMsg
+                    )
+
+                _ ->
+                    ( route, Cmd.none )
+
+        UnderstandMeMsg localMsg ->
+            case route of
+                UnderstandMe model_ ->
+                    ( UnderstandMe (UnderstandMe.update localMsg model_ |> Tuple.first)
+                    , UnderstandMe.update localMsg model_ |> Tuple.second |> Cmd.map UnderstandMeMsg
                     )
 
                 _ ->
@@ -139,6 +152,9 @@ view route =
         WalkWithMe model ->
             WalkWithMe.view model |> Html.map WalkWithMeMsg
 
+        UnderstandMe model ->
+            UnderstandMe.view model |> Html.map UnderstandMeMsg
+
 
 subscriptions : Route -> Sub Msg
 subscriptions route =
@@ -157,3 +173,6 @@ subscriptions route =
 
         WalkWithMe model ->
             WalkWithMe.subscriptions model |> Sub.map (WalkWithMeMsg)
+
+        UnderstandMe model ->
+            UnderstandMe.subscriptions model |> Sub.map (UnderstandMeMsg)

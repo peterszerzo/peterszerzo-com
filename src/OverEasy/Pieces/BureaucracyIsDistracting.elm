@@ -1,5 +1,6 @@
 module OverEasy.Pieces.BureaucracyIsDistracting exposing (..)
 
+import String.Future
 import Random
 import AnimationFrame
 import Time
@@ -71,7 +72,7 @@ update msg model =
 
 toPx : Float -> String
 toPx no =
-    (toString no) ++ "px"
+    (String.Future.fromFloat no) ++ "px"
 
 
 ballTransform : Float -> List ( String, String )
@@ -92,7 +93,7 @@ ballTransform2 : Float -> List ( String, String )
 ballTransform2 rot =
     [ ( "top", "15px" )
     , ( "left", "19px" )
-    , ( "transform", "rotate(" ++ (toString rot) ++ "rad)" )
+    , ( "transform", "rotate(" ++ (String.Future.fromFloat rot) ++ "rad)" )
     , ( "transform-origin", "-4px 0px" )
     ]
 
@@ -137,8 +138,8 @@ view model =
             in
                 div
                     [ style
-                        [ ( "width", (toString w) ++ "px" )
-                        , ( "height", (toString h) ++ "px" )
+                        [ ( "width", (String.Future.fromFloat w) ++ "px" )
+                        , ( "height", (String.Future.fromFloat h) ++ "px" )
                         , ( "position", "relative" )
                         , ( "background-color", "#FFF" )
                         , ( "overflow", "hidden" )

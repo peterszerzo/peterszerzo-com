@@ -1,5 +1,6 @@
 module OverEasy.Pieces.BureaucracyIsDistracting.Scribble exposing (..)
 
+import String.Future
 import Time
 import Random
 import Html exposing (Html, text)
@@ -72,7 +73,7 @@ single index time isRed offsets =
         path
             [ d <|
                 "M10,"
-                    ++ (toString startY)
+                    ++ (String.Future.fromFloat startY)
                     ++ (offsets
                             |> List.indexedMap
                                 (\columnIndex offset ->
@@ -82,7 +83,7 @@ single index time isRed offsets =
                                                 + offset
                                     in
                                         "c5,4,10,-5,15,"
-                                            ++ (toString modifiedOffset)
+                                            ++ (String.Future.fromFloat modifiedOffset)
                                 )
                             |> String.join ""
                        )
