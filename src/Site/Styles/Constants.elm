@@ -1,6 +1,7 @@
-module Site.Styles.Constants exposing (..)
+module Site.Styles.Constants exposing (black, blue, darkGrey, desktop, faintBlue, faintMustard, grey, lightBlue, lightGrey, mustard, sansSerif, serif, white)
 
-import Css exposing (Color, hex, rgba, rgb)
+import Css exposing (Color, hex, rgb, rgba)
+
 
 
 -- Fonts

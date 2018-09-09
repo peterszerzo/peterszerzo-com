@@ -1,19 +1,19 @@
-module Site.Ui.Projects exposing (..)
+module Site.Ui.Projects exposing (Config, overlaySectionStyles, projectLogo, view)
 
-import String.Future
-import Json.Decode as Decode
-import Html.Styled exposing (Html, div, h1, p, a, header, node, img, text, fromUnstyled)
-import Html.Styled.Attributes exposing (style, href, src, css)
-import Html.Styled.Events exposing (onClick, onWithOptions)
 import Css exposing (..)
-import Css.Foreign as Foreign
+import Css.Global as Global
+import Html.Styled exposing (Html, a, div, fromUnstyled, h1, header, img, node, p, text)
+import Html.Styled.Attributes exposing (css, href, src, style)
+import Html.Styled.Events exposing (onClick)
+import Json.Decode as Decode
+import Site.Data.PackBubble as PackBubble
+import Site.Data.Project as Project
+import Site.Messages exposing (Msg(..))
 import Site.Styles.Constants exposing (..)
 import Site.Styles.Mixins as Mixins
-import Site.Data.Project as Project
-import Site.Data.PackBubble as PackBubble
-import Site.Ui.Shapes as Shapes
 import Site.Ui as Ui
-import Site.Messages exposing (Msg(..))
+import Site.Ui.Shapes as Shapes
+import String.Future
 
 
 type alias Config =
@@ -85,8 +85,8 @@ view { projects, packBubbles, activeProject } =
                                 [ property "box-shadow" "3px 6px 24px rgba(0, 0, 0, 0.5)"
                                 , property "transform" "scale(1.03)"
                                 ]
-                            , Foreign.descendants
-                                [ Foreign.svg
+                            , Global.descendants
+                                [ Global.svg
                                     [ width (pct 60)
                                     , height (pct 60)
                                     , marginTop (pct 20)
@@ -96,17 +96,10 @@ view { projects, packBubbles, activeProject } =
                                 ]
                             ]
                         , href ("/projects/" ++ project.id)
-                        , onWithOptions "click"
-                            { preventDefault = True
-                            , stopPropagation = False
-                            }
-                            (Decode.succeed <| Navigate ("/projects/" ++ project.id))
-                        , style
-                            [ ( "width", (floor (2 * r) |> String.Future.fromInt) ++ "px" )
-                            , ( "height", (floor (2 * r) |> String.Future.fromInt) ++ "px" )
-                            , ( "top", (floor (y - r) |> String.Future.fromInt) ++ "px" )
-                            , ( "left", (floor (x - r) |> String.Future.fromInt) ++ "px" )
-                            ]
+                        , style "width" <| ((floor (2 * r) |> String.Future.fromInt) ++ "px")
+                        , style "height" <| ((floor (2 * r) |> String.Future.fromInt) ++ "px")
+                        , style "top" <| ((floor (y - r) |> String.Future.fromInt) ++ "px")
+                        , style "left" <| ((floor (x - r) |> String.Future.fromInt) ++ "px")
                         ]
                         [ projectLogo project.name ]
                 )

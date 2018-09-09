@@ -1,7 +1,7 @@
-module Site.Router exposing (..)
+module Site.Router exposing (Route(..), parse, parser)
 
-import Navigation
-import UrlParser exposing (..)
+import Url
+import Url.Parser exposing (..)
 
 
 type Route
@@ -14,17 +14,17 @@ type Route
     | NotFound
 
 
-parse : Navigation.Location -> Route
+parse : Url.Url -> Route
 parse location =
     location
-        |> parsePath matchers
+        |> Url.Parser.parse parser
         |> Maybe.withDefault NotFound
 
 
-matchers : Parser (Route -> a) a
-matchers =
+parser : Parser (Route -> a) a
+parser =
     oneOf
-        [ s "" |> map Home
+        [ top |> map Home
         , s "projects" |> map Projects
         , s "projects" </> string |> map Project
         , s "about" |> map About

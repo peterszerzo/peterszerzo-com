@@ -1,4 +1,4 @@
-module Site.Content exposing (..)
+module Site.Content exposing (aboutConventional, aboutReal, mainLinks, now, projects, subtitle, talks, title)
 
 import Site.Data.Project exposing (Project)
 
@@ -31,7 +31,7 @@ Care to play? Head to the [website](https://elm-gameroom-firebaseapp.com) for a 
 
 **Role:** Developer / Designer
 
-**Technologies:** Elm / WebGL
+**Made with:** Elm / WebGL
     """
       , url = "https://elm-gameroom.firebaseapp.com"
       , size = 1200
@@ -46,7 +46,7 @@ Design interface for creating 3d bezier shapes.
 
 **Role:** Developer / Designer
 
-**Technologies:** Elm / SVG
+**Made with:** Elm / SVG
       """
       , url = "https://codepen.io/peterszerzo/full/Wpdxyd/"
       , size = 400
@@ -61,7 +61,7 @@ Immersing myself into [Alto's Adventure](http://altosadventure.com) in the past 
 
 **Role:** Developer / Designer
 
-**Technologies:** React / WebGL / SVG
+**Made with:** React / WebGL / SVG
       """
       , url = "/"
       , size = 1600
@@ -76,7 +76,7 @@ A drag-and-drop tree structure visualizer and editor that is agnostic about the 
 
 **Role:** Developer / Designer
 
-**Technologies:** Elm / SVG
+**Made with:** Elm / SVG
       """
       , url = "/"
       , size = 800
@@ -91,7 +91,7 @@ Design interface for the [SplytLight](http://www.splytlight.com) lighting system
 
 **Role:** Developer / UX Designer
 
-**Technologies:** React / SVG / Three.js
+**Made with:** React / SVG / Three.js
       """
       , url = "http://splytlight.surge.sh"
       , size = 1600
@@ -106,7 +106,7 @@ Atlas is a data visualization CMS made for the Education Policy Program at [New 
 
 **Role:** Full-stack Developer / UX Designer
 
-**Technologies:** React / SVG / Leaflet.js / Mapbox
+**Made with:** React / SVG / Leaflet.js / Mapbox
       """
       , url = "http://atlas.newamerica.org"
       , size = 400
@@ -115,11 +115,11 @@ Atlas is a data visualization CMS made for the Education Policy Program at [New 
       , name = "OverEasy"
       , image = "/site/imgs/projects/overeasy.png"
       , description = """
-A silly playground for my computational art experiments.
+A playground for my computational art experiments.
 
 **Info:** Berlin / 2017-2018 / [Website](http://overeasy.sh)
 
-**Technologies:** React / WebGL
+**Made with:** Elm / WebGL
       """
       , url = "https://overeasy.sh"
       , size = 1200

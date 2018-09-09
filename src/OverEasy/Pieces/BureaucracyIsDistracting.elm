@@ -1,21 +1,22 @@
-module OverEasy.Pieces.BureaucracyIsDistracting exposing (..)
+module OverEasy.Pieces.BureaucracyIsDistracting exposing (Model, Msg(..), init, subscriptions, update, view)
 
-import String.Future
-import Random
-import AnimationFrame
-import Time
-import Html exposing (Html, program, div, text)
+import Browser.Events as Events
+import Html exposing (Html, div, text)
 import Html.Attributes exposing (style)
 import OverEasy.Pieces.BureaucracyIsDistracting.Ball as Ball
+import OverEasy.Pieces.BureaucracyIsDistracting.Constants as Constants
 import OverEasy.Pieces.BureaucracyIsDistracting.Scribble as Scribble
 import OverEasy.Pieces.BureaucracyIsDistracting.Stamp as Stamp
-import OverEasy.Pieces.BureaucracyIsDistracting.Constants as Constants
+import Random
+import String.Future
+import Time
 
 
 type alias Model =
     { ball : Ball.Ball
     , scribble : Maybe Scribble.Scribble
-    , time : Time.Time
+    , time : Maybe Time.Posix
+    , startTime : Maybe Time.Posix
     }
 
 
@@ -23,14 +24,15 @@ init : ( Model, Cmd Msg )
 init =
     ( { ball = Ball.init
       , scribble = Nothing
-      , time = 0
+      , time = Nothing
+      , startTime = Nothing
       }
     , Random.generate GenerateScribble Scribble.generator
     )
 
 
 type Msg
-    = Tick Time.Time
+    = Tick Time.Posix
     | GenerateScribble Scribble.Scribble
     | RepositionBall Ball.Ball
 
@@ -45,22 +47,41 @@ h =
     480
 
 
+timeDiff : Model -> Float
+timeDiff model =
+    case ( model.time, model.startTime ) of
+        ( Just time, Just startTime ) ->
+            Time.posixToMillis time
+                - Time.posixToMillis startTime
+                |> toFloat
+
+        ( _, _ ) ->
+            0
+
+
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         Tick time ->
             ( { model
-                | ball = Ball.tick model.time model.ball
-                , time = time
+                | ball = Ball.tick (timeDiff model) model.ball
+                , time = Just time
+                , startTime =
+                    if model.startTime == Nothing then
+                        Just time
+
+                    else
+                        model.startTime
               }
             , if Ball.shouldReposition model.ball then
                 Ball.reposition RepositionBall model.ball
+
               else
                 Cmd.none
             )
 
-        RepositionBall ball ->
-            ( { model | ball = ball }
+        RepositionBall newBall ->
+            ( { model | ball = newBall }
             , Cmd.none
             )
 
@@ -72,7 +93,7 @@ update msg model =
 
 toPx : Float -> String
 toPx no =
-    (String.Future.fromFloat no) ++ "px"
+    String.Future.fromFloat no ++ "px"
 
 
 ballTransform : Float -> List ( String, String )
@@ -81,9 +102,9 @@ ballTransform rot =
     , ( "left", "0px" )
     , ( "transform"
       , "translate3d("
-            ++ toPx (15 + (cos rot) * 6 - 3)
+            ++ toPx (15 + cos rot * 6 - 3)
             ++ ","
-            ++ toPx (15 + (sin rot) * 6 - 3)
+            ++ toPx (15 + sin rot * 6 - 3)
             ++ ", 0px)"
       )
     ]
@@ -93,34 +114,32 @@ ballTransform2 : Float -> List ( String, String )
 ballTransform2 rot =
     [ ( "top", "15px" )
     , ( "left", "19px" )
-    , ( "transform", "rotate(" ++ (String.Future.fromFloat rot) ++ "rad)" )
+    , ( "transform", "rotate(" ++ String.Future.fromFloat rot ++ "rad)" )
     , ( "transform-origin", "-4px 0px" )
     ]
 
 
-ball : Time.Time -> Ball.Ball -> Html msg
+ball : Float -> Ball.Ball -> Html msg
 ball time { x, y, rot } =
     div
-        [ style
-            [ ( "width", "30px" )
-            , ( "height", "30px" )
-            , ( "border-radius", "50%" )
-            , ( "background-color", Constants.blue )
-            , ( "position", "absolute" )
-            , ( "left", toPx (x * w - 15) )
-            , ( "top", toPx (y * h - 15) )
-            ]
+        [ style "width" "30px"
+        , style "height" "30px"
+        , style "border-radius" "50%"
+        , style "background-color" Constants.blue
+        , style "position" "absolute"
+        , style "left" (toPx (x * w - 15))
+        , style "top" (toPx (y * h - 15))
         ]
         [ div
-            [ style <|
-                [ ( "width", "6px" )
-                , ( "height", "6px" )
-                , ( "background-color", "#FFF" )
-                , ( "border-radius", "3px" )
-                , ( "position", "absolute" )
-                ]
-                    ++ (ballTransform2 rot)
-            ]
+            ([ ( "width", "6px" )
+             , ( "height", "6px" )
+             , ( "background-color", "#FFF" )
+             , ( "border-radius", "3px" )
+             , ( "position", "absolute" )
+             ]
+                ++ ballTransform2 rot
+                |> List.map (\( prop, value ) -> style prop value)
+            )
             []
         ]
 
@@ -134,84 +153,68 @@ view model =
         Just scribble ->
             let
                 makeScribble =
-                    Scribble.view model.time scribble
+                    Scribble.view (timeDiff model) scribble
             in
-                div
-                    [ style
-                        [ ( "width", (String.Future.fromFloat w) ++ "px" )
-                        , ( "height", (String.Future.fromFloat h) ++ "px" )
-                        , ( "position", "relative" )
-                        , ( "background-color", "#FFF" )
-                        , ( "overflow", "hidden" )
+            div
+                [ style "width" (String.Future.fromFloat w ++ "px")
+                , style "height" (String.Future.fromFloat h ++ "px")
+                , style "position" "relative"
+                , style "background-color" "#FFF"
+                , style "overflow" "hidden"
+                ]
+                [ ball (timeDiff model) model.ball
+                , div [] <|
+                    List.map2
+                        (\styles red ->
+                            div
+                                ([ ( "position", "absolute" )
+                                 , ( "top", "40px" )
+                                 , ( "left", "140px" )
+                                 ]
+                                    ++ styles
+                                    |> List.map (\( prop, value ) -> style prop value)
+                                )
+                                [ makeScribble red
+                                ]
+                        )
+                        [ [ ( "top", "40px" )
+                          , ( "left", "140px" )
+                          , ( "transform", "rotateZ(-30deg)" )
+                          ]
+                        , [ ( "top", "280px" )
+                          , ( "left", "420px" )
+                          , ( "transform", "rotateZ(30deg)" )
+                          ]
+                        , [ ( "top", "60px" )
+                          , ( "left", "600px" )
+                          , ( "transform", "rotateZ(-45deg)" )
+                          ]
                         ]
+                        [ [ 3, 4 ]
+                        , [ 2, 6, 7 ]
+                        , [ 1, 5 ]
+                        ]
+                , div
+                    [ style "width" "160px"
+                    , style "height" "160px"
+                    , style "position" "absolute"
+                    , style "top" "260px"
+                    , style "left" "160px"
+                    , style "transform" "rotateZ(45deg)"
                     ]
-                    [ ball model.time model.ball
-                    , div [] <|
-                        List.map2
-                            (\styles red ->
-                                div
-                                    [ style <|
-                                        [ ( "position", "absolute" )
-                                        , ( "top", "40px" )
-                                        , ( "left", "140px" )
-                                        ]
-                                            ++ styles
-                                    ]
-                                    [ makeScribble red
-                                    ]
-                            )
-                            [ [ ( "top", "40px" )
-                              , ( "left", "140px" )
-                              , ( "transform", "rotateZ(-30deg)" )
-                              ]
-                            , [ ( "top", "280px" )
-                              , ( "left", "420px" )
-                              , ( "transform", "rotateZ(30deg)" )
-                              ]
-                            , [ ( "top", "60px" )
-                              , ( "left", "600px" )
-                              , ( "transform", "rotateZ(-45deg)" )
-                              ]
-                            ]
-                            [ [ 3, 4 ]
-                            , [ 2, 6, 7 ]
-                            , [ 1, 5 ]
-                            ]
-                    , div
-                        [ style
-                            [ ( "width", "160px" )
-                            , ( "height", "160px" )
-                            , ( "position", "absolute" )
-                            , ( "top", "260px" )
-                            , ( "left", "160px" )
-                            , ( "transform", "rotateZ(45deg)" )
-                            ]
-                        ]
-                        [ Stamp.view { time = model.time, singleSnake = True } ]
-                    , div
-                        [ style
-                            [ ( "width", "160px" )
-                            , ( "height", "160px" )
-                            , ( "position", "absolute" )
-                            , ( "top", "80px" )
-                            , ( "left", "320px" )
-                            , ( "transform", "rotateZ(210deg)" )
-                            ]
-                        ]
-                        [ Stamp.view { time = model.time, singleSnake = False } ]
+                    [ Stamp.view { time = timeDiff model, singleSnake = True } ]
+                , div
+                    [ style "width" "160px"
+                    , style "height" "160px"
+                    , style "position" "absolute"
+                    , style "top" "80px"
+                    , style "left" "320px"
+                    , style "transform" "rotateZ(210deg)"
                     ]
+                    [ Stamp.view { time = timeDiff model, singleSnake = False } ]
+                ]
 
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    AnimationFrame.times Tick
-
-
-main : Program Never Model Msg
-main =
-    program
-        { init = init
-        , update = update
-        , view = view
-        , subscriptions = subscriptions
-        }
+    Events.onAnimationFrame Tick

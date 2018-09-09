@@ -1,4 +1,4 @@
-module Maddi.Views.Mixins exposing (..)
+module Maddi.Views.Mixins exposing (black, bodyType, borderColor_, headingType, linkType, mobile, stickoutStyles, titleType, white, yellow)
 
 import Css exposing (..)
 import Css.Media as Media
@@ -102,29 +102,30 @@ stickoutStyles { hover } =
                 , property "transition" "border-color 0.2s"
                 , borderColor
                     (if hover then
-                        (hex "444")
+                        hex "444"
+
                      else
                         borderColor_
                     )
                 ]
     in
-        Css.batch
-            [ before
-                [ top (px -stickout)
-                , bottom (px -stickout)
-                , left (px 0)
-                , right (px 0)
-                , borderLeft2 (px 1) solid
-                , borderRight2 (px 1) solid
-                , common
-                ]
-            , after
-                [ left (px -stickout)
-                , right (px -stickout)
-                , top (px 0)
-                , bottom (px 0)
-                , borderTop2 (px 1) solid
-                , borderBottom2 (px 1) solid
-                , common
-                ]
+    Css.batch
+        [ before
+            [ top (px -stickout)
+            , bottom (px -stickout)
+            , left (px 0)
+            , right (px 0)
+            , borderLeft2 (px 1) solid
+            , borderRight2 (px 1) solid
+            , common
             ]
+        , after
+            [ left (px -stickout)
+            , right (px -stickout)
+            , top (px 0)
+            , bottom (px 0)
+            , borderTop2 (px 1) solid
+            , borderBottom2 (px 1) solid
+            , common
+            ]
+        ]

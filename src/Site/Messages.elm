@@ -1,15 +1,9 @@
-module Site.Messages exposing (..)
+module Site.Messages exposing (Msg(..))
 
---
-
-import Time exposing (Time)
-import Window
+import Browser
 import Json.Decode as Decode
-
-
---
-
 import Site.Router exposing (Route)
+import Time
 
 
 type Msg
@@ -17,6 +11,7 @@ type Msg
     | ToggleQuirky
     | Navigate String
     | ChangeRoute Route
-    | AnimationTick Time
-    | Resize Window.Size
+    | UrlRequest Browser.UrlRequest
+    | AnimationTick Time.Posix
+    | Resize Int Int
     | PackLayoutResponse Decode.Value

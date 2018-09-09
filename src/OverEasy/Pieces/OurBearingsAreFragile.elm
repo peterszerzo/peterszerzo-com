@@ -1,36 +1,48 @@
-module OverEasy.Pieces.OurBearingsAreFragile exposing (..)
+module OverEasy.Pieces.OurBearingsAreFragile exposing (Model, Msg(..), init, subscriptions, update, view)
 
-import String.Future
-import Time
-import Random
-import AnimationFrame
-import Html exposing (Html, Attribute, div, program)
-import Html.Attributes exposing (class, style, width, height)
-import Svg exposing (svg, path)
-import Svg.Attributes exposing (viewBox, d, fill, transform)
+import Browser.Events as Events
+import Html exposing (Attribute, Html, div)
+import Html.Attributes exposing (class, height, style, width)
 import Math.Matrix4 as Matrix4
 import Math.Vector3 as Vector3 exposing (Vec3, vec3)
 import Math.Vector4 as Vector4 exposing (Vec4, vec4)
-import WebGL
 import OverEasy.Concepts.Icosahedron as Icosahedron
+import Random
+import String.Future
+import Svg exposing (path, svg)
+import Svg.Attributes exposing (d, fill, transform, viewBox)
+import Time
+import WebGL
 
 
 type alias Model =
-    { time : Time.Time
-    , startTime : Time.Time
+    { time : Maybe Time.Posix
+    , startTime : Maybe Time.Posix
     , starPositions : List ( Float, Float )
     }
 
 
 type Msg
-    = Tick Time.Time
+    = Tick Time.Posix
     | StarPositions (List ( Float, Float ))
+
+
+timeDiff : Model -> Float
+timeDiff model =
+    case ( model.time, model.startTime ) of
+        ( Just time, Just startTime ) ->
+            Time.posixToMillis time
+                - Time.posixToMillis startTime
+                |> toFloat
+
+        ( _, _ ) ->
+            0
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( { time = 0
-      , startTime = 0
+    ( { time = Nothing
+      , startTime = Nothing
       , starPositions = []
       }
     , Cmd.batch
@@ -60,11 +72,12 @@ update msg model =
         Tick time ->
             ( { model
                 | startTime =
-                    if model.startTime == 0 then
-                        time
+                    if model.startTime == Nothing then
+                        Just time
+
                     else
                         model.startTime
-                , time = time
+                , time = Just time
               }
             , Cmd.none
             )
@@ -76,7 +89,7 @@ update msg model =
 subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.batch
-        [ AnimationFrame.times Tick
+        [ Events.onAnimationFrame Tick
         ]
 
 
@@ -107,55 +120,49 @@ view model =
         top =
             (w - h) / 2 |> min 0
     in
-        div
-            [ style
-                [ ( "overflow", "hidden" )
-                , ( "position", "relative" )
-                , ( "width", String.Future.fromFloat w ++ "px" )
-                , ( "height", String.Future.fromFloat h ++ "px" )
-                , ( "background-color", "#FFFFFF" )
-                , ( "border", "2px solid #000" )
-                ]
+    div
+        [ style "overflow" "hidden"
+        , style "position" "relative"
+        , style "width" (String.Future.fromFloat w ++ "px")
+        , style "height" (String.Future.fromFloat h ++ "px")
+        , style "background-color" "#FFFFFF"
+        , style "border" "2px solid #000"
+        ]
+        (WebGL.toHtmlWith
+            [ WebGL.alpha True
+            , WebGL.depth 1
+            , WebGL.antialias
             ]
-            (WebGL.toHtmlWith
-                [ WebGL.alpha True
-                , WebGL.depth 1
-                , WebGL.antialias
-                ]
-                [ width size
-                , height size
-                , style
-                    [ ( "position", "absolute" )
-                    , ( "top", "50%" )
-                    , ( "left", "50%" )
-                    , ( "transform", "translate3d(-50%, -50%, 0)" )
-                    , ( "width", String.Future.fromInt size ++ "px" )
-                    , ( "height", String.Future.fromInt size ++ "px" )
-                    , ( "z-index", "10" )
-                    ]
-                ]
-                [ globeEntity (model.time - model.startTime)
-                ]
-                :: (List.map
-                        (\( x, y ) ->
-                            div
-                                [ style
-                                    [ ( "position", "absolute" )
-                                    , ( "opacity", "0.4" )
-                                    , ( "top", ((toFloat size) * x |> String.Future.fromFloat) ++ "px" )
-                                    , ( "left", ((toFloat size) * y |> String.Future.fromFloat) ++ "px" )
-                                    , ( "z-index", "9" )
-                                    ]
-                                ]
-                                [ if size < 800 then
-                                    star 6
-                                  else
-                                    star 9
-                                ]
-                        )
-                        model.starPositions
-                   )
-            )
+            [ width size
+            , height size
+            , style "position" "absolute"
+            , style "top" "50%"
+            , style "left" "50%"
+            , style "transform" "translate3d(-50%, -50%, 0)"
+            , style "width" (String.Future.fromInt size ++ "px")
+            , style "height" (String.Future.fromInt size ++ "px")
+            , style "z-index" "10"
+            ]
+            [ globeEntity (timeDiff model)
+            ]
+            :: List.map
+                (\( x, y ) ->
+                    div
+                        [ style "position" "absolute"
+                        , style "opacity" "0.4"
+                        , style "top" ((toFloat size * x |> String.Future.fromFloat) ++ "px")
+                        , style "left" ((toFloat size * y |> String.Future.fromFloat) ++ "px")
+                        , style "z-index" "9"
+                        ]
+                        [ if size < 800 then
+                            star 6
+
+                          else
+                            star 9
+                        ]
+                )
+                model.starPositions
+        )
 
 
 
@@ -183,7 +190,7 @@ type alias Varyings =
     }
 
 
-globeEntity : Time.Time -> WebGL.Entity
+globeEntity : Float -> WebGL.Entity
 globeEntity time =
     WebGL.entity vertexShader
         fragmentShader
@@ -204,7 +211,7 @@ type alias Polygon =
     }
 
 
-globePerspective : Time.Time -> Matrix4.Mat4
+globePerspective : Float -> Matrix4.Mat4
 globePerspective time =
     let
         sineTime =
@@ -223,8 +230,8 @@ globePerspective time =
                 (sin phi)
                 |> Vector3.scale 9
     in
-        Matrix4.mul (Matrix4.makePerspective 45 1 0.01 100)
-            (Matrix4.makeLookAt eye (vec3 0 0 1.2) (vec3 0 0 1))
+    Matrix4.mul (Matrix4.makePerspective 45 1 0.01 100)
+        (Matrix4.makeLookAt eye (vec3 0 0 1.2) (vec3 0 0 1))
 
 
 rawTriangleToVertexTriangle : ( Vec3, Vec3, Vec3 ) -> ( Vertex, Vertex, Vertex )
@@ -236,10 +243,10 @@ rawTriangleToVertexTriangle ( pt1, pt2, pt3 ) =
         normal =
             Vector3.cross (Vector3.sub pt2 pt1) (Vector3.sub pt3 pt1) |> Vector3.normalize
     in
-        ( { normal = normal, center = center, polarCenter = toPolar center, polar = (toPolar pt1), position = pt1 }
-        , { normal = normal, center = center, polarCenter = toPolar center, polar = (toPolar pt2), position = pt2 }
-        , { normal = normal, center = center, polarCenter = toPolar center, polar = (toPolar pt3), position = pt3 }
-        )
+    ( { normal = normal, center = center, polarCenter = toPolar center, polar = toPolar pt1, position = pt1 }
+    , { normal = normal, center = center, polarCenter = toPolar center, polar = toPolar pt2, position = pt2 }
+    , { normal = normal, center = center, polarCenter = toPolar center, polar = toPolar pt3, position = pt3 }
+    )
 
 
 {-| vec3 x y z -> vec3 radius theta phi
@@ -254,12 +261,12 @@ toPolar v =
             Vector3.scale (1 / r) v
 
         theta =
-            Basics.toPolar ( (Vector3.getX v), (Vector3.getY v) ) |> Tuple.second
+            Basics.toPolar ( Vector3.getX v, Vector3.getY v ) |> Tuple.second
 
         phi =
             Vector3.dot vNorm (vec3 0 0 1) |> acos |> (\angle -> pi / 2 - angle)
     in
-        vec3 r theta phi
+    vec3 r theta phi
 
 
 mesh : WebGL.Mesh Vertex
@@ -355,13 +362,3 @@ void main() {
   gl_FragColor = baseColor * brightness;
 }
 |]
-
-
-main : Program Never Model Msg
-main =
-    program
-        { init = init
-        , update = update
-        , view = view
-        , subscriptions = subscriptions
-        }

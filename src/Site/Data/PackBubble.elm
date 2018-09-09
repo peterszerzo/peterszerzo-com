@@ -1,4 +1,4 @@
-module Site.Data.PackBubble exposing (..)
+module Site.Data.PackBubble exposing (PackBubble, decoder)
 
 import Json.Decode as Decode
 

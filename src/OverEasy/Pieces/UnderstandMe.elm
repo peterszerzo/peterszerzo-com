@@ -1,13 +1,13 @@
-module OverEasy.Pieces.UnderstandMe exposing (..)
+module OverEasy.Pieces.UnderstandMe exposing (Model, Msg(..), init, subscriptions, update, view)
 
-import String.Future
-import Time
-import AnimationFrame
-import Html exposing (Html, Attribute, div, program, text)
+import Browser.Events as Events
+import Html exposing (Attribute, Html, div, text)
 import Html.Attributes exposing (style)
 import Random
-import Svg exposing (svg, line, path)
-import Svg.Attributes exposing (viewBox, width, height, x1, x2, y1, y2, stroke, strokeWidth, strokeLinecap, strokeLinejoin, opacity, d, fill)
+import String.Future
+import Svg exposing (line, path, svg)
+import Svg.Attributes exposing (d, fill, height, opacity, stroke, strokeLinecap, strokeLinejoin, strokeWidth, viewBox, width, x1, x2, y1, y2)
+import Time
 
 
 type alias Line =
@@ -25,21 +25,33 @@ type alias LineGeneratorData =
 
 
 type alias Model =
-    { time : Time.Time
-    , startTime : Time.Time
+    { time : Maybe Time.Posix
+    , startTime : Maybe Time.Posix
     , lines : List Line
     }
 
 
 type Msg
-    = Tick Time.Time
+    = Tick Time.Posix
     | GenerateLines (List LineGeneratorData)
+
+
+timeDiff : Model -> Float
+timeDiff model =
+    case ( model.time, model.startTime ) of
+        ( Just time, Just startTime ) ->
+            Time.posixToMillis time
+                - Time.posixToMillis startTime
+                |> toFloat
+
+        ( _, _ ) ->
+            0
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( { time = 0
-      , startTime = 0
+    ( { time = Nothing
+      , startTime = Nothing
       , lines = []
       }
     , Random.map2 LineGeneratorData (Random.float 0.02 0.1) (Random.float 0.4 1)
@@ -64,11 +76,12 @@ update msg model =
         Tick time ->
             ( { model
                 | startTime =
-                    if model.startTime == 0 then
-                        time
+                    if model.startTime == Nothing then
+                        Just time
+
                     else
                         model.startTime
-                , time = time
+                , time = Just time
               }
             , Cmd.none
             )
@@ -103,6 +116,7 @@ createLinesHelper prevLine lineData =
                         , len = lineDatum.len
                         , opacity = lineDatum.opacity
                         }
+
                     else
                         { x = prevLine.x + prevLine.len + 0.028
                         , y = prevLine.y
@@ -110,13 +124,13 @@ createLinesHelper prevLine lineData =
                         , opacity = lineDatum.opacity
                         }
             in
-                nextLine :: createLinesHelper nextLine lineDataTail
+            nextLine :: createLinesHelper nextLine lineDataTail
 
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.batch
-        [ AnimationFrame.times Tick
+        [ Events.onAnimationFrame Tick
         ]
 
 
@@ -158,27 +172,27 @@ geometryAttrs animationFactor lineData =
         y3Coord =
             y2Coord + 10 * animationFactor
     in
-        [ d <|
-            "M"
-                ++ svgPtPair x0Coord y0Coord
-                ++ " "
-                ++ "C"
-                ++ svgPtPair x1Coord y1Coord
-                ++ " "
-                ++ svgPtPair x1Coord y1Coord
-                ++ " "
-                ++ svgPtPair xmCoord ymCoord
-                ++ " "
-                ++ "C"
-                ++ svgPtPair x2Coord y2Coord
-                ++ " "
-                ++ svgPtPair x2Coord y2Coord
-                ++ " "
-                ++ svgPtPair x3Coord y3Coord
-        ]
+    [ d <|
+        "M"
+            ++ svgPtPair x0Coord y0Coord
+            ++ " "
+            ++ "C"
+            ++ svgPtPair x1Coord y1Coord
+            ++ " "
+            ++ svgPtPair x1Coord y1Coord
+            ++ " "
+            ++ svgPtPair xmCoord ymCoord
+            ++ " "
+            ++ "C"
+            ++ svgPtPair x2Coord y2Coord
+            ++ " "
+            ++ svgPtPair x2Coord y2Coord
+            ++ " "
+            ++ svgPtPair x3Coord y3Coord
+    ]
 
 
-lineValue : Time.Time -> Line -> Float
+lineValue : Float -> Line -> Float
 lineValue time { x, y, len } =
     let
         timeFactor =
@@ -197,22 +211,21 @@ lineValue time { x, y, len } =
                 _ ->
                     ( 0, 0 )
     in
-        if refY1 == refY2 || y < refY1 || y > refY2 then
-            0
-        else
-            (y - (refY1 + refY2) / 2) / (refY2 - refY1) * 2 |> abs |> (\f -> 1 - f)
+    if refY1 == refY2 || y < refY1 || y > refY2 then
+        0
+
+    else
+        (y - (refY1 + refY2) / 2) / (refY2 - refY1) * 2 |> abs |> (\f -> 1 - f)
 
 
 view : Model -> Html Msg
 view model =
     div
-        [ style
-            [ ( "width", "800px" )
-            , ( "height", "480px" )
-            , ( "overflow", "hidden" )
-            , ( "background-color", "#1A2A44" )
-            , ( "position", "relative" )
-            ]
+        [ style "width" "800px"
+        , style "height" "480px"
+        , style "overflow" "hidden"
+        , style "background-color" "#1A2A44"
+        , style "position" "relative"
         ]
         [ svg
             [ width "800"
@@ -224,21 +237,21 @@ view model =
                 (\lineData ->
                     let
                         val =
-                            lineValue (model.time - model.startTime) lineData
+                            lineValue (timeDiff model) lineData
                     in
-                        path
-                            (geometryAttrs
-                                val
-                                lineData
-                                ++ [ stroke "#FFFFFF"
-                                   , strokeWidth "8"
-                                   , strokeLinecap "round"
-                                   , strokeLinejoin "round"
-                                   , fill "none"
-                                   , (lineData.opacity + (1 - lineData.opacity) * val) |> String.Future.fromFloat |> opacity
-                                   ]
-                            )
-                            []
+                    path
+                        (geometryAttrs
+                            val
+                            lineData
+                            ++ [ stroke "#FFFFFF"
+                               , strokeWidth "8"
+                               , strokeLinecap "round"
+                               , strokeLinejoin "round"
+                               , fill "none"
+                               , (lineData.opacity + (1 - lineData.opacity) * val) |> String.Future.fromFloat |> opacity
+                               ]
+                        )
+                        []
                 )
                 model.lines
         ]

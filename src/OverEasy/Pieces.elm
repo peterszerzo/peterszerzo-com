@@ -1,13 +1,13 @@
-module OverEasy.Pieces exposing (..)
+module OverEasy.Pieces exposing (Msg(..), Route(..), matchers, routeInitCmd, subscriptions, update, view)
 
-import UrlParser exposing (..)
 import Html
+import OverEasy.Pieces.BordersAreLenient as BordersAreLenient
+import OverEasy.Pieces.BureaucracyIsDistracting as BureaucracyIsDistracting
 import OverEasy.Pieces.MoreSimpleLessSimple as MoreSimpleLessSimple
 import OverEasy.Pieces.OurBearingsAreFragile as OurBearingsAreFragile
-import OverEasy.Pieces.BureaucracyIsDistracting as BureaucracyIsDistracting
-import OverEasy.Pieces.BordersAreLenient as BordersAreLenient
-import OverEasy.Pieces.WalkWithMe as WalkWithMe
 import OverEasy.Pieces.UnderstandMe as UnderstandMe
+import OverEasy.Pieces.WalkWithMe as WalkWithMe
+import Url.Parser exposing (..)
 
 
 type Route
@@ -160,19 +160,19 @@ subscriptions : Route -> Sub Msg
 subscriptions route =
     case route of
         OurBearingsAreFragile model ->
-            OurBearingsAreFragile.subscriptions model |> Sub.map (OurBearingsAreFragileMsg)
+            OurBearingsAreFragile.subscriptions model |> Sub.map OurBearingsAreFragileMsg
 
         MoreSimpleLessSimple model ->
-            MoreSimpleLessSimple.subscriptions model |> Sub.map (MoreSimpleLessSimpleMsg)
+            MoreSimpleLessSimple.subscriptions model |> Sub.map MoreSimpleLessSimpleMsg
 
         BureaucracyIsDistracting model ->
-            BureaucracyIsDistracting.subscriptions model |> Sub.map (BureaucracyIsDistractingMsg)
+            BureaucracyIsDistracting.subscriptions model |> Sub.map BureaucracyIsDistractingMsg
 
         BordersAreLenient model ->
-            BordersAreLenient.subscriptions model |> Sub.map (BordersAreLenientMsg)
+            BordersAreLenient.subscriptions model |> Sub.map BordersAreLenientMsg
 
         WalkWithMe model ->
-            WalkWithMe.subscriptions model |> Sub.map (WalkWithMeMsg)
+            WalkWithMe.subscriptions model |> Sub.map WalkWithMeMsg
 
         UnderstandMe model ->
-            UnderstandMe.subscriptions model |> Sub.map (UnderstandMeMsg)
+            UnderstandMe.subscriptions model |> Sub.map UnderstandMeMsg

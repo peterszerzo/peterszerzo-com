@@ -1,11 +1,10 @@
-module Site.Ui.Background exposing (..)
+module Site.Ui.Background exposing (Uniforms, Varyings, Vertex, fragmentShader, view)
 
-import Html exposing (Html, Attribute, div)
+import Html exposing (Attribute, Html, div)
+import Html.Attributes exposing (style)
 import Math.Vector2 exposing (Vec2, vec2)
-import WebGL
-import Window
-import Time
 import Shared.SimpleWebGL as SimpleWebGL
+import WebGL
 
 
 type alias Vertex =
@@ -25,23 +24,23 @@ type alias Varyings =
     {}
 
 
-view : Window.Size -> Time.Time -> Html msg
+view : { width : Int, height : Int } -> Float -> Html msg
 view window timeSinceStart =
     SimpleWebGL.view
         { window = window
-        , styles =
+        , attrs =
             if window.width < 600 then
-                [ ( "transform", "scale(1.35)" ) ]
+                [ style "transform" "scale(1.35)" ]
+
             else
                 []
         , makeUniforms =
-            (\resolution ->
+            \resolution ->
                 { resolution = resolution
                 , time = timeSinceStart / 2000
                 , horizontal = window.width > window.height
                 , mobile = window.width < 600
                 }
-            )
         , fragmentShader = fragmentShader
         }
 

@@ -1,17 +1,15 @@
-module Site.Ui.Nav exposing (..)
-
-import Html.Styled exposing (Html, div, h1, p, nav, node, a, text)
-import Html.Styled.Attributes exposing (href, css)
-import Css exposing (..)
-
+module Site.Ui.Nav exposing (view, viewMainLink)
 
 --
 
+import Css exposing (..)
+import Html.Styled exposing (Html, a, div, h1, nav, node, p, text)
+import Html.Styled.Attributes exposing (css, href)
+import Site.Content as Content
+import Site.Messages exposing (Msg(..))
 import Site.Styles.Constants exposing (..)
 import Site.Styles.Mixins as Mixins
-import Site.Messages exposing (Msg(..))
 import Site.Ui.Link as Link
-import Site.Content as Content
 
 
 viewMainLink : ( String, String ) -> Html Msg

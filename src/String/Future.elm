@@ -1,11 +1,11 @@
-module String.Future exposing (fromInt, fromFloat)
+module String.Future exposing (fromFloat, fromInt)
 
 
 fromInt : Int -> String
 fromInt no =
-    toString no
+    String.fromInt no
 
 
 fromFloat : Float -> String
 fromFloat no =
-    toString no
+    String.fromFloat no

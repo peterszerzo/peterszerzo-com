@@ -4,7 +4,8 @@ node_modules
 elm-stuff
 dist
 build
-src/elm.js
 *.log
 tmp
 public/index.html
+index.html
+elm.js

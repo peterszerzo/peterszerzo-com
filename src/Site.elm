@@ -1,59 +1,80 @@
-module Site exposing (..)
+module Site exposing (Model, init, main, subscriptions, update, view)
 
-import Task
-import AnimationFrame
-import Window
-import Time
-import Json.Encode as Encode
-import Json.Decode as Decode
-import Navigation exposing (Location, program)
-import Html.Styled exposing (Html, div, text, h1, h2, p, header, node, toUnstyled, fromUnstyled)
-import Html.Styled.Attributes exposing (css)
+import Browser
+import Browser.Dom as Dom
+import Browser.Events as Events
+import Browser.Navigation as Navigation
 import Css exposing (..)
-import Site.Messages exposing (Msg(..))
-import Site.Ports as Ports
+import Html.Styled exposing (Html, div, fromUnstyled, h1, h2, header, node, p, text, toUnstyled)
+import Html.Styled.Attributes exposing (css)
+import Json.Decode as Decode
+import Json.Encode as Encode
 import Site.Content as Content
 import Site.Data.PackBubble as PackBubble
+import Site.Messages exposing (Msg(..))
+import Site.Ports as Ports
 import Site.Router as Router exposing (Route, parse)
+import Site.Styles exposing (globalStyles)
+import Site.Styles.Constants exposing (..)
+import Site.Styles.Raw exposing (raw)
 import Site.Ui as Ui
 import Site.Ui.Background
 import Site.Ui.Projects
-import Site.Styles.Constants exposing (..)
-import Site.Styles exposing (globalStyles)
-import Site.Styles.Raw exposing (raw)
+import Task
+import Time
+import Url
+
+
+type alias Flags =
+    Encode.Value
 
 
 type alias Model =
-    { route : Route
+    { key : Navigation.Key
+    , route : Route
     , isQuirky : Bool
-    , time : Time.Time
-    , startTime : Time.Time
-    , window : Window.Size
+    , time : Maybe Time.Posix
+    , startTime : Maybe Time.Posix
+    , window : { width : Int, height : Int }
     , projectPackBubbles : List PackBubble.PackBubble
     }
 
 
-init : Location -> ( Model, Cmd Msg )
-init location =
-    ( { route = (parse location)
+init : Flags -> Url.Url -> Navigation.Key -> ( Model, Cmd Msg )
+init flags url key =
+    ( { key = key
+      , route = parse url
       , isQuirky = False
-      , time = 0
-      , startTime = 0
-      , window = (Window.Size 0 0)
+      , time = Nothing
+      , startTime = Nothing
+      , window = { width = 0, height = 0 }
       , projectPackBubbles = []
       }
-    , Task.perform Resize Window.size
+    , Dom.getViewport
+        |> Task.perform
+            (\viewport ->
+                Resize
+                    (floor viewport.viewport.width)
+                    (floor viewport.viewport.height)
+            )
     )
 
 
-main : Program Never Model Msg
+main : Program Flags Model Msg
 main =
-    program
-        (ChangeRoute << parse)
+    Browser.application
         { init = init
-        , view = view >> toUnstyled
+        , view =
+            view
+                >> (\styledDocument ->
+                        { title = styledDocument.title
+                        , body = List.map toUnstyled styledDocument.body
+                        }
+                   )
         , update = update
         , subscriptions = subscriptions
+        , onUrlRequest = UrlRequest
+        , onUrlChange = ChangeRoute << parse
         }
 
 
@@ -70,7 +91,7 @@ update msg model =
 
         Navigate newPath ->
             ( model
-            , Navigation.newUrl newPath
+            , Navigation.pushUrl model.key newPath
             )
 
         ChangeRoute newRoute ->
@@ -78,22 +99,41 @@ update msg model =
             , Cmd.none
             )
 
-        Resize window ->
-            ( { model | window = window }
+        UrlRequest urlRequest ->
+            case urlRequest of
+                Browser.Internal url ->
+                    ( model
+                    , Navigation.pushUrl model.key (Url.toString url)
+                    )
+
+                Browser.External href ->
+                    ( model, Navigation.load href )
+
+        Resize width height ->
+            ( { model
+                | window =
+                    { width = width
+                    , height = height
+                    }
+              }
             , Ports.packLayoutReq <|
                 Encode.object
-                    [ ( "width", Encode.int window.width )
-                    , ( "height", Encode.int <| window.height - 60 )
-                    , ( "sizes", Encode.list <| List.map Encode.int (List.map .size Content.projects) )
+                    [ ( "width", Encode.int width )
+                    , ( "height", Encode.int <| height - 60 )
+                    , ( "sizes"
+                      , List.map .size Content.projects
+                            |> Encode.list Encode.int
+                      )
                     ]
             )
 
         AnimationTick time ->
             ( { model
-                | time = time
+                | time = Just time
                 , startTime =
-                    if model.startTime == 0 then
-                        time
+                    if model.startTime == Nothing then
+                        Just time
+
                     else
                         model.startTime
               }
@@ -114,130 +154,171 @@ update msg model =
 subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.batch
-        [ Window.resizes Resize
+        [ Events.onResize Resize
         , Ports.packLayoutRes PackLayoutResponse
         , case model.route of
             Router.Home ->
-                if (model.time - model.startTime > 30000) then
+                if startedSince model > 30000 then
                     Sub.none
+
                 else
-                    AnimationFrame.times AnimationTick
+                    Events.onAnimationFrame AnimationTick
 
             _ ->
                 Sub.none
         ]
 
 
-view : Model -> Html Msg
-view model =
-    let
-        content =
-            case model.route of
-                Router.Home ->
-                    [ Ui.banner
-                    , Site.Ui.Background.view model.window (model.time - model.startTime) |> fromUnstyled
-                    ]
+startedSince : Model -> Float
+startedSince model =
+    case ( model.time, model.startTime ) of
+        ( Just time, Just startTime ) ->
+            Time.posixToMillis time
+                - Time.posixToMillis startTime
+                |> toFloat
 
-                Router.Projects ->
-                    [ Ui.contentBox
-                        { content =
-                            [ Site.Ui.Projects.view
-                                { packBubbles = model.projectPackBubbles
-                                , projects = Content.projects
-                                , activeProject = Nothing
-                                }
-                            ]
-                        , breadcrumbs = [ { label = "Projects", url = Nothing } ]
-                        , quirkyContent = Nothing
-                        , isQuirky = model.isQuirky
-                        }
-                    ]
+        ( _, _ ) ->
+            0
 
-                Router.Project prj ->
-                    let
-                        project =
-                            Content.projects
-                                |> List.filter (\currentProject -> currentProject.id == prj)
-                                |> List.head
-                                |> Maybe.withDefault
-                                    { id = ""
-                                    , name = ""
-                                    , description = ""
-                                    , image = ""
-                                    , size = 0
-                                    , url = ""
-                                    }
-                    in
-                        [ Ui.contentBox
-                            { content =
-                                [ Site.Ui.Projects.view
-                                    { packBubbles = model.projectPackBubbles
-                                    , projects = Content.projects
-                                    , activeProject = Just prj
-                                    }
-                                ]
-                            , breadcrumbs =
-                                [ { label = "Projects", url = Just "/projects" }
-                                , { label = project.name, url = Nothing }
-                                ]
-                            , quirkyContent = Nothing
-                            , isQuirky = model.isQuirky
-                            }
-                        ]
 
-                Router.Now ->
-                    [ Ui.contentBox
-                        { content = [ Ui.static Content.now ]
-                        , quirkyContent = Nothing
-                        , breadcrumbs = [ { label = "Now!", url = Nothing } ]
-                        , isQuirky = model.isQuirky
-                        }
-                    ]
-
-                Router.About ->
-                    [ Ui.contentBox
-                        { content = [ Ui.static Content.aboutConventional ]
-                        , breadcrumbs = [ { label = "About", url = Nothing } ]
-                        , quirkyContent = Just [ Ui.static Content.aboutReal ]
-                        , isQuirky = model.isQuirky
-                        }
-                    ]
-
-                Router.Talks ->
-                    [ Ui.contentBox
-                        { content = [ Ui.static Content.talks ]
-                        , quirkyContent = Nothing
-                        , breadcrumbs = [ { label = "Talks", url = Nothing } ]
-                        , isQuirky = model.isQuirky
-                        }
-                    ]
-
-                Router.NotFound ->
-                    [ div [] []
-                    ]
-    in
-        div
+layout : List (Html msg) -> List (Html msg)
+layout children =
+    [ div
+        [ css
+            [ width (pct 100)
+            , height (pct 100)
+            ]
+        ]
+        [ node "style"
+            []
+            [ text raw
+            ]
+        , globalStyles
+        , div
             [ css
                 [ width (pct 100)
                 , height (pct 100)
+                , backgroundColor blue
+                , displayFlex
+                , alignItems center
+                , justifyContent center
+                , property "animation" "fade-in ease-out .5s"
+                , position relative
                 ]
             ]
-            [ node "style"
-                []
-                [ text (raw)
+            children
+        ]
+    ]
+
+
+view : Model -> { title : String, body : List (Html Msg) }
+view model =
+    case model.route of
+        Router.Home ->
+            { title = "Home"
+            , body =
+                [ Ui.banner
+                , Site.Ui.Background.view model.window (startedSince model) |> fromUnstyled
                 ]
-            , globalStyles
-            , div
-                [ css
-                    [ width (pct 100)
-                    , height (pct 100)
-                    , backgroundColor blue
-                    , displayFlex
-                    , alignItems center
-                    , justifyContent center
-                    , property "animation" "fade-in ease-out .5s"
-                    , position relative
-                    ]
+                    |> layout
+            }
+
+        Router.Projects ->
+            { title = "Projects"
+            , body =
+                [ Ui.contentBox
+                    { content =
+                        [ Site.Ui.Projects.view
+                            { packBubbles = model.projectPackBubbles
+                            , projects = Content.projects
+                            , activeProject = Nothing
+                            }
+                        ]
+                    , breadcrumbs = [ { label = "Projects", url = Nothing } ]
+                    , quirkyContent = Nothing
+                    , isQuirky = model.isQuirky
+                    }
                 ]
-                content
-            ]
+                    |> layout
+            }
+
+        Router.Project prj ->
+            let
+                project =
+                    Content.projects
+                        |> List.filter (\currentProject -> currentProject.id == prj)
+                        |> List.head
+                        |> Maybe.withDefault
+                            { id = ""
+                            , name = ""
+                            , description = ""
+                            , image = ""
+                            , size = 0
+                            , url = ""
+                            }
+            in
+            { title = "Projects"
+            , body =
+                [ Ui.contentBox
+                    { content =
+                        [ Site.Ui.Projects.view
+                            { packBubbles = model.projectPackBubbles
+                            , projects = Content.projects
+                            , activeProject = Just prj
+                            }
+                        ]
+                    , breadcrumbs =
+                        [ { label = "Projects", url = Just "/projects" }
+                        , { label = project.name, url = Nothing }
+                        ]
+                    , quirkyContent = Nothing
+                    , isQuirky = model.isQuirky
+                    }
+                ]
+                    |> layout
+            }
+
+        Router.Now ->
+            { title = "Now"
+            , body =
+                [ Ui.contentBox
+                    { content = [ Ui.static Content.now ]
+                    , quirkyContent = Nothing
+                    , breadcrumbs = [ { label = "Now!", url = Nothing } ]
+                    , isQuirky = model.isQuirky
+                    }
+                ]
+            }
+
+        Router.About ->
+            { title = "About"
+            , body =
+                [ Ui.contentBox
+                    { content = [ Ui.static Content.aboutConventional ]
+                    , breadcrumbs = [ { label = "About", url = Nothing } ]
+                    , quirkyContent = Just [ Ui.static Content.aboutReal ]
+                    , isQuirky = model.isQuirky
+                    }
+                ]
+                    |> layout
+            }
+
+        Router.Talks ->
+            { title = "Talks"
+            , body =
+                [ Ui.contentBox
+                    { content = [ Ui.static Content.talks ]
+                    , quirkyContent = Nothing
+                    , breadcrumbs = [ { label = "Talks", url = Nothing } ]
+                    , isQuirky = model.isQuirky
+                    }
+                ]
+            }
+
+        Router.NotFound ->
+            { title = "Not found"
+            , body =
+                [ div [] []
+                ]
+                    |> layout
+            }

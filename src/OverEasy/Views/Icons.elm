@@ -1,8 +1,8 @@
-module OverEasy.Views.Icons exposing (..)
+module OverEasy.Views.Icons exposing (logo, smallLogo)
 
 import Html.Styled exposing (Html)
-import Svg.Styled exposing (svg, path)
-import Svg.Styled.Attributes exposing (viewBox, d, fill)
+import Svg.Styled exposing (path, svg)
+import Svg.Styled.Attributes exposing (d, fill, viewBox)
 
 
 logo : Html msg

@@ -1,4 +1,4 @@
-module OverEasy.Constants exposing (..)
+module OverEasy.Constants exposing (black, desktop, white, yellow)
 
 import Css exposing (..)
 import Css.Media as Media

@@ -1,4 +1,4 @@
-module Site.Data.Project exposing (..)
+module Site.Data.Project exposing (Project)
 
 
 type alias Project =

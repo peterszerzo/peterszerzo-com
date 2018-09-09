@@ -1,10 +1,10 @@
-module OverEasy.Pieces.MoreSimpleLessSimple exposing (..)
+module OverEasy.Pieces.MoreSimpleLessSimple exposing (Model, Msg(..), init, subscriptions, update, view)
 
-import String.Future
-import Html exposing (Html, div, text, span, program)
+import Html exposing (Html, div, span, text)
 import Html.Attributes exposing (style)
-import Svg exposing (svg, line, g)
-import Svg.Attributes exposing (viewBox, x1, x2, y1, y2, stroke, strokeWidth, width, height, transform)
+import String.Future
+import Svg exposing (g, line, svg)
+import Svg.Attributes exposing (height, stroke, strokeWidth, transform, viewBox, width, x1, x2, y1, y2)
 
 
 type alias Model =
@@ -32,7 +32,7 @@ update msg model =
 
 toPx : Float -> String
 toPx x =
-    (String.Future.fromFloat x) ++ "px"
+    String.Future.fromFloat x ++ "px"
 
 
 moresimple : String
@@ -85,35 +85,29 @@ viewGrid =
 view : Model -> Html Msg
 view model =
     div
-        [ style
-            [ ( "width", "800px" )
-            , ( "position", "relative" )
-            , ( "height", "480px" )
-            , ( "background-color", "#FFF" )
-            , ( "border", "2px solid #000" )
-            ]
+        [ style "width" "800px"
+        , style "position" "relative"
+        , style "height" "480px"
+        , style "background-color" "#FFF"
+        , style "border" "2px solid #000"
         ]
         [ div
-            [ style
-                [ ( "position", "absolute" )
-                , ( "top", "0px" )
-                , ( "bottom", "0px" )
-                , ( "left", "0px" )
-                , ( "right", "0px" )
-                ]
+            [ style "position" "absolute"
+            , style "top" "0px"
+            , style "bottom" "0px"
+            , style "left" "0px"
+            , style "right" "0px"
             ]
             [ viewGrid
             ]
         , div
-            [ style
-                [ ( "width", "160px" )
-                , ( "height", "160px" )
-                , ( "border", "2px solid #000" )
-                , ( "border-radius", "50%" )
-                , ( "position", "absolute" )
-                , ( "top", "80px" )
-                , ( "left", "140px" )
-                ]
+            [ style "width" "160px"
+            , style "height" "160px"
+            , style "border" "2px solid #000"
+            , style "border-radius" "50%"
+            , style "position" "absolute"
+            , style "top" "80px"
+            , style "left" "140px"
             ]
             [ div []
                 (List.range 1 10
@@ -132,16 +126,14 @@ view model =
                                 y =
                                     (angle |> sin) * 95 + 80
                             in
-                                div
-                                    [ style
-                                        [ ( "position", "absolute" )
-                                        , ( "top", toPx y )
-                                        , ( "left", toPx x )
-                                        , ( "transform", "translate3d(-50%, -50%, 0) rotate(" ++ (String.Future.fromFloat (angle + pi / 2)) ++ "rad)" )
-                                        , ( "opacity", "1" )
-                                        ]
-                                    ]
-                                    [ Html.text (moresimple |> String.slice (i - 1) i) ]
+                            div
+                                [ style "position" "absolute"
+                                , style "top" (toPx y)
+                                , style "left" (toPx x)
+                                , style "transform" ("translate3d(-50%, -50%, 0) rotate(" ++ String.Future.fromFloat (angle + pi / 2) ++ "rad)")
+                                , style "opacity" "1"
+                                ]
+                                [ Html.text (moresimple |> String.slice (i - 1) i) ]
                         )
                 )
             ]
@@ -153,39 +145,25 @@ view model =
                             i =
                                 toFloat i_
                         in
-                            div
-                                [ style
-                                    [ ( "position", "absolute" )
-                                    , ( "left", (i * 45 + 80) |> toPx )
-                                    , ( "bottom", (i * i * 4.45 + i * -36 + 120) |> toPx )
-                                    , ( "width", (50 + i * 12) |> toPx )
-                                    , ( "height", (50 + i * 12) |> toPx )
-                                    , ( "border-radius", "6px" )
-                                    , ( "box-sizing", "border-box" )
-                                    , ( "border", "2px solid #000" )
-                                    , ( "padding", "10px" )
-                                    ]
+                        div
+                            [ style "position" "absolute"
+                            , style "left" ((i * 45 + 80) |> toPx)
+                            , style "bottom" ((i * i * 4.45 + i * -36 + 120) |> toPx)
+                            , style "width" ((50 + i * 12) |> toPx)
+                            , style "height" ((50 + i * 12) |> toPx)
+                            , style "border-radius" "6px"
+                            , style "box-sizing" "border-box"
+                            , style "border" "2px solid #000"
+                            , style "padding" "10px"
+                            ]
+                            [ span
+                                [ style "position" "absolute"
+                                , style "right" "8px"
+                                , style "bottom" "5px"
+                                , style "opacity" "1"
                                 ]
-                                [ span
-                                    [ style
-                                        [ ( "position", "absolute" )
-                                        , ( "right", "8px" )
-                                        , ( "bottom", "5px" )
-                                        , ( "opacity", "1" )
-                                        ]
-                                    ]
-                                    [ Html.text (lesssimple |> String.slice (i_ - 1) (i_ + 0)) ]
-                                ]
+                                [ Html.text (lesssimple |> String.slice (i_ - 1) (i_ + 0)) ]
+                            ]
                     )
             )
         ]
-
-
-main : Program Never Model Msg
-main =
-    program
-        { init = init
-        , update = update
-        , view = view
-        , subscriptions = subscriptions
-        }

@@ -1,16 +1,15 @@
-module Maddi.Views exposing (..)
+module Maddi.Views exposing (homeLink, iconContainer, intro, largeLogo, layout, link, siteHeader, static)
 
 import Css exposing (..)
-import Css.Foreign as Foreign
-import Json.Decode as Decode
-import Html.Styled exposing (Html, text, div, a, p, br, header, h2, fromUnstyled)
+import Css.Global as Global
+import Html.Styled exposing (Html, a, br, div, fromUnstyled, h2, header, p, text)
 import Html.Styled.Attributes exposing (css, href)
-import Html.Styled.Events exposing (onWithOptions, onClick)
-import Svg.Styled exposing (svg, path, line)
-import Svg.Styled.Attributes exposing (d, viewBox, x1, x2, y1, y2)
-import Markdown
+import Html.Styled.Events exposing (onClick)
+import Json.Decode as Decode
 import Maddi.Views.Mixins exposing (..)
-import Maddi.Views.CustomLink exposing (customLink)
+import Markdown
+import Svg.Styled exposing (line, path, svg)
+import Svg.Styled.Attributes exposing (d, viewBox, x1, x2, y1, y2)
 
 
 largeLogo : Html msg
@@ -26,18 +25,18 @@ static markdownContent =
     div
         [ css
             [ overflow auto
-            , Foreign.descendants
-                [ Foreign.each [ Foreign.p, Foreign.li ]
+            , Global.descendants
+                [ Global.each [ Global.p, Global.li ]
                     [ bodyType
                     ]
-                , Foreign.each [ Foreign.a ]
+                , Global.each [ Global.a ]
                     [ linkType
                     ]
                 ]
-            , Foreign.children
-                [ Foreign.everything
-                    [ Foreign.children
-                        [ Foreign.everything
+            , Global.children
+                [ Global.everything
+                    [ Global.children
+                        [ Global.everything
                             [ firstChild
                                 [ marginTop (px -4)
                                 ]
@@ -74,8 +73,8 @@ homeLink navigate =
             , hover
                 [ backgroundColor yellow
                 , color (hex "000")
-                , Foreign.children
-                    [ Foreign.everything
+                , Global.children
+                    [ Global.everything
                         [ firstChild
                             [ color (hex "000")
                             ]
@@ -83,16 +82,19 @@ homeLink navigate =
                     ]
                 ]
             ]
-        , onWithOptions "click" { preventDefault = True, stopPropagation = False } (Decode.succeed navigate)
         , href "/"
         ]
         [ largeLogo
         ]
 
 
-link : (String -> msg) -> String -> List (Html msg) -> Html msg
-link navigate url children =
-    customLink { navigate = navigate, url = url, css = linkType } children
+link : String -> List (Html msg) -> Html msg
+link url children =
+    a
+        [ href url
+        , css [ linkType ]
+        ]
+        children
 
 
 intro : (String -> msg) -> Html msg
@@ -104,9 +106,9 @@ intro navigate =
         ]
         [ p [ css [ marginTop (px -4) ] ]
             [ text "My name is Anna. I design sets for theatre pieces like "
-            , link navigate "/projects/karmafulminien" [ text "Karmafulminien" ]
+            , a [ href "/projects/karmafulminien" ] [ text "Karmafulminien" ]
             , text " and "
-            , link navigate "/projects/story-of-qu" [ text "Story of Qu" ]
+            , a [ href "/projects/story-of-qu" ] [ text "Story of Qu" ]
             , text ", and I also work in opera."
             ]
         , p []
@@ -120,12 +122,12 @@ iconContainer config children =
     div
         [ css
             [ cursor pointer
-            , Foreign.descendants
-                [ Foreign.svg
+            , Global.descendants
+                [ Global.svg
                     [ width (px 30)
                     , height (px 30)
                     ]
-                , Foreign.line
+                , Global.line
                     [ property "stroke" "#000"
                     , property "stroke-width" "2"
                     ]
@@ -146,164 +148,159 @@ siteHeader { navigate, mobileNav, setMobileNav } =
             , ( "mailto:annamcingi@gmail.com", "contact" )
             ]
     in
-        header
+    header
+        [ css
+            [ position absolute
+            , top (px 0)
+            , padding2 (px 20) (px 20)
+            , left (px 0)
+            , width (pct 100)
+            , alignItems start
+            , marginBottom (px 20)
+            , property "z-index" "10000"
+            , backgroundColor white
+            ]
+        ]
+        [ div
             [ css
-                [ position absolute
-                , top (px 0)
-                , padding2 (px 20) (px 20)
-                , left (px 0)
-                , width (pct 100)
-                , alignItems start
-                , marginBottom (px 20)
-                , property "z-index" "10000"
-                , backgroundColor white
+                [ maxWidth (px 1000)
+                , margin auto
+                , displayFlex
+                , alignItems flexEnd
+                , justifyContent spaceBetween
                 ]
             ]
-            [ div
+            [ a
                 [ css
-                    [ maxWidth (px 1000)
-                    , margin auto
+                    [ width (px 220)
                     , displayFlex
-                    , alignItems flexEnd
-                    , justifyContent spaceBetween
+                    , textDecoration none
+                    , color inherit
+                    ]
+                , href "/"
+                ]
+                [ div
+                    [ css
+                        [ width (px 44)
+                        , height (px 44)
+                        , borderRadius (px 3)
+                        , backgroundColor black
+                        , marginRight (px 8)
+                        , color white
+                        , property "transition" "all 0.2s"
+                        ]
+                    ]
+                    [ largeLogo
+                    ]
+                , div [ css [ marginTop (px 0) ] ]
+                    [ p
+                        [ css
+                            [ fontSize (Css.rem 1.25)
+                            , lineHeight (num 1.15)
+                            , margin (px 0)
+                            , property "font-weight" "700"
+                            ]
+                        ]
+                        [ text "Anna Cingi" ]
+                    , p
+                        [ css
+                            [ fontSize (Css.rem 1.25)
+                            , lineHeight (num 1.15)
+                            , margin (px 0)
+                            , property "font-weight" "300"
+                            ]
+                        ]
+                        [ text "set designer" ]
                     ]
                 ]
-                [ customLink
-                    { css =
-                        Css.batch
-                            [ width (px 220)
-                            , displayFlex
-                            , textDecoration none
-                            , color inherit
-                            ]
-                    , url = "/"
-                    , navigate = navigate
-                    }
-                    [ div
-                        [ css
-                            [ width (px 44)
-                            , height (px 44)
-                            , borderRadius (px 3)
-                            , backgroundColor black
-                            , marginRight (px 8)
-                            , color white
-                            , property "transition" "all 0.2s"
-                            ]
-                        ]
-                        [ largeLogo
-                        ]
-                    , div [ css [ marginTop (px 0) ] ]
-                        [ p
-                            [ css
-                                [ fontSize (Css.rem 1.25)
-                                , lineHeight (num 1.15)
-                                , margin (px 0)
-                                , property "font-weight" "700"
+            , div
+                [ css
+                    [ display block
+                    , mobile [ display none ]
+                    ]
+                ]
+                (List.map
+                    (\( url, label ) ->
+                        a
+                            [ href url
+                            , css
+                                [ textDecoration none
+                                , color inherit
+                                , fontSize (Css.rem 1.25)
+                                , marginLeft (px 20)
+                                , borderBottom2 (px 1) solid
+                                , borderBottomColor transparent
+                                , hover
+                                    [ borderBottomColor (hex "000")
+                                    ]
                                 ]
                             ]
-                            [ text "Anna Cingi" ]
-                        , p
-                            [ css
-                                [ fontSize (Css.rem 1.25)
-                                , lineHeight (num 1.15)
-                                , margin (px 0)
-                                , property "font-weight" "300"
-                                ]
-                            ]
-                            [ text "set designer" ]
-                        ]
-                    ]
-                , div
-                    [ css
-                        [ display block
-                        , mobile [ display none ]
-                        ]
-                    ]
-                    (List.map
-                        (\( url, label ) ->
-                            customLink
-                                { url = url
-                                , css =
-                                    Css.batch
-                                        [ textDecoration none
-                                        , color inherit
-                                        , fontSize (Css.rem 1.25)
-                                        , marginLeft (px 20)
-                                        , borderBottom2 (px 1) solid
-                                        , borderBottomColor transparent
-                                        , hover
-                                            [ borderBottomColor (hex "000")
-                                            ]
-                                        ]
-                                , navigate = navigate
-                                }
-                                [ text label ]
-                        )
-                        (List.tail links |> Maybe.withDefault [])
+                            [ text label ]
                     )
-                , if mobileNav then
-                    div
+                    (List.tail links |> Maybe.withDefault [])
+                )
+            , if mobileNav then
+                div
+                    [ css
+                        [ position fixed
+                        , property "z-index" "10000"
+                        , top (px 0)
+                        , left (px 0)
+                        , width (vw 100)
+                        , height (vh 100)
+                        , padding2 (px 35) (px 20)
+                        , textAlign right
+                        , backgroundColor (rgba 255 255 255 0.9)
+                        , display none
+                        , mobile [ display block ]
+                        ]
+                    ]
+                    [ iconContainer { handleClick = setMobileNav False, css = Css.batch [] }
+                        [ svg [ Svg.Styled.Attributes.viewBox "0 0 100 100" ]
+                            [ line [ x1 "20", y1 "20", x2 "80", y2 "80" ] []
+                            , line [ x1 "80", y1 "20", x2 "20", y2 "80" ] []
+                            ]
+                        ]
+                    , div
                         [ css
-                            [ position fixed
-                            , property "z-index" "10000"
-                            , top (px 0)
-                            , left (px 0)
-                            , width (vw 100)
-                            , height (vh 100)
-                            , padding2 (px 35) (px 20)
-                            , textAlign right
-                            , backgroundColor (rgba 255 255 255 0.9)
-                            , display none
+                            []
+                        ]
+                        (List.map
+                            (\( url, label ) ->
+                                a
+                                    [ href url
+                                    , css
+                                        [ display block
+                                        , margin (px 0)
+                                        , lineHeight (num 1)
+                                        , padding2 (px 10) (px 0)
+                                        , headingType
+                                        ]
+                                    ]
+                                    [ text label ]
+                            )
+                            links
+                        )
+                    ]
+
+              else
+                iconContainer
+                    { handleClick = setMobileNav (not mobileNav)
+                    , css =
+                        Css.batch
+                            [ display none
                             , mobile [ display block ]
                             ]
+                    }
+                    [ svg
+                        [ Svg.Styled.Attributes.viewBox "0 0 100 100" ]
+                        [ line [ x1 "10", y1 "30", x2 "90", y2 "30" ] []
+                        , line [ x1 "10", y1 "50", x2 "90", y2 "50" ] []
+                        , line [ x1 "10", y1 "70", x2 "90", y2 "70" ] []
                         ]
-                        [ iconContainer { handleClick = (setMobileNav False), css = Css.batch [] }
-                            [ svg [ Svg.Styled.Attributes.viewBox "0 0 100 100" ]
-                                [ line [ x1 "20", y1 "20", x2 "80", y2 "80" ] []
-                                , line [ x1 "80", y1 "20", x2 "20", y2 "80" ] []
-                                ]
-                            ]
-                        , div
-                            [ css
-                                []
-                            ]
-                            (List.map
-                                (\( url, label ) ->
-                                    customLink
-                                        { url = url
-                                        , navigate = navigate
-                                        , css =
-                                            Css.batch
-                                                [ display block
-                                                , margin (px 0)
-                                                , lineHeight (num 1)
-                                                , padding2 (px 10) (px 0)
-                                                , headingType
-                                                ]
-                                        }
-                                        [ text label ]
-                                )
-                                links
-                            )
-                        ]
-                  else
-                    iconContainer
-                        { handleClick = (setMobileNav (not mobileNav))
-                        , css =
-                            Css.batch
-                                [ display none
-                                , mobile [ display block ]
-                                ]
-                        }
-                        [ svg
-                            [ Svg.Styled.Attributes.viewBox "0 0 100 100" ]
-                            [ line [ x1 "10", y1 "30", x2 "90", y2 "30" ] []
-                            , line [ x1 "10", y1 "50", x2 "90", y2 "50" ] []
-                            , line [ x1 "10", y1 "70", x2 "90", y2 "70" ] []
-                            ]
-                        ]
-                ]
+                    ]
             ]
+        ]
 
 
 layout : List (Html msg) -> Html msg
@@ -312,88 +309,87 @@ layout children =
         stickout =
             10
     in
-        div
+    div
+        [ css
+            [ padding (px 20)
+            , position relative
+            , width (pct 100)
+            , height (px 400)
+            , property "animation" "fadein 0.5s ease-in-out forwards"
+            , mobile
+                [ height auto
+                , margin3 (px 60) auto (px 0)
+                ]
+            , stickoutStyles { hover = False }
+            ]
+        ]
+        [ div
             [ css
-                [ padding (px 20)
-                , position relative
-                , width (pct 100)
-                , height (px 400)
-                , property "animation" "fadein 0.5s ease-in-out forwards"
-                , mobile
-                    [ height auto
-                    , margin3 (px 60) auto (px 0)
+                [ mobile
+                    [ display none
                     ]
-                , stickoutStyles { hover = False }
                 ]
             ]
-            ([ div
-                [ css
-                    [ mobile
-                        [ display none
-                        ]
-                    ]
-                ]
-                [ div
-                    [ css
-                        [ position absolute
-                        , top (px -stickout)
-                        , left (pct 50)
-                        , height (px (2 * stickout))
-                        , borderLeft3 (px 1) solid borderColor_
-                        ]
-                    ]
-                    []
-                , div
-                    [ css
-                        [ position absolute
-                        , bottom (px -stickout)
-                        , left (pct 50)
-                        , height (px (2 * stickout))
-                        , borderLeft3 (px 1) solid borderColor_
-                        ]
-                    ]
-                    []
-                ]
-             , div
+            [ div
                 [ css
                     [ position absolute
-                    , property "z-index" "9"
-                    , flex (num 0)
-                    , width (px 1)
                     , top (px -stickout)
-                    , bottom (px -stickout)
-                    , right (pct 50)
-                    , mobile
-                        [ display none
-                        ]
+                    , left (pct 50)
+                    , height (px (2 * stickout))
+                    , borderLeft3 (px 1) solid borderColor_
                     ]
                 ]
                 []
-             , div
+            , div
                 [ css
-                    [ displayFlex
-                    , position relative
-                    , alignItems flexStart
-                    , justifyContent spaceBetween
-                    , mobile
-                        [ display block
-                        ]
-                    , Foreign.children
-                        [ Foreign.everything
-                            [ property "width" "calc(50% - 20px)"
-                            , position relative
-                            , property "z-index" "10"
-                            , overflow visible
-                            , mobile
-                                [ width (pct 100)
-                                ]
-                            , firstChild
-                                [ marginBottom (px 40)
-                                ]
+                    [ position absolute
+                    , bottom (px -stickout)
+                    , left (pct 50)
+                    , height (px (2 * stickout))
+                    , borderLeft3 (px 1) solid borderColor_
+                    ]
+                ]
+                []
+            ]
+        , div
+            [ css
+                [ position absolute
+                , property "z-index" "9"
+                , flex (num 0)
+                , width (px 1)
+                , top (px -stickout)
+                , bottom (px -stickout)
+                , right (pct 50)
+                , mobile
+                    [ display none
+                    ]
+                ]
+            ]
+            []
+        , div
+            [ css
+                [ displayFlex
+                , position relative
+                , alignItems flexStart
+                , justifyContent spaceBetween
+                , mobile
+                    [ display block
+                    ]
+                , Global.children
+                    [ Global.everything
+                        [ property "width" "calc(50% - 20px)"
+                        , position relative
+                        , property "z-index" "10"
+                        , overflow visible
+                        , mobile
+                            [ width (pct 100)
+                            ]
+                        , firstChild
+                            [ marginBottom (px 40)
                             ]
                         ]
                     ]
                 ]
-                children
-             ]
-            )
+            ]
+            children
+        ]

@@ -1,29 +1,21 @@
-module OverEasy.Views.Home exposing (..)
+module OverEasy.Views.Home exposing (Config, link, smallTextStyles, textStyles, tiltedSubtitleStyle, view)
 
+import Css exposing (..)
+import Html.Styled exposing (Html, a, br, div, fromUnstyled, h2, img, p, text)
+import Html.Styled.Attributes exposing (class, css, href, src)
+import Json.Decode as Decode
+import OverEasy.Constants exposing (..)
+import OverEasy.Views.Home.Bg
+import OverEasy.Views.Icons as Icons
 import String.Future
 import Time
-import Json.Decode as Decode
-import Css exposing (..)
-import Html.Styled exposing (Html, text, div, img, h2, a, p, fromUnstyled, br)
-import Html.Styled.Attributes exposing (class, css, src, href)
-import Html.Styled.Events exposing (onWithOptions)
-import Window
 
 
---
-
-import OverEasy.Views.Icons as Icons
-import OverEasy.Views.Home.Bg
-import OverEasy.Constants exposing (..)
-
-
-type alias Config msg =
-    { delayedNavigate : String -> msg
-    , navigate : String -> msg
-    , links : List ( String, String )
+type alias Config =
+    { links : List ( String, String )
     , page : Int
-    , window : Window.Size
-    , time : Time.Time
+    , window : { width : Int, height : Int }
+    , time : Float
     , css : List Style
     }
 
@@ -48,17 +40,12 @@ smallTextStyles =
         ]
 
 
-link : { navigate : String -> msg, url : Maybe String, label : String, discrete : Bool } -> Html msg
-link { navigate, url, label, discrete } =
+link : { url : Maybe String, label : String, discrete : Bool } -> Html msg
+link { url, label, discrete } =
     a
         ((case url of
             Just linkUrl ->
                 [ href linkUrl
-                , onWithOptions "click"
-                    { preventDefault = True
-                    , stopPropagation = False
-                    }
-                    (navigate linkUrl |> Decode.succeed)
                 ]
 
             Nothing ->
@@ -68,9 +55,10 @@ link { navigate, url, label, discrete } =
                     [ textDecoration none
                     , color inherit
                     , display inlineBlock
-                    , borderBottom3 (px 1) solid (transparent)
+                    , borderBottom3 (px 1) solid transparent
                     , if url /= Nothing then
                         Css.batch [ opacity (num 1.0) ]
+
                       else
                         Css.batch
                             [ opacity (num 0.6)
@@ -83,6 +71,7 @@ link { navigate, url, label, discrete } =
                             , backgroundColor (rgba 0 0 0 0)
                             , smallTextStyles
                             ]
+
                       else
                         Css.batch
                             [ padding2 (px 4) (px 12)
@@ -98,6 +87,7 @@ link { navigate, url, label, discrete } =
                         if discrete then
                             [ backgroundColor (rgba 0 0 0 0.04)
                             ]
+
                         else
                             [ backgroundColor black
                             , color yellow
@@ -144,7 +134,7 @@ tiltedSubtitleStyle =
         ]
 
 
-view : Config msg -> Html msg
+view : Config -> Html msg
 view config =
     div
         [ css
@@ -229,20 +219,20 @@ view config =
                     ]
                     [ div [ css [ marginBottom (px 10) ] ]
                         [ link
-                            { navigate = config.navigate
-                            , url =
+                            { url =
                                 if config.page > 0 then
-                                    "/?p=" ++ (String.Future.fromInt <| config.page - 1) |> Just
+                                    "/?nosmooth=true&p=" ++ (String.Future.fromInt <| config.page - 1) |> Just
+
                                 else
                                     Nothing
                             , label = "<- Newer.."
                             , discrete = True
                             }
                         , link
-                            { navigate = config.navigate
-                            , url =
+                            { url =
                                 if (config.page + 1) * 3 < List.length config.links then
-                                    "/?p=" ++ (String.Future.fromInt <| config.page + 1) |> Just
+                                    "/?nosmooth=true&p=" ++ (String.Future.fromInt <| config.page + 1) |> Just
+
                                 else
                                     Nothing
                             , label = "Older ->"
@@ -256,8 +246,7 @@ view config =
                         |> List.map
                             (\( url, label ) ->
                                 link
-                                    { navigate = config.delayedNavigate
-                                    , url = Just url
+                                    { url = Just url
                                     , label = label
                                     , discrete = False
                                     }

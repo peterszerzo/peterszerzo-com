@@ -1,12 +1,11 @@
-module OverEasy.Views.Nav exposing (..)
+module OverEasy.Views.Nav exposing (view)
 
-import Json.Decode as Decode
 import Css exposing (..)
-import Html.Styled exposing (Html, text, div, a)
+import Html.Styled exposing (Html, a, div, text)
 import Html.Styled.Attributes exposing (css, href)
-import Html.Styled.Events exposing (onWithOptions)
-import OverEasy.Views.Icons as Icons
+import Json.Decode as Decode
 import OverEasy.Constants exposing (..)
+import OverEasy.Views.Icons as Icons
 
 
 view : { onClick : msg, css : List Style } -> Html msg
@@ -38,10 +37,5 @@ view config =
             , Css.batch config.css
             ]
         , href "/"
-        , onWithOptions "click"
-            { preventDefault = True
-            , stopPropagation = False
-            }
-            (Decode.succeed config.onClick)
         ]
         [ Icons.smallLogo ]

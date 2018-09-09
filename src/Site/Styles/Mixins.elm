@@ -1,4 +1,4 @@
-module Site.Styles.Mixins exposing (..)
+module Site.Styles.Mixins exposing (bodyType, calcPctMinusPx, desktop, highlightedBodyType, lineHeight, pointerEventsAll, pointerEventsNone, regularTransition, standardShadow, zIndex)
 
 import Css exposing (..)
 import Css.Media as Media

@@ -1,4 +1,4 @@
-module OverEasy.Pieces.BureaucracyIsDistracting.Constants exposing (..)
+module OverEasy.Pieces.BureaucracyIsDistracting.Constants exposing (blue, red)
 
 
 blue : String

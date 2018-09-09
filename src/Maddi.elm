@@ -1,26 +1,34 @@
-module Maddi exposing (..)
+module Maddi exposing (main)
 
-import Time
-import Process
-import Task
-import Navigation exposing (Location, program)
-import UrlParser exposing (..)
+import Browser
+import Browser.Navigation as Navigation
 import Css exposing (..)
-import Css.Foreign as Foreign
+import Css.Global as Global
 import Html exposing (Html)
-import Html.Styled exposing (div, toUnstyled, h1, text)
+import Html.Styled exposing (div, h1, text, toUnstyled)
 import Html.Styled.Attributes exposing (css)
-import Maddi.Views.Carousel as CarouselView
-import Maddi.Views.Project as ProjectView
-import Maddi.Views.Wing as Wing
-import Maddi.Views as Views
-import Maddi.Views.Mixins exposing (mobile)
+import Json.Encode as Encode
 import Maddi.Content as Content
 import Maddi.Data.Project as Project
+import Maddi.Views as Views
+import Maddi.Views.Carousel as CarouselView
+import Maddi.Views.Mixins exposing (mobile)
+import Maddi.Views.Project as ProjectView
+import Maddi.Views.Wing as Wing
+import Process
+import Task
+import Time
+import Url
+import Url.Parser exposing (..)
+
+
+type alias Flags =
+    Encode.Value
 
 
 type alias State =
-    { route : Route
+    { key : Navigation.Key
+    , route : Route
     , prevRoute : Maybe Route
     , nextRoute : Maybe Route
     , project : ProjectView.State
@@ -29,9 +37,10 @@ type alias State =
     }
 
 
-init : Location -> ( State, Cmd Msg )
-init location =
-    ( { route = parse location
+init : Flags -> Url.Url -> Navigation.Key -> ( State, Cmd Msg )
+init _ url key =
+    ( { key = key
+      , route = parse url
       , prevRoute = Nothing
       , nextRoute = Nothing
       , project = ProjectView.init
@@ -42,14 +51,16 @@ init location =
     )
 
 
-main : Program Never State Msg
+main : Program Flags State Msg
 main =
-    program
-        (ChangeRoute << parse)
+    Browser.application
         { init = init
         , view = view
         , update = update
         , subscriptions = subscriptions
+        , onUrlRequest = UrlRequest
+        , onUrlChange =
+            ChangeRoute << parse
         }
 
 
@@ -60,34 +71,17 @@ type Route
     | NotFound
 
 
-parse : Navigation.Location -> Route
+parse : Url.Url -> Route
 parse location =
     location
-        |> parsePath matchers
+        |> Url.Parser.parse matchers
         |> Maybe.withDefault NotFound
-
-
-parseRawPath : String -> Route
-parseRawPath path =
-    parse
-        { href = ""
-        , host = ""
-        , hostname = ""
-        , protocol = ""
-        , origin = ""
-        , port_ = ""
-        , pathname = path
-        , search = ""
-        , hash = ""
-        , username = ""
-        , password = ""
-        }
 
 
 matchers : Parser (Route -> a) a
 matchers =
     oneOf
-        [ s "" |> map Home
+        [ Url.Parser.top |> map Home
         , s "projects" </> string |> map Project
         , s "about" |> map About
         ]
@@ -98,6 +92,7 @@ type Msg
     | Navigate String
     | DelayedNavigate String
     | SetMobileNav Bool
+    | UrlRequest Browser.UrlRequest
     | ChangeRoute Route
     | ChangeProjectState ProjectView.State ProjectView.Data
 
@@ -113,18 +108,29 @@ update msg model =
 
         Navigate newPath ->
             ( model
-            , Navigation.newUrl newPath
+            , Navigation.pushUrl model.key newPath
             )
 
         DelayedNavigate newPath ->
             ( { model
                 | nextRoute =
-                    parseRawPath newPath
-                        |> Just
+                    newPath
+                        |> Url.fromString
+                        |> Maybe.map parse
               }
-            , Process.sleep (400 * Time.millisecond)
+            , Process.sleep 400
                 |> Task.attempt (\res -> Navigate newPath)
             )
+
+        UrlRequest urlRequest ->
+            case urlRequest of
+                Browser.Internal url ->
+                    ( model
+                    , Navigation.pushUrl model.key (Url.toString url)
+                    )
+
+                Browser.External href ->
+                    ( model, Navigation.load href )
 
         ChangeRoute newRoute ->
             ( { model
@@ -145,37 +151,28 @@ update msg model =
             )
 
 
-view : State -> Html Msg
-view model =
-    let
-        selectedProject =
-            case model.nextRoute of
-                Just (Project projectId) ->
-                    Just projectId
-
-                _ ->
-                    Nothing
-    in
-        div
-            [ css
-                [ width (pct 100)
-                , height (pct 100)
-                , padding2 (px 60) (px 20)
-                , displayFlex
-                , alignItems center
-                , justifyContent center
-                , mobile
-                    [ overflow auto
-                    ]
+layout : State -> List (Html.Styled.Html Msg) -> List (Html Msg)
+layout model children =
+    [ div
+        [ css
+            [ width (pct 100)
+            , height (pct 100)
+            , padding2 (px 60) (px 20)
+            , displayFlex
+            , alignItems center
+            , justifyContent center
+            , mobile
+                [ overflow auto
                 ]
             ]
-            [ Foreign.global
-                [ Foreign.everything
-                    [ boxSizing borderBox
-                    , property "-webkit-font-smoothing" "antialiased"
-                    , property "font-family" "Lato, sans-serif"
-                    ]
-                , Foreign.selector """
+        ]
+        [ Global.global
+            [ Global.everything
+                [ boxSizing borderBox
+                , property "-webkit-font-smoothing" "antialiased"
+                , property "font-family" "Lato, sans-serif"
+                ]
+            , Global.selector """
                 @keyframes fadein {
                   0% {
                     opacity: 0;
@@ -188,95 +185,125 @@ view model =
 
                 .noselector
                 """ [ display block ]
-                , Foreign.each [ Foreign.html, Foreign.body ]
-                    [ margin (px 0)
-                    , height (pct 100)
-                    ]
-                , Foreign.body
-                    [ mobile
-                        [ overflow auto
-                        , height auto
-                        ]
-                    ]
-                , Foreign.selector "#App"
-                    [ width (pct 100)
-                    , height (pct 100)
-                    , mobile
-                        [ height auto
-                        ]
-                    ]
-                , Foreign.a
-                    [ textDecoration none
-                    , border (px 0)
+            , Global.each [ Global.html, Global.body ]
+                [ margin (px 0)
+                , height (pct 100)
+                ]
+            , Global.body
+                [ mobile
+                    [ overflow auto
+                    , height auto
                     ]
                 ]
-            , Views.siteHeader
-                { navigate = Navigate
-                , mobileNav = model.mobileNav
-                , setMobileNav = SetMobileNav
-                }
-            , div
-                [ css
-                    [ maxWidth (px 1000)
-                    , width (pct 100)
-                    , margin auto
-                    , position relative
+            , Global.selector "#App"
+                [ width (pct 100)
+                , height (pct 100)
+                , mobile
+                    [ height auto
                     ]
                 ]
-                (case model.route of
-                    Home ->
-                        [ div
-                            [ css
-                                [ width (pct 100)
-                                , height (px 240)
-                                , margin2 (px 60) (px 0)
-                                , property "animation" "fadein 0.5s ease-in-out forwards"
-                                ]
-                            ]
-                          <|
-                            List.indexedMap
-                                (\index project ->
-                                    Wing.wing
-                                        { order = index
-                                        , project = project
-                                        , navigate = DelayedNavigate
-                                        , selected = selectedProject
-                                        }
-                                )
-                                Content.projects
-                        ]
-
-                    About ->
-                        [ Views.layout
-                            [ Views.static Content.about
-                            , CarouselView.view
-                                { data = [ ( "/maddi/cover.jpg", "Anna Cingi" ) ]
-                                , state = CarouselView.init
-                                , toMsg = \_ _ -> NoOp
-                                }
-                            ]
-                        ]
-
-                    Project id ->
-                        let
-                            project =
-                                List.filter (\prj -> prj.id == id) Content.projects
-                                    |> List.head
-                                    |> Maybe.withDefault Project.placeholder
-                        in
-                            [ ProjectView.view
-                                { data = project
-                                , state = model.project
-                                , toMsg = ChangeProjectState
-                                }
-                            ]
-
-                    NotFound ->
-                        [ Html.Styled.text "Not found"
-                        ]
-                )
+            , Global.a
+                [ textDecoration none
+                , border (px 0)
+                ]
             ]
-            |> toUnstyled
+        , Views.siteHeader
+            { navigate = Navigate
+            , mobileNav = model.mobileNav
+            , setMobileNav = SetMobileNav
+            }
+        , div
+            [ css
+                [ maxWidth (px 1000)
+                , width (pct 100)
+                , margin auto
+                , position relative
+                ]
+            ]
+            children
+        ]
+    ]
+        |> List.map toUnstyled
+
+
+view : State -> Browser.Document Msg
+view model =
+    let
+        selectedProject =
+            case model.nextRoute of
+                Just (Project projectId) ->
+                    Just projectId
+
+                _ ->
+                    Nothing
+    in
+    case model.route of
+        Home ->
+            { title = "Home"
+            , body =
+                [ div
+                    [ css
+                        [ width (pct 100)
+                        , height (px 240)
+                        , margin2 (px 60) (px 0)
+                        , property "animation" "fadein 0.5s ease-in-out forwards"
+                        ]
+                    ]
+                  <|
+                    List.indexedMap
+                        (\index project ->
+                            Wing.wing
+                                { order = index
+                                , project = project
+                                , navigate = DelayedNavigate
+                                , selected = selectedProject
+                                }
+                        )
+                        Content.projects
+                ]
+                    |> layout model
+            }
+
+        About ->
+            { title = "About"
+            , body =
+                [ Views.layout
+                    [ Views.static Content.about
+                    , CarouselView.view
+                        { data = [ ( "/maddi/cover.jpg", "Anna Cingi" ) ]
+                        , state = CarouselView.init
+                        , toMsg = \_ _ -> NoOp
+                        }
+                    ]
+                ]
+                    |> layout model
+            }
+
+        Project id ->
+            let
+                project =
+                    List.filter (\prj -> prj.id == id) Content.projects
+                        |> List.head
+                        |> Maybe.withDefault Project.placeholder
+            in
+            { title = "Projects"
+            , body =
+                [ ProjectView.view
+                    { data = project
+                    , state = model.project
+                    , toMsg = ChangeProjectState
+                    }
+                ]
+                    |> layout model
+            }
+
+        NotFound ->
+            { title = "Not found"
+            , body =
+                [ Html.Styled.text "Not found"
+                ]
+                    |> layout model
+            }
 
 
 subscriptions : State -> Sub Msg

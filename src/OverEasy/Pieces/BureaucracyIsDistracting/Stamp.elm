@@ -1,11 +1,10 @@
-module OverEasy.Pieces.BureaucracyIsDistracting.Stamp exposing (..)
+module OverEasy.Pieces.BureaucracyIsDistracting.Stamp exposing (gradient, toPx, view)
 
-import Time
-import String.Future
 import Html exposing (Html, text)
-import Svg exposing (svg, path, line, rect, g, defs, linearGradient, stop)
-import Svg.Attributes exposing (id, viewBox, x, y, x1, x2, y1, y2, width, height, rx, ry, stroke, fill, strokeWidth, strokeLinecap, strokeLinejoin, d, offset, stopColor)
 import OverEasy.Pieces.BureaucracyIsDistracting.Constants as Constants
+import String.Future
+import Svg exposing (defs, g, line, linearGradient, path, rect, stop, svg)
+import Svg.Attributes exposing (d, fill, height, id, offset, rx, ry, stopColor, stroke, strokeLinecap, strokeLinejoin, strokeWidth, viewBox, width, x, x1, x2, y, y1, y2)
 
 
 toPx : Float -> String
@@ -38,32 +37,33 @@ gradient config =
                 * (1 + factor)
                 |> toPx
     in
-        linearGradient
-            (if config.isHorizontal then
-                [ id config.id
-                , x1 "0%"
-                , x2 "100%"
-                , y1 "0%"
-                , y2 "0%"
-                ]
-             else
-                [ id config.id
-                , x1 "0%"
-                , x2 "0%"
-                , y1 "0%"
-                , y2 "100%"
-                ]
-            )
-            [ stop [ offset "0%", stopColor "#000" ] []
-            , stop [ offset redStart, stopColor "#000" ] []
-            , stop [ offset redStart, stopColor Constants.red ] []
-            , stop [ offset redEnd, stopColor Constants.red ] []
-            , stop [ offset redEnd, stopColor "#000" ] []
-            , stop [ offset "100%", stopColor "#000" ] []
+    linearGradient
+        (if config.isHorizontal then
+            [ id config.id
+            , x1 "0%"
+            , x2 "100%"
+            , y1 "0%"
+            , y2 "0%"
             ]
 
+         else
+            [ id config.id
+            , x1 "0%"
+            , x2 "0%"
+            , y1 "0%"
+            , y2 "100%"
+            ]
+        )
+        [ stop [ offset "0%", stopColor "#000" ] []
+        , stop [ offset redStart, stopColor "#000" ] []
+        , stop [ offset redStart, stopColor Constants.red ] []
+        , stop [ offset redEnd, stopColor Constants.red ] []
+        , stop [ offset redEnd, stopColor "#000" ] []
+        , stop [ offset "100%", stopColor "#000" ] []
+        ]
 
-view : { time : Time.Time, singleSnake : Bool } -> Html msg
+
+view : { time : Float, singleSnake : Bool } -> Html msg
 view config =
     svg [ viewBox "0 0 160 160" ]
         [ defs
@@ -94,7 +94,7 @@ view config =
             , strokeLinejoin "round"
             , d <|
                 "M126,18 "
-                    ++ (String.repeat 5 "l0,6 t2,2 l6,0 t2,2 l0,6 t-2,2 l-6,0 t-2,2")
+                    ++ String.repeat 5 "l0,6 t2,2 l6,0 t2,2 l0,6 t-2,2 l-6,0 t-2,2"
             ]
             []
         , path
@@ -106,7 +106,7 @@ view config =
             , strokeLinejoin "round"
             , d <|
                 "M1,24 "
-                    ++ (String.repeat 5 "l0,6 t2,2 l6,0 t2,2 l0,6 t-2,2 l-6,0 t-2,2")
+                    ++ String.repeat 5 "l0,6 t2,2 l6,0 t2,2 l0,6 t-2,2 l-6,0 t-2,2"
             ]
             []
         , path
@@ -118,7 +118,7 @@ view config =
             , strokeLinejoin "round"
             , d <|
                 "M20,132 "
-                    ++ (String.repeat 5 "l6,0 t2,2 l0,6 t2,2 l6,0 t2,-2 l0,-6 t2,-2")
+                    ++ String.repeat 5 "l6,0 t2,2 l0,6 t2,2 l6,0 t2,-2 l0,-6 t2,-2"
             ]
             []
         , path
@@ -129,12 +129,13 @@ view config =
             , stroke <|
                 if config.singleSnake then
                     "#000"
+
                 else
                     "url(#snake2)"
             , strokeLinejoin "round"
             , d <|
                 "M14,4 "
-                    ++ (String.repeat 5 "l6,0 t2,2 l0,6 t2,2 l6,0 t2,-2 l0,-6 t2,-2")
+                    ++ String.repeat 5 "l6,0 t2,2 l0,6 t2,2 l6,0 t2,-2 l0,-6 t2,-2"
             ]
             []
         ]

@@ -1,8 +1,8 @@
 module OverEasy.Pieces.BordersAreLenient.P08 exposing (view)
 
 import Html exposing (Html)
-import Svg exposing (svg, g, line, circle, path, polygon, polyline)
-import Svg.Attributes exposing (viewBox, class, x1, x2, y1, y2, cx, cy, r, d, points)
+import Svg exposing (circle, g, line, path, polygon, polyline, svg)
+import Svg.Attributes exposing (class, cx, cy, d, points, r, viewBox, x1, x2, y1, y2)
 
 
 view : Html msg

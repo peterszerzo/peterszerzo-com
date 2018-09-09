@@ -1,9 +1,8 @@
 import * as d3 from "d3-hierarchy"
 const Elm = require(`./${process.env.ELM_APP_MAIN}.elm`)
 
-const startApp = (node) => {
-  node.innerHTML = "" 
-  const elmApp = Elm[process.env.ELM_APP_MAIN].embed(node)
+const startApp = node => {
+  const elmApp = Elm.Elm[process.env.ELM_APP_MAIN].init({ node })
   elmApp.ports && elmApp.ports.packLayoutReq.subscribe(msg => {
     const pack = d3.pack()
       .size([msg.width, msg.height])

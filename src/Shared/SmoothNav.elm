@@ -1,22 +1,20 @@
-module Shared.SmoothNav
-    exposing
-        ( NavState(..)
-        , Model
-        , Msg(ChangeRoute)
-        , init
-        , initWith
-        , navState
-        , route
-        , setRoute
-        , update
-        , newUrl
-        , delayedNewUrl
-        )
+module Shared.SmoothNav exposing
+    ( Model
+    , Msg(..)
+    , NavState(..)
+    , delayedNewUrl
+    , init
+    , initWith
+    , navState
+    , newUrl
+    , route
+    , setRoute
+    , update
+    )
 
-import Navigation
+import Browser.Navigation as Navigation
 import Process
 import Task
-import Time
 
 
 type NavState
@@ -30,8 +28,8 @@ type Model route
     = Model
         { route : route
         , navState : NavState
-        , inbound : Time.Time
-        , outbound : Time.Time
+        , inbound : Float
+        , outbound : Float
         }
 
 
@@ -48,20 +46,20 @@ type Msg route
 init : route -> ( Model route, Cmd (Msg route) )
 init =
     initWith
-        { inbound = 50 * Time.millisecond
-        , outbound = 200 * Time.millisecond
+        { inbound = 50
+        , outbound = 200
         }
 
 
-initWith : { outbound : Time.Time, inbound : Time.Time } -> route -> ( Model route, Cmd (Msg route) )
-initWith { outbound, inbound } route =
+initWith : { outbound : Float, inbound : Float } -> route -> ( Model route, Cmd (Msg route) )
+initWith { outbound, inbound } initRoute =
     ( Model
-        { route = route
+        { route = initRoute
         , navState = Inbound
         , inbound = inbound
         , outbound = outbound
         }
-    , Process.sleep (20 * Time.millisecond)
+    , Process.sleep 20
         |> Task.attempt (\_ -> RestRoute)
     )
 
@@ -72,8 +70,8 @@ route (Model model) =
 
 
 setRoute : route -> Model route -> Model route
-setRoute route (Model model) =
-    Model { model | route = route }
+setRoute newRoute (Model model) =
+    Model { model | route = newRoute }
 
 
 navState : Model route -> NavState
@@ -83,25 +81,25 @@ navState (Model model) =
 
 newUrl : String -> Cmd (Msg route)
 newUrl newPath =
-    Process.sleep (0 * Time.millisecond)
+    Process.sleep 0
         |> Task.attempt (\_ -> Navigate newPath)
 
 
 delayedNewUrl : String -> Cmd (Msg route)
 delayedNewUrl newPath =
-    Process.sleep (0 * Time.millisecond)
+    Process.sleep 0
         |> Task.attempt (\_ -> DelayedNavigate newPath)
 
 
-update : Msg route -> Model route -> ( Model route, Cmd (Msg route) )
-update msg (Model model) =
+update : Navigation.Key -> Msg route -> Model route -> ( Model route, Cmd (Msg route) )
+update key msg (Model model) =
     case msg of
         NoOp ->
             ( Model model, Cmd.none )
 
         Navigate newPath ->
             ( Model model
-            , Navigation.newUrl newPath
+            , Navigation.pushUrl key newPath
             )
 
         DelayedNavigate newPath ->
@@ -112,31 +110,33 @@ update msg (Model model) =
 
         DelayedNavigate2 newPath ->
             ( Model { model | navState = Clear }
-            , Process.sleep (20 * Time.millisecond)
+            , Process.sleep 20
                 |> Task.attempt (\_ -> DelayedNavigate3 newPath)
             )
 
         DelayedNavigate3 newPath ->
             ( Model model
-            , Navigation.newUrl newPath
+            , Navigation.pushUrl key newPath
             )
 
         RestRoute ->
             ( Model { model | navState = Rest }, Cmd.none )
 
-        ChangeRoute route ->
+        ChangeRoute newRoute ->
             ( Model
                 { model
-                    | route = route
+                    | route = newRoute
                     , navState =
                         if model.navState == Clear then
                             Inbound
+
                         else
                             model.navState
                 }
             , Cmd.batch
                 [ if model.navState == Clear then
                     Process.sleep model.inbound |> Task.attempt (\_ -> RestRoute)
+
                   else
                     Cmd.none
                 ]

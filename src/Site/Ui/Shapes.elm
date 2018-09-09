@@ -1,8 +1,8 @@
-module Site.Ui.Shapes exposing (..)
+module Site.Ui.Shapes exposing (arrow, close, elmArborist, elmgameroom, logo, newamerica, nlx, overeasy, ripsaw, smallLogo, splytlight, twistydonutracer)
 
 import Html exposing (Html)
-import Svg exposing (svg, g, path, polyline, rect, line, circle, polygon)
-import Svg.Attributes exposing (viewBox, stroke, fill, strokeWidth, strokeLinecap, strokeLinejoin, d, points, transform, textRendering, x, y, width, height, rx, x1, x2, y1, y2, cx, cy, r)
+import Svg exposing (circle, g, line, path, polygon, polyline, rect, svg)
+import Svg.Attributes exposing (cx, cy, d, fill, height, points, r, rx, stroke, strokeLinecap, strokeLinejoin, strokeWidth, textRendering, transform, viewBox, width, x, x1, x2, y, y1, y2)
 
 
 ripsaw : Html msg

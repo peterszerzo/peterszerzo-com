@@ -1,9 +1,9 @@
-module Maddi.Views.Carousel exposing (..)
+module Maddi.Views.Carousel exposing (Config, Data, State, expandButton, init, view)
 
-import Html.Styled exposing (Html, div, img, button)
+import Css exposing (..)
+import Html.Styled exposing (Html, button, div, img)
 import Html.Styled.Attributes exposing (alt, css)
 import Html.Styled.Events exposing (onClick)
-import Css exposing (..)
 import Maddi.Views as Views
 
 
@@ -59,87 +59,89 @@ view config =
                 |> List.head
                 |> Maybe.withDefault ( "", "" )
     in
-        div
+    div
+        [ css
+            [ borderRadius (px 3)
+            , height (px 360)
+            , position relative
+            , overflow visible
+            ]
+        ]
+        [ div
             [ css
-                [ borderRadius (px 3)
-                , height (px 360)
+                [ maxWidth (pct 100)
+                , backgroundColor (rgba 0 0 0 0.08)
+                , height (pct 100)
+                , margin auto
+                , displayFlex
+                , alignItems center
+                , justifyContent center
                 , position relative
-                , overflow visible
                 ]
             ]
-            [ div
+          <|
+            [ img
                 [ css
                     [ maxWidth (pct 100)
-                    , backgroundColor (rgba 0 0 0 0.08)
-                    , height (pct 100)
+                    , maxHeight (pct 100)
+                    , display block
                     , margin auto
-                    , displayFlex
-                    , alignItems center
-                    , justifyContent center
-                    , position relative
                     ]
+                , Html.Styled.Attributes.src url
+                , alt altAttr
                 ]
-              <|
-                [ img
-                    [ css
-                        [ maxWidth (pct 100)
-                        , maxHeight (pct 100)
-                        , display block
-                        , margin auto
-                        ]
-                    , Html.Styled.Attributes.src url
-                    , alt altAttr
-                    ]
-                    []
+                []
 
-                -- Placeholder for expand button
-                ]
-                    ++ (if List.length config.data > 1 then
-                            [ div
-                                [ css
-                                    [ position absolute
-                                    , width (pct 100)
-                                    , left (px 0)
-                                    , textAlign center
-                                    , bottom (px -22)
-                                    ]
+            -- Placeholder for expand button
+            ]
+                ++ (if List.length config.data > 1 then
+                        [ div
+                            [ css
+                                [ position absolute
+                                , width (pct 100)
+                                , left (px 0)
+                                , textAlign center
+                                , bottom (px -22)
                                 ]
-                              <|
-                                List.indexedMap
-                                    (\index _ ->
-                                        div
-                                            [ css
-                                                [ cursor pointer
-                                                , display inlineBlock
-                                                , padding (px 4)
-                                                , margin2 (px 0) (px 1)
-                                                , after
-                                                    [ property "content" "' '"
-                                                    , display block
-                                                    , width (px 10)
-                                                    , height (px 10)
-                                                    , boxSizing borderBox
-                                                    , borderRadius (pct 50)
-                                                    , property "transition" "all 0.1s"
-                                                    , backgroundColor <|
-                                                        if index == config.state.active then
-                                                            hex "898989"
-                                                        else
-                                                            hex "CECECE"
-                                                    ]
-                                                , hover
-                                                    [ after
-                                                        [ backgroundColor (hex "898989")
-                                                        ]
+                            ]
+                          <|
+                            List.indexedMap
+                                (\index _ ->
+                                    div
+                                        [ css
+                                            [ cursor pointer
+                                            , display inlineBlock
+                                            , padding (px 4)
+                                            , margin2 (px 0) (px 1)
+                                            , after
+                                                [ property "content" "' '"
+                                                , display block
+                                                , width (px 10)
+                                                , height (px 10)
+                                                , boxSizing borderBox
+                                                , borderRadius (pct 50)
+                                                , property "transition" "all 0.1s"
+                                                , backgroundColor <|
+                                                    if index == config.state.active then
+                                                        hex "898989"
+
+                                                    else
+                                                        hex "CECECE"
+                                                ]
+                                            , hover
+                                                [ after
+                                                    [ backgroundColor (hex "898989")
                                                     ]
                                                 ]
-                                            , onClick (config.toMsg { active = index, isExpanded = config.state.isExpanded } config.data)
                                             ]
-                                            []
-                                    )
-                                    config.data
-                            ]
-                        else
-                            []
-                       )
-            ]
+                                        , onClick (config.toMsg { active = index, isExpanded = config.state.isExpanded } config.data)
+                                        ]
+                                        []
+                                )
+                                config.data
+                        ]
+
+                    else
+                        []
+                   )
+        ]

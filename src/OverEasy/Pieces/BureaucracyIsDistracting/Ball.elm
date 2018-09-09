@@ -1,7 +1,6 @@
-module OverEasy.Pieces.BureaucracyIsDistracting.Ball exposing (..)
+module OverEasy.Pieces.BureaucracyIsDistracting.Ball exposing (Ball, Repositioning, init, reposition, shouldReposition, tick)
 
 import Random
-import Time
 
 
 type alias Ball =
@@ -10,7 +9,7 @@ type alias Ball =
     , vx : Float
     , vy : Float
     , rot : Float
-    , time : Time.Time
+    , time : Float
     }
 
 
@@ -32,22 +31,23 @@ type alias Repositioning =
     }
 
 
-tick : Time.Time -> Ball -> Ball
+tick : Float -> Ball -> Ball
 tick time ball =
     let
         timeAdjustment =
             if ball.time == 0 then
                 1
+
             else
                 (time - ball.time) / 16
     in
-        { x = ball.x + ball.vx * 0.001 * timeAdjustment
-        , y = ball.y + ball.vy * 0.001 * timeAdjustment
-        , vx = ball.vx
-        , vy = ball.vy
-        , rot = ball.rot + (0.001 * 3 * 15 * timeAdjustment)
-        , time = time
-        }
+    { x = ball.x + ball.vx * 0.001 * timeAdjustment
+    , y = ball.y + ball.vy * 0.001 * timeAdjustment
+    , vx = ball.vx
+    , vy = ball.vy
+    , rot = ball.rot + (0.001 * 3 * 15 * timeAdjustment)
+    , time = time
+    }
 
 
 shouldReposition : Ball -> Bool

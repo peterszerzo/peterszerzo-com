@@ -1,4 +1,4 @@
-module Maddi.Content exposing (projects, about)
+module Maddi.Content exposing (about, projects)
 
 import Maddi.Data.Project as Project
 

@@ -1,22 +1,25 @@
-module OverEasy exposing (..)
+module OverEasy exposing (main)
 
-import String.Future
-import Time
-import Task
-import AnimationFrame
+import Browser
+import Browser.Dom as Dom
+import Browser.Events as Events
+import Browser.Navigation as Navigation
 import Css exposing (..)
-import Css.Foreign as Foreign
+import Css.Global as Global
 import Html exposing (Html)
-import Html.Styled exposing (fromUnstyled, toUnstyled, text, div, img)
+import Html.Styled exposing (div, fromUnstyled, img, text, toUnstyled)
 import Html.Styled.Attributes exposing (css)
-import Navigation
-import Window
-import UrlParser exposing (..)
-import OverEasy.Views.Home
-import OverEasy.Pieces as Pieces
-import OverEasy.Views.Nav
+import Json.Encode as Encode
 import OverEasy.Constants exposing (..)
+import OverEasy.Pieces as Pieces
+import OverEasy.Views.Home
+import OverEasy.Views.Nav
 import Shared.SmoothNav as SmoothNav
+import Task
+import Time
+import Url
+import Url.Parser exposing (..)
+import Url.Parser.Query as Query
 
 
 type Route
@@ -25,17 +28,33 @@ type Route
     | NotFound
 
 
-parse : Navigation.Location -> Route
+type alias Flags =
+    Encode.Value
+
+
+parse : Url.Url -> Route
 parse location =
     location
-        |> parsePath matchers
+        |> Url.Parser.parse matchers
         |> Maybe.withDefault (Home 0)
+
+
+timeDiff : Model -> Float
+timeDiff model =
+    case ( model.time, model.startTime ) of
+        ( Just time, Just startTime ) ->
+            Time.posixToMillis time
+                - Time.posixToMillis startTime
+                |> toFloat
+
+        ( _, _ ) ->
+            0
 
 
 matchers : Parser (Route -> a) a
 matchers =
     oneOf
-        [ s "" <?> intParam "p" |> map (Maybe.withDefault 0 >> Home)
+        [ Url.Parser.top <?> Query.int "p" |> map (Maybe.withDefault 0 >> Home)
         , Pieces.matchers |> map Pieces
         ]
 
@@ -54,17 +73,19 @@ type Msg
     | Navigate String
     | DelayedNavigate String
     | PieceMsg Pieces.Msg
-    | Resize Window.Size
-    | Tick Time.Time
-    | StartTime Time.Time
+    | UrlRequest Browser.UrlRequest
+    | Resize Int Int
+    | Tick Time.Posix
+    | StartTime Time.Posix
     | NoOp
 
 
 type alias Model =
     { smoothNav : SmoothNav.Model Route
-    , window : Window.Size
-    , startTime : Time.Time
-    , time : Time.Time
+    , key : Navigation.Key
+    , window : { width : Int, height : Int }
+    , startTime : Maybe Time.Posix
+    , time : Maybe Time.Posix
     , lastHomePage : Int
     }
 
@@ -79,31 +100,32 @@ routeInitCmd route =
             Cmd.none
 
 
-init : Navigation.Location -> ( Model, Cmd Msg )
-init location =
+init : Flags -> Url.Url -> Navigation.Key -> ( Model, Cmd Msg )
+init flags url key =
     let
         route =
-            parse location
+            parse url
 
         ( smoothNav, smoothNavCmd ) =
             SmoothNav.init route
     in
-        ( { smoothNav = smoothNav
-          , window =
-                { width = 0
-                , height = 0
-                }
-          , startTime = 0
-          , time = 0
-          , lastHomePage = 0
-          }
-        , Cmd.batch
-            [ routeInitCmd route
-            , Window.size |> Task.perform Resize
-            , Time.now |> Task.perform StartTime
-            , smoothNavCmd |> Cmd.map SmoothNav
-            ]
-        )
+    ( { smoothNav = smoothNav
+      , key = key
+      , window =
+            { width = 0
+            , height = 0
+            }
+      , startTime = Nothing
+      , time = Nothing
+      , lastHomePage = 0
+      }
+    , Cmd.batch
+        [ routeInitCmd route
+        , Dom.getViewport |> Task.perform (\viewport -> Resize (floor viewport.viewport.width) (floor viewport.viewport.height))
+        , Time.now |> Task.perform StartTime
+        , smoothNavCmd |> Cmd.map SmoothNav
+        ]
+    )
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -112,31 +134,59 @@ update msg model =
         NoOp ->
             ( model, Cmd.none )
 
-        Resize window ->
-            ( { model | window = window }, Cmd.none )
+        Resize width height ->
+            ( { model | window = { width = width, height = height } }, Cmd.none )
 
         SmoothNav smoothNavMsg ->
             let
                 ( smoothNav, smoothNavCmd ) =
-                    SmoothNav.update smoothNavMsg model.smoothNav
+                    SmoothNav.update model.key smoothNavMsg model.smoothNav
             in
-                ( { model | smoothNav = smoothNav }
-                , Cmd.batch
-                    [ smoothNavCmd |> Cmd.map SmoothNav
-                    , case smoothNavMsg of
-                        SmoothNav.ChangeRoute route ->
-                            routeInitCmd route
+            ( { model | smoothNav = smoothNav }
+            , Cmd.batch
+                [ smoothNavCmd |> Cmd.map SmoothNav
+                , case smoothNavMsg of
+                    SmoothNav.ChangeRoute route ->
+                        routeInitCmd route
 
-                        _ ->
-                            Cmd.none
-                    ]
-                )
+                    _ ->
+                        Cmd.none
+                ]
+            )
+
+        UrlRequest urlRequest ->
+            case urlRequest of
+                Browser.Internal url ->
+                    let
+                        urlString =
+                            Url.toString url
+
+                        isSmooth =
+                            String.contains "nosmooth" urlString
+                                |> not
+                    in
+                    ( model
+                    , if isSmooth then
+                        SmoothNav.delayedNewUrl urlString
+                            |> Cmd.map SmoothNav
+
+                      else
+                        Navigation.pushUrl model.key urlString
+                    )
+
+                Browser.External href ->
+                    ( model, Navigation.load href )
 
         Tick time ->
-            ( { model | time = time }, Cmd.none )
+            ( { model
+                | time =
+                    Just time
+              }
+            , Cmd.none
+            )
 
         StartTime time ->
-            ( { model | startTime = time }, Cmd.none )
+            ( { model | startTime = Just time }, Cmd.none )
 
         PieceMsg pageMsg ->
             case SmoothNav.route model.smoothNav of
@@ -181,9 +231,9 @@ viewProject config =
                 , height (px 480)
                 , property "transform" <|
                     "scale("
-                        ++ (String.Future.fromFloat config.scale)
+                        ++ String.fromFloat config.scale
                         ++ ","
-                        ++ (String.Future.fromFloat config.scale)
+                        ++ String.fromFloat config.scale
                         ++ ")"
                 ]
             ]
@@ -191,7 +241,7 @@ viewProject config =
         ]
 
 
-projectScale : Window.Size -> Float
+projectScale : { width : Int, height : Int } -> Float
 projectScale window =
     let
         w =
@@ -206,8 +256,8 @@ projectScale window =
         fy =
             (window.height - 40 |> toFloat) / h
     in
-        min fx fy
-            |> min 1
+    min fx fy
+        |> min 1
 
 
 transitionCss : SmoothNav.NavState -> List Style
@@ -231,12 +281,11 @@ transitionCss navState =
         SmoothNav.Clear ->
             []
     )
-        ++ ([ property "transition" "all 0.2s"
-            ]
-           )
+        ++ [ property "transition" "all 0.2s"
+           ]
 
 
-view : Model -> Html Msg
+view : Model -> Browser.Document Msg
 view model =
     let
         navState =
@@ -258,9 +307,12 @@ view model =
         transitionCss_ =
             transitionCss navState
     in
-        if (model.window.width == 0 && model.window.height == 0) then
+    { title = "OverEasy"
+    , body =
+        [ if model.window.width == 0 && model.window.height == 0 then
             text "" |> toUnstyled
-        else
+
+          else
             div
                 [ css
                     [ height (pct 100)
@@ -269,20 +321,20 @@ view model =
                     , overflow hidden
                     ]
                 ]
-                [ Foreign.global
-                    [ Foreign.each
-                        [ Foreign.body
-                        , Foreign.html
+                [ Global.global
+                    [ Global.each
+                        [ Global.body
+                        , Global.html
                         ]
                         [ width (pct 100)
                         , height (pct 100)
                         , padding (px 0)
                         , margin (px 0)
                         ]
-                    , Foreign.body
+                    , Global.body
                         [ backgroundColor black
                         ]
-                    , Foreign.everything
+                    , Global.everything
                         [ property "font-family" "Moon, sans-serif"
                         ]
                     ]
@@ -292,21 +344,20 @@ view model =
 
                     _ ->
                         OverEasy.Views.Nav.view
-                            { onClick = (DelayedNavigate <| "/?p=" ++ (String.Future.fromInt model.lastHomePage))
+                            { onClick = DelayedNavigate <| "/?p=" ++ String.fromInt model.lastHomePage
                             , css = transitionCss_
                             }
                 , if navState == SmoothNav.Clear then
                     text ""
+
                   else
-                    (case route of
+                    case route of
                         Home page ->
                             OverEasy.Views.Home.view
-                                { delayedNavigate = DelayedNavigate
-                                , navigate = Navigate
-                                , links = links
+                                { links = links
                                 , page = page
                                 , window = model.window
-                                , time = model.time - model.startTime
+                                , time = timeDiff model
                                 , css = transitionCss_
                                 }
 
@@ -317,9 +368,10 @@ view model =
                             Pieces.view piece
                                 |> Html.map PieceMsg
                                 |> viewPrj
-                    )
                 ]
                 |> toUnstyled
+        ]
+    }
 
 
 subscriptions : Model -> Sub Msg
@@ -331,8 +383,12 @@ subscriptions model =
 
             Home _ ->
                 Sub.batch
-                    [ AnimationFrame.times Tick
-                    , Window.resizes Resize
+                    [ if True then
+                        Sub.none
+
+                      else
+                        Events.onAnimationFrame Tick
+                    , Events.onResize Resize
                     ]
 
             NotFound ->
@@ -340,12 +396,13 @@ subscriptions model =
         ]
 
 
-main : Program Never Model Msg
+main : Program Flags Model Msg
 main =
-    Navigation.program
-        ((SmoothNav << SmoothNav.ChangeRoute) << parse)
+    Browser.application
         { view = view
         , init = init
         , update = update
         , subscriptions = subscriptions
+        , onUrlChange = (SmoothNav << SmoothNav.ChangeRoute) << parse
+        , onUrlRequest = UrlRequest
         }

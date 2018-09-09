@@ -1,27 +1,39 @@
-module OverEasy.Pieces.WalkWithMe exposing (..)
+module OverEasy.Pieces.WalkWithMe exposing (Model, Msg(..), init, subscriptions, update, view)
 
-import Time
-import AnimationFrame
-import Html exposing (Html, Attribute, div, program)
+import Browser.Events as Events
+import Html exposing (Attribute, Html, div)
 import Html.Attributes exposing (style)
-import WebGL
 import Shared.SimpleWebGL as SimpleWebGL
+import Time
+import WebGL
 
 
 type alias Model =
-    { time : Time.Time
-    , startTime : Time.Time
+    { time : Maybe Time.Posix
+    , startTime : Maybe Time.Posix
     }
 
 
 type Msg
-    = Tick Time.Time
+    = Tick Time.Posix
+
+
+timeDiff : Model -> Float
+timeDiff model =
+    case ( model.time, model.startTime ) of
+        ( Just time, Just startTime ) ->
+            Time.posixToMillis time
+                - Time.posixToMillis startTime
+                |> toFloat
+
+        ( _, _ ) ->
+            0
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( { time = 0
-      , startTime = 0
+    ( { time = Nothing
+      , startTime = Nothing
       }
     , Cmd.none
     )
@@ -43,11 +55,12 @@ update msg model =
         Tick time ->
             ( { model
                 | startTime =
-                    if model.startTime == 0 then
-                        time
+                    if model.startTime == Nothing then
+                        Just time
+
                     else
                         model.startTime
-                , time = time
+                , time = Just time
               }
             , Cmd.none
             )
@@ -56,28 +69,26 @@ update msg model =
 subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.batch
-        [ AnimationFrame.times Tick
+        [ Events.onAnimationFrame Tick
         ]
 
 
 view : Model -> Html Msg
 view model =
     div
-        [ style
-            [ ( "width", "800px" )
-            , ( "height", "480px" )
-            , ( "overflow", "hidden" )
-            , ( "background-color", "#FFFFFB" )
-            , ( "position", "relative" )
-            ]
+        [ style "width" "800px"
+        , style "height" "480px"
+        , style "overflow" "hidden"
+        , style "background-color" "#FFFFFB"
+        , style "position" "relative"
         ]
         [ SimpleWebGL.view
             { fragmentShader = fragmentShader
             , window = { width = 800, height = 480 }
-            , styles = []
+            , attrs = []
             , makeUniforms =
                 \resolution ->
-                    { time = (model.time - model.startTime)
+                    { time = timeDiff model
                     , resolution = resolution
                     }
             }
@@ -92,7 +103,7 @@ precision mediump float;
 uniform vec2 resolution;
 uniform float time;
 
-const float pi = 3.14159265358979323;
+const float pi = 3.14159265;
 const float n = 38.0;
 const vec2 center1 = vec2(0.5, 0.42);
 const vec2 center2 = vec2(0.5, 0.58);
@@ -111,7 +122,7 @@ float rand(float x) {
 float perlin(float x) {
   float i = floor(x);  // integer
   float f = fract(x);  // fraction
-  return mix(rand(i), rand(i + 1.0), smoothstep(0., 1., f));
+  return mix(rand(i), rand(i + 1.0), smoothstep(0.0, 1.0, f));
 }
 
 // Snaps a coordinate to the edges of an n-by-n grid, returning ( newX, gridLine ) where
@@ -139,7 +150,7 @@ vec4 getColor(vec2 st, vec2 center, vec3 color) {
   }
   float randomArgument = sin(4.0 * angle / pi + 0.8 * time / 2000.0);
   float maxDistance = 0.26 + 0.18 * perlin(randomArgument);
-  float fullDistance = maxDistance - 0.10;
+  float fullDistance = maxDistance - 0.1;
   if (d >= maxDistance) {
     return vec4(color, 0.0);
   } else if (d > fullDistance) {
@@ -217,13 +228,3 @@ void main() {
   }
 }
 |]
-
-
-main : Program Never Model Msg
-main =
-    program
-        { init = init
-        , update = update
-        , view = view
-        , subscriptions = subscriptions
-        }

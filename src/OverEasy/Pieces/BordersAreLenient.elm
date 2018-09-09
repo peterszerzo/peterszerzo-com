@@ -1,9 +1,9 @@
-module OverEasy.Pieces.BordersAreLenient exposing (..)
+module OverEasy.Pieces.BordersAreLenient exposing (Model, Msg(..), init, subscriptions, update, view)
 
-import String.Future
-import Html exposing (Html, div, program, node, text)
+import Html exposing (Html, div, node, text)
 import Html.Attributes exposing (style)
 import OverEasy.Pieces.BordersAreLenient.P12 as P02
+import String.Future
 
 
 type alias Model =
@@ -37,10 +37,8 @@ update msg model =
 view : Model -> Html Msg
 view model =
     div
-        [ style
-            [ ( "width", (String.Future.fromFloat w) ++ "px" )
-            , ( "height", (String.Future.fromFloat h) ++ "px" )
-            ]
+        [ style "width" (String.Future.fromFloat w ++ "px")
+        , style "height" (String.Future.fromFloat h ++ "px")
         ]
         [ node "style" [] [ text """
         svg * {
@@ -69,13 +67,3 @@ view model =
 subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.none
-
-
-main : Program Never Model Msg
-main =
-    program
-        { init = init
-        , update = update
-        , view = view
-        , subscriptions = subscriptions
-        }

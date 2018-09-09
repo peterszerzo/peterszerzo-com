@@ -1,9 +1,9 @@
-module Maddi.Views.Project exposing (init, State, view, Data)
+module Maddi.Views.Project exposing (Data, State, init, view)
 
 import Html.Styled as Html exposing (Html, div)
 import Maddi.Data.Project as Project
-import Maddi.Views.Carousel as Carousel
 import Maddi.Views as Views
+import Maddi.Views.Carousel as Carousel
 
 
 type alias State =

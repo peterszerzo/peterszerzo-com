@@ -1,20 +1,21 @@
-module OverEasy.Views.Home.Bg exposing (..)
+module OverEasy.Views.Home.Bg exposing (fragmentShader, view)
 
+import Html.Attributes exposing (style)
 import Html.Styled exposing (Html, fromUnstyled)
+import Shared.SimpleWebGL as SimpleWebGL
 import Time
 import WebGL
-import Window
-import Shared.SimpleWebGL as SimpleWebGL
 
 
-view : Window.Size -> Time.Time -> Html msg
+view : { width : Int, height : Int } -> Float -> Html msg
 view window time =
     SimpleWebGL.view
         { fragmentShader = fragmentShader
         , window = window
-        , styles =
+        , attrs =
             if window.width < 600 then
-                [ ( "transform", "scale(1.35)" ) ]
+                [ style "transform" "scale(1.35)" ]
+
             else
                 []
         , makeUniforms =

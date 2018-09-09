@@ -1,37 +1,16 @@
-module Site.Ui.Link exposing (..)
+module Site.Ui.Link exposing (link)
 
-import Json.Decode as Decode
-import Html.Styled exposing (Html, div, h1, p, nav, node, a, text)
-import Html.Styled.Attributes exposing (href, css)
-import Html.Styled.Events exposing (onWithOptions)
 import Css exposing (..)
-
-
---
-
+import Html.Styled exposing (Html, a, div, h1, nav, node, p, text)
+import Html.Styled.Attributes exposing (css, href)
+import Json.Decode as Decode
 import Site.Messages exposing (Msg(..))
 
 
 link : { url : String, css : List Style, children : List (Html Msg) } -> Html Msg
 link config =
-    let
-        isExternalLink =
-            String.slice 0 4 config.url == "http" || String.slice 0 6 config.url == "mailto"
-
-        slug =
-            String.dropLeft 1 config.url
-    in
-        a
-            ([ css config.css
-             , href config.url
-             ]
-                ++ (if isExternalLink then
-                        []
-                    else
-                        [ onWithOptions "click"
-                            { preventDefault = True, stopPropagation = False }
-                            (Navigate config.url |> Decode.succeed)
-                        ]
-                   )
-            )
-            config.children
+    a
+        [ css config.css
+        , href config.url
+        ]
+        config.children
