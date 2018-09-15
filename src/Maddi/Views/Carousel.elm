@@ -1,29 +1,33 @@
-module Maddi.Views.Carousel exposing (Config, Data, State, expandButton, init, view)
+module Maddi.Views.Carousel exposing (Config, Data, State, init, view)
 
 import Css exposing (..)
+import Css.Global as Global
 import Html.Styled exposing (Html, button, div, img)
 import Html.Styled.Attributes exposing (alt, css)
-import Html.Styled.Events exposing (onClick)
+import Html.Styled.Events exposing (on, onClick)
+import Json.Decode as Decode
 import Maddi.Views as Views
+import Maddi.Views.Icons as Icons
+import Maddi.Views.Mixins as Mixins
 
 
 type alias Data =
     List ( String, String )
 
 
-type alias State =
-    { active : Int
-
-    -- TODO: implement expand feature
-    , isExpanded : Bool
-    }
+type State
+    = State
+        { active : Int
+        , isExpanded : Bool
+        }
 
 
 init : State
 init =
-    { active = 0
-    , isExpanded = False
-    }
+    State
+        { active = 0
+        , isExpanded = False
+        }
 
 
 type alias Config msg =
@@ -33,45 +37,93 @@ type alias Config msg =
     }
 
 
-expandButton : Config msg -> Html msg
-expandButton config =
-    button
-        [ css
-            [ width (px 30)
-            , height (px 30)
-            , border (px 0)
-            , backgroundColor (rgba 255 255 255 0.1)
-            , position absolute
-            , top (px 10)
-            , right (px 10)
-            ]
-        , onClick (config.toMsg { active = config.state.active, isExpanded = True } config.data)
-        ]
-        []
-
-
 view : Config msg -> Html msg
 view config =
     let
+        (State state) =
+            config.state
+
         ( url, altAttr ) =
             config.data
-                |> List.drop config.state.active
+                |> List.drop state.active
                 |> List.head
                 |> Maybe.withDefault ( "", "" )
+
+        noOp =
+            config.toMsg config.state config.data
     in
     div
         [ css
             [ borderRadius (px 3)
-            , height (px 360)
             , position relative
             , overflow visible
+            , property "z-index" "10000"
+            , Css.batch <|
+                if state.isExpanded then
+                    [ position fixed
+                    , displayFlex
+                    , alignItems center
+                    , justifyContent center
+                    , top (px 0)
+                    , bottom (px 0)
+                    , left (px 0)
+                    , right (px 0)
+                    , width (vw 100) |> important
+                    , height (vh 100) |> important
+                    , backgroundColor (rgba 0 0 0 0.4)
+                    ]
+
+                else
+                    [ height (px 360)
+                    , backgroundColor (rgba 0 0 0 0.08)
+                    ]
             ]
         ]
         [ div
             [ css
-                [ maxWidth (pct 100)
-                , backgroundColor (rgba 0 0 0 0.08)
+                [ width (px 35)
+                , height (px 35)
+                , padding (px 5)
+                , backgroundColor (rgba 0 0 0 0.2)
+                , property "z-index" "10000"
+                , borderRadius (px 3)
+                , color Mixins.white
+                , position absolute
+                , top (px 20)
+                , right (px 20)
+                , hover
+                    [ backgroundColor (rgba 0 0 0 0.3)
+                    ]
+                , Global.children
+                    [ Global.svg
+                        [ width (pct 100)
+                        , height (pct 100)
+                        ]
+                    ]
+                ]
+            , onClick
+                (config.toMsg
+                    (State
+                        { state
+                            | isExpanded =
+                                not state.isExpanded
+                        }
+                    )
+                    config.data
+                )
+            ]
+            [ if state.isExpanded then
+                Icons.close
+
+              else
+                Icons.expand
+            ]
+        , div
+            [ css
+                [ width (pct 100)
                 , height (pct 100)
+                , maxWidth (px 600)
+                , maxHeight (px 400)
                 , margin auto
                 , displayFlex
                 , alignItems center
@@ -91,8 +143,6 @@ view config =
                 , alt altAttr
                 ]
                 []
-
-            -- Placeholder for expand button
             ]
                 ++ (if List.length config.data > 1 then
                         [ div
@@ -122,19 +172,27 @@ view config =
                                                 , borderRadius (pct 50)
                                                 , property "transition" "all 0.1s"
                                                 , backgroundColor <|
-                                                    if index == config.state.active then
-                                                        hex "898989"
+                                                    if index == state.active then
+                                                        Mixins.yellow
 
                                                     else
                                                         hex "CECECE"
                                                 ]
                                             , hover
                                                 [ after
-                                                    [ backgroundColor (hex "898989")
+                                                    [ backgroundColor Mixins.yellow
                                                     ]
                                                 ]
                                             ]
-                                        , onClick (config.toMsg { active = index, isExpanded = config.state.isExpanded } config.data)
+                                        , onClick
+                                            (config.toMsg
+                                                (State
+                                                    { active = index
+                                                    , isExpanded = state.isExpanded
+                                                    }
+                                                )
+                                                config.data
+                                            )
                                         ]
                                         []
                                 )

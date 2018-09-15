@@ -26,7 +26,7 @@ type alias Flags =
     Encode.Value
 
 
-type alias State =
+type alias Model =
     { key : Navigation.Key
     , route : Route
     , prevRoute : Maybe Route
@@ -37,7 +37,7 @@ type alias State =
     }
 
 
-init : Flags -> Url.Url -> Navigation.Key -> ( State, Cmd Msg )
+init : Flags -> Url.Url -> Navigation.Key -> ( Model, Cmd Msg )
 init _ url key =
     ( { key = key
       , route = parse url
@@ -51,7 +51,7 @@ init _ url key =
     )
 
 
-main : Program Flags State Msg
+main : Program Flags Model Msg
 main =
     Browser.application
         { init = init
@@ -94,10 +94,10 @@ type Msg
     | SetMobileNav Bool
     | UrlRequest Browser.UrlRequest
     | ChangeRoute Route
-    | ChangeProjectState ProjectView.State ProjectView.Data
+    | ChangeProjectModel ProjectView.State ProjectView.Data
 
 
-update : Msg -> State -> ( State, Cmd Msg )
+update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         NoOp ->
@@ -143,7 +143,7 @@ update msg model =
             , Cmd.none
             )
 
-        ChangeProjectState project _ ->
+        ChangeProjectModel project _ ->
             ( { model
                 | project = project
               }
@@ -151,91 +151,11 @@ update msg model =
             )
 
 
-layout : State -> List (Html.Styled.Html Msg) -> List (Html Msg)
-layout model children =
-    [ div
-        [ css
-            [ width (pct 100)
-            , height (pct 100)
-            , padding2 (px 60) (px 20)
-            , displayFlex
-            , alignItems center
-            , justifyContent center
-            , mobile
-                [ overflow auto
-                ]
-            ]
-        ]
-        [ Global.global
-            [ Global.everything
-                [ boxSizing borderBox
-                , property "-webkit-font-smoothing" "antialiased"
-                , property "font-family" "Lato, sans-serif"
-                ]
-            , Global.selector """
-                @keyframes fadein {
-                  0% {
-                    opacity: 0;
-                  }
-
-                  100% {
-                    opacity: 100%;
-                  }
-                }
-
-                .noselector
-                """ [ display block ]
-            , Global.each [ Global.html, Global.body ]
-                [ margin (px 0)
-                , height (pct 100)
-                ]
-            , Global.body
-                [ mobile
-                    [ overflow auto
-                    , height auto
-                    ]
-                ]
-            , Global.selector "#App"
-                [ width (pct 100)
-                , height (pct 100)
-                , mobile
-                    [ height auto
-                    ]
-                ]
-            , Global.a
-                [ textDecoration none
-                , border (px 0)
-                ]
-            ]
-        , Views.siteHeader
-            { navigate = Navigate
-            , mobileNav = model.mobileNav
-            , setMobileNav = SetMobileNav
-            }
-        , div
-            [ css
-                [ maxWidth (px 1000)
-                , width (pct 100)
-                , margin auto
-                , position relative
-                ]
-            ]
-            children
-        ]
-    ]
-        |> List.map toUnstyled
-
-
-view : State -> Browser.Document Msg
+view : Model -> Browser.Document Msg
 view model =
     let
-        selectedProject =
-            case model.nextRoute of
-                Just (Project projectId) ->
-                    Just projectId
-
-                _ ->
-                    Nothing
+        layout =
+            Views.pageLayout model.mobileNav SetMobileNav >> List.map toUnstyled
     in
     case model.route of
         Home ->
@@ -243,31 +163,34 @@ view model =
             , body =
                 [ div
                     [ css
-                        [ width (pct 100)
-                        , height (px 240)
-                        , margin2 (px 60) (px 0)
+                        [ margin2 (px 60) (px 0)
                         , property "animation" "fadein 0.5s ease-in-out forwards"
                         ]
                     ]
                   <|
-                    List.indexedMap
-                        (\index project ->
-                            Wing.wing
-                                { order = index
-                                , project = project
-                                , navigate = DelayedNavigate
-                                , selected = selectedProject
-                                }
+                    List.map
+                        (\{ title, projects } ->
+                            div
+                                [ css
+                                    [ textAlign center
+                                    , paddingBottom (px 40)
+                                    ]
+                                ]
+                                (Wing.wingHeader title
+                                    :: List.map
+                                        (\project -> Wing.wing project)
+                                        projects
+                                )
                         )
-                        Content.projects
+                        Content.groupedProjects
                 ]
-                    |> layout model
+                    |> layout
             }
 
         About ->
             { title = "About"
             , body =
-                [ Views.layout
+                [ Views.simplePageContent
                     [ Views.static Content.about
                     , CarouselView.view
                         { data = [ ( "/maddi/cover.jpg", "Anna Cingi" ) ]
@@ -276,14 +199,13 @@ view model =
                         }
                     ]
                 ]
-                    |> layout model
+                    |> layout
             }
 
         Project id ->
             let
                 project =
-                    List.filter (\prj -> prj.id == id) Content.projects
-                        |> List.head
+                    Project.findById id Content.groupedProjects
                         |> Maybe.withDefault Project.placeholder
             in
             { title = "Projects"
@@ -291,10 +213,10 @@ view model =
                 [ ProjectView.view
                     { data = project
                     , state = model.project
-                    , toMsg = ChangeProjectState
+                    , toStatefulMsg = ChangeProjectModel
                     }
                 ]
-                    |> layout model
+                    |> layout
             }
 
         NotFound ->
@@ -302,11 +224,11 @@ view model =
             , body =
                 [ Html.Styled.text "Not found"
                 ]
-                    |> layout model
+                    |> layout
             }
 
 
-subscriptions : State -> Sub Msg
+subscriptions : Model -> Sub Msg
 subscriptions _ =
     Sub.batch
         []

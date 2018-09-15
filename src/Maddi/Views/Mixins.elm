@@ -46,7 +46,7 @@ bodyType =
 headingType : Style
 headingType =
     Css.batch
-        [ fontSize (Css.rem 1.25)
+        [ fontSize (Css.rem 1.5)
         , textDecoration none
         , color inherit
         ]
@@ -78,7 +78,7 @@ titleType =
     Css.batch
         [ property "font-family" "Quicksand"
         , textTransform uppercase
-        , fontSize (Css.rem 2)
+        , fontSize (Css.rem 1.75)
         , lineHeight (num 1.15)
         , margin (px 0)
         , property "font-weight" "600"
@@ -99,10 +99,10 @@ stickoutStyles { hover } =
                 [ position absolute
                 , property "content" "' '"
                 , property "z-index" "9"
-                , property "transition" "border-color 0.2s"
+                , property "transition" "border-color 0.05s"
                 , borderColor
                     (if hover then
-                        hex "444"
+                        hex "BDBDBD"
 
                      else
                         borderColor_

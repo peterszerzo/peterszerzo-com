@@ -6,15 +6,17 @@ import Maddi.Views as Views
 import Maddi.Views.Carousel as Carousel
 
 
-type alias State =
-    { carousel : Carousel.State
-    }
+type State
+    = State
+        { carousel : Carousel.State
+        }
 
 
 init : State
 init =
-    { carousel = Carousel.init
-    }
+    State
+        { carousel = Carousel.init
+        }
 
 
 type alias Data =
@@ -24,17 +26,21 @@ type alias Data =
 type alias Config msg =
     { state : State
     , data : Data
-    , toMsg : State -> Data -> msg
+    , toStatefulMsg : State -> Data -> msg
     }
 
 
 view : Config msg -> Html msg
-view { state, data, toMsg } =
-    Views.layout
-        [ Views.static data.content
+view config =
+    let
+        (State state) =
+            config.state
+    in
+    Views.simplePageContent
+        [ Views.static config.data.content
         , Carousel.view
-            { data = data.imgs
+            { data = config.data.imgs
             , state = state.carousel
-            , toMsg = \newState _ -> toMsg { state | carousel = newState } data
+            , toMsg = \newState _ -> config.toStatefulMsg (State { state | carousel = newState }) config.data
             }
         ]
