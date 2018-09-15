@@ -1,18 +1,20 @@
 module Maddi exposing (main)
 
 import Browser
+import Browser.Events as Events
 import Browser.Navigation as Navigation
 import Css exposing (..)
 import Css.Global as Global
 import Html exposing (Html)
 import Html.Styled exposing (div, h1, text, toUnstyled)
 import Html.Styled.Attributes exposing (css)
+import Json.Decode as Decode
 import Json.Encode as Encode
 import Maddi.Content as Content
 import Maddi.Data.Project as Project
 import Maddi.Views as Views
-import Maddi.Views.Carousel as CarouselView
-import Maddi.Views.Mixins exposing (mobile)
+import Maddi.Views.Carousel as Carousel
+import Maddi.Views.Mixins as Mixins exposing (mobile)
 import Maddi.Views.Project as ProjectView
 import Maddi.Views.Wing as Wing
 import Process
@@ -31,8 +33,8 @@ type alias Model =
     , route : Route
     , prevRoute : Maybe Route
     , nextRoute : Maybe Route
-    , project : ProjectView.State
-    , home : Maybe Int
+    , projectViewState : ProjectView.State
+    , aboutCarouselState : Carousel.State
     , mobileNav : Bool
     }
 
@@ -43,8 +45,8 @@ init _ url key =
       , route = parse url
       , prevRoute = Nothing
       , nextRoute = Nothing
-      , project = ProjectView.init
-      , home = Nothing
+      , projectViewState = ProjectView.init
+      , aboutCarouselState = Carousel.init
       , mobileNav = False
       }
     , Cmd.none
@@ -94,7 +96,10 @@ type Msg
     | SetMobileNav Bool
     | UrlRequest Browser.UrlRequest
     | ChangeRoute Route
-    | ChangeProjectModel ProjectView.State ProjectView.Data
+    | ChangeProjectView ProjectView.State ProjectView.Data
+    | ChangeProjectViewState ProjectView.State
+    | ChangeAboutCarousel Carousel.State Carousel.Data
+    | ChangeAboutCarouselState Carousel.State
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -137,15 +142,37 @@ update msg model =
                 | route = newRoute
                 , nextRoute = Nothing
                 , prevRoute = Just model.route
-                , project = ProjectView.init
+                , projectViewState = ProjectView.init
+                , aboutCarouselState = Carousel.init
                 , mobileNav = False
               }
             , Cmd.none
             )
 
-        ChangeProjectModel project _ ->
+        ChangeProjectView newProjectViewState _ ->
             ( { model
-                | project = project
+                | projectViewState = newProjectViewState
+              }
+            , Cmd.none
+            )
+
+        ChangeProjectViewState newProjectViewState ->
+            ( { model
+                | projectViewState = newProjectViewState
+              }
+            , Cmd.none
+            )
+
+        ChangeAboutCarousel newState _ ->
+            ( { model
+                | aboutCarouselState = newState
+              }
+            , Cmd.none
+            )
+
+        ChangeAboutCarouselState newState ->
+            ( { model
+                | aboutCarouselState = newState
               }
             , Cmd.none
             )
@@ -159,12 +186,12 @@ view model =
     in
     case model.route of
         Home ->
-            { title = "Home"
+            { title = "Anna Cingi | Set Designer"
             , body =
                 [ div
                     [ css
                         [ margin2 (px 60) (px 0)
-                        , property "animation" "fadein 0.5s ease-in-out forwards"
+                        , Mixins.fadeIn
                         ]
                     ]
                   <|
@@ -188,14 +215,14 @@ view model =
             }
 
         About ->
-            { title = "About"
+            { title = "About Anna"
             , body =
                 [ Views.simplePageContent
                     [ Views.static Content.about
-                    , CarouselView.view
+                    , Carousel.view
                         { data = [ ( "/maddi/cover.jpg", "Anna Cingi" ) ]
-                        , state = CarouselView.init
-                        , toMsg = \_ _ -> NoOp
+                        , state = model.aboutCarouselState
+                        , toMsg = ChangeAboutCarousel
                         }
                     ]
                 ]
@@ -208,12 +235,12 @@ view model =
                     Project.findById id Content.groupedProjects
                         |> Maybe.withDefault Project.placeholder
             in
-            { title = "Projects"
+            { title = project.title
             , body =
                 [ ProjectView.view
                     { data = project
-                    , state = model.project
-                    , toStatefulMsg = ChangeProjectModel
+                    , state = model.projectViewState
+                    , toStatefulMsg = ChangeProjectView
                     }
                 ]
                     |> layout
@@ -222,13 +249,15 @@ view model =
         NotFound ->
             { title = "Not found"
             , body =
-                [ Html.Styled.text "Not found"
+                [ Wing.wingHeader "It has not been found."
                 ]
                     |> layout
             }
 
 
 subscriptions : Model -> Sub Msg
-subscriptions _ =
+subscriptions model =
     Sub.batch
-        []
+        [ ProjectView.subscriptions model.projectViewState |> Sub.map ChangeProjectViewState
+        , Carousel.subscriptions model.aboutCarouselState |> Sub.map ChangeAboutCarouselState
+        ]

@@ -1,5 +1,6 @@
-module Maddi.Views.Carousel exposing (Config, Data, State, init, view)
+module Maddi.Views.Carousel exposing (Config, Data, State, init, subscriptions, view)
 
+import Browser.Events as Events
 import Css exposing (..)
 import Css.Global as Global
 import Html.Styled exposing (Html, button, div, img)
@@ -37,15 +38,50 @@ type alias Config msg =
     }
 
 
+subscriptions : State -> Sub State
+subscriptions (State state) =
+    Events.onKeyUp
+        (Decode.field "key" Decode.string
+            |> Decode.map
+                (\key ->
+                    case key of
+                        "Escape" ->
+                            State { state | isExpanded = False }
+
+                        " " ->
+                            State { state | isExpanded = True }
+
+                        "Enter" ->
+                            State { state | isExpanded = True }
+
+                        "ArrowLeft" ->
+                            State { state | active = state.active - 1 }
+
+                        "ArrowRight" ->
+                            State { state | active = state.active + 1 }
+
+                        _ ->
+                            State state
+                )
+        )
+
+
 view : Config msg -> Html msg
 view config =
     let
         (State state) =
             config.state
 
+        displayIndex =
+            if List.length config.data == 0 then
+                0
+
+            else
+                modBy (List.length config.data) state.active
+
         ( url, altAttr ) =
             config.data
-                |> List.drop state.active
+                |> List.drop displayIndex
                 |> List.head
                 |> Maybe.withDefault ( "", "" )
 
@@ -70,7 +106,7 @@ view config =
                     , right (px 0)
                     , width (vw 100) |> important
                     , height (vh 100) |> important
-                    , backgroundColor (rgba 0 0 0 0.4)
+                    , backgroundColor (rgba 0 0 0 0.7)
                     ]
 
                 else
@@ -172,7 +208,7 @@ view config =
                                                 , borderRadius (pct 50)
                                                 , property "transition" "all 0.1s"
                                                 , backgroundColor <|
-                                                    if index == state.active then
+                                                    if index == displayIndex then
                                                         Mixins.yellow
 
                                                     else

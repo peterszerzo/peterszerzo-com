@@ -1,4 +1,16 @@
-module Maddi.Views.Mixins exposing (black, bodyType, borderColor_, headingType, linkType, mobile, stickoutStyles, titleType, white, yellow)
+module Maddi.Views.Mixins exposing
+    ( black
+    , bodyType
+    , borderColor_
+    , fadeIn
+    , headingType
+    , linkType
+    , mobile
+    , stickoutStyles
+    , titleType
+    , white
+    , yellow
+    )
 
 import Css exposing (..)
 import Css.Media as Media
@@ -49,6 +61,9 @@ headingType =
         [ fontSize (Css.rem 1.5)
         , textDecoration none
         , color inherit
+        , mobile
+            [ fontSize (Css.rem 1.25)
+            ]
         ]
 
 
@@ -78,14 +93,19 @@ titleType =
     Css.batch
         [ property "font-family" "Quicksand"
         , textTransform uppercase
-        , fontSize (Css.rem 1.75)
+        , fontSize (Css.rem 2)
         , lineHeight (num 1.15)
         , margin (px 0)
         , property "font-weight" "600"
         , mobile
-            [ fontSize (Css.rem 2)
+            [ fontSize (Css.rem 1.75)
             ]
         ]
+
+
+fadeIn : Style
+fadeIn =
+    property "animation" "fadein 0.15s ease-in-out forwards"
 
 
 stickoutStyles : { hover : Bool } -> Style
@@ -100,6 +120,7 @@ stickoutStyles { hover } =
                 , property "content" "' '"
                 , property "z-index" "9"
                 , property "transition" "border-color 0.05s"
+                , property "pointer-events" "none"
                 , borderColor
                     (if hover then
                         hex "BDBDBD"

@@ -1,4 +1,4 @@
-module Maddi.Views.Project exposing (Data, State, init, view)
+module Maddi.Views.Project exposing (Data, State, init, subscriptions, view)
 
 import Html.Styled as Html exposing (Html, div)
 import Maddi.Data.Project as Project
@@ -28,6 +28,12 @@ type alias Config msg =
     , data : Data
     , toStatefulMsg : State -> Data -> msg
     }
+
+
+subscriptions : State -> Sub State
+subscriptions (State state) =
+    Carousel.subscriptions state.carousel
+        |> Sub.map (\newCarousel -> State { state | carousel = newCarousel })
 
 
 view : Config msg -> Html msg

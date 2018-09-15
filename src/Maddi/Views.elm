@@ -17,7 +17,7 @@ import Html.Styled.Events exposing (onClick)
 import Json.Decode as Decode
 import Maddi.Content exposing (navLinks)
 import Maddi.Views.Icons as Icons
-import Maddi.Views.Mixins exposing (..)
+import Maddi.Views.Mixins as Mixins exposing (..)
 import Markdown
 import Svg.Styled exposing (line, path, svg)
 import Svg.Styled.Attributes exposing (d, stroke, strokeWidth, viewBox, x1, x2, y1, y2)
@@ -116,13 +116,14 @@ iconContainer config children =
     div
         [ css
             [ cursor pointer
-            , width (px 30)
-            , height (px 30)
+            , width (px 35)
+            , height (px 35)
+            , padding (px 2)
             , display inlineBlock
             , Global.descendants
                 [ Global.svg
-                    [ width (px 30)
-                    , height (px 30)
+                    [ width (pct 100)
+                    , height (pct 100)
                     ]
                 ]
             , borderRadius (px 2)
@@ -248,6 +249,7 @@ mobileNav { close } =
             [ position fixed
             , property "z-index" "10000"
             , top (px 0)
+            , Mixins.fadeIn
             , left (px 0)
             , width (vw 100)
             , height (vh 100)
@@ -263,7 +265,7 @@ mobileNav { close } =
         [ div []
             [ iconContainer
                 { handleClick = close
-                , css = Css.batch []
+                , css = Css.batch [ marginBottom (px 20) ]
                 }
                 [ Icons.close
                 ]

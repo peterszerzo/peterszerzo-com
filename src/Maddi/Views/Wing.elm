@@ -6,8 +6,6 @@ import Html.Styled exposing (Html, a, br, div, fromUnstyled, h2, header, p, text
 import Html.Styled.Attributes exposing (css, href)
 import Maddi.Data.Project as Project
 import Maddi.Views.Mixins exposing (..)
-import Math.Matrix4 as Matrix4
-import Math.Vector3 as Vector3
 import Svg.Styled exposing (line, svg)
 import Svg.Styled.Attributes exposing (fill, stroke, viewBox, x1, x2, y1, y2)
 
@@ -61,12 +59,6 @@ wingTransform { skewAngle, scale, w, offset } =
     in
     Css.batch
         [ ([ "skewY(" ++ String.fromFloat skewAngle ++ "rad)" ]
-            ++ (if offset == 1 then
-                    [ translateString ]
-
-                else
-                    []
-               )
             ++ [ "scale(1.0, 1.0)"
                ]
           )
@@ -76,89 +68,20 @@ wingTransform { skewAngle, scale, w, offset } =
         ]
 
 
-wingBorders : Html msg
-wingBorders =
-    let
-        w =
-            wingWidth
-
-        h =
-            wingHeight
-
-        s =
-            10
-
-        dy =
-            w * tan wingSkewAngle
-
-        fF =
-            String.fromFloat
-    in
-    svg
-        [ viewBox "-10 -10 180 280" ]
-        [ line
-            [ x1 <| fF -s
-            , y1 <| fF dy
-            , x2 <| fF (w + s)
-            , y2 <| fF 0
-            , stroke "#000"
-            ]
-            []
-        , line
-            [ x1 <| fF 0
-            , y1 <| fF (dy - s)
-            , x2 <| fF 0
-            , y2 <| fF (dy + h + s)
-            , stroke "#000"
-            ]
-            []
-        , line
-            [ x1 <| fF -s
-            , y1 <| fF (h + dy)
-            , x2 <| fF (w + s)
-            , y2 <| fF h
-            , stroke "#000"
-            ]
-            []
-        , line
-            [ x1 <| fF w
-            , y1 <| fF -s
-            , x2 <| fF w
-            , y2 <| fF (h + s)
-            , stroke "#000"
-            ]
-            []
-        ]
-
-
 wing : Project.Project -> Html msg
 wing project =
-    let
-        translation =
-            Matrix4.makeTranslate (Vector3.vec3 0 0 0)
-
-        rotation =
-            Matrix4.makeRotate 0.9 (Vector3.vec3 0 1 0)
-
-        perspective =
-            Matrix4.makeLookAt
-                (Vector3.vec3 0 0.05 0.1)
-                (Vector3.vec3 0 0 0)
-                (Vector3.vec3 0 0 -1)
-
-        matrix =
-            rotation
-                |> Matrix4.mul translation
-                |> Matrix4.mul perspective
-    in
     a
         [ css
             [ display inlineBlock
             , textDecoration none
             , color inherit
             , width (px (2 * wingWidth))
-            , marginBottom (px 20)
+            , marginBottom (px 30)
             , position relative
+
+            -- Offsets the fact that the first wing is pushed 1px to the right, so that
+            -- adjacent wings can line up.
+            , marginRight (px -2)
             , height (px wingHeight)
             , overflow visible
             , property "z-index" "100"
@@ -167,7 +90,9 @@ wing project =
                 [ Global.div
                     [ width (px wingWidth)
                     , height (px wingHeight)
-                    , position absolute
+                    , display inlineFlex
+                    , verticalAlign middle
+                    , fontSize (px 0)
                     , stickoutStyles { hover = False }
                     , property "word-break" "break-all"
                     , property "transition" "all 0.2s ease-in-out"
@@ -202,6 +127,8 @@ wing project =
                     }
                 , padding (px 10)
                 , displayFlex
+                , position relative
+                , left (px 1)
                 , flexDirection column
                 , justifyContent spaceBetween
                 , textAlign left
