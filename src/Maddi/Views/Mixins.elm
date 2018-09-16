@@ -1,11 +1,14 @@
 module Maddi.Views.Mixins exposing
     ( black
     , bodyType
-    , borderColor_
     , fadeIn
+    , gray
     , headingType
+    , lightGray
+    , lighterGray
     , linkType
     , mobile
+    , smallType
     , stickoutStyles
     , titleType
     , white
@@ -39,9 +42,30 @@ yellow =
     hex "F7CE00"
 
 
-borderColor_ : Color
-borderColor_ =
-    hex "#CECECE"
+gray : Color
+gray =
+    hex "898989"
+
+
+lighterGray : Color
+lighterGray =
+    hex "BDBDBD"
+
+
+lightGray : Color
+lightGray =
+    hex "CECECE"
+
+
+smallType : Style
+smallType =
+    Css.batch
+        [ fontSize (Css.rem 0.75)
+        , lineHeight (num 1.6)
+        , mobile
+            [ fontSize (Css.rem 0.75)
+            ]
+        ]
 
 
 bodyType : Style
@@ -58,11 +82,11 @@ bodyType =
 headingType : Style
 headingType =
     Css.batch
-        [ fontSize (Css.rem 1.5)
+        [ fontSize (Css.rem 1.75)
         , textDecoration none
         , color inherit
         , mobile
-            [ fontSize (Css.rem 1.25)
+            [ fontSize (Css.rem 1.5)
             ]
         ]
 
@@ -123,10 +147,10 @@ stickoutStyles { hover } =
                 , property "pointer-events" "none"
                 , borderColor
                     (if hover then
-                        hex "BDBDBD"
+                        lighterGray
 
                      else
-                        borderColor_
+                        lightGray
                     )
                 ]
     in

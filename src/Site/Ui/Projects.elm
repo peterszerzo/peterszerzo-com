@@ -73,16 +73,20 @@ view { projects, packBubbles, activeProject } =
         [ div [] <|
             List.map2
                 (\project { x, y, r } ->
+                    let
+                        r_ =
+                            r * 1.1
+                    in
                     a
                         [ css
                             [ position absolute
-                            , borderRadius (pct 50)
+                            , borderRadius (px 6)
                             , cursor pointer
                             , backgroundColor blue
-                            , property "box-shadow" "3px 6px 16px rgba(0, 0, 0, 0.2)"
+                            , property "box-shadow" "3px 6px 20px rgba(0, 0, 0, 0.3)"
                             , property "transition" "all 0.3s"
                             , hover
-                                [ property "box-shadow" "3px 6px 24px rgba(0, 0, 0, 0.5)"
+                                [ property "box-shadow" "3px 6px 28px rgba(0, 0, 0, 0.5)"
                                 , property "transform" "scale(1.03)"
                                 ]
                             , Global.descendants
@@ -96,10 +100,10 @@ view { projects, packBubbles, activeProject } =
                                 ]
                             ]
                         , href ("/projects/" ++ project.id)
-                        , style "width" <| ((floor (2 * r) |> String.Future.fromInt) ++ "px")
-                        , style "height" <| ((floor (2 * r) |> String.Future.fromInt) ++ "px")
-                        , style "top" <| ((floor (y - r) |> String.Future.fromInt) ++ "px")
-                        , style "left" <| ((floor (x - r) |> String.Future.fromInt) ++ "px")
+                        , style "width" <| ((floor (2 * r_) |> String.Future.fromInt) ++ "px")
+                        , style "height" <| ((floor (2 * r_) |> String.Future.fromInt) ++ "px")
+                        , style "top" <| ((floor (y - r_) |> String.Future.fromInt) ++ "px")
+                        , style "left" <| ((floor (x - r_) |> String.Future.fromInt) ++ "px")
                         ]
                         [ projectLogo project.name ]
                 )

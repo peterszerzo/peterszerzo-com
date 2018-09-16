@@ -24,67 +24,69 @@ I studied at Accademia di Brera, trained at Teatro alla Scala, currently based i
 
 groupedProjects : List Project.GroupedProject
 groupedProjects =
-    [ { title = "Opera"
+    [ { title = "Theater"
       , projects =
-            [ { id = "ernani"
-              , title = "Ernani"
-              , institution = "La Scala"
-              , openedAt = ( 2018, 9, 29 )
+            [ { id = "visite"
+              , title = "Visite"
+              , institution = "Teatro Franco Parenti"
+              , tags = [ "set design" ]
+              , openedAt = ( 2018, 11, 20 )
               , content = """
-# Ernani
-    """
+Original play by Teatro Dei Gordi 
+        """
               , imgs =
                     []
               }
-            ]
-      }
-    , { title = "Theater"
-      , projects =
-            [ { id = "karmafulminien"
+            , { id = "karmafulminien"
               , title = "Karmafulminien"
               , institution = "Teatro Della Tosse"
+              , tags = [ "set design", "costume design" ]
               , openedAt = ( 2014, 11, 3 )
               , content = """
-# Karmafulminien
-
 Original play by Generazione Disagio (Luca Mammoli, Enrico Pittaluga, Graziano Sirressi), directed and co-written by Riccardo Pippa, produced by Fondazione Luzzati - Teatro della Tosse. First played November 3rd 2015 in, Teatro della Tosse, Genoa // [trailer](https://vimeo.com/148718410).
-
-**Role:** Set, costume and props designer
-
-**Photo credits:** Laura Granelli, Luca Riccio
         """
               , imgs =
-                    [ ( "/maddi/karmafulminien-stage-1.jpg", "Karmafulminien Stage 1" )
-                    , ( "/maddi/karmafulminien-rendering.jpg", "Karmafulminien rendering" )
-                    , ( "/maddi/karmafulminien-stage-2.jpg", "Karmafulminien Stage 2" )
-                    , ( "/maddi/karmafulminien-stage-3.jpg", "Karmafulminien Stage 3" )
-                    , ( "/maddi/karmafulminien-stage-4.jpg", "Karmafulminien Stage 4" )
-                    , ( "/maddi/karmafulminien-stage-5.jpg", "Karmafulminien Stage 5" )
-                    , ( "/maddi/karmafulminien-stage-6.jpg", "Karmafulminien Stage 6" )
+                    [ { url = "/maddi/karmafulminien-stage-1.jpg", alt = "Karmafulminien Stage 1", credit = Just "Laura Granelli, Luca Riccio" }
+                    , { url = "/maddi/karmafulminien-stage-2.jpg", alt = "Karmafulminien Stage 2", credit = Just "Laura Granelli, Luca Riccio" }
+                    , { url = "/maddi/karmafulminien-stage-3.jpg", alt = "Karmafulminien Stage 3", credit = Just "Laura Granelli, Luca Riccio" }
+                    , { url = "/maddi/karmafulminien-stage-4.jpg", alt = "Karmafulminien Stage 4", credit = Just "Laura Granelli, Luca Riccio" }
+                    , { url = "/maddi/karmafulminien-stage-5.jpg", alt = "Karmafulminien Stage 5", credit = Just "Laura Granelli, Luca Riccio" }
+                    , { url = "/maddi/karmafulminien-stage-6.jpg", alt = "Karmafulminien Stage 6", credit = Just "Laura Granelli, Luca Riccio" }
+                    , { url = "/maddi/karmafulminien-rendering.jpg", alt = "Karmafulminien rendering", credit = Just "Laura Granelli, Luca Riccio" }
                     ]
               }
             , { id = "story-of-qu"
               , title = "Story of Qu"
               , institution = "Piccolo Teatro"
+              , tags = [ "set design", "collective work" ]
               , openedAt = ( 2017, 1, 1 )
               , content = """
-# Story of Qu
-
 Original play by Dario Fo and Franca Rame, directed by Massimo Navone. Opening in September 24th 2014, Piccolo Teatro Studio Melato, Milan
 
-**Role:** Set, costume and props designer
-
 Awarded Premio Salon Brera-Bicocca in 2015, displayed in the International Art Academies Exihibition (Beijing, September 2015).
-
-**Photo credits:** Pino Montisci
         """
               , imgs =
-                    [ ( "/maddi/story-of-qu-stage-2.jpg", "Story of Qu, Stage 2" )
-                    , ( "/maddi/story-of-qu-model-2.jpg", "Story of Qu, Model 2" )
-                    , ( "/maddi/story-of-qu-model-3.jpg", "Story of Qu, Model 3" )
-                    , ( "/maddi/story-of-qu-model-4.jpg", "Story of Qu, Model 4" )
-                    , ( "/maddi/story-of-qu-stage-1.jpg", "Story of Qu, Stage 1" )
+                    [ { url = "/maddi/story-of-qu-stage-2.jpg", alt = "Story of Qu, Stage 2", credit = Just "Pino Montisci" }
+                    , { url = "/maddi/story-of-qu-model-2.jpg", alt = "Story of Qu, Model 2", credit = Just "Pino Montisci" }
+                    , { url = "/maddi/story-of-qu-model-3.jpg", alt = "Story of Qu, Model 3", credit = Just "Pino Montisci" }
+                    , { url = "/maddi/story-of-qu-model-4.jpg", alt = "Story of Qu, Model 4", credit = Just "Pino Montisci" }
+                    , { url = "/maddi/story-of-qu-stage-1.jpg", alt = "Story of Qu, Stage 1", credit = Just "Pino Montisci" }
                     ]
+              }
+            ]
+      }
+    , { title = "Opera"
+      , projects =
+            [ { id = "ernani"
+              , title = "Ernani"
+              , institution = "La Scala"
+              , tags = [ "set assistant" ]
+              , openedAt = ( 2018, 9, 29 )
+              , content = """
+[Julian Crouch](http://crouch.com)
+    """
+              , imgs =
+                    []
               }
             ]
       }

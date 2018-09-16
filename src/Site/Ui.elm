@@ -30,47 +30,32 @@ banner =
         ]
         [ div
             [ css
-                [ color Constants.white
+                [ maxWidth (px 360)
                 , textAlign center
+                , color white
+                , position relative
+                , Global.children
+                    [ Global.svg
+                        [ width (px 140)
+                        , height (px 140)
+                        ]
+                    ]
                 ]
             ]
-            [ div
+            [ Shapes.logo |> fromUnstyled
+            , h1
                 [ css
-                    [ width (px 240)
-                    , height (px 240)
-                    , position relative
-                    , displayFlex
-                    , alignItems center
-                    , justifyContent center
-                    , borderRadius (pct 50)
-                    , margin3 auto auto (px 0)
-                    , Global.children
-                        [ Global.svg
-                            [ property "stroke" "rgba(255, 255, 255, 0.08)"
-                            , position absolute
-                            , top (px 0)
-                            , left (px 0)
-                            ]
-                        ]
+                    [ margin3 (px 5) auto (px 10)
                     ]
                 ]
-                [ Shapes.logo |> fromUnstyled
-                , div []
-                    [ h1
-                        [ css
-                            [ margin3 (px 20) auto (px 10)
-                            ]
-                        ]
-                        [ text Content.title ]
-                    , p
-                        [ css
-                            [ width (px 220)
-                            , marginTop (px 0)
-                            ]
-                        ]
-                        [ text Content.subtitle ]
+                [ text Content.title ]
+            , p
+                [ css
+                    [ marginTop (px 0)
+                    , fontSize (rem 1.125)
                     ]
                 ]
+                [ text Content.subtitle ]
             , Nav.view
             ]
         ]

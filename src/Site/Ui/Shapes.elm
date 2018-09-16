@@ -170,6 +170,7 @@ logo =
         [ g
             [ fill "none"
             , strokeWidth "4"
+            , stroke "currentColor"
             , strokeLinecap "round"
             , strokeLinejoin "round"
             ]

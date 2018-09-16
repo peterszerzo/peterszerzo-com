@@ -2,9 +2,10 @@ module Maddi.Views.Wing exposing (wing, wingHeader)
 
 import Css exposing (..)
 import Css.Global as Global
-import Html.Styled exposing (Html, a, br, div, fromUnstyled, h2, header, p, text)
+import Html.Styled exposing (Html, a, br, div, fromUnstyled, h2, header, p, span, text)
 import Html.Styled.Attributes exposing (css, href)
 import Maddi.Data.Project as Project
+import Maddi.Views as Views
 import Maddi.Views.Mixins exposing (..)
 import Svg.Styled exposing (line, svg)
 import Svg.Styled.Attributes exposing (fill, stroke, viewBox, x1, x2, y1, y2)
@@ -33,6 +34,8 @@ wingHeader title =
             , width (px <| 2 * wingWidth)
             , property "transform" <| "skewY(" ++ String.fromFloat -wingSkewAngle ++ "rad)"
             , margin4 (px 120) auto (px 100) auto
+            , backgroundColor black
+            , color white
             , padding2 (px 4) (px 10)
             , textAlign center
             , stickoutStyles { hover = False }
@@ -76,7 +79,7 @@ wing project =
             , textDecoration none
             , color inherit
             , width (px (2 * wingWidth))
-            , marginBottom (px 30)
+            , marginBottom (px 35)
             , position relative
 
             -- Offsets the fact that the first wing is pushed 1px to the right, so that
@@ -134,13 +137,24 @@ wing project =
                 , textAlign left
                 ]
             ]
-            [ h2
-                [ css
-                    [ titleType
-                    , margin (px 0)
+            [ div []
+                [ h2
+                    [ css
+                        [ titleType
+                        , margin (px 0)
+                        ]
                     ]
+                    [ text project.title ]
+                , div
+                    [ css
+                        [ marginTop (px 8)
+                        ]
+                    ]
+                  <|
+                    List.map
+                        (Views.tag False)
+                        project.tags
                 ]
-                [ text project.title ]
             , p
                 [ css
                     [ fontSize (Css.rem 1.5)
@@ -165,11 +179,10 @@ wing project =
                     }
                 , property "background-size" "cover"
                 , property "background-position" "50% 50%"
-                , property "background-clip" "content-box"
                 , property "background-image"
                     (project.imgs
                         |> List.head
-                        |> Maybe.map (\( img, alt ) -> "linear-gradient(45deg, rgba(255, 255, 255, 0.30), rgba(255, 255, 255, 0.15)), url(" ++ img ++ ")")
+                        |> Maybe.map (\{ url, alt, credit } -> "linear-gradient(45deg, rgba(255, 255, 255, 0.30), rgba(255, 255, 255, 0.15)), url(" ++ url ++ ")")
                         |> Maybe.withDefault ""
                     )
                 ]

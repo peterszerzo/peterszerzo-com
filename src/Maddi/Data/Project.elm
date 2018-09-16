@@ -1,13 +1,16 @@
 module Maddi.Data.Project exposing (GroupedProject, Project, findById, placeholder)
 
+import Maddi.Data.Image as Image
+
 
 type alias Project =
     { id : String
     , title : String
+    , tags : List String
     , institution : String
     , openedAt : ( Int, Int, Int )
     , content : String
-    , imgs : List ( String, String )
+    , imgs : List Image.Image
     }
 
 
@@ -41,6 +44,7 @@ placeholder =
     { id = ""
     , title = ""
     , institution = ""
+    , tags = []
     , openedAt = ( 2018, 1, 1 )
     , content = ""
     , imgs = []

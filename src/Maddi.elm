@@ -220,7 +220,7 @@ view model =
                 [ Views.simplePageContent
                     [ Views.static Content.about
                     , Carousel.view
-                        { data = [ ( "/maddi/cover.jpg", "Anna Cingi" ) ]
+                        { data = [ { url = "/maddi/cover.jpg", alt = "Anna Cingi", credit = Nothing } ]
                         , state = model.aboutCarouselState
                         , toMsg = ChangeAboutCarousel
                         }

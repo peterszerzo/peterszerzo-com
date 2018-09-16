@@ -3,17 +3,18 @@ module Maddi.Views.Carousel exposing (Config, Data, State, init, subscriptions, 
 import Browser.Events as Events
 import Css exposing (..)
 import Css.Global as Global
-import Html.Styled exposing (Html, button, div, img)
+import Html.Styled exposing (Html, button, div, img, text)
 import Html.Styled.Attributes exposing (alt, css)
 import Html.Styled.Events exposing (on, onClick)
 import Json.Decode as Decode
+import Maddi.Data.Image as Image
 import Maddi.Views as Views
 import Maddi.Views.Icons as Icons
 import Maddi.Views.Mixins as Mixins
 
 
 type alias Data =
-    List ( String, String )
+    List Image.Image
 
 
 type State
@@ -79,11 +80,11 @@ view config =
             else
                 modBy (List.length config.data) state.active
 
-        ( url, altAttr ) =
+        imageData =
             config.data
                 |> List.drop displayIndex
                 |> List.head
-                |> Maybe.withDefault ( "", "" )
+                |> Maybe.withDefault { url = "", alt = "", credit = Nothing }
 
         noOp =
             config.toMsg config.state config.data
@@ -115,45 +116,70 @@ view config =
                     ]
             ]
         ]
-        [ div
-            [ css
-                [ width (px 35)
-                , height (px 35)
-                , padding (px 5)
-                , backgroundColor (rgba 0 0 0 0.2)
-                , property "z-index" "10000"
-                , borderRadius (px 3)
-                , color Mixins.white
-                , position absolute
-                , top (px 20)
-                , right (px 20)
-                , hover
-                    [ backgroundColor (rgba 0 0 0 0.3)
-                    ]
-                , Global.children
-                    [ Global.svg
-                        [ width (pct 100)
-                        , height (pct 100)
+        [ case imageData.credit of
+            Just credit ->
+                div
+                    [ css
+                        [ backgroundColor (rgba 0 0 0 0.3)
+                        , padding2 (px 0) (px 6)
+                        , color Mixins.white
+                        , Mixins.smallType
+                        , position absolute
+                        , property "z-index" "1001"
+                        , bottom (px 10)
+                        , borderRadius (px 3)
+                        , left (pct 50)
+                        , transform <| translateX (pct -50)
                         ]
                     ]
-                ]
-            , onClick
-                (config.toMsg
-                    (State
-                        { state
-                            | isExpanded =
-                                not state.isExpanded
-                        }
-                    )
-                    config.data
-                )
-            ]
-            [ if state.isExpanded then
-                Icons.close
+                    [ text <| "Credit: " ++ credit
+                    ]
 
-              else
-                Icons.expand
-            ]
+            Nothing ->
+                text ""
+        , if List.length config.data > 0 then
+            div
+                [ css
+                    [ width (px 35)
+                    , height (px 35)
+                    , padding (px 5)
+                    , backgroundColor (rgba 0 0 0 0.2)
+                    , property "z-index" "1000"
+                    , borderRadius (px 3)
+                    , color Mixins.white
+                    , position absolute
+                    , top (px 10)
+                    , right (px 10)
+                    , hover
+                        [ backgroundColor (rgba 0 0 0 0.3)
+                        ]
+                    , Global.children
+                        [ Global.svg
+                            [ width (pct 100)
+                            , height (pct 100)
+                            ]
+                        ]
+                    ]
+                , onClick
+                    (config.toMsg
+                        (State
+                            { state
+                                | isExpanded =
+                                    not state.isExpanded
+                            }
+                        )
+                        config.data
+                    )
+                ]
+                [ if state.isExpanded then
+                    Icons.close
+
+                  else
+                    Icons.expand
+                ]
+
+          else
+            text ""
         , div
             [ css
                 [ width (pct 100)
@@ -175,8 +201,8 @@ view config =
                     , display block
                     , margin auto
                     ]
-                , Html.Styled.Attributes.src url
-                , alt altAttr
+                , Html.Styled.Attributes.src imageData.url
+                , alt imageData.alt
                 ]
                 []
             ]

@@ -1,17 +1,16 @@
 module Maddi.Views exposing
     ( homeLink
-    , iconContainer
     , intro
     , mobileNav
     , pageLayout
     , simplePageContent
-    , siteHeader
     , static
+    , tag
     )
 
 import Css exposing (..)
 import Css.Global as Global
-import Html.Styled exposing (Html, a, br, div, fromUnstyled, h2, header, p, text)
+import Html.Styled exposing (Html, a, br, div, footer, fromUnstyled, h2, header, p, span, text)
 import Html.Styled.Attributes exposing (css, href)
 import Html.Styled.Events exposing (onClick)
 import Json.Decode as Decode
@@ -21,6 +20,54 @@ import Maddi.Views.Mixins as Mixins exposing (..)
 import Markdown
 import Svg.Styled exposing (line, path, svg)
 import Svg.Styled.Attributes exposing (d, stroke, strokeWidth, viewBox, x1, x2, y1, y2)
+
+
+tag : Bool -> String -> Html msg
+tag isLarge tagText =
+    span
+        [ css
+            [ if isLarge then
+                bodyType
+
+              else
+                smallType
+            , padding2 (px 2) (px 6)
+            , borderRadius (px 3)
+            , backgroundColor (rgba 0 0 0 0.05)
+            , display inlineBlock
+            , marginRight (px 6)
+            , marginBottom (px 6)
+            ]
+        ]
+        [ text tagText ]
+
+
+pageFooter : Html msg
+pageFooter =
+    footer
+        [ css
+            [ padding2 (px 20) (px 20)
+            ]
+        ]
+        [ p
+            [ css
+                [ Mixins.smallType
+                , color Mixins.gray
+                , textAlign center
+                ]
+            ]
+            [ text "Website co-designed and built by "
+            , a
+                [ css
+                    [ textDecoration none
+                    , color inherit
+                    , borderBottom3 (px 1) solid currentColor
+                    ]
+                , href "http://peterszerzo.com"
+                ]
+                [ text "Peter Sz" ]
+            ]
+        ]
 
 
 static : String -> Html msg
@@ -137,14 +184,11 @@ iconContainer config children =
         children
 
 
-siteHeader : { activateMobileNav : msg } -> Html msg
-siteHeader { activateMobileNav } =
+pageHeader : { activateMobileNav : msg } -> Html msg
+pageHeader { activateMobileNav } =
     header
         [ css
-            [ position absolute
-            , top (px 0)
-            , padding2 (px 20) (px 20)
-            , left (px 0)
+            [ padding2 (px 20) (px 20)
             , width (pct 100)
             , alignItems start
             , marginBottom (px 20)
@@ -296,26 +340,13 @@ mobileNav { close } =
 
 pageLayout : Bool -> (Bool -> msg) -> List (Html msg) -> List (Html msg)
 pageLayout isMobileNavActive toggleMobileNav children =
-    [ div
-        [ css
-            [ width (pct 100)
-            , height (pct 100)
-            , padding2 (px 60) (px 20)
-            , displayFlex
-            , alignItems center
-            , justifyContent center
-            , mobile
-                [ overflow auto
-                ]
+    [ Global.global
+        [ Global.everything
+            [ boxSizing borderBox
+            , property "-webkit-font-smoothing" "antialiased"
+            , property "font-family" "Lato, sans-serif"
             ]
-        ]
-        [ Global.global
-            [ Global.everything
-                [ boxSizing borderBox
-                , property "-webkit-font-smoothing" "antialiased"
-                , property "font-family" "Lato, sans-serif"
-                ]
-            , Global.selector """
+        , Global.selector """
                 @keyframes fadein {
                   0% {
                     opacity: 0;
@@ -328,46 +359,40 @@ pageLayout isMobileNavActive toggleMobileNav children =
 
                 .noselector
                 """ [ display block ]
-            , Global.each [ Global.html, Global.body ]
-                [ margin (px 0)
-                , height (pct 100)
-                ]
-            , Global.body
-                [ mobile
-                    [ overflow auto
-                    , height auto
-                    ]
-                ]
-            , Global.selector "#App"
-                [ width (pct 100)
-                , height (pct 100)
-                , mobile
-                    [ height auto
-                    ]
-                ]
-            , Global.a
-                [ textDecoration none
-                , border (px 0)
+        , Global.each [ Global.html, Global.body ]
+            [ margin (px 0)
+            , height (pct 100)
+            ]
+        , Global.body
+            [ mobile
+                [ overflow auto
+                , height auto
                 ]
             ]
-        , siteHeader
-            { activateMobileNav = toggleMobileNav True
-            }
-        , div
-            [ css
-                [ maxWidth (px 1000)
-                , width (pct 100)
-                , margin auto
-                , position relative
-                ]
+        , Global.a
+            [ textDecoration none
+            , border (px 0)
             ]
-            children
-        , if isMobileNavActive then
-            mobileNav { close = toggleMobileNav False }
-
-          else
-            text ""
         ]
+    , pageHeader
+        { activateMobileNav = toggleMobileNav True
+        }
+    , div
+        [ css
+            [ maxWidth (px 1040)
+            , width (pct 100)
+            , padding (px 20)
+            , margin auto
+            , position relative
+            ]
+        ]
+        children
+    , if isMobileNavActive then
+        mobileNav { close = toggleMobileNav False }
+
+      else
+        text ""
+    , pageFooter
     ]
 
 
@@ -386,7 +411,6 @@ simplePageContent children =
             , property "animation" "fadein 0.5s ease-in-out forwards"
             , mobile
                 [ height auto
-                , margin3 (px 60) auto (px 0)
                 ]
             , stickoutStyles { hover = False }
             ]
@@ -404,7 +428,7 @@ simplePageContent children =
                     , top (px -stickout)
                     , left (pct 50)
                     , height (px (2 * stickout))
-                    , borderLeft3 (px 1) solid borderColor_
+                    , borderLeft3 (px 1) solid lightGray
                     ]
                 ]
                 []
@@ -414,7 +438,7 @@ simplePageContent children =
                     , bottom (px -stickout)
                     , left (pct 50)
                     , height (px (2 * stickout))
-                    , borderLeft3 (px 1) solid borderColor_
+                    , borderLeft3 (px 1) solid lightGray
                     ]
                 ]
                 []

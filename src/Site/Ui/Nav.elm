@@ -1,6 +1,4 @@
-module Site.Ui.Nav exposing (view, viewMainLink)
-
---
+module Site.Ui.Nav exposing (view)
 
 import Css exposing (..)
 import Html.Styled exposing (Html, a, div, h1, nav, node, p, text)
@@ -27,7 +25,7 @@ viewMainLink ( label, url ) =
             , letterSpacing (Css.rem 0.05)
             , property "font-kerning" "normal"
             , property "background-color" "rgba(255, 255, 255, .23)"
-            , margin (px 8)
+            , margin (px 6)
             , property "transition" "all .2s"
             , hover
                 [ color blue
@@ -51,7 +49,6 @@ view =
             [ width (pct 100)
             , padding2 (px 0) (px 20)
             , maxWidth (px 420)
-            , marginTop (px -55)
             , Mixins.zIndex 9
             , color white
             ]
