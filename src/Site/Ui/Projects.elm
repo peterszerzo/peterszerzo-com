@@ -6,8 +6,8 @@ import Html.Styled exposing (Html, a, div, fromUnstyled, h1, header, img, node, 
 import Html.Styled.Attributes exposing (css, href, src, style)
 import Html.Styled.Events exposing (onClick)
 import Json.Decode as Decode
+import Site.Content exposing (Project)
 import Site.Data.PackBubble as PackBubble
-import Site.Data.Project as Project
 import Site.Messages exposing (Msg(..))
 import Site.Styles.Constants exposing (..)
 import Site.Styles.Mixins as Mixins
@@ -17,7 +17,7 @@ import String.Future
 
 
 type alias Config =
-    { projects : List Project.Project
+    { projects : List Project
     , packBubbles : List PackBubble.PackBubble
     , activeProject : Maybe String
     }
@@ -150,7 +150,7 @@ view { projects, packBubbles, activeProject } =
                                         []
                                     ]
                                 , div [ css [ overlaySectionStyles ] ]
-                                    [ Ui.static project.description
+                                    [ Ui.static { children = [], markdown = Just project.description }
                                     ]
                                 ]
                             ]

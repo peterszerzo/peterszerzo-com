@@ -200,7 +200,14 @@ view model =
                             div
                                 [ css
                                     [ textAlign center
-                                    , paddingBottom (px 40)
+                                    , paddingBottom (px 35)
+                                    , paddingTop (px 100)
+                                    , firstChild
+                                        [ paddingTop (px 20)
+                                        ]
+                                    , lastChild
+                                        [ paddingBottom (px 10)
+                                        ]
                                     ]
                                 ]
                                 (Wing.wingHeader title

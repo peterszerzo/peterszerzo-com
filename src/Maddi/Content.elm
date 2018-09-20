@@ -24,7 +24,7 @@ I studied at Accademia di Brera, trained at Teatro alla Scala, currently based i
 
 groupedProjects : List Project.GroupedProject
 groupedProjects =
-    [ { title = "Theater"
+    [ { title = "Theatre"
       , projects =
             [ { id = "visite"
               , title = "Visite"
@@ -32,10 +32,14 @@ groupedProjects =
               , tags = [ "set design" ]
               , openedAt = ( 2018, 11, 20 )
               , content = """
-Original play by Teatro Dei Gordi 
+Produced by [Teatro Franco Parenti / Teatro dei Gordi](https://www.teatrodeigordi.it/spettacolo/visite/), opening November 20th, 2018.
+
+Directed by Riccardo Pippa, actors Cecilia Campani, Giovanni Longhin, Andrea Panigatti, Sandro Pivotti, Maria Vittoria Scarlattei, Matteo Vitanza. Dramaturg Giulia Tollis.
         """
               , imgs =
-                    []
+                    [ { url = "/maddi/visite-1.jpg", alt = "Visite Promo 1", credit = Nothing }
+                    , { url = "/maddi/visite-2.jpg", alt = "Visite Promo 2", credit = Nothing }
+                    ]
               }
             , { id = "karmafulminien"
               , title = "Karmafulminien"
@@ -83,10 +87,16 @@ Awarded Premio Salon Brera-Bicocca in 2015, displayed in the International Art A
               , tags = [ "set assistant" ]
               , openedAt = ( 2018, 9, 29 )
               , content = """
-[Julian Crouch](http://crouch.com)
+[Opening September 29th, 2018](http://www.teatroallascala.org/it/stagione/2017-2018/opera/ernani.html)
+
+Opera by Giuseppe Verdi, produced by Teatro alla Scala
+
+Conductor Ádám Fischer, Director Sven-Eric Bechtolf, Set Designer Julian Crouch, Costume Designer Kevin Pollard
+Light Designer Marco Filibeck, Video Designer Filippo Marta, Coreography Lara Montanaro
     """
               , imgs =
-                    []
+                    [ { url = "/maddi/ernani-billboard.jpg", alt = "Ernani Billboard", credit = Nothing }
+                    ]
               }
             ]
       }

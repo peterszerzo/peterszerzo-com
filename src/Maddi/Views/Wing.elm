@@ -33,7 +33,7 @@ wingHeader title =
             [ titleType
             , width (px <| 2 * wingWidth)
             , property "transform" <| "skewY(" ++ String.fromFloat -wingSkewAngle ++ "rad)"
-            , margin4 (px 120) auto (px 100) auto
+            , margin4 (px 0) auto (px 100) auto
             , backgroundColor black
             , color white
             , padding2 (px 4) (px 10)

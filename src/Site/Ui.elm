@@ -247,8 +247,8 @@ contentBox config =
         ]
 
 
-static : String -> Html msg
-static mdContent =
+static : { children : List (Html msg), markdown : Maybe String } -> Html msg
+static { children, markdown } =
     div
         [ css
             [ width (pct 100)
@@ -339,7 +339,12 @@ static mdContent =
                 ]
             ]
         ]
-        [ toHtml [] mdContent |> fromUnstyled ]
+        ((markdown
+            |> Maybe.map (toHtml [] >> fromUnstyled)
+            |> Maybe.withDefault (text "")
+         )
+            :: children
+        )
 
 
 switch : Bool -> msg -> Html msg

@@ -184,8 +184,16 @@ view config =
             [ css
                 [ width (pct 100)
                 , height (pct 100)
-                , maxWidth (px 600)
-                , maxHeight (px 400)
+                , Css.batch <|
+                    if state.isExpanded then
+                        [ maxWidth (px 800)
+                        , maxHeight (px 600)
+                        ]
+
+                    else
+                        [ maxWidth (px 600)
+                        , maxHeight (px 400)
+                        ]
                 , margin auto
                 , displayFlex
                 , alignItems center

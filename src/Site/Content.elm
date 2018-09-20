@@ -1,6 +1,34 @@
-module Site.Content exposing (aboutConventional, aboutReal, mainLinks, now, projects, subtitle, talks, title)
+module Site.Content exposing
+    ( Project
+    , aboutConventional
+    , aboutReal
+    , mainLinks
+    , now
+    , projects
+    , subtitle
+    , talks
+    , talksIntro
+    , title
+    )
 
-import Site.Data.Project exposing (Project)
+
+type alias Talk =
+    { title : String
+    , location : String
+    , date : String
+    , youtubeUrl : Maybe String
+    , slidesUrl : Maybe String
+    }
+
+
+type alias Project =
+    { id : String
+    , name : String
+    , url : String
+    , image : String
+    , description : String
+    , size : Int
+    }
 
 
 mainLinks : List ( String, String )
@@ -137,25 +165,45 @@ subtitle =
     "Your friendly neighborhood creative programmer"
 
 
-talks : String
+talks : List Talk
 talks =
+    [ { title = "Take your Framework Dancing"
+      , location = "Berlin"
+      , date = "February 2018"
+      , youtubeUrl = Just "https://www.youtube.com/embed/0ASvEzfuH7g"
+      , slidesUrl = Just "https://peterszerzo.github.io/talks/take-your-framework-dancing"
+      }
+    , { title = "Multiplayer Games by the Boatloads"
+      , location = "Paris"
+      , date = "June 2017"
+      , youtubeUrl = Just "https://www.youtube.com/embed/sBCz6atTRZk"
+      , slidesUrl = Just "http://elmeu.peterszerzo.com/#1"
+      }
+    , { title = "Copenhagen React Workshop"
+      , location = "Copenhagen"
+      , date = "April 2016"
+      , youtubeUrl = Nothing
+      , slidesUrl = Nothing
+      }
+    , { title = "Practicel Elm. And Friends"
+      , location = "Copenhagen"
+      , date = "June 2016"
+      , youtubeUrl = Nothing
+      , slidesUrl = Just "https://peterszerzo.github.io/practical-elm-and-friends/"
+      }
+    , { title = "CSS by the Fireplace"
+      , location = "Copenhagen"
+      , date = "April 2016"
+      , youtubeUrl = Nothing
+      , slidesUrl = Just "https://peterszerzo.github.io/css-by-the-fireplace/"
+      }
+    ]
+
+
+talksIntro : String
+talksIntro =
     """
 Speaking and workshopping I enjoy. Here are the few I was fortunate to have done so far:
-* Take your Framework Dancing / Berlin / February 2018 / [Slides](https://peterszerzo.github.io/talks/take-your-framework-dancing)
-
-<div style="position: relative; padding-bottom: 56%; height: 0; overflow: hidden">
-  <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%" src="https://www.youtube.com/embed/0ASvEzfuH7g" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
-</div>
-
-* Multiplayer Games by the Boatloads / Paris / June 2017 / [Slides](http://elmeu.peterszerzo.com/#1)
-
-<div style="position: relative; padding-bottom: 56%; height: 0; overflow: hidden">
-  <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%" src="https://www.youtube.com/embed/sBCz6atTRZk" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
-</div>
-
-* Copenhagen React Workshop / Copenhagen / April 2016 / [Website](https://www.eventbrite.com/e/copenhagen-react-workshop-1-tickets-25344956447#)
-* Practical Elm. And Friends / Copenhagen / June 2016 / [Slides](https://peterszerzo.github.io/practical-elm-and-friends/)
-* CSS by the Fireplace / Copenhagen / April 2016 / [Slides](https://peterszerzo.github.io/css-by-the-fireplace/)
   """
 
 

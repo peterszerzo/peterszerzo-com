@@ -5,8 +5,8 @@ import Browser.Dom as Dom
 import Browser.Events as Events
 import Browser.Navigation as Navigation
 import Css exposing (..)
-import Html.Styled exposing (Html, div, fromUnstyled, h1, h2, header, node, p, text, toUnstyled)
-import Html.Styled.Attributes exposing (css)
+import Html.Styled exposing (Html, a, div, fromUnstyled, h1, h2, header, iframe, li, node, p, text, toUnstyled, ul)
+import Html.Styled.Attributes exposing (attribute, css, href, src, style)
 import Json.Decode as Decode
 import Json.Encode as Encode
 import Site.Content as Content
@@ -257,7 +257,7 @@ view model =
                             , url = ""
                             }
             in
-            { title = "Projects"
+            { title = project.name
             , body =
                 [ Ui.contentBox
                     { content =
@@ -282,7 +282,7 @@ view model =
             { title = "Now"
             , body =
                 [ Ui.contentBox
-                    { content = [ Ui.static Content.now ]
+                    { content = [ Ui.static { markdown = Just Content.now, children = [] } ]
                     , quirkyContent = Nothing
                     , breadcrumbs = [ { label = "Now!", url = Nothing } ]
                     , isQuirky = model.isQuirky
@@ -294,9 +294,9 @@ view model =
             { title = "About"
             , body =
                 [ Ui.contentBox
-                    { content = [ Ui.static Content.aboutConventional ]
+                    { content = [ Ui.static { markdown = Just Content.aboutConventional, children = [] } ]
                     , breadcrumbs = [ { label = "About", url = Nothing } ]
-                    , quirkyContent = Just [ Ui.static Content.aboutReal ]
+                    , quirkyContent = Just [ Ui.static { markdown = Just Content.aboutReal, children = [] } ]
                     , isQuirky = model.isQuirky
                     }
                 ]
@@ -307,12 +307,71 @@ view model =
             { title = "Talks"
             , body =
                 [ Ui.contentBox
-                    { content = [ Ui.static Content.talks ]
+                    { content =
+                        [ Ui.static
+                            { markdown = Just Content.talksIntro
+                            , children =
+                                [ div []
+                                    (Content.talks
+                                        |> List.reverse
+                                        |> List.map
+                                            (\talk ->
+                                                [ li []
+                                                    ((text <|
+                                                        talk.title
+                                                            ++ " // "
+                                                            ++ talk.location
+                                                            ++ " // "
+                                                            ++ talk.date
+                                                     )
+                                                        :: (talk.slidesUrl
+                                                                |> Maybe.map
+                                                                    (\slidesUrl ->
+                                                                        [ text " // "
+                                                                        , a [ href slidesUrl ] [ text "Slides" ]
+                                                                        ]
+                                                                    )
+                                                                |> Maybe.withDefault []
+                                                           )
+                                                    )
+                                                , talk.youtubeUrl
+                                                    |> Maybe.map
+                                                        (\youtubeUrl ->
+                                                            div
+                                                                [ style "position" "relative"
+                                                                , style "padding-bottom" "56%"
+                                                                , style "height" "0"
+                                                                , style "overflow" "hidden"
+                                                                ]
+                                                                [ iframe
+                                                                    [ style "position" "absolute"
+                                                                    , style "top" "0"
+                                                                    , style "left" "0"
+                                                                    , style "width" "100%"
+                                                                    , style "height" "100%"
+                                                                    , src youtubeUrl
+                                                                    , attribute "frameBorder" "0"
+                                                                    , attribute "gesture" "media"
+                                                                    , attribute "allow" "encrypted-media"
+                                                                    , attribute "allowfullscreen" "true"
+                                                                    ]
+                                                                    []
+                                                                ]
+                                                        )
+                                                    |> Maybe.withDefault (text "")
+                                                ]
+                                            )
+                                        |> List.foldl (++) []
+                                    )
+                                ]
+                            }
+                        ]
                     , quirkyContent = Nothing
                     , breadcrumbs = [ { label = "Talks", url = Nothing } ]
                     , isQuirky = model.isQuirky
                     }
                 ]
+                    |> layout
             }
 
         Router.NotFound ->
