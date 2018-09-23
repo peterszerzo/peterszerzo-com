@@ -3,7 +3,8 @@ module Maddi.Views.Mixins exposing
     , bodyType
     , fadeIn
     , gray
-    , headingType
+    , heading1Type
+    , heading2Type
     , lightGray
     , lighterGray
     , linkType
@@ -71,23 +72,31 @@ smallType =
 bodyType : Style
 bodyType =
     Css.batch
-        [ fontSize (Css.rem 1)
+        [ fontSize (Css.rem 0.825)
         , lineHeight (num 1.6)
         , mobile
-            [ fontSize (Css.rem 1)
+            [ fontSize (Css.rem 0.825)
             ]
         ]
 
 
-headingType : Style
-headingType =
+heading1Type : Style
+heading1Type =
     Css.batch
-        [ fontSize (Css.rem 1.75)
+        [ fontSize (Css.rem 1.5)
         , textDecoration none
         , color inherit
         , mobile
-            [ fontSize (Css.rem 1.5)
+            [ fontSize (Css.rem 1.375)
             ]
+        ]
+
+
+heading2Type : Style
+heading2Type =
+    Css.batch
+        [ fontSize (Css.rem 1.25)
+        , property "font-family" "Quicksand"
         ]
 
 

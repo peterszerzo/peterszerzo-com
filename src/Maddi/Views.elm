@@ -1,6 +1,5 @@
 module Maddi.Views exposing
-    ( homeLink
-    , intro
+    ( intro
     , mobileNav
     , pageLayout
     , simplePageContent
@@ -10,7 +9,7 @@ module Maddi.Views exposing
 
 import Css exposing (..)
 import Css.Global as Global
-import Html.Styled exposing (Html, a, br, div, footer, fromUnstyled, h2, header, p, span, text)
+import Html.Styled exposing (Html, a, br, div, footer, fromUnstyled, h1, h2, header, p, span, text)
 import Html.Styled.Attributes exposing (css, href)
 import Html.Styled.Events exposing (onClick)
 import Json.Decode as Decode
@@ -82,6 +81,14 @@ static markdownContent =
                 , Global.each [ Global.a ]
                     [ linkType
                     ]
+                , Global.h2
+                    [ heading2Type
+                    ]
+                , Global.blockquote
+                    [ margin4 (px 16) (px 0) (px 16) (px 0)
+                    , paddingLeft (px 20)
+                    , color Mixins.gray
+                    ]
                 ]
             , Global.children
                 [ Global.everything
@@ -100,41 +107,6 @@ static markdownContent =
             ]
         ]
         [ Markdown.toHtml [] markdownContent |> fromUnstyled
-        ]
-
-
-homeLink : msg -> Html msg
-homeLink navigate =
-    a
-        [ css
-            [ width (px 40)
-            , height (px 40)
-            , backgroundColor (hex "000")
-            , color (hex "FFF")
-            , marginRight (px 10)
-            , borderRadius (px 3)
-            , display inlineBlock
-            , position relative
-            , property "transition" "all 0.1s"
-            , mobile
-                [ width (px 30)
-                , height (px 30)
-                ]
-            , hover
-                [ backgroundColor yellow
-                , color (hex "000")
-                , Global.children
-                    [ Global.everything
-                        [ firstChild
-                            [ color (hex "000")
-                            ]
-                        ]
-                    ]
-                ]
-            ]
-        , href "/"
-        ]
-        [ Icons.largeLogo
         ]
 
 
@@ -228,7 +200,7 @@ pageHeader { activateMobileNav } =
                 , div [ css [ marginTop (px 0) ] ]
                     [ p
                         [ css
-                            [ fontSize (Css.rem 1.25)
+                            [ Mixins.heading2Type
                             , lineHeight (num 1.15)
                             , margin (px 0)
                             , property "font-weight" "700"
@@ -237,10 +209,9 @@ pageHeader { activateMobileNav } =
                         [ text "Anna Cingi" ]
                     , p
                         [ css
-                            [ fontSize (Css.rem 1.25)
+                            [ Mixins.heading2Type
                             , lineHeight (num 1.15)
                             , margin (px 0)
-                            , property "font-weight" "300"
                             ]
                         ]
                         [ text "set designer" ]
@@ -259,7 +230,7 @@ pageHeader { activateMobileNav } =
                             , css
                                 [ textDecoration none
                                 , color inherit
-                                , fontSize (Css.rem 1.25)
+                                , Mixins.heading2Type
                                 , marginLeft (px 20)
                                 , borderBottom2 (px 1) solid
                                 , borderBottomColor transparent
@@ -322,10 +293,10 @@ mobileNav { close } =
                             [ href url
                             , css
                                 [ display block
+                                , Mixins.heading2Type
                                 , margin (px 0)
                                 , lineHeight (num 1)
                                 , padding2 (px 10) (px 0)
-                                , headingType
                                 , textDecoration none
                                 , color currentColor
                                 ]
@@ -396,90 +367,107 @@ pageLayout isMobileNavActive toggleMobileNav children =
     ]
 
 
-simplePageContent : List (Html msg) -> Html msg
-simplePageContent children =
+simplePageContent : { title : String, left : Html msg, right : Html msg } -> Html msg
+simplePageContent config =
     let
         stickout =
             10
     in
     div
         [ css
-            [ padding (px 20)
-            , position relative
-            , width (pct 100)
-            , height (px 400)
-            , property "animation" "fadein 0.5s ease-in-out forwards"
-            , mobile
-                [ height auto
-                ]
-            , stickoutStyles { hover = False }
+            [ Mixins.fadeIn
             ]
         ]
-        [ div
+        [ h1
             [ css
-                [ mobile
-                    [ display none
+                [ Mixins.titleType
+                , textTransform none
+                , marginTop (px 0)
+                , marginLeft (px 20)
+                , marginBottom (px 10)
+                ]
+            ]
+            [ text config.title ]
+        , div
+            [ css
+                [ padding (px 20)
+                , position relative
+                , width (pct 100)
+                , height (px 400)
+                , mobile
+                    [ height auto
                     ]
+                , stickoutStyles { hover = False }
                 ]
             ]
             [ div
                 [ css
+                    [ mobile
+                        [ display none
+                        ]
+                    ]
+                ]
+                [ div
+                    [ css
+                        [ position absolute
+                        , top (px -stickout)
+                        , left (pct 50)
+                        , height (px (2 * stickout))
+                        , borderLeft3 (px 1) solid lightGray
+                        ]
+                    ]
+                    []
+                , div
+                    [ css
+                        [ position absolute
+                        , bottom (px -stickout)
+                        , left (pct 50)
+                        , height (px (2 * stickout))
+                        , borderLeft3 (px 1) solid lightGray
+                        ]
+                    ]
+                    []
+                ]
+            , div
+                [ css
                     [ position absolute
+                    , flex (num 0)
+                    , width (px 1)
                     , top (px -stickout)
-                    , left (pct 50)
-                    , height (px (2 * stickout))
-                    , borderLeft3 (px 1) solid lightGray
+                    , bottom (px -stickout)
+                    , right (pct 50)
+                    , mobile
+                        [ display none
+                        ]
                     ]
                 ]
                 []
             , div
                 [ css
-                    [ position absolute
-                    , bottom (px -stickout)
-                    , left (pct 50)
-                    , height (px (2 * stickout))
-                    , borderLeft3 (px 1) solid lightGray
-                    ]
-                ]
-                []
-            ]
-        , div
-            [ css
-                [ position absolute
-                , flex (num 0)
-                , width (px 1)
-                , top (px -stickout)
-                , bottom (px -stickout)
-                , right (pct 50)
-                , mobile
-                    [ display none
-                    ]
-                ]
-            ]
-            []
-        , div
-            [ css
-                [ displayFlex
-                , position relative
-                , alignItems flexStart
-                , justifyContent spaceBetween
-                , mobile
-                    [ display block
-                    ]
-                , Global.children
-                    [ Global.everything
-                        [ property "width" "calc(50% - 20px)"
-                        , position relative
-                        , overflow visible
-                        , mobile
-                            [ width (pct 100)
-                            ]
-                        , firstChild
-                            [ marginBottom (px 40)
+                    [ displayFlex
+                    , position relative
+                    , alignItems flexStart
+                    , justifyContent spaceBetween
+                    , mobile
+                        [ display block
+                        ]
+                    , Global.children
+                        [ Global.everything
+                            [ property "width" "calc(50% - 20px)"
+                            , position relative
+                            , overflow visible
+                            , mobile
+                                [ width (pct 100)
+                                ]
+                            , firstChild
+                                [ marginBottom (px 40)
+                                ]
                             ]
                         ]
                     ]
                 ]
+                [ config.left
+                , config.right
+                ]
             ]
-            children
         ]

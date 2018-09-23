@@ -225,13 +225,15 @@ view model =
             { title = "About Anna"
             , body =
                 [ Views.simplePageContent
-                    [ Views.static Content.about
-                    , Carousel.view
-                        { data = [ { url = "/maddi/cover.jpg", alt = "Anna Cingi", credit = Nothing } ]
-                        , state = model.aboutCarouselState
-                        , toMsg = ChangeAboutCarousel
-                        }
-                    ]
+                    { title = "About Anna"
+                    , left = Views.static Content.about
+                    , right =
+                        Carousel.view
+                            { data = [ { url = "/maddi/cover.jpg", alt = "Anna Cingi", credit = Nothing } ]
+                            , state = model.aboutCarouselState
+                            , toMsg = ChangeAboutCarousel
+                            }
+                    }
                 ]
                     |> layout
             }

@@ -123,6 +123,8 @@ view config =
                         [ backgroundColor (rgba 0 0 0 0.3)
                         , padding2 (px 0) (px 6)
                         , color Mixins.white
+                        , property "width" "fit-content"
+                        , whiteSpace noWrap
                         , Mixins.smallType
                         , position absolute
                         , property "z-index" "1001"

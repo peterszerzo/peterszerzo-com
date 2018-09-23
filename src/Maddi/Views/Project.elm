@@ -46,17 +46,16 @@ view config =
             config.state
     in
     Views.simplePageContent
-        [ div []
-            [ h1
-                [ css [ Mixins.headingType, marginTop (px 0), marginBottom (px 20) ]
+        { title = config.data.title
+        , left =
+            div []
+                [ div [ css [ marginBottom (px 20) ] ] <| List.map (Views.tag True) config.data.tags
+                , Views.static config.data.content
                 ]
-                [ text config.data.title ]
-            , div [ css [ marginBottom (px 20) ] ] <| List.map (Views.tag True) config.data.tags
-            , Views.static config.data.content
-            ]
-        , Carousel.view
-            { data = config.data.imgs
-            , state = state.carousel
-            , toMsg = \newState _ -> config.toStatefulMsg (State { state | carousel = newState }) config.data
-            }
-        ]
+        , right =
+            Carousel.view
+                { data = config.data.imgs
+                , state = state.carousel
+                , toMsg = \newState _ -> config.toStatefulMsg (State { state | carousel = newState }) config.data
+                }
+        }
