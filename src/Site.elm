@@ -81,9 +81,6 @@ main =
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        NoOp ->
-            ( model, Cmd.none )
-
         ToggleQuirky ->
             ( { model | isQuirky = not model.isQuirky }
             , Cmd.none
@@ -158,11 +155,7 @@ subscriptions model =
         , Ports.packLayoutRes PackLayoutResponse
         , case model.route of
             Router.Home ->
-                if startedSince model > 30000 then
-                    Sub.none
-
-                else
-                    Events.onAnimationFrame AnimationTick
+                Events.onAnimationFrame AnimationTick
 
             _ ->
                 Sub.none
@@ -255,6 +248,7 @@ view model =
                             , image = ""
                             , size = 0
                             , url = ""
+                            , color = ""
                             }
             in
             { title = project.name

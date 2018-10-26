@@ -234,7 +234,7 @@ contentBox config =
                     ]
                 , onClick ToggleQuirky
                 ]
-                [ switch isQuirky NoOp
+                [ switch isQuirky
                 ]
             ]
         , div
@@ -347,8 +347,8 @@ static { children, markdown } =
         )
 
 
-switch : Bool -> msg -> Html msg
-switch isRight handleClick =
+switch : Bool -> Html msg
+switch isRight =
     let
         rightStyles =
             [ property "transition" "transform .3s"
@@ -369,7 +369,6 @@ switch isRight handleClick =
             , property "border-width" "1px"
             , borderStyle solid
             ]
-        , onClick handleClick
         ]
         [ div
             [ css

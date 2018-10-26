@@ -7,8 +7,7 @@ import Time
 
 
 type Msg
-    = NoOp
-    | ToggleQuirky
+    = ToggleQuirky
     | Navigate String
     | ChangeRoute Route
     | UrlRequest Browser.UrlRequest

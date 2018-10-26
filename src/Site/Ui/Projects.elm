@@ -82,9 +82,10 @@ view { projects, packBubbles, activeProject } =
                             [ position absolute
                             , borderRadius (px 6)
                             , cursor pointer
-                            , backgroundColor blue
                             , property "box-shadow" "3px 6px 20px rgba(0, 0, 0, 0.3)"
+                            , backgroundColor blue
                             , property "transition" "all 0.3s"
+                            , property "z-index" (r |> floor |> String.fromInt)
                             , hover
                                 [ property "box-shadow" "3px 6px 28px rgba(0, 0, 0, 0.5)"
                                 , property "transform" "scale(1.03)"
@@ -99,6 +100,7 @@ view { projects, packBubbles, activeProject } =
                                     ]
                                 ]
                             ]
+                        , style "background-color" <| "#" ++ project.color
                         , href ("/projects/" ++ project.id)
                         , style "width" <| ((floor (2 * r_) |> String.Future.fromInt) ++ "px")
                         , style "height" <| ((floor (2 * r_) |> String.Future.fromInt) ++ "px")
@@ -129,7 +131,7 @@ view { projects, packBubbles, activeProject } =
                                     , height (pct 100)
                                     , overflow auto
                                     , property "animation" "fade-in 0.2s"
-                                    , property "z-index" "18"
+                                    , property "z-index" "1000"
                                     , Mixins.desktop
                                         [ overflow hidden
                                         , displayFlex

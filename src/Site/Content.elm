@@ -28,6 +28,7 @@ type alias Project =
     , image : String
     , description : String
     , size : Int
+    , color : String
     }
 
 
@@ -43,12 +44,9 @@ mainLinks =
     ]
 
 
-projects : List Project
-projects =
-    [ { id = "elm-gameroom"
-      , name = "elm-gameroom"
-      , image = "/site/imgs/projects/elm-gameroom.png"
-      , description = """
+elmGameroomCopy : String
+elmGameroomCopy =
+    """
 How easily can we create multiplayer games, and how custom can these games be? (answer: under 200 lines of code, any single-step competitive guessing game, any graphics the browser can handle)
 
 elm-gameroom is an API design experiment that balances the experience of the developer with the creative freedom of the game designer, delivering a framework that ‘clocks’ the simplest game in just under 150 lines of code. Replacing the back-end with peer-to-peer communication running on the frontend in the trusted, type-safe hands of the Elm programming language, elm-gameroom spawns a number of robust games that can be programed within the hour.
@@ -61,13 +59,11 @@ Care to play? Head to the [website](https://elm-gameroom-firebaseapp.com) for a 
 
 **Made with:** Elm / WebGL
     """
-      , url = "https://elm-gameroom.firebaseapp.com"
-      , size = 1200
-      }
-    , { id = "ripsaw"
-      , name = "ripsaw"
-      , image = "/site/imgs/projects/ripsaw.png"
-      , description = """
+
+
+ripsawCopy : String
+ripsawCopy =
+    """
 Design interface for creating 3d bezier shapes.
 
 **Info:** Brooklyn, NY / 2014 / [Website](https://codepen.io/peterszerzo/full/Wpdxyd/)
@@ -76,13 +72,11 @@ Design interface for creating 3d bezier shapes.
 
 **Made with:** Elm / SVG
       """
-      , url = "https://codepen.io/peterszerzo/full/Wpdxyd/"
-      , size = 400
-      }
-    , { id = "twisty-donut-racer"
-      , name = "Twisty Donut Racer"
-      , image = "/site/imgs/projects/twisty-donut-racer.png"
-      , description = """
+
+
+twistyCopy : String
+twistyCopy =
+    """
 Immersing myself into [Alto's Adventure](http://altosadventure.com) in the past few months, I have discovered the tremendous calming effect the right game design can have. Twisty Donut Racer is an exploration of what the Alto's secret is. Incidentally, it also revives an old [Moebius strip fascination](https://www.youtube.com/watch?v=MAYWsyDcAPQ).
 
 **Info:** Berlin / 2017 / [Website](https://peterszerzo.github.io/twisty-donut-racer)
@@ -91,13 +85,11 @@ Immersing myself into [Alto's Adventure](http://altosadventure.com) in the past 
 
 **Made with:** React / WebGL / SVG
       """
-      , url = "/"
-      , size = 1600
-      }
-    , { id = "elm-arborist"
-      , name = "elm-arborist"
-      , image = "/site/imgs/projects/elm-arborist.png"
-      , description = """
+
+
+arboristCopy : String
+arboristCopy =
+    """
 A drag-and-drop tree structure visualizer and editor that is agnostic about the data structure that sits in each node. It grew out of a need to model conversation flows, but has since generalized itself a fair bit. The latest experiment in the working: write pieces of JavaScript in each node, and compose user interfaces visually - a refreshing escape from file-based IDE's.
 
 **Info:** Berlin / 2017 / [Website](https://peterszerzo.github.io/elm-arborist/)
@@ -106,13 +98,11 @@ A drag-and-drop tree structure visualizer and editor that is agnostic about the 
 
 **Made with:** Elm / SVG
       """
-      , url = "/"
-      , size = 800
-      }
-    , { id = "splytlight"
-      , name = "SplytLight"
-      , image = "/site/imgs/projects/splytlight.png"
-      , description = """
+
+
+splytlightCopy : String
+splytlightCopy =
+    """
 Design interface for the [SplytLight](http://www.splytlight.com) lighting system developed by [Scott Leinweber](http://scottleinweber.com) and [Jason Krugman](http://www.jasonkrugman.com). Scott and I teamed up for some lovely recursive geometric hacking.
 
 **Info:** Copenhagen / 2016 / [Website](http://splytlight.surge.sh)
@@ -121,13 +111,11 @@ Design interface for the [SplytLight](http://www.splytlight.com) lighting system
 
 **Made with:** React / SVG / Three.js
       """
-      , url = "http://splytlight.surge.sh"
-      , size = 1600
-      }
-    , { id = "atlas"
-      , name = "Atlas"
-      , image = "/site/imgs/projects/atlas.png"
-      , description = """
+
+
+atlasCopy : String
+atlasCopy =
+    """
 Atlas is a data visualization CMS made for the Education Policy Program at [New America](http://newamerica.org). It allows policy analysts to create their own custom interactive maps based on a spreadsheet template.
 
 **Info:** Washington, DC / 2015 / [Website](http://atlas.newamerica.org)
@@ -136,21 +124,76 @@ Atlas is a data visualization CMS made for the Education Policy Program at [New 
 
 **Made with:** React / SVG / Leaflet.js / Mapbox
       """
-      , url = "http://atlas.newamerica.org"
-      , size = 400
-      }
-    , { id = "overeasy"
-      , name = "OverEasy"
-      , image = "/site/imgs/projects/overeasy.png"
-      , description = """
+
+
+overeasyCopy : String
+overeasyCopy =
+    """
 A playground for my computational art experiments.
 
 **Info:** Berlin / 2017-2018 / [Website](http://overeasy.sh)
 
 **Made with:** Elm / WebGL
       """
+
+
+projects : List Project
+projects =
+    [ { id = "elm-gameroom"
+      , name = "elm-gameroom"
+      , image = "/site/imgs/projects/elm-gameroom.png"
+      , description = elmGameroomCopy
+      , url = "https://elm-gameroom.firebaseapp.com"
+      , size = 1200
+      , color = "2D739E"
+      }
+    , { id = "ripsaw"
+      , name = "ripsaw"
+      , image = "/site/imgs/projects/ripsaw.png"
+      , description = ripsawCopy
+      , url = "https://codepen.io/peterszerzo/full/Wpdxyd/"
+      , size = 400
+      , color = "3c394d"
+      }
+    , { id = "twisty-donut-racer"
+      , name = "Twisty Donut Racer"
+      , image = "/site/imgs/projects/twisty-donut-racer.png"
+      , description = twistyCopy
+      , url = "/"
+      , size = 1600
+      , color = "302E27"
+      }
+    , { id = "elm-arborist"
+      , name = "elm-arborist"
+      , image = "/site/imgs/projects/elm-arborist.png"
+      , description = arboristCopy
+      , url = "/"
+      , size = 800
+      , color = "037C4E"
+      }
+    , { id = "splytlight"
+      , name = "SplytLight"
+      , image = "/site/imgs/projects/splytlight.png"
+      , description = splytlightCopy
+      , url = "http://splytlight.surge.sh"
+      , size = 1600
+      , color = "4a76b2"
+      }
+    , { id = "atlas"
+      , name = "Atlas"
+      , image = "/site/imgs/projects/atlas.png"
+      , description = atlasCopy
+      , url = "http://atlas.newamerica.org"
+      , size = 400
+      , color = "000000"
+      }
+    , { id = "overeasy"
+      , name = "OverEasy"
+      , image = "/site/imgs/projects/overeasy.png"
+      , description = overeasyCopy
       , url = "https://overeasy.sh"
       , size = 1200
+      , color = "ffc235"
       }
     ]
 
