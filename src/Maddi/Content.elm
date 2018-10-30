@@ -29,11 +29,13 @@ visiteCopy =
     """
 **Director:** Riccardo Pippa.
 
-**Dramaturg:** Giulia Tollis.
-
 **Performers:** Cecilia Campani, Giovanni Longhin, Andrea Panigatti, Sandro Pivotti, Maria Vittoria Scarlattei, Matteo Vitanza.
 
-Opening November 20th, 2018 in [Teatro Franco Parenti / Teatro dei Gordi](https://www.teatrodeigordi.it/spettacolo/visite/), 
+Costume design and masks by Ilaria Ariemme, dramaturgy by Giulia Tollis, light design by Paolo Casati, sound design by Luca De Marinis, directing assistent Daniele Cavone Felicioni.
+
+An original show by Teatro dei Gordi. Produced by Teatro Franco Parenti and Teatro dei Gordi.
+
+Opening November 20th, 2018 in [Teatro Franco Parenti](https://www.teatrodeigordi.it/spettacolo/visite/).
 """
 
 
@@ -44,22 +46,24 @@ karmaCopy =
 
 **Performers:** Luca Mammoli, Enrico Pittaluga, Graziano Sirressi.
 
-An original show by [Generazione Disagio](https://www.facebook.com/generazionedisagio/). First played on November 3rd 2015 in Teatro della Tosse, Genoa, Italy // [trailer](https://vimeo.com/148718410).
-
 Costumes designed together with Daniela De Blasio, light design by Danilo Deiana.
 
-Produced by Fondazione Luzzati - Teatro della Tosse, Genoa.
+An original show by [Generazione Disagio](https://www.facebook.com/generazionedisagio/). Produced by Fondazione Luzzati - Teatro della Tosse, Genoa.
+
+First performed on November 3rd 2015 in Teatro della Tosse, Genoa, Italy // [trailer](https://vimeo.com/148718410).
 """
 
 
 quCopy : String
 quCopy =
     """
-**Director:** Massimo Navone. 
+**Director:** Massimo Navone.
 
-Original play by Dario Fo and Franca Rame.
+**Set, props and tech team:** Gianluca Agazzi, Cristina Baroni, Martina Carcano, myself, Andrea Colombo, Greta Gasparini, Alberto Gramegna, Francesca Meregalli, Maddalena Oriani, Clarissa Palumbo, Flavio Pezzotti, Federica Piergiacomi, Francesca Sgariboldi, Alice Simoni
+ 
+Original play by Dario Fo and Franca Rame. Produced by Milano Teatro Scuola Paolo Grassi, Scuola di Scenografia dell’Accademia di Belle Arti di Brera, Accademia dell’Arte di Arezzo, Milano Civica Scuola di Musica Claudio Abbado, Milano Scuola di Cinema e Televisione, Laboratorio di Circo Quattrox4.
 
-First played on September 24th 2014 in Piccolo Teatro Studio Melato, Milan.
+First performed on September 24th 2014 in Piccolo Teatro Studio Melato, Milan.
 
 Awarded Premio Salon Brera-Bicocca in 2015, displayed in the International Art Academies Exihibition (Beijing, September 2015).
 """
@@ -68,11 +72,11 @@ Awarded Premio Salon Brera-Bicocca in 2015, displayed in the International Art A
 ernaniCopy : String
 ernaniCopy =
     """
-**Conductor:** Ádám Fischer
+**Conductor:** Ádám Fischer.
 
-**Director:** Sven-Eric Bechtolf
+**Director:** Sven-Eric Bechtolf.
 
-**Set Designer:** Julian Crouch
+**Set Designer:** Julian Crouch.
 
 Costume design by Kevin Pollard, light design by Marco Filibeck, video design by Filippo Marta, coreography by Lara Montanaro.
 
@@ -87,9 +91,9 @@ urlandoCopy =
     """
 **Director:** Riccardo Pippa.
 
-**Performer:** Rita Pelusio
+**Performer:** Rita Pelusio.
 
-**Scenic sculpture:** Simone Fersino 
+**Scenic sculpture:** Simone Fersino.
 
 An original show by Domenico Ferrari, Riccardo Piferi, Riccardo Pippa and Rita Pelusio. First played on December 12th 2017 in Teatro Verdi, Milan, Italy // [trailer](https://vimeo.com/250084156).
 
@@ -155,7 +159,15 @@ groupedProjects =
               , openedAt = ( 2018, 11, 20 )
               , content = urlandoCopy
               , imgs =
-                    [ { url = "/maddi/visite-2.jpg", alt = "Visite Promo 2", credit = Nothing }
+                    [ { url = "/maddi/urlando-furiosa-06.jpg", alt = "Urlando Furiosa 6", credit = Nothing }
+                    , { url = "/maddi/urlando-furiosa-01.jpg", alt = "Urlando Furiosa 1", credit = Nothing }
+                    , { url = "/maddi/urlando-furiosa-02.jpg", alt = "Urlando Furiosa 2", credit = Nothing }
+                    , { url = "/maddi/urlando-furiosa-03.jpg", alt = "Urlando Furiosa 3", credit = Nothing }
+                    , { url = "/maddi/urlando-furiosa-04.jpg", alt = "Urlando Furiosa 4", credit = Nothing }
+                    , { url = "/maddi/urlando-furiosa-05.jpg", alt = "Urlando Furiosa 5", credit = Nothing }
+                    , { url = "/maddi/urlando-furiosa-07.jpg", alt = "Urlando Furiosa 7", credit = Nothing }
+                    , { url = "/maddi/urlando-furiosa-08.jpg", alt = "Urlando Furiosa 8", credit = Nothing }
+                    , { url = "/maddi/urlando-furiosa-09.jpg", alt = "Urlando Furiosa 9", credit = Nothing }
                     ]
               }
             , { id = "karmafulminien"

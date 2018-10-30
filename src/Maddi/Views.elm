@@ -393,7 +393,7 @@ simplePageContent config =
                 [ padding (px 20)
                 , position relative
                 , width (pct 100)
-                , height (px 400)
+                , height (px 420)
                 , mobile
                     [ height auto
                     ]

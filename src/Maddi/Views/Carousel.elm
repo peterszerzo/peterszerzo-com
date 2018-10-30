@@ -111,7 +111,7 @@ view config =
                     ]
 
                 else
-                    [ height (px 360)
+                    [ height (px 380)
                     , backgroundColor (rgba 0 0 0 0.08)
                     ]
             ]
