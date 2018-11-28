@@ -2,7 +2,6 @@ module Site.Styles.Mixins exposing (bodyType, calcPctMinusPx, desktop, highlight
 
 import Css exposing (..)
 import Css.Media as Media
-import String.Future
 
 
 desktop =
@@ -11,17 +10,17 @@ desktop =
 
 calcPctMinusPx : Float -> Float -> String
 calcPctMinusPx percent pixels =
-    "calc(" ++ (percent |> String.Future.fromFloat) ++ "% - " ++ (pixels |> String.Future.fromFloat) ++ "px)"
+    "calc(" ++ (percent |> String.fromFloat) ++ "% - " ++ (pixels |> String.fromFloat) ++ "px)"
 
 
 zIndex : Int -> Style
 zIndex i =
-    property "z-index" (i |> String.Future.fromInt)
+    property "z-index" (i |> String.fromInt)
 
 
 lineHeight : Float -> Style
 lineHeight lh =
-    property "line-height" (lh |> String.Future.fromFloat)
+    property "line-height" (lh |> String.fromFloat)
 
 
 pointerEventsNone : Style

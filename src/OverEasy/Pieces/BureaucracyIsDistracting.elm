@@ -8,7 +8,6 @@ import OverEasy.Pieces.BureaucracyIsDistracting.Constants as Constants
 import OverEasy.Pieces.BureaucracyIsDistracting.Scribble as Scribble
 import OverEasy.Pieces.BureaucracyIsDistracting.Stamp as Stamp
 import Random
-import String.Future
 import Time
 
 
@@ -93,7 +92,7 @@ update msg model =
 
 toPx : Float -> String
 toPx no =
-    String.Future.fromFloat no ++ "px"
+    String.fromFloat no ++ "px"
 
 
 ballTransform : Float -> List ( String, String )
@@ -114,7 +113,7 @@ ballTransform2 : Float -> List ( String, String )
 ballTransform2 rot =
     [ ( "top", "15px" )
     , ( "left", "19px" )
-    , ( "transform", "rotate(" ++ String.Future.fromFloat rot ++ "rad)" )
+    , ( "transform", "rotate(" ++ String.fromFloat rot ++ "rad)" )
     , ( "transform-origin", "-4px 0px" )
     ]
 
@@ -156,8 +155,8 @@ view model =
                     Scribble.view (timeDiff model) scribble
             in
             div
-                [ style "width" (String.Future.fromFloat w ++ "px")
-                , style "height" (String.Future.fromFloat h ++ "px")
+                [ style "width" (String.fromFloat w ++ "px")
+                , style "height" (String.fromFloat h ++ "px")
                 , style "position" "relative"
                 , style "background-color" "#FFF"
                 , style "overflow" "hidden"

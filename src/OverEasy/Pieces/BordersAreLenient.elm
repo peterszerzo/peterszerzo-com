@@ -3,7 +3,6 @@ module OverEasy.Pieces.BordersAreLenient exposing (Model, Msg(..), init, subscri
 import Html exposing (Html, div, node, text)
 import Html.Attributes exposing (style)
 import OverEasy.Pieces.BordersAreLenient.P12 as P02
-import String.Future
 
 
 type alias Model =
@@ -37,8 +36,8 @@ update msg model =
 view : Model -> Html Msg
 view model =
     div
-        [ style "width" (String.Future.fromFloat w ++ "px")
-        , style "height" (String.Future.fromFloat h ++ "px")
+        [ style "width" (String.fromFloat w ++ "px")
+        , style "height" (String.fromFloat h ++ "px")
         ]
         [ node "style" [] [ text """
         svg * {

@@ -8,7 +8,6 @@ import Math.Vector3 as Vector3 exposing (Vec3, vec3)
 import Math.Vector4 as Vector4 exposing (Vec4, vec4)
 import OverEasy.Concepts.Icosahedron as Icosahedron
 import Random
-import String.Future
 import Svg exposing (path, svg)
 import Svg.Attributes exposing (d, fill, transform, viewBox)
 import Time
@@ -96,8 +95,8 @@ subscriptions model =
 star : Int -> Html msg
 star size =
     svg
-        [ Svg.Attributes.width (String.Future.fromInt size)
-        , Svg.Attributes.height (String.Future.fromInt size)
+        [ Svg.Attributes.width (String.fromInt size)
+        , Svg.Attributes.height (String.fromInt size)
         , viewBox "0 0 100 100"
         ]
         [ path
@@ -123,8 +122,8 @@ view model =
     div
         [ style "overflow" "hidden"
         , style "position" "relative"
-        , style "width" (String.Future.fromFloat w ++ "px")
-        , style "height" (String.Future.fromFloat h ++ "px")
+        , style "width" (String.fromFloat w ++ "px")
+        , style "height" (String.fromFloat h ++ "px")
         , style "background-color" "#FFFFFF"
         , style "border" "2px solid #000"
         ]
@@ -139,8 +138,8 @@ view model =
             , style "top" "50%"
             , style "left" "50%"
             , style "transform" "translate3d(-50%, -50%, 0)"
-            , style "width" (String.Future.fromInt size ++ "px")
-            , style "height" (String.Future.fromInt size ++ "px")
+            , style "width" (String.fromInt size ++ "px")
+            , style "height" (String.fromInt size ++ "px")
             , style "z-index" "10"
             ]
             [ globeEntity (timeDiff model)
@@ -150,8 +149,8 @@ view model =
                     div
                         [ style "position" "absolute"
                         , style "opacity" "0.4"
-                        , style "top" ((toFloat size * x |> String.Future.fromFloat) ++ "px")
-                        , style "left" ((toFloat size * y |> String.Future.fromFloat) ++ "px")
+                        , style "top" ((toFloat size * x |> String.fromFloat) ++ "px")
+                        , style "left" ((toFloat size * y |> String.fromFloat) ++ "px")
                         , style "z-index" "9"
                         ]
                         [ if size < 800 then

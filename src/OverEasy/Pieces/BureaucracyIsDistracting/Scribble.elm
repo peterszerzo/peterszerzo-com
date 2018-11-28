@@ -3,7 +3,6 @@ module OverEasy.Pieces.BureaucracyIsDistracting.Scribble exposing (Scribble, gen
 import Html exposing (Html, text)
 import OverEasy.Pieces.BureaucracyIsDistracting.Constants as Constants
 import Random
-import String.Future
 import Svg exposing (g, line, path, rect, svg)
 import Svg.Attributes
     exposing
@@ -75,7 +74,7 @@ single index time isRed offsets =
     path
         [ d <|
             "M10,"
-                ++ String.Future.fromFloat startY
+                ++ String.fromFloat startY
                 ++ (offsets
                         |> List.indexedMap
                             (\columnIndex offset ->
@@ -85,7 +84,7 @@ single index time isRed offsets =
                                             + offset
                                 in
                                 "c5,4,10,-5,15,"
-                                    ++ String.Future.fromFloat modifiedOffset
+                                    ++ String.fromFloat modifiedOffset
                             )
                         |> String.join ""
                    )

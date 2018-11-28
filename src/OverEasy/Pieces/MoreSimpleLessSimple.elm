@@ -2,7 +2,6 @@ module OverEasy.Pieces.MoreSimpleLessSimple exposing (Model, Msg(..), init, subs
 
 import Html exposing (Html, div, span, text)
 import Html.Attributes exposing (style)
-import String.Future
 import Svg exposing (g, line, svg)
 import Svg.Attributes exposing (height, stroke, strokeWidth, transform, viewBox, width, x1, x2, y1, y2)
 
@@ -32,7 +31,7 @@ update msg model =
 
 toPx : Float -> String
 toPx x =
-    String.Future.fromFloat x ++ "px"
+    String.fromFloat x ++ "px"
 
 
 moresimple : String
@@ -53,9 +52,9 @@ viewGrid =
                 |> List.map
                     (\v ->
                         line
-                            [ v * 20 |> String.Future.fromInt |> x1
+                            [ v * 20 |> String.fromInt |> x1
                             , y1 "0"
-                            , v * 20 |> String.Future.fromInt |> x2
+                            , v * 20 |> String.fromInt |> x2
                             , y2 "480"
                             , stroke "#F8F8EB"
                             , stroke "#E7EFF2"
@@ -69,9 +68,9 @@ viewGrid =
                 |> List.map
                     (\v ->
                         line
-                            [ v * 20 |> String.Future.fromInt |> y1
+                            [ v * 20 |> String.fromInt |> y1
                             , x1 "0"
-                            , v * 20 |> String.Future.fromInt |> y2
+                            , v * 20 |> String.fromInt |> y2
                             , x2 "800"
                             , stroke "#f1f1f1"
                             , strokeWidth "1"
@@ -130,7 +129,7 @@ view model =
                                 [ style "position" "absolute"
                                 , style "top" (toPx y)
                                 , style "left" (toPx x)
-                                , style "transform" ("translate3d(-50%, -50%, 0) rotate(" ++ String.Future.fromFloat (angle + pi / 2) ++ "rad)")
+                                , style "transform" ("translate3d(-50%, -50%, 0) rotate(" ++ String.fromFloat (angle + pi / 2) ++ "rad)")
                                 , style "opacity" "1"
                                 ]
                                 [ Html.text (moresimple |> String.slice (i - 1) i) ]

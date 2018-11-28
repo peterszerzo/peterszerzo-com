@@ -4,7 +4,6 @@ import Browser.Events as Events
 import Html exposing (Attribute, Html, div, text)
 import Html.Attributes exposing (style)
 import Random
-import String.Future
 import Svg exposing (line, path, svg)
 import Svg.Attributes exposing (d, fill, height, opacity, stroke, strokeLinecap, strokeLinejoin, strokeWidth, viewBox, width, x1, x2, y1, y2)
 import Time
@@ -136,7 +135,7 @@ subscriptions model =
 
 svgPtPair : Float -> Float -> String
 svgPtPair x y =
-    (x |> floor |> String.Future.fromInt) ++ "," ++ (y |> floor |> String.Future.fromInt)
+    (x |> floor |> String.fromInt) ++ "," ++ (y |> floor |> String.fromInt)
 
 
 geometryAttrs : Float -> Line -> List (Attribute msg)
@@ -248,7 +247,7 @@ view model =
                                , strokeLinecap "round"
                                , strokeLinejoin "round"
                                , fill "none"
-                               , (lineData.opacity + (1 - lineData.opacity) * val) |> String.Future.fromFloat |> opacity
+                               , (lineData.opacity + (1 - lineData.opacity) * val) |> String.fromFloat |> opacity
                                ]
                         )
                         []

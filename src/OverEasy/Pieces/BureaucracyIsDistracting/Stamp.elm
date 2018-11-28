@@ -2,14 +2,13 @@ module OverEasy.Pieces.BureaucracyIsDistracting.Stamp exposing (gradient, toPx, 
 
 import Html exposing (Html, text)
 import OverEasy.Pieces.BureaucracyIsDistracting.Constants as Constants
-import String.Future
 import Svg exposing (defs, g, line, linearGradient, path, rect, stop, svg)
 import Svg.Attributes exposing (d, fill, height, id, offset, rx, ry, stopColor, stroke, strokeLinecap, strokeLinejoin, strokeWidth, viewBox, width, x, x1, x2, y, y1, y2)
 
 
 toPx : Float -> String
 toPx =
-    String.Future.fromFloat
+    String.fromFloat
         >> (\p -> p ++ "%")
 
 

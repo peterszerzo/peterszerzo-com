@@ -13,7 +13,6 @@ import Site.Styles.Constants exposing (..)
 import Site.Styles.Mixins as Mixins
 import Site.Ui as Ui
 import Site.Ui.Shapes as Shapes
-import String.Future
 
 
 type alias Config =
@@ -102,10 +101,10 @@ view { projects, packBubbles, activeProject } =
                             ]
                         , style "background-color" <| "#" ++ project.color
                         , href ("/projects/" ++ project.id)
-                        , style "width" <| ((floor (2 * r_) |> String.Future.fromInt) ++ "px")
-                        , style "height" <| ((floor (2 * r_) |> String.Future.fromInt) ++ "px")
-                        , style "top" <| ((floor (y - r_) |> String.Future.fromInt) ++ "px")
-                        , style "left" <| ((floor (x - r_) |> String.Future.fromInt) ++ "px")
+                        , style "width" <| ((floor (2 * r_) |> String.fromInt) ++ "px")
+                        , style "height" <| ((floor (2 * r_) |> String.fromInt) ++ "px")
+                        , style "top" <| ((floor (y - r_) |> String.fromInt) ++ "px")
+                        , style "left" <| ((floor (x - r_) |> String.fromInt) ++ "px")
                         ]
                         [ projectLogo project.name ]
                 )

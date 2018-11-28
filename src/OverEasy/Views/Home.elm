@@ -7,7 +7,6 @@ import Json.Decode as Decode
 import OverEasy.Constants exposing (..)
 import OverEasy.Views.Home.Bg
 import OverEasy.Views.Icons as Icons
-import String.Future
 import Time
 
 
@@ -221,7 +220,7 @@ view config =
                         [ link
                             { url =
                                 if config.page > 0 then
-                                    "/?nosmooth=true&p=" ++ (String.Future.fromInt <| config.page - 1) |> Just
+                                    "/?nosmooth=true&p=" ++ (String.fromInt <| config.page - 1) |> Just
 
                                 else
                                     Nothing
@@ -231,7 +230,7 @@ view config =
                         , link
                             { url =
                                 if (config.page + 1) * 3 < List.length config.links then
-                                    "/?nosmooth=true&p=" ++ (String.Future.fromInt <| config.page + 1) |> Just
+                                    "/?nosmooth=true&p=" ++ (String.fromInt <| config.page + 1) |> Just
 
                                 else
                                     Nothing

@@ -3,7 +3,6 @@ module Shared.SimpleWebGL exposing (Config, Uniforms, Varyings, Vertex, mesh, ve
 import Html exposing (Attribute, Html)
 import Html.Attributes exposing (style)
 import Math.Vector2 as Vector2 exposing (Vec2, vec2)
-import String.Future
 import WebGL
 
 
@@ -54,8 +53,8 @@ view { window, makeUniforms, fragmentShader, attrs } =
     WebGL.toHtml
         ([ Html.Attributes.width size
          , Html.Attributes.height size
-         , style "top" <| String.Future.fromFloat top ++ "px"
-         , style "left" <| String.Future.fromFloat left ++ "px"
+         , style "top" <| String.fromFloat top ++ "px"
+         , style "left" <| String.fromFloat left ++ "px"
          , style "z-index" <| "1"
          , style "position" <| "absolute"
          ]
