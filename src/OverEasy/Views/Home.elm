@@ -194,7 +194,7 @@ view config =
                             [ tiltedSubtitleStyle
                             ]
                         ]
-                        [ text "~ bryhllaupp with "
+                        [ text "~ with "
                         , a
                             [ css
                                 [ textDecoration none
@@ -205,7 +205,7 @@ view config =
                                 ]
                             , href "http://peterszerzo.com"
                             ]
-                            [ text "peter" ]
+                            [ text "peterchen mond" ]
                         , text " ~"
                         ]
                     ]

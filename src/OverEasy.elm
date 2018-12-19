@@ -383,11 +383,7 @@ subscriptions model =
 
             Home _ ->
                 Sub.batch
-                    [ if True then
-                        Sub.none
-
-                      else
-                        Events.onAnimationFrame Tick
+                    [ Events.onAnimationFrame Tick
                     , Events.onResize Resize
                     ]
 
