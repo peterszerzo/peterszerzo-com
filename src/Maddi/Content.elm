@@ -151,6 +151,7 @@ groupedProjects =
                     [ { url = "/maddi/visite-1.jpg", alt = "Visite Promo 1", credit = Nothing }
                     , { url = "/maddi/visite-2.jpg", alt = "Visite Promo 2", credit = Nothing }
                     ]
+              , thumbnailImg = Nothing
               }
             , { id = "urlando-furiosa"
               , title = "Urlando Furiosa"
@@ -169,6 +170,7 @@ groupedProjects =
                     , { url = "/maddi/urlando-furiosa-08.jpg", alt = "Urlando Furiosa 8", credit = Nothing }
                     , { url = "/maddi/urlando-furiosa-09.jpg", alt = "Urlando Furiosa 9", credit = Nothing }
                     ]
+              , thumbnailImg = Nothing
               }
             , { id = "karmafulminien"
               , title = "Karmafulminien"
@@ -189,6 +191,7 @@ groupedProjects =
                     , { url = "/maddi/karmafulminien-rendering.jpg", alt = "Karmafulminien rendering", credit = Just "my rendering" }
                     , { url = "/maddi/karmafulminien-poster.jpg", alt = "Karmafulminien poster", credit = Just "Niccolò Masini" }
                     ]
+              , thumbnailImg = Nothing
               }
             , { id = "story-of-qu"
               , title = "Story of Qu"
@@ -203,6 +206,7 @@ groupedProjects =
                     , { url = "/maddi/story-of-qu-model-4.jpg", alt = "Story of Qu, Model 4", credit = Just "Pino Montisci" }
                     , { url = "/maddi/story-of-qu-stage-1.jpg", alt = "Story of Qu, Stage 1", credit = Just "Pino Montisci" }
                     ]
+              , thumbnailImg = Nothing
               }
             ]
       }
@@ -217,6 +221,7 @@ groupedProjects =
               , imgs =
                     [ { url = "/maddi/barber-of-seville-01.jpg", alt = "Barber of Seville", credit = Nothing }
                     ]
+              , thumbnailImg = Nothing
               }
             , { id = "ernani"
               , title = "Ernani"
@@ -227,6 +232,7 @@ groupedProjects =
               , imgs =
                     [ { url = "/maddi/ernani-billboard.jpg", alt = "Ernani Billboard", credit = Nothing }
                     ]
+              , thumbnailImg = Nothing
               }
             , { id = "hansel-gretel"
               , title = "Hänsel und Gretel"
@@ -250,6 +256,7 @@ groupedProjects =
                     , { url = "/maddi/haensel-gretel-13.jpg", alt = "Hänsel und Gretel Stage 13", credit = Just "Marco Brescia, Rudy Amisano" }
                     , { url = "/maddi/haensel-gretel-14.jpg", alt = "Hänsel und Gretel Stage 14", credit = Just "Marco Brescia, Rudy Amisano" }
                     ]
+              , thumbnailImg = Nothing
               }
             ]
       }

@@ -1,4 +1,4 @@
-module Maddi.Data.Project exposing (GroupedProject, Project, findById, placeholder)
+module Maddi.Data.Project exposing (GroupedProject, Project, findById)
 
 import Maddi.Data.Image as Image
 
@@ -10,6 +10,7 @@ type alias Project =
     , institution : String
     , openedAt : ( Int, Int, Int )
     , content : String
+    , thumbnailImg : Maybe String
     , imgs : List Image.Image
     }
 
@@ -37,15 +38,3 @@ findById projectId groupedProjects =
 
                 Nothing ->
                     findById projectId groupedProjectsTail
-
-
-placeholder : Project
-placeholder =
-    { id = ""
-    , title = ""
-    , institution = ""
-    , tags = []
-    , openedAt = ( 2018, 1, 1 )
-    , content = ""
-    , imgs = []
-    }

@@ -1,8 +1,13 @@
-module Maddi.Views.Icons exposing (close, expand, largeLogo, menu)
+module Maddi.Views.Icons exposing (chevronLeft, chevronRight, close, expand, largeLogo, menu)
 
 import Html.Styled exposing (Html)
 import Svg.Styled exposing (line, path, svg)
-import Svg.Styled.Attributes exposing (d, fill, stroke, strokeWidth, viewBox, x1, x2, y1, y2)
+import Svg.Styled.Attributes exposing (d, fill, stroke, strokeLinecap, strokeLinejoin, strokeWidth, viewBox, x1, x2, y1, y2)
+
+
+strokeWidthVal : String
+strokeWidthVal =
+    "8"
 
 
 largeLogo : Html msg
@@ -17,13 +22,43 @@ largeLogo =
         ]
 
 
+chevronRight : Html msg
+chevronRight =
+    svg
+        [ Svg.Styled.Attributes.viewBox "0 0 40 100" ]
+        [ path
+            [ d "M10,10 L30,50 L10,90"
+            , strokeWidth strokeWidthVal
+            , strokeLinecap "round"
+            , strokeLinejoin "round"
+            , stroke "currentColor"
+            ]
+            []
+        ]
+
+
+chevronLeft : Html msg
+chevronLeft =
+    svg
+        [ Svg.Styled.Attributes.viewBox "0 0 40 100" ]
+        [ path
+            [ d "M30,10 L10,50 L30,90"
+            , strokeWidth strokeWidthVal
+            , strokeLinecap "round"
+            , strokeLinejoin "round"
+            , stroke "currentColor"
+            ]
+            []
+        ]
+
+
 menu : Html msg
 menu =
     svg
         [ Svg.Styled.Attributes.viewBox "0 0 100 100" ]
-        [ line [ x1 "10", y1 "30", x2 "90", y2 "30", strokeWidth "5", stroke "currentColor" ] []
-        , line [ x1 "10", y1 "50", x2 "90", y2 "50", strokeWidth "5", stroke "currentColor" ] []
-        , line [ x1 "10", y1 "70", x2 "90", y2 "70", strokeWidth "5", stroke "currentColor" ] []
+        [ line [ x1 "10", y1 "30", x2 "90", y2 "30", strokeWidth strokeWidthVal, stroke "currentColor" ] []
+        , line [ x1 "10", y1 "50", x2 "90", y2 "50", strokeWidth strokeWidthVal, stroke "currentColor" ] []
+        , line [ x1 "10", y1 "70", x2 "90", y2 "70", strokeWidth strokeWidthVal, stroke "currentColor" ] []
         ]
 
 
@@ -32,16 +67,20 @@ expand =
     svg
         [ Svg.Styled.Attributes.viewBox "0 0 100 100" ]
         [ path
-            [ d "M60,10 L90,10 L90,40 L90,10 L55,45"
-            , strokeWidth "5"
+            [ d "M60,10 L90,10 L90,40 L90,10 L60,40"
+            , strokeWidth strokeWidthVal
             , stroke "currentColor"
+            , strokeLinecap "round"
+            , strokeLinejoin "round"
             , fill "none"
             ]
             []
         , path
-            [ d "M10,60 L10,90 L40,90 L10,90 L45,55"
-            , strokeWidth "5"
+            [ d "M10,60 L10,90 L40,90 L10,90 L40,60"
+            , strokeWidth strokeWidthVal
             , stroke "currentColor"
+            , strokeLinecap "round"
+            , strokeLinejoin "round"
             , fill "none"
             ]
             []
@@ -51,6 +90,6 @@ expand =
 close : Html msg
 close =
     svg [ Svg.Styled.Attributes.viewBox "0 0 100 100" ]
-        [ line [ x1 "20", y1 "20", x2 "80", y2 "80", strokeWidth "5", stroke "currentColor" ] []
-        , line [ x1 "80", y1 "20", x2 "20", y2 "80", strokeWidth "5", stroke "currentColor" ] []
+        [ line [ x1 "20", y1 "20", x2 "80", y2 "80", strokeWidth strokeWidthVal, stroke "currentColor" ] []
+        , line [ x1 "80", y1 "20", x2 "20", y2 "80", strokeWidth strokeWidthVal, stroke "currentColor" ] []
         ]

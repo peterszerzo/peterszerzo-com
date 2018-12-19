@@ -29,7 +29,7 @@ type alias Data =
 type alias Config msg =
     { state : State
     , data : Data
-    , toStatefulMsg : State -> Data -> msg
+    , toMsg : State -> msg
     }
 
 
@@ -56,6 +56,6 @@ view config =
             Carousel.view
                 { data = config.data.imgs
                 , state = state.carousel
-                , toMsg = \newState _ -> config.toStatefulMsg (State { state | carousel = newState }) config.data
+                , toMsg = \newState -> config.toMsg (State { state | carousel = newState })
                 }
         }

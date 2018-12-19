@@ -96,9 +96,9 @@ type Msg
     | SetMobileNav Bool
     | UrlRequest Browser.UrlRequest
     | ChangeRoute Route
-    | ChangeProjectView ProjectView.State ProjectView.Data
+    | ChangeProjectView ProjectView.State
     | ChangeProjectViewState ProjectView.State
-    | ChangeAboutCarousel Carousel.State Carousel.Data
+    | ChangeAboutCarousel Carousel.State
     | ChangeAboutCarouselState Carousel.State
 
 
@@ -149,7 +149,7 @@ update msg model =
             , Cmd.none
             )
 
-        ChangeProjectView newProjectViewState _ ->
+        ChangeProjectView newProjectViewState ->
             ( { model
                 | projectViewState = newProjectViewState
               }
@@ -163,7 +163,7 @@ update msg model =
             , Cmd.none
             )
 
-        ChangeAboutCarousel newState _ ->
+        ChangeAboutCarousel newState ->
             ( { model
                 | aboutCarouselState = newState
               }
@@ -242,18 +242,27 @@ view model =
             let
                 project =
                     Project.findById id Content.groupedProjects
-                        |> Maybe.withDefault Project.placeholder
             in
-            { title = project.title
-            , body =
-                [ ProjectView.view
-                    { data = project
-                    , state = model.projectViewState
-                    , toStatefulMsg = ChangeProjectView
+            project
+                |> Maybe.map
+                    (\project_ ->
+                        { title = project_.title
+                        , body =
+                            [ ProjectView.view
+                                { data = project_
+                                , state = model.projectViewState
+                                , toMsg = ChangeProjectView
+                                }
+                            ]
+                                |> layout
+                        }
+                    )
+                |> Maybe.withDefault
+                    { title = "Project not found"
+                    , body =
+                        [ text "This project was not found" ]
+                            |> layout
                     }
-                ]
-                    |> layout
-            }
 
         NotFound ->
             { title = "Not found"
