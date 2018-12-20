@@ -74,6 +74,16 @@ subscriptions (State state) =
         )
 
 
+menuZIndex : Style
+menuZIndex =
+    property "z-index" "1000"
+
+
+overlayZIndex : Style
+overlayZIndex =
+    property "z-index" "100000"
+
+
 view : Config msg -> Html msg
 view config =
     let
@@ -99,12 +109,40 @@ view config =
      else
         container
     )
-        [ case imageData.credit of
-            Just credit_ ->
-                credit <| "Credit: " ++ credit_
+        [ div
+            [ css
+                [ position absolute
+                , bottom (px 5)
+                , left (pct 50)
+                , width (pct 100)
+                , transform <| translate3d (pct -50) (px 0) (px 0)
+                , textAlign center
+                , menuZIndex
+                ]
+            ]
+            [ if List.length config.data > 1 then
+                bulletMenu
+                    { count = List.length config.data
+                    , active = displayIndex
+                    , onClick =
+                        \newDisplayIndex ->
+                            config.toMsg
+                                (State
+                                    { active = newDisplayIndex
+                                    , isExpanded = state.isExpanded
+                                    }
+                                )
+                    }
 
-            Nothing ->
+              else
                 text ""
+            , case imageData.credit of
+                Just credit_ ->
+                    credit <| "Credit: " ++ credit_
+
+                Nothing ->
+                    text ""
+            ]
         , if List.length config.data > 0 then
             buttonContainer
                 { onClick =
@@ -122,7 +160,7 @@ view config =
                     else
                         Icons.expand
                 , css =
-                    [ property "z-index" "1000"
+                    [ menuZIndex
                     , top (px 10)
                     , right (px 10)
                     ]
@@ -164,24 +202,6 @@ view config =
                 ]
                 []
             ]
-                ++ (if List.length config.data > 1 then
-                        [ bulletMenu
-                            { count = List.length config.data
-                            , active = displayIndex
-                            , onClick =
-                                \newDisplayIndex ->
-                                    config.toMsg
-                                        (State
-                                            { active = newDisplayIndex
-                                            , isExpanded = state.isExpanded
-                                            }
-                                        )
-                            }
-                        ]
-
-                    else
-                        []
-                   )
         ]
 
 
@@ -189,8 +209,8 @@ buttonContainer : { onClick : msg, icon : Html msg, css : List Style } -> Html m
 buttonContainer config =
     div
         [ css
-            [ width (px 35)
-            , height (px 35)
+            [ width (px 32)
+            , height (px 32)
             , padding (px 5)
             , backgroundColor (rgba 0 0 0 0.2)
             , borderRadius (px 3)
@@ -217,7 +237,7 @@ overlay : List (Html msg) -> Html msg
 overlay =
     div
         [ css
-            [ property "z-index" "10000"
+            [ overlayZIndex
             , position fixed |> important
             , displayFlex
             , overflow visible
@@ -252,17 +272,13 @@ credit bodyText =
     div
         [ css
             [ backgroundColor (rgba 0 0 0 0.3)
+            , property "width" "fit-content"
+            , margin2 (px 5) auto
+            , borderRadius (px 3)
             , padding2 (px 0) (px 6)
             , color Mixins.white
-            , property "width" "fit-content"
             , whiteSpace noWrap
             , Mixins.smallType
-            , position absolute
-            , property "z-index" "1001"
-            , bottom (px 10)
-            , borderRadius (px 3)
-            , left (pct 50)
-            , transform <| translateX (pct -50)
             ]
         ]
         [ text bodyText
@@ -273,11 +289,7 @@ bulletMenu : { count : Int, active : Int, onClick : Int -> msg } -> Html msg
 bulletMenu config =
     div
         [ css
-            [ position absolute
-            , width (pct 100)
-            , left (px 0)
-            , textAlign center
-            , bottom (px -22)
+            [ textAlign center
             ]
         ]
     <|
@@ -288,12 +300,12 @@ bulletMenu config =
                         [ cursor pointer
                         , display inlineBlock
                         , padding (px 4)
-                        , margin2 (px 0) (px 1)
+                        , margin2 (px 0) (px 2)
                         , after
                             [ property "content" "' '"
                             , display block
-                            , width (px 10)
-                            , height (px 10)
+                            , width (px 12)
+                            , height (px 12)
                             , boxSizing borderBox
                             , borderRadius (pct 50)
                             , property "transition" "all 0.1s"

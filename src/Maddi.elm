@@ -130,9 +130,17 @@ update msg model =
         UrlRequest urlRequest ->
             case urlRequest of
                 Browser.Internal url ->
-                    ( model
-                    , Navigation.pushUrl model.key (Url.toString url)
-                    )
+                    let
+                        stringUrl =
+                            Url.toString url
+                    in
+                    if String.right 4 stringUrl == ".pdf" then
+                        ( model, Navigation.load stringUrl )
+
+                    else
+                        ( model
+                        , Navigation.pushUrl model.key stringUrl
+                        )
 
                 Browser.External href ->
                     ( model, Navigation.load href )

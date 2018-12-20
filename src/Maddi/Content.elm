@@ -8,6 +8,7 @@ navLinks =
     [ ( "/", "home" )
     , ( "/about", "about" )
     , ( "mailto:annamcingi@gmail.com", "contact" )
+    , ( "/maddi/anna-cingi-cv-english.pdf", "cv" )
     ]
 
 
@@ -200,11 +201,19 @@ groupedProjects =
               , openedAt = ( 2017, 1, 1 )
               , content = quCopy
               , imgs =
-                    [ { url = "/maddi/story-of-qu-stage-2.jpg", alt = "Story of Qu, Stage 2", credit = Just "Pino Montisci" }
-                    , { url = "/maddi/story-of-qu-model-2.jpg", alt = "Story of Qu, Model 2", credit = Just "Pino Montisci" }
-                    , { url = "/maddi/story-of-qu-model-3.jpg", alt = "Story of Qu, Model 3", credit = Just "Pino Montisci" }
-                    , { url = "/maddi/story-of-qu-model-4.jpg", alt = "Story of Qu, Model 4", credit = Just "Pino Montisci" }
-                    , { url = "/maddi/story-of-qu-stage-1.jpg", alt = "Story of Qu, Stage 1", credit = Just "Pino Montisci" }
+                    [ { url = "/maddi/story-of-qu-01.jpg", alt = "Story of Qu 1", credit = Nothing }
+                    , { url = "/maddi/story-of-qu-02.jpg", alt = "Story of Qu 2", credit = Nothing }
+                    , { url = "/maddi/story-of-qu-03.jpg", alt = "Story of Qu 3", credit = Just "Pino Montisci" }
+                    , { url = "/maddi/story-of-qu-04.jpg", alt = "Story of Qu 4", credit = Nothing }
+                    , { url = "/maddi/story-of-qu-05.jpg", alt = "Story of Qu 5", credit = Just "Enzo Mologni" }
+                    , { url = "/maddi/story-of-qu-06.jpg", alt = "Story of Qu 6", credit = Nothing }
+                    , { url = "/maddi/story-of-qu-07.jpg", alt = "Story of Qu 7", credit = Just "Enzo Mologni" }
+                    , { url = "/maddi/story-of-qu-08.jpg", alt = "Story of Qu 8", credit = Nothing }
+                    , { url = "/maddi/story-of-qu-09.jpg", alt = "Story of Qu 9", credit = Just "Enzo Mologni" }
+                    , { url = "/maddi/story-of-qu-10.jpg", alt = "Story of Qu 10", credit = Just "Enzo Mologni" }
+                    , { url = "/maddi/story-of-qu-11.jpg", alt = "Story of Qu 11", credit = Nothing }
+                    , { url = "/maddi/story-of-qu-12.jpg", alt = "Story of Qu 12", credit = Just "Enzo Mologni" }
+                    , { url = "/maddi/story-of-qu-13.jpg", alt = "Story of Qu 13", credit = Just "Pino Montisci" }
                     ]
               , thumbnailImg = Nothing
               }
@@ -219,7 +228,22 @@ groupedProjects =
               , openedAt = ( 2018, 11, 10 )
               , content = barberCopy
               , imgs =
-                    [ { url = "/maddi/barber-of-seville-01.jpg", alt = "Barber of Seville", credit = Nothing }
+                    let
+                        credit =
+                            Just "Marco Borggreve"
+                    in
+                    [ { url = "/maddi/barber-of-seville-01.jpg", alt = "Barber of Seville 1", credit = credit }
+                    , { url = "/maddi/barber-of-seville-02.jpg", alt = "Barber of Seville 2", credit = credit }
+                    , { url = "/maddi/barber-of-seville-03.jpg", alt = "Barber of Seville 3", credit = credit }
+                    , { url = "/maddi/barber-of-seville-04.jpg", alt = "Barber of Seville 4", credit = credit }
+                    , { url = "/maddi/barber-of-seville-05.jpg", alt = "Barber of Seville 5", credit = credit }
+                    , { url = "/maddi/barber-of-seville-06.jpg", alt = "Barber of Seville 6", credit = credit }
+                    , { url = "/maddi/barber-of-seville-07.jpg", alt = "Barber of Seville 7", credit = credit }
+                    , { url = "/maddi/barber-of-seville-08.jpg", alt = "Barber of Seville 8", credit = credit }
+                    , { url = "/maddi/barber-of-seville-09.jpg", alt = "Barber of Seville 9", credit = credit }
+                    , { url = "/maddi/barber-of-seville-10.jpg", alt = "Barber of Seville 10", credit = credit }
+                    , { url = "/maddi/barber-of-seville-11.jpg", alt = "Barber of Seville 11", credit = credit }
+                    , { url = "/maddi/barber-of-seville-12.jpg", alt = "Barber of Seville 12", credit = credit }
                     ]
               , thumbnailImg = Nothing
               }
@@ -230,7 +254,25 @@ groupedProjects =
               , openedAt = ( 2018, 9, 29 )
               , content = ernaniCopy
               , imgs =
-                    [ { url = "/maddi/ernani-billboard.jpg", alt = "Ernani Billboard", credit = Nothing }
+                    let
+                        credit =
+                            Just "Brescia, Amisano © Teatro Alla Scala"
+                    in
+                    [ { url = "/maddi/ernani-01.jpg", alt = "Ernani stage 1", credit = credit }
+                    , { url = "/maddi/ernani-02.jpg", alt = "Ernani stage 2", credit = credit }
+                    , { url = "/maddi/ernani-03.jpg", alt = "Ernani stage 3", credit = credit }
+                    , { url = "/maddi/ernani-04.jpg", alt = "Ernani stage 4", credit = credit }
+                    , { url = "/maddi/ernani-05.jpg", alt = "Ernani stage 5", credit = credit }
+                    , { url = "/maddi/ernani-06.jpg", alt = "Ernani stage 6", credit = credit }
+                    , { url = "/maddi/ernani-07.jpg", alt = "Ernani stage 7", credit = credit }
+                    , { url = "/maddi/ernani-08.jpg", alt = "Ernani stage 8", credit = credit }
+                    , { url = "/maddi/ernani-09.jpg", alt = "Ernani stage 9", credit = credit }
+                    , { url = "/maddi/ernani-10.jpg", alt = "Ernani stage 10", credit = credit }
+                    , { url = "/maddi/ernani-11.jpg", alt = "Ernani stage 11", credit = credit }
+                    , { url = "/maddi/ernani-12.jpg", alt = "Ernani stage 12", credit = credit }
+                    , { url = "/maddi/ernani-13.jpg", alt = "Ernani stage 13", credit = credit }
+                    , { url = "/maddi/ernani-14.jpg", alt = "Ernani stage 14", credit = credit }
+                    , { url = "/maddi/ernani-15.jpg", alt = "Ernani stage 15", credit = credit }
                     ]
               , thumbnailImg = Nothing
               }
@@ -241,20 +283,20 @@ groupedProjects =
               , openedAt = ( 2017, 9, 2 )
               , content = hanselGretelCopy
               , imgs =
-                    [ { url = "/maddi/haensel-gretel-01.jpg", alt = "Hänsel und Gretel Stage 1", credit = Just "Marco Brescia, Rudy Amisano" }
-                    , { url = "/maddi/haensel-gretel-02.jpg", alt = "Hänsel und Gretel Stage 2", credit = Just "Marco Brescia, Rudy Amisano" }
-                    , { url = "/maddi/haensel-gretel-03.jpg", alt = "Hänsel und Gretel Stage 3", credit = Just "Marco Brescia, Rudy Amisano" }
-                    , { url = "/maddi/haensel-gretel-04.jpg", alt = "Hänsel und Gretel Stage 4", credit = Just "Marco Brescia, Rudy Amisano" }
-                    , { url = "/maddi/haensel-gretel-05.jpg", alt = "Hänsel und Gretel Stage 5", credit = Just "Marco Brescia, Rudy Amisano" }
-                    , { url = "/maddi/haensel-gretel-06.jpg", alt = "Hänsel und Gretel Stage 6", credit = Just "Marco Brescia, Rudy Amisano" }
-                    , { url = "/maddi/haensel-gretel-07.jpg", alt = "Hänsel und Gretel Stage 7", credit = Just "Marco Brescia, Rudy Amisano" }
-                    , { url = "/maddi/haensel-gretel-08.jpg", alt = "Hänsel und Gretel Stage 8", credit = Just "Marco Brescia, Rudy Amisano" }
-                    , { url = "/maddi/haensel-gretel-09.jpg", alt = "Hänsel und Gretel Stage 9", credit = Just "Marco Brescia, Rudy Amisano" }
-                    , { url = "/maddi/haensel-gretel-10.jpg", alt = "Hänsel und Gretel Stage 10", credit = Just "Marco Brescia, Rudy Amisano" }
-                    , { url = "/maddi/haensel-gretel-11.jpg", alt = "Hänsel und Gretel Stage 11", credit = Just "Marco Brescia, Rudy Amisano" }
-                    , { url = "/maddi/haensel-gretel-12.jpg", alt = "Hänsel und Gretel Stage 12", credit = Just "Marco Brescia, Rudy Amisano" }
-                    , { url = "/maddi/haensel-gretel-13.jpg", alt = "Hänsel und Gretel Stage 13", credit = Just "Marco Brescia, Rudy Amisano" }
-                    , { url = "/maddi/haensel-gretel-14.jpg", alt = "Hänsel und Gretel Stage 14", credit = Just "Marco Brescia, Rudy Amisano" }
+                    [ { url = "/maddi/haensel-gretel-01.jpg", alt = "Hänsel und Gretel Stage 1", credit = Just "Brescia, Amisano © Teatro Alla Scala" }
+                    , { url = "/maddi/haensel-gretel-02.jpg", alt = "Hänsel und Gretel Stage 2", credit = Just "Brescia, Amisano © Teatro Alla Scala" }
+                    , { url = "/maddi/haensel-gretel-03.jpg", alt = "Hänsel und Gretel Stage 3", credit = Just "Brescia, Amisano © Teatro Alla Scala" }
+                    , { url = "/maddi/haensel-gretel-04.jpg", alt = "Hänsel und Gretel Stage 4", credit = Just "Brescia, Amisano © Teatro Alla Scala" }
+                    , { url = "/maddi/haensel-gretel-05.jpg", alt = "Hänsel und Gretel Stage 5", credit = Just "Brescia, Amisano © Teatro Alla Scala" }
+                    , { url = "/maddi/haensel-gretel-06.jpg", alt = "Hänsel und Gretel Stage 6", credit = Just "Brescia, Amisano © Teatro Alla Scala" }
+                    , { url = "/maddi/haensel-gretel-07.jpg", alt = "Hänsel und Gretel Stage 7", credit = Just "Brescia, Amisano © Teatro Alla Scala" }
+                    , { url = "/maddi/haensel-gretel-08.jpg", alt = "Hänsel und Gretel Stage 8", credit = Just "Brescia, Amisano © Teatro Alla Scala" }
+                    , { url = "/maddi/haensel-gretel-09.jpg", alt = "Hänsel und Gretel Stage 9", credit = Just "Brescia, Amisano © Teatro Alla Scala" }
+                    , { url = "/maddi/haensel-gretel-10.jpg", alt = "Hänsel und Gretel Stage 10", credit = Just "Brescia, Amisano © Teatro Alla Scala" }
+                    , { url = "/maddi/haensel-gretel-11.jpg", alt = "Hänsel und Gretel Stage 11", credit = Just "Brescia, Amisano © Teatro Alla Scala" }
+                    , { url = "/maddi/haensel-gretel-12.jpg", alt = "Hänsel und Gretel Stage 12", credit = Just "Brescia, Amisano © Teatro Alla Scala" }
+                    , { url = "/maddi/haensel-gretel-13.jpg", alt = "Hänsel und Gretel Stage 13", credit = Just "Brescia, Amisano © Teatro Alla Scala" }
+                    , { url = "/maddi/haensel-gretel-14.jpg", alt = "Hänsel und Gretel Stage 14", credit = Just "Brescia, Amisano © Teatro Alla Scala" }
                     ]
               , thumbnailImg = Nothing
               }
