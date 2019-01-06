@@ -32,7 +32,7 @@ tag isLarge tagText =
                 smallType
             , padding2 (px 2) (px 6)
             , borderRadius (px 3)
-            , backgroundColor (rgba 0 0 0 0.05)
+            , backgroundColor (hex "F1F1F1")
             , display inlineBlock
             , marginRight (px 6)
             , marginBottom (px 6)

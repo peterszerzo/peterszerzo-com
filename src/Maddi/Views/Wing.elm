@@ -11,66 +11,6 @@ import Svg.Styled exposing (line, svg)
 import Svg.Styled.Attributes exposing (fill, stroke, viewBox, x1, x2, y1, y2)
 
 
-wingSkewAngle : Float
-wingSkewAngle =
-    15 * pi / 180
-
-
-wingWidth : Float
-wingWidth =
-    140
-
-
-wingHeight : Float
-wingHeight =
-    240
-
-
-wingHeader : String -> Html msg
-wingHeader title =
-    div
-        [ css
-            [ titleType
-            , width (px <| 2 * wingWidth)
-            , property "transform" <| "skewY(" ++ String.fromFloat -wingSkewAngle ++ "rad)"
-            , margin4 (px 0) auto (px 100) auto
-            , backgroundColor black
-            , color white
-            , padding2 (px 4) (px 10)
-            , textAlign center
-            , stickoutStyles { hover = False }
-            ]
-        ]
-        [ text title ]
-
-
-wingTransform : { skewAngle : Float, scale : Float, w : Float, offset : Int } -> Style
-wingTransform { skewAngle, scale, w, offset } =
-    let
-        translateString =
-            "translate3d("
-                ++ String.fromInt (floor w * offset)
-                ++ "px, "
-                ++ String.fromInt
-                    (if skewAngle > 0 then
-                        w * tan -skewAngle |> floor
-
-                     else
-                        0
-                    )
-                ++ "px, 0)"
-    in
-    Css.batch
-        [ ([ "skewY(" ++ String.fromFloat skewAngle ++ "rad)" ]
-            ++ [ "scale(1.0, 1.0)"
-               ]
-          )
-            |> String.join " "
-            |> property "transform"
-        , property "-webkit-font-smoothing" "subpixel-antialiased"
-        ]
-
-
 wing : Project.Project -> Html msg
 wing project =
     a
@@ -98,7 +38,7 @@ wing project =
                     , fontSize (px 0)
                     , stickoutStyles { hover = False }
                     , property "word-break" "break-all"
-                    , property "transition" "all 0.2s ease-in-out"
+                    , property "transition" "all 0.1s ease-in-out"
                     ]
                 , Global.svg
                     [ position absolute
@@ -109,18 +49,21 @@ wing project =
                     ]
                 ]
             , hover
-                [ property "z-index" "101"
-                , Global.children
+                [ Global.children
                     [ Global.div
-                        [ stickoutStyles { hover = True }
+                        [ firstChild
+                            [ backgroundColor (hex "F1F1F1")
+                            ]
+                        , lastChild
+                            [ property "filter" "brightness(90%)"
+                            ]
                         ]
                     ]
                 ]
             ]
         , href <| "/projects/" ++ project.id
         ]
-        [ --wingBorders
-          div
+        [ div
             [ css
                 [ wingTransform
                     { skewAngle = -wingSkewAngle
@@ -188,4 +131,64 @@ wing project =
                 ]
             ]
             []
+        ]
+
+
+wingSkewAngle : Float
+wingSkewAngle =
+    15 * pi / 180
+
+
+wingWidth : Float
+wingWidth =
+    140
+
+
+wingHeight : Float
+wingHeight =
+    240
+
+
+wingHeader : String -> Html msg
+wingHeader title =
+    div
+        [ css
+            [ titleType
+            , width (px <| 2 * wingWidth)
+            , property "transform" <| "skewY(" ++ String.fromFloat -wingSkewAngle ++ "rad)"
+            , margin4 (px 0) auto (px 100) auto
+            , backgroundColor black
+            , color white
+            , padding2 (px 4) (px 10)
+            , textAlign center
+            , stickoutStyles { hover = False }
+            ]
+        ]
+        [ text title ]
+
+
+wingTransform : { skewAngle : Float, scale : Float, w : Float, offset : Int } -> Style
+wingTransform { skewAngle, scale, w, offset } =
+    let
+        translateString =
+            "translate3d("
+                ++ String.fromInt (floor w * offset)
+                ++ "px, "
+                ++ String.fromInt
+                    (if skewAngle > 0 then
+                        w * tan -skewAngle |> floor
+
+                     else
+                        0
+                    )
+                ++ "px, 0)"
+    in
+    Css.batch
+        [ ([ "skewY(" ++ String.fromFloat skewAngle ++ "rad)" ]
+            ++ [ "scale(1.0, 1.0)"
+               ]
+          )
+            |> String.join " "
+            |> property "transform"
+        , property "-webkit-font-smoothing" "subpixel-antialiased"
         ]
