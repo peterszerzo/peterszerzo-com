@@ -81,13 +81,15 @@ view { projects, packBubbles, activeProject } =
                             [ position absolute
                             , borderRadius (px 6)
                             , cursor pointer
-                            , property "box-shadow" "3px 6px 20px rgba(0, 0, 0, 0.3)"
-                            , backgroundColor blue
                             , property "transition" "all 0.3s"
                             , property "z-index" (r |> floor |> String.fromInt)
+                            , color dark
+                            , border3 (px 2) solid currentColor
                             , hover
-                                [ property "box-shadow" "3px 6px 28px rgba(0, 0, 0, 0.5)"
-                                , property "transform" "scale(1.03)"
+                                [ property "transform" "scale(1.05)"
+                                , backgroundColor (hex project.color)
+                                , borderColor (hex project.color)
+                                , color white
                                 ]
                             , Global.descendants
                                 [ Global.svg
@@ -95,11 +97,10 @@ view { projects, packBubbles, activeProject } =
                                     , height (pct 60)
                                     , marginTop (pct 20)
                                     , marginLeft (pct 0)
-                                    , fill white
+                                    , fill currentColor
                                     ]
                                 ]
                             ]
-                        , style "background-color" <| "#" ++ project.color
                         , href ("/projects/" ++ project.id)
                         , style "width" <| ((floor (2 * r_) |> String.fromInt) ++ "px")
                         , style "height" <| ((floor (2 * r_) |> String.fromInt) ++ "px")

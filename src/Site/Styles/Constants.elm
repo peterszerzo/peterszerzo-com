@@ -1,4 +1,19 @@
-module Site.Styles.Constants exposing (black, blue, darkGrey, desktop, faintBlue, faintMustard, grey, lightBlue, lightGrey, mustard, sansSerif, serif, white)
+module Site.Styles.Constants exposing
+    ( black
+    , blue
+    , dark
+    , darkGrey
+    , desktop
+    , faintBlue
+    , faintMustard
+    , grey
+    , lightBlue
+    , lightGrey
+    , mustard
+    , sansSerif
+    , serif
+    , white
+    )
 
 import Css exposing (Color, hex, rgb, rgba)
 
@@ -49,6 +64,11 @@ faintMustard =
 black : Color
 black =
     hex "000000"
+
+
+dark : Color
+dark =
+    hex "232323"
 
 
 darkGrey : Color

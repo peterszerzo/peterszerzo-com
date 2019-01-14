@@ -205,7 +205,7 @@ title =
 
 subtitle : String
 subtitle =
-    "Your friendly neighborhood creative programmer"
+    "your friendly neighborhood creative programmer"
 
 
 talks : List Talk

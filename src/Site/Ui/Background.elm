@@ -98,14 +98,21 @@ void main() {
 
   float randomArgument = sin(6.0 * angle / pi + 0.8 * time);
 
-  float maxDistance = 0.22 + 0.18 * perlin(randomArgument);
+  float maxDistance = 0.18 + 0.18 * perlin(randomArgument);
+
+  float blur = 0.18;
+
+  vec3 innerColor = vec3(99.0, 27.0, 91.0) / 255.0;
+
+  vec3 outerColor = vec3(18.0, 23.0, 35.0) / 255.0;
 
   if (d < maxDistance) {
-    discard;
-  } else if (d < maxDistance + 0.08) {
-    gl_FragColor = vec4(0.0, 0.0, 0.0, 0.16 * (d - maxDistance) / 0.08);
+    gl_FragColor = vec4(innerColor, 1.0);
+  } else if (d < maxDistance + blur) {
+    float ratio = 1.0 - (d - maxDistance) / blur;
+    gl_FragColor = vec4(mix(outerColor, innerColor, vec3(ratio)), 1.0);
   } else {
-    gl_FragColor = vec4(0.0, 0.0, 0.0, 0.16);
+    gl_FragColor = vec4(outerColor, 1.0);
   }
 }
 |]

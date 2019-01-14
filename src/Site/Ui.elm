@@ -48,11 +48,13 @@ banner =
                     [ margin3 (px 5) auto (px 10)
                     ]
                 ]
-                [ text Content.title ]
+                [ text Content.title
+                ]
             , p
                 [ css
                     [ marginTop (px 0)
-                    , fontSize (rem 1.125)
+                    , fontSize (rem 1.25)
+                    , letterSpacing (rem 0.02)
                     ]
                 ]
                 [ text Content.subtitle ]
