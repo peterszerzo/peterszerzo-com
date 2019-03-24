@@ -7,5 +7,4 @@ build
 *.log
 tmp
 public/index.html
-index.html
 elm.js
