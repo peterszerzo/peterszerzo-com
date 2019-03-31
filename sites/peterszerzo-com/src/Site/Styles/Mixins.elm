@@ -1,16 +1,23 @@
-module Site.Styles.Mixins exposing (bodyType, calcPctMinusPx, desktop, highlightedBodyType, lineHeight, pointerEventsAll, pointerEventsNone, regularTransition, standardShadow, zIndex)
+module Site.Styles.Mixins exposing
+    ( bodyType
+    , desktop
+    , highlightedBodyType
+    , lineHeight
+    , pointerEventsAll
+    , pointerEventsNone
+    , regularTransition
+    , standardShadow
+    , titleType
+    , zIndex
+    )
 
 import Css exposing (..)
 import Css.Media as Media
+import Site.Styles.Constants as Constants
 
 
 desktop =
     Media.withMediaQuery [ "screen and (min-width: 600px)" ]
-
-
-calcPctMinusPx : Float -> Float -> String
-calcPctMinusPx percent pixels =
-    "calc(" ++ (percent |> String.fromFloat) ++ "% - " ++ (pixels |> String.fromFloat) ++ "px)"
 
 
 zIndex : Int -> Style
@@ -19,8 +26,9 @@ zIndex i =
 
 
 lineHeight : Float -> Style
-lineHeight lh =
-    property "line-height" (lh |> String.fromFloat)
+lineHeight =
+    String.fromFloat
+        >> property "line-height"
 
 
 pointerEventsNone : Style
@@ -43,15 +51,26 @@ standardShadow =
     [ property "box-shadow" "0 0 12px rgba(20, 20, 20, .3)" ]
 
 
-bodyType : List Style
+titleType : Style
+titleType =
+    Css.batch
+        [ fontSize (Css.rem 1.75)
+        , lineHeight 1.68
+        , property "font-family" Constants.serif
+        ]
+
+
+bodyType : Style
 bodyType =
-    [ fontSize (Css.rem 1)
-    , lineHeight 1.68
-    ]
+    Css.batch
+        [ fontSize (Css.rem 1)
+        , lineHeight 1.68
+        ]
 
 
-highlightedBodyType : List Style
+highlightedBodyType : Style
 highlightedBodyType =
-    [ fontSize (Css.rem 1)
-    , property "font-weight" "600"
-    ]
+    Css.batch
+        [ fontSize (Css.rem 1)
+        , property "font-weight" "600"
+        ]

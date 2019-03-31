@@ -54,7 +54,7 @@ uniform vec2 resolution;
 uniform float time;
 
 float rand(float x) {
-  return fract(sin(x) * 4378.5453);
+  return fract(sin(x) * 4378.545);
 }
 
 float perlin(float x) {
@@ -96,13 +96,13 @@ void main() {
     angle = acos(dot);
   }
 
-  float randomArgument = sin(4.0 * angle / pi + 0.8 * time);
+  float randomArgument = sin(4.0 * angle / pi + 0.9 * time);
 
-  float maxDistance = 0.18 + 0.18 * perlin(randomArgument);
+  float maxDistance = 0.12 + 0.18 * perlin(randomArgument);
 
-  float blur = 0.30;
+  float blur = 0.28;
 
-  vec3 innerColor = vec3(235.0, 235.0, 255.0) / 255.0;
+  vec3 innerColor = vec3(182.0, 199.0, 238.0) / 255.0;
 
   vec3 outerColor = vec3(255.0, 255.0, 255.0) / 255.0;
 

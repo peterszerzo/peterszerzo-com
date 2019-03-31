@@ -28,9 +28,7 @@ viewMainLink ( label, url ) =
             , margin (px 6)
             , property "transition" "all .2s"
             , hover
-                [ color blue
-                , opacity (num 1)
-                , property "background-color" "rgba(255, 255, 255, 1)"
+                [ backgroundColor (rgba 255 255 255 1)
                 ]
             , focus
                 [ outline none

@@ -38,15 +38,15 @@ banner =
             ]
             [ h1
                 [ css
-                    [ margin3 (px 5) auto (px 10)
-                    , fontSize (rem 2)
+                    [ margin3 (px 5) auto (px 0)
+                    , Mixins.titleType
                     ]
                 ]
                 [ text Content.title
                 ]
             , p
                 [ css
-                    [ marginTop (px 0)
+                    [ margin4 (px 0) (px 0) (px 30) (px 0)
                     , fontSize (rem 1)
                     , letterSpacing (rem 0.02)
                     ]
@@ -283,7 +283,8 @@ static { children, markdown } =
                         ]
                     ]
                 , Global.each [ Global.p, Global.li, Global.code ]
-                    Mixins.bodyType
+                    [ Mixins.bodyType
+                    ]
                 , Global.each [ Global.p, Global.li, Global.ul, Global.strong ]
                     [ fontFamily inherit
                     ]

@@ -139,20 +139,30 @@ view { projects, packBubbles, activeProject } =
                                     ]
                                 ]
                                 [ div
-                                    [ css [ overlaySectionStyles ]
+                                    [ css
+                                        [ overlaySectionStyles
+                                        ]
                                     ]
                                     [ img
                                         [ css
                                             [ margin4 (px 20) (px 20) (px 0) (px 20)
                                             , border3 (px 1) solid (rgba 0 0 0 0.1)
                                             , property "width" "calc(100% - 40px)"
+                                            , borderRadius (px 10)
                                             ]
                                         , src project.image
                                         ]
                                         []
                                     ]
-                                , div [ css [ overlaySectionStyles ] ]
-                                    [ Ui.static { children = [], markdown = Just project.description }
+                                , div
+                                    [ css
+                                        [ overlaySectionStyles
+                                        ]
+                                    ]
+                                    [ Ui.static
+                                        { children = []
+                                        , markdown = Just project.description
+                                        }
                                     ]
                                 ]
                             ]
@@ -161,6 +171,7 @@ view { projects, packBubbles, activeProject } =
                )
 
 
+overlaySectionStyles : Style
 overlaySectionStyles =
     Css.batch
         [ padding (px 0)

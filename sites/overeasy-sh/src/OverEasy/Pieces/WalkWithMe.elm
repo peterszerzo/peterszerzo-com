@@ -120,8 +120,8 @@ float rand(float x) {
 }
 
 float perlin(float x) {
-  float i = floor(x);  // integer
-  float f = fract(x);  // fraction
+  float i = floor(x);
+  float f = fract(x);
   return mix(rand(i), rand(i + 1.0), smoothstep(0.0, 1.0, f));
 }
 
