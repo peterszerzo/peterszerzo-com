@@ -14,7 +14,7 @@ viewMainLink : ( String, String ) -> Html Msg
 viewMainLink ( label, url ) =
     Link.link
         { css =
-            [ color white
+            [ color black
             , display inlineBlock
             , cursor pointer
             , position relative
@@ -24,7 +24,7 @@ viewMainLink ( label, url ) =
             , fontSize (Css.rem 1)
             , letterSpacing (Css.rem 0.05)
             , property "font-kerning" "normal"
-            , property "background-color" "rgba(255, 255, 255, .23)"
+            , backgroundColor (rgba 255 255 255 0.8)
             , margin (px 6)
             , property "transition" "all .2s"
             , hover

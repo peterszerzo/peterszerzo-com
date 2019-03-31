@@ -1,7 +1,7 @@
 module OverEasy.Pieces.BordersAreLenient exposing (Model, Msg(..), init, subscriptions, update, view)
 
 import Html exposing (Html, div, node, text)
-import Html.Attributes exposing (style)
+import Html.Attributes exposing (class, style)
 import OverEasy.Pieces.BordersAreLenient.P12 as P02
 
 
@@ -38,24 +38,33 @@ view model =
     div
         [ style "width" (String.fromFloat w ++ "px")
         , style "height" (String.fromFloat h ++ "px")
+        , style "background-color" "#FFFFFF"
+        , style "display" "flex"
+        , style "align-items" "center"
+        , style "justify-content" "center"
+        , class "borders-container"
         ]
         [ node "style" [] [ text """
-        svg * {
+        .borders-container svg {
+          width: 600px;
+        }
+
+        .borders-container svg * {
           fill: none;
           stroke: #000;
           stroke-linecap: round;
           stroke-linejoin: round;
         }
 
-        .engrave * {
+        .borders-container .engrave * {
           stroke: #F00;
         }
 
-        .engrave {
+        .borders-container .engrave {
           transition: all 0.2s ease-in-out;
         }
 
-        svg:hover .engrave {
+        .borders-container svg:hover .engrave {
           transform: translate3d(-6px, -4px, 0);
         }
         """ ]

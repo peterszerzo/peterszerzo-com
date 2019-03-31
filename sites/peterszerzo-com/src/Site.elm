@@ -191,7 +191,6 @@ layout children =
             [ css
                 [ width (pct 100)
                 , height (pct 100)
-                , backgroundColor blue
                 , displayFlex
                 , alignItems center
                 , justifyContent center

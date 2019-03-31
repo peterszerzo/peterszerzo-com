@@ -96,15 +96,15 @@ void main() {
     angle = acos(dot);
   }
 
-  float randomArgument = sin(6.0 * angle / pi + 0.8 * time);
+  float randomArgument = sin(4.0 * angle / pi + 0.8 * time);
 
   float maxDistance = 0.18 + 0.18 * perlin(randomArgument);
 
-  float blur = 0.18;
+  float blur = 0.30;
 
-  vec3 innerColor = vec3(99.0, 27.0, 91.0) / 255.0;
+  vec3 innerColor = vec3(235.0, 235.0, 255.0) / 255.0;
 
-  vec3 outerColor = vec3(18.0, 23.0, 35.0) / 255.0;
+  vec3 outerColor = vec3(255.0, 255.0, 255.0) / 255.0;
 
   if (d < maxDistance) {
     gl_FragColor = vec4(innerColor, 1.0);

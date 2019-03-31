@@ -32,20 +32,14 @@ banner =
             [ css
                 [ maxWidth (px 360)
                 , textAlign center
-                , color white
+                , color black
                 , position relative
-                , Global.children
-                    [ Global.svg
-                        [ width (px 140)
-                        , height (px 140)
-                        ]
-                    ]
                 ]
             ]
-            [ Shapes.logo |> fromUnstyled
-            , h1
+            [ h1
                 [ css
                     [ margin3 (px 5) auto (px 10)
+                    , fontSize (rem 2)
                     ]
                 ]
                 [ text Content.title
@@ -53,7 +47,7 @@ banner =
             , p
                 [ css
                     [ marginTop (px 0)
-                    , fontSize (rem 1.25)
+                    , fontSize (rem 1)
                     , letterSpacing (rem 0.02)
                     ]
                 ]
