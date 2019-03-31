@@ -1,3 +1,3 @@
-# self
+# sites
 
-Personal website and projects.
+Various websites
