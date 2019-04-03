@@ -1,12 +1,11 @@
-module Maddi.Views.Project exposing (Data, State, init, subscriptions, view)
+module Maddi.Ui.Project exposing (Data, State, init, subscriptions, view)
 
 import Css exposing (..)
 import Html.Styled as Html exposing (Html, div, h1, text)
 import Html.Styled.Attributes exposing (css)
 import Maddi.Data.Project as Project
-import Maddi.Views as Views
-import Maddi.Views.Carousel as Carousel
-import Maddi.Views.Mixins as Mixins
+import Maddi.Ui as Ui
+import Maddi.Ui.Carousel as Carousel
 
 
 type State
@@ -45,12 +44,18 @@ view config =
         (State state) =
             config.state
     in
-    Views.simplePageContent
+    Ui.simplePageContent
         { title = config.data.title
         , left =
             div []
-                [ div [ css [ marginBottom (px 20) ] ] <| List.map (Views.tag True) config.data.tags
-                , Views.static config.data.content
+                [ div
+                    [ css
+                        [ marginBottom (px 20)
+                        ]
+                    ]
+                  <|
+                    List.map (Ui.tag True) config.data.tags
+                , Ui.static config.data.content
                 ]
         , right =
             Carousel.view

@@ -1,4 +1,4 @@
-module Site exposing (Model, init, main, subscriptions, update, view)
+module Site exposing (main)
 
 import Browser
 import Browser.Dom as Dom

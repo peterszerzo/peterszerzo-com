@@ -1,4 +1,4 @@
-module Maddi.Views.Carousel exposing
+module Maddi.Ui.Carousel exposing
     ( Config
     , Data
     , State
@@ -15,9 +15,8 @@ import Html.Styled.Attributes exposing (alt, css)
 import Html.Styled.Events exposing (on, onClick)
 import Json.Decode as Decode
 import Maddi.Data.Image as Image
-import Maddi.Views as Views
-import Maddi.Views.Icons as Icons
-import Maddi.Views.Mixins as Mixins
+import Maddi.Ui as Ui
+import Maddi.Ui.Icons as Icons
 
 
 type alias Data =
@@ -214,9 +213,8 @@ buttonContainer config =
             , padding (px 5)
             , backgroundColor (rgba 0 0 0 0.2)
             , borderRadius (px 3)
-            , color Mixins.white
+            , color Ui.white
             , position absolute
-            , Css.batch config.css
             , hover
                 [ backgroundColor (rgba 0 0 0 0.3)
                 ]
@@ -226,6 +224,7 @@ buttonContainer config =
                     , height (pct 100)
                     ]
                 ]
+            , Css.batch config.css
             ]
         , onClick config.onClick
         ]
@@ -276,9 +275,9 @@ credit bodyText =
             , margin2 (px 5) auto
             , borderRadius (px 3)
             , padding2 (px 0) (px 6)
-            , color Mixins.white
+            , color Ui.white
             , whiteSpace noWrap
-            , Mixins.smallType
+            , Ui.smallType
             ]
         ]
         [ text bodyText
@@ -311,14 +310,14 @@ bulletMenu config =
                             , property "transition" "all 0.1s"
                             , backgroundColor <|
                                 if index == config.active then
-                                    Mixins.yellow
+                                    Ui.yellow
 
                                 else
                                     hex "CECECE"
                             ]
                         , hover
                             [ after
-                                [ backgroundColor Mixins.yellow
+                                [ backgroundColor Ui.yellow
                                 ]
                             ]
                         ]

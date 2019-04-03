@@ -1,12 +1,11 @@
-module Maddi.Views.Wing exposing (wing, wingHeader)
+module Maddi.Ui.Wing exposing (wing, wingHeader)
 
 import Css exposing (..)
 import Css.Global as Global
 import Html.Styled exposing (Html, a, br, div, fromUnstyled, h2, header, p, span, text)
 import Html.Styled.Attributes exposing (css, href)
 import Maddi.Data.Project as Project
-import Maddi.Views as Views
-import Maddi.Views.Mixins exposing (..)
+import Maddi.Ui as Ui
 import Svg.Styled exposing (line, svg)
 import Svg.Styled.Attributes exposing (fill, stroke, viewBox, x1, x2, y1, y2)
 
@@ -36,7 +35,7 @@ wing project =
                     , display inlineFlex
                     , verticalAlign middle
                     , fontSize (px 0)
-                    , stickoutStyles { hover = False }
+                    , Ui.stickoutStyles { hover = False }
                     , property "word-break" "break-all"
                     , property "transition" "all 0.1s ease-in-out"
                     ]
@@ -83,7 +82,7 @@ wing project =
             [ div []
                 [ h2
                     [ css
-                        [ titleType
+                        [ Ui.titleType
                         , margin (px 0)
                         ]
                     ]
@@ -95,7 +94,7 @@ wing project =
                     ]
                   <|
                     List.map
-                        (Views.tag False)
+                        (Ui.tag False)
                         project.tags
                 ]
             , p
@@ -153,15 +152,15 @@ wingHeader : String -> Html msg
 wingHeader title =
     div
         [ css
-            [ titleType
+            [ Ui.titleType
             , width (px <| 2 * wingWidth)
             , property "transform" <| "skewY(" ++ String.fromFloat -wingSkewAngle ++ "rad)"
             , margin4 (px 0) auto (px 100) auto
-            , backgroundColor black
-            , color white
+            , backgroundColor Ui.black
+            , color Ui.white
             , padding2 (px 4) (px 10)
             , textAlign center
-            , stickoutStyles { hover = False }
+            , Ui.stickoutStyles { hover = False }
             ]
         ]
         [ text title ]

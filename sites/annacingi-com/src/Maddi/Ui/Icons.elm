@@ -1,4 +1,4 @@
-module Maddi.Views.Icons exposing (chevronLeft, chevronRight, close, expand, largeLogo, menu)
+module Maddi.Ui.Icons exposing (chevronLeft, chevronRight, close, expand, largeLogo, menu)
 
 import Html.Styled exposing (Html)
 import Svg.Styled exposing (line, path, svg)

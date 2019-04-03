@@ -47,6 +47,16 @@ serif =
 -- Colors
 
 
+lavender : Color
+lavender =
+    rgb 182 199 238
+
+
+mint : Color
+mint =
+    rgb 50 201 143
+
+
 blue : Color
 blue =
     rgb 45 81 135
@@ -342,14 +352,7 @@ layout config =
                 ]
             ]
         ]
-        [ let
-            lavender =
-                rgb 182 199 238
-
-            jade =
-                rgb 21 168 104
-          in
-          header
+        [ header
             [ css
                 [ position absolute
                 , top (px 0)
@@ -366,7 +369,7 @@ layout config =
                     , right (px 0)
                     , height (px 4)
                     , position absolute
-                    , linearGradient2 toRight (stop lavender) (stop lavender) [ stop jade ]
+                    , linearGradient2 toRight (stop lavender) (stop lavender) [ stop mint ]
                         |> backgroundImage
                     ]
                 , padding (px 0)
@@ -403,6 +406,7 @@ layout config =
                                 ([ css
                                     [ cursor pointer
                                     , property "font-family" serif
+                                    , color inherit
                                     , Css.batch <|
                                         if b.url /= Nothing then
                                             [ borderBottom3 (px 1) solid currentColor

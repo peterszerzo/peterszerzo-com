@@ -12,11 +12,10 @@ import Json.Decode as Decode
 import Json.Encode as Encode
 import Maddi.Content as Content
 import Maddi.Data.Project as Project
-import Maddi.Views as Views
-import Maddi.Views.Carousel as Carousel
-import Maddi.Views.Mixins as Mixins exposing (mobile)
-import Maddi.Views.Project as ProjectView
-import Maddi.Views.Wing as Wing
+import Maddi.Ui as Ui
+import Maddi.Ui.Carousel as Carousel
+import Maddi.Ui.Project as ProjectView
+import Maddi.Ui.Wing as Wing
 import Process
 import Task
 import Time
@@ -90,9 +89,7 @@ matchers =
 
 
 type Msg
-    = NoOp
-    | Navigate String
-    | DelayedNavigate String
+    = Navigate String
     | SetMobileNav Bool
     | UrlRequest Browser.UrlRequest
     | ChangeRoute Route
@@ -105,26 +102,12 @@ type Msg
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        NoOp ->
-            ( model, Cmd.none )
-
         SetMobileNav mobileNav ->
             ( { model | mobileNav = mobileNav }, Cmd.none )
 
         Navigate newPath ->
             ( model
             , Navigation.pushUrl model.key newPath
-            )
-
-        DelayedNavigate newPath ->
-            ( { model
-                | nextRoute =
-                    newPath
-                        |> Url.fromString
-                        |> Maybe.map parse
-              }
-            , Process.sleep 400
-                |> Task.attempt (\res -> Navigate newPath)
             )
 
         UrlRequest urlRequest ->
@@ -190,7 +173,7 @@ view : Model -> Browser.Document Msg
 view model =
     let
         layout =
-            Views.pageLayout model.mobileNav SetMobileNav >> List.map toUnstyled
+            Ui.pageLayout model.mobileNav SetMobileNav >> List.map toUnstyled
     in
     case model.route of
         Home ->
@@ -199,7 +182,7 @@ view model =
                 [ div
                     [ css
                         [ margin2 (px 60) (px 0)
-                        , Mixins.fadeIn
+                        , Ui.fadeIn
                         ]
                     ]
                   <|
@@ -232,9 +215,9 @@ view model =
         About ->
             { title = "About Anna"
             , body =
-                [ Views.simplePageContent
+                [ Ui.simplePageContent
                     { title = "About Anna"
-                    , left = Views.static Content.about
+                    , left = Ui.static Content.about
                     , right =
                         Carousel.view
                             { data = [ { url = "/maddi/cover.jpg", alt = "Anna Cingi", credit = Nothing } ]

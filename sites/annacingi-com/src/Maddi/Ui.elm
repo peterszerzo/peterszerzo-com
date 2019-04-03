@@ -1,24 +1,191 @@
-module Maddi.Views exposing
-    ( intro
-    , mobileNav
-    , pageLayout
-    , simplePageContent
-    , static
-    , tag
+module Maddi.Ui exposing
+    ( black, bodyType, fadeIn, gray, heading1Type, heading2Type, lightGray, lighterGray, linkType, mobile, smallType, stickoutStyles, titleType, white, yellow
+    , mobileNav, pageLayout, simplePageContent, static, tag
     )
+
+{-| Ui
+
+@docs black, bodyType, fadeIn, gray, heading1Type, heading2Type, lightGray, lighterGray, linkType, mobile, smallType, stickoutStyles, titleType, white, yellow
+
+-}
 
 import Css exposing (..)
 import Css.Global as Global
+import Css.Media as Media
 import Html.Styled exposing (Html, a, br, div, footer, fromUnstyled, h1, h2, header, p, span, text)
 import Html.Styled.Attributes exposing (css, href)
 import Html.Styled.Events exposing (onClick)
 import Json.Decode as Decode
 import Maddi.Content exposing (navLinks)
-import Maddi.Views.Icons as Icons
-import Maddi.Views.Mixins as Mixins exposing (..)
+import Maddi.Ui.Icons as Icons
 import Markdown
 import Svg.Styled exposing (line, path, svg)
 import Svg.Styled.Attributes exposing (d, stroke, strokeWidth, viewBox, x1, x2, y1, y2)
+
+
+mobile : List Style -> Style
+mobile =
+    Media.withMedia
+        [ Media.only Media.screen
+            [ Media.maxWidth (px 600) ]
+        ]
+
+
+black : Color
+black =
+    hex "000000"
+
+
+white : Color
+white =
+    hex "FFFFFF"
+
+
+yellow : Color
+yellow =
+    hex "F7CE00"
+
+
+gray : Color
+gray =
+    hex "898989"
+
+
+lighterGray : Color
+lighterGray =
+    hex "BDBDBD"
+
+
+lightGray : Color
+lightGray =
+    hex "CECECE"
+
+
+smallType : Style
+smallType =
+    Css.batch
+        [ fontSize (Css.rem 0.75)
+        , lineHeight (num 1.6)
+        , mobile
+            [ fontSize (Css.rem 0.75)
+            ]
+        ]
+
+
+bodyType : Style
+bodyType =
+    Css.batch
+        [ fontSize (Css.rem 0.825)
+        , lineHeight (num 1.6)
+        , mobile
+            [ fontSize (Css.rem 0.825)
+            ]
+        ]
+
+
+heading1Type : Style
+heading1Type =
+    Css.batch
+        [ fontSize (Css.rem 1.5)
+        , textDecoration none
+        , color inherit
+        , mobile
+            [ fontSize (Css.rem 1.375)
+            ]
+        ]
+
+
+heading2Type : Style
+heading2Type =
+    Css.batch
+        [ fontSize (Css.rem 1.25)
+        , property "font-family" "Quicksand"
+        ]
+
+
+linkType : Style
+linkType =
+    Css.batch
+        [ display inlineBlock
+        , color inherit
+        , bodyType
+        , paddingLeft (px 1)
+        , paddingRight (px 1)
+        , borderRadius (px 2)
+        , textDecoration underline
+        , property "transition" "all 0.15s"
+        , hover
+            [ backgroundColor yellow
+            ]
+        , focus
+            [ outline none
+            , backgroundColor (rgb 250 250 250)
+            ]
+        ]
+
+
+titleType : Style
+titleType =
+    Css.batch
+        [ property "font-family" "Quicksand"
+        , textTransform uppercase
+        , fontSize (Css.rem 2)
+        , lineHeight (num 1.15)
+        , margin (px 0)
+        , property "font-weight" "600"
+        , mobile
+            [ fontSize (Css.rem 1.75)
+            ]
+        ]
+
+
+fadeIn : Style
+fadeIn =
+    property "animation" "fadein 0.15s ease-in-out forwards"
+
+
+stickoutStyles : { hover : Bool } -> Style
+stickoutStyles { hover } =
+    let
+        stickout =
+            10
+
+        common =
+            Css.batch
+                [ position absolute
+                , property "content" "' '"
+                , property "z-index" "9"
+                , property "transition" "border-color 0.05s"
+                , property "pointer-events" "none"
+                , borderColor
+                    (if hover then
+                        lighterGray
+
+                     else
+                        lightGray
+                    )
+                ]
+    in
+    Css.batch
+        [ before
+            [ top (px -stickout)
+            , bottom (px -stickout)
+            , left (px 0)
+            , right (px 0)
+            , borderLeft2 (px 1) solid
+            , borderRight2 (px 1) solid
+            , common
+            ]
+        , after
+            [ left (px -stickout)
+            , right (px -stickout)
+            , top (px 0)
+            , bottom (px 0)
+            , borderTop2 (px 1) solid
+            , borderBottom2 (px 1) solid
+            , common
+            ]
+        ]
 
 
 tag : Bool -> String -> Html msg
@@ -50,8 +217,8 @@ pageFooter =
         ]
         [ p
             [ css
-                [ Mixins.smallType
-                , color Mixins.gray
+                [ smallType
+                , color gray
                 , textAlign center
                 ]
             ]
@@ -87,7 +254,7 @@ static markdownContent =
                 , Global.blockquote
                     [ margin4 (px 16) (px 0) (px 16) (px 0)
                     , paddingLeft (px 20)
-                    , color Mixins.gray
+                    , color gray
                     ]
                 ]
             , Global.children
@@ -107,26 +274,6 @@ static markdownContent =
             ]
         ]
         [ Markdown.toHtml [] markdownContent |> fromUnstyled
-        ]
-
-
-intro : (String -> msg) -> Html msg
-intro navigate =
-    div
-        [ css
-            [ bodyType
-            ]
-        ]
-        [ p [ css [ marginTop (px -4) ] ]
-            [ text "My name is Anna. I design sets for theatre pieces like "
-            , a [ href "/projects/karmafulminien" ] [ text "Karmafulminien" ]
-            , text " and "
-            , a [ href "/projects/story-of-qu" ] [ text "Story of Qu" ]
-            , text ", and I also work in opera."
-            ]
-        , p []
-            [ text "I studied at Accademia di Brera, trained at Teatro alla Scala, currently based in Reggio Emilia and Milan, traveling across Italy with brief escapades to New York, Sydney, and wherever next."
-            ]
         ]
 
 
@@ -200,7 +347,7 @@ pageHeader { activateMobileNav } =
                 , div [ css [ marginTop (px 0) ] ]
                     [ p
                         [ css
-                            [ Mixins.heading2Type
+                            [ heading2Type
                             , lineHeight (num 1.15)
                             , margin (px 0)
                             , property "font-weight" "700"
@@ -209,7 +356,7 @@ pageHeader { activateMobileNav } =
                         [ text "Anna Cingi" ]
                     , p
                         [ css
-                            [ Mixins.heading2Type
+                            [ heading2Type
                             , lineHeight (num 1.15)
                             , margin (px 0)
                             ]
@@ -230,7 +377,7 @@ pageHeader { activateMobileNav } =
                             , css
                                 [ textDecoration none
                                 , color inherit
-                                , Mixins.heading2Type
+                                , heading2Type
                                 , marginLeft (px 20)
                                 , borderBottom2 (px 1) solid
                                 , borderBottomColor transparent
@@ -264,7 +411,7 @@ mobileNav { close } =
             [ position fixed
             , property "z-index" "10000"
             , top (px 0)
-            , Mixins.fadeIn
+            , fadeIn
             , left (px 0)
             , width (vw 100)
             , height (vh 100)
@@ -293,7 +440,7 @@ mobileNav { close } =
                             [ href url
                             , css
                                 [ display block
-                                , Mixins.heading2Type
+                                , heading2Type
                                 , margin (px 0)
                                 , lineHeight (num 1)
                                 , padding2 (px 10) (px 0)
@@ -375,12 +522,12 @@ simplePageContent config =
     in
     div
         [ css
-            [ Mixins.fadeIn
+            [ fadeIn
             ]
         ]
         [ h1
             [ css
-                [ Mixins.titleType
+                [ titleType
                 , textTransform none
                 , marginTop (px 0)
                 , marginLeft (px 20)
