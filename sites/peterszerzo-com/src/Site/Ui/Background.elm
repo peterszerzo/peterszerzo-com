@@ -37,7 +37,9 @@ view window timeSinceStart =
         , makeUniforms =
             \resolution ->
                 { resolution = resolution
-                , time = timeSinceStart / 2000
+                , time =
+                    timeSinceStart
+                        / 2000
                 , horizontal = window.width > window.height
                 , mobile = window.width < 600
                 }
@@ -96,7 +98,7 @@ void main() {
     angle = acos(dot);
   }
 
-  float randomArgument = sin(4.0 * angle / pi + 0.9 * time);
+  float randomArgument = sin(4.0 * angle / pi + 1.0 * time);
 
   float maxDistance = 0.12 + 0.18 * perlin(randomArgument);
 

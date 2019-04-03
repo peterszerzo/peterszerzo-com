@@ -5,18 +5,14 @@ import Browser.Dom as Dom
 import Browser.Events as Events
 import Browser.Navigation as Navigation
 import Css exposing (..)
-import Html.Styled exposing (Html, a, div, fromUnstyled, h1, h2, header, iframe, li, node, p, text, toUnstyled, ul)
+import Html.Styled exposing (Html, a, div, fromUnstyled, iframe, li, node, text, toUnstyled)
 import Html.Styled.Attributes exposing (attribute, css, href, src, style)
 import Json.Decode as Decode
 import Json.Encode as Encode
 import Site.Content as Content
 import Site.Data.PackBubble as PackBubble
-import Site.Messages exposing (Msg(..))
 import Site.Ports as Ports
 import Site.Router as Router exposing (Route, parse)
-import Site.Styles exposing (globalStyles)
-import Site.Styles.Constants exposing (..)
-import Site.Styles.Raw exposing (raw)
 import Site.Ui as Ui
 import Site.Ui.Background
 import Site.Ui.Projects
@@ -35,13 +31,16 @@ type alias Model =
     , isQuirky : Bool
     , time : Maybe Time.Posix
     , startTime : Maybe Time.Posix
-    , window : { width : Int, height : Int }
+    , window :
+        { width : Int
+        , height : Int
+        }
     , projectPackBubbles : List PackBubble.PackBubble
     }
 
 
 init : Flags -> Url.Url -> Navigation.Key -> ( Model, Cmd Msg )
-init flags url key =
+init _ url key =
     ( { key = key
       , route = parse url
       , isQuirky = False
@@ -78,11 +77,21 @@ main =
         }
 
 
+type Msg
+    = SetQuirky Bool
+    | Navigate String
+    | ChangeRoute Route
+    | UrlRequest Browser.UrlRequest
+    | AnimationTick Time.Posix
+    | Resize Int Int
+    | PackLayoutResponse Decode.Value
+
+
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        ToggleQuirky ->
-            ( { model | isQuirky = not model.isQuirky }
+        SetQuirky isQuirky ->
+            ( { model | isQuirky = isQuirky }
             , Cmd.none
             )
 
@@ -176,30 +185,43 @@ startedSince model =
 
 layout : List (Html msg) -> List (Html msg)
 layout children =
-    [ div
+    [ node "style"
+        []
+        [ text """
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0turn);
+  }
+
+  100% {
+    transform: rotate(1turn);
+  }
+}
+"""
+        ]
+    , Ui.globalStyles
+    , div
         [ css
             [ width (pct 100)
             , height (pct 100)
+            , displayFlex
+            , alignItems center
+            , justifyContent center
+            , property "animation" "fade-in ease-out .5s"
+            , position relative
             ]
         ]
-        [ node "style"
-            []
-            [ text raw
-            ]
-        , globalStyles
-        , div
-            [ css
-                [ width (pct 100)
-                , height (pct 100)
-                , displayFlex
-                , alignItems center
-                , justifyContent center
-                , property "animation" "fade-in ease-out .5s"
-                , position relative
-                ]
-            ]
-            children
-        ]
+        children
     ]
 
 
@@ -218,7 +240,7 @@ view model =
         Router.Projects ->
             { title = "Projects"
             , body =
-                [ Ui.contentBox
+                [ Ui.layout
                     { content =
                         [ Site.Ui.Projects.view
                             { packBubbles = model.projectPackBubbles
@@ -229,6 +251,7 @@ view model =
                     , breadcrumbs = [ { label = "Projects", url = Nothing } ]
                     , quirkyContent = Nothing
                     , isQuirky = model.isQuirky
+                    , onQuirkyChange = SetQuirky
                     }
                 ]
                     |> layout
@@ -252,7 +275,7 @@ view model =
             in
             { title = project.name
             , body =
-                [ Ui.contentBox
+                [ Ui.layout
                     { content =
                         [ Site.Ui.Projects.view
                             { packBubbles = model.projectPackBubbles
@@ -266,6 +289,7 @@ view model =
                         ]
                     , quirkyContent = Nothing
                     , isQuirky = model.isQuirky
+                    , onQuirkyChange = SetQuirky
                     }
                 ]
                     |> layout
@@ -274,11 +298,12 @@ view model =
         Router.Now ->
             { title = "Now"
             , body =
-                [ Ui.contentBox
+                [ Ui.layout
                     { content = [ Ui.static { markdown = Just Content.now, children = [] } ]
                     , quirkyContent = Nothing
                     , breadcrumbs = [ { label = "Now!", url = Nothing } ]
                     , isQuirky = model.isQuirky
+                    , onQuirkyChange = SetQuirky
                     }
                 ]
             }
@@ -286,11 +311,12 @@ view model =
         Router.About ->
             { title = "About"
             , body =
-                [ Ui.contentBox
+                [ Ui.layout
                     { content = [ Ui.static { markdown = Just Content.aboutConventional, children = [] } ]
                     , breadcrumbs = [ { label = "About", url = Nothing } ]
                     , quirkyContent = Just [ Ui.static { markdown = Just Content.aboutReal, children = [] } ]
                     , isQuirky = model.isQuirky
+                    , onQuirkyChange = SetQuirky
                     }
                 ]
                     |> layout
@@ -299,7 +325,7 @@ view model =
         Router.Talks ->
             { title = "Talks"
             , body =
-                [ Ui.contentBox
+                [ Ui.layout
                     { content =
                         [ Ui.static
                             { markdown = Just Content.talksIntro
@@ -362,6 +388,7 @@ view model =
                     , quirkyContent = Nothing
                     , breadcrumbs = [ { label = "Talks", url = Nothing } ]
                     , isQuirky = model.isQuirky
+                    , onQuirkyChange = SetQuirky
                     }
                 ]
                     |> layout

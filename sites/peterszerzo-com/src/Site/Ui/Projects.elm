@@ -8,11 +8,8 @@ import Html.Styled.Events exposing (onClick)
 import Json.Decode as Decode
 import Site.Content exposing (Project)
 import Site.Data.PackBubble as PackBubble
-import Site.Messages exposing (Msg(..))
-import Site.Styles.Constants exposing (..)
-import Site.Styles.Mixins as Mixins
 import Site.Ui as Ui
-import Site.Ui.Shapes as Shapes
+import Site.Ui.Icons as Icons
 
 
 type alias Config =
@@ -26,39 +23,39 @@ projectLogo : String -> Html msg
 projectLogo name =
     (case name of
         "elm-gameroom" ->
-            Shapes.elmgameroom
+            Icons.elmgameroom
 
         "elm-arborist" ->
-            Shapes.elmArborist
+            Icons.elmArborist
 
         "Atlas" ->
-            Shapes.newamerica
+            Icons.newamerica
 
         "ripsaw" ->
-            Shapes.ripsaw
+            Icons.ripsaw
 
         "nlx" ->
-            Shapes.nlx
+            Icons.nlx
 
         "Twisty Donut Racer" ->
-            Shapes.twistydonutracer
+            Icons.twistydonutracer
 
         "SplytLight" ->
-            Shapes.splytlight
+            Icons.splytlight
 
         "OverEasy" ->
-            Shapes.overeasy
+            Icons.overeasy
 
         "peterszerzo.com" ->
-            Shapes.smallLogo
+            Icons.smallLogo
 
         _ ->
-            Shapes.ripsaw
+            Icons.ripsaw
     )
         |> fromUnstyled
 
 
-view : Config -> Html Msg
+view : Config -> Html msg
 view { projects, packBubbles, activeProject } =
     div
         [ css
@@ -83,13 +80,13 @@ view { projects, packBubbles, activeProject } =
                             , cursor pointer
                             , property "transition" "all 0.3s"
                             , property "z-index" (r |> floor |> String.fromInt)
-                            , color dark
+                            , color Ui.dark
                             , border3 (px 2) solid currentColor
                             , hover
                                 [ property "transform" "scale(1.05)"
                                 , backgroundColor (hex project.color)
                                 , borderColor (hex project.color)
-                                , color white
+                                , color Ui.white
                                 ]
                             , Global.descendants
                                 [ Global.svg
@@ -123,7 +120,7 @@ view { projects, packBubbles, activeProject } =
                         (\project ->
                             [ div
                                 [ css
-                                    [ backgroundColor white
+                                    [ backgroundColor Ui.white
                                     , position absolute
                                     , top (px 0)
                                     , left (px 0)
@@ -132,7 +129,7 @@ view { projects, packBubbles, activeProject } =
                                     , overflow auto
                                     , property "animation" "fade-in 0.2s"
                                     , property "z-index" "1000"
-                                    , Mixins.desktop
+                                    , Ui.desktop
                                         [ overflow hidden
                                         , displayFlex
                                         ]
@@ -178,7 +175,7 @@ overlaySectionStyles =
         , overflowY auto
         , overflowX hidden
         , textAlign left
-        , Mixins.desktop
+        , Ui.desktop
             [ height (pct 100)
             , width (pct 50)
             ]
