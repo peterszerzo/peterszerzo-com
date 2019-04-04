@@ -1,11 +1,14 @@
 module Maddi.Ui exposing
-    ( black, bodyType, fadeIn, gray, heading1Type, heading2Type, lightGray, lighterGray, linkType, mobile, smallType, stickoutStyles, titleType, white, yellow
+    ( black, gray, lightGray, lighterGray, white, yellow
+    , bodyType, fadeIn, heading1Type, heading2Type, linkType, mobile, smallType, stickoutStyles, titleType, logoPattern
     , mobileNav, pageLayout, simplePageContent, static, tag
     )
 
 {-| Ui
 
-@docs black, bodyType, fadeIn, gray, heading1Type, heading2Type, lightGray, lighterGray, linkType, mobile, smallType, stickoutStyles, titleType, white, yellow
+@docs black, gray, lightGray, lighterGray, white, yellow
+
+@docs bodyType, fadeIn, heading1Type, heading2Type, linkType, mobile, smallType, stickoutStyles, titleType, logoPattern
 
 -}
 
@@ -234,6 +237,54 @@ pageFooter =
                 [ text "Peter Sz" ]
             ]
         ]
+
+
+logoPattern : List (Html msg)
+logoPattern =
+    List.range 1 14
+        |> List.map
+            (\val ->
+                List.range 1 14
+                    |> List.map
+                        (\val_ -> ( val, val_ ))
+            )
+        |> List.foldl (++) []
+        |> List.map
+            (\( i, j ) ->
+                div
+                    [ css
+                        [ position absolute
+                        , (i * 40 - 75) |> toFloat |> px |> top
+                        , (j
+                            * 40
+                            + (if modBy 2 i == 0 then
+                                20
+
+                               else
+                                0
+                              )
+                            - 55
+                          )
+                            |> toFloat
+                            |> px
+                            |> left
+                        , width (px 40)
+                        , height (px 40)
+                        , color white
+                        , property "z-index" "1000"
+                        , property "font-size" "12px"
+                        , (3 * i + 5 * j)
+                            |> modBy 4
+                            |> toFloat
+                            |> (*) 90
+                            |> deg
+                            |> rotateZ
+                            |> transform
+                        ]
+                    ]
+                    [ Icons.largeLogo
+                    ]
+            )
 
 
 static : String -> Html msg

@@ -61,7 +61,7 @@ quCopy =
 **Director:** Massimo Navone.
 
 **Set, props and tech team:** Gianluca Agazzi, Cristina Baroni, Martina Carcano, myself, Andrea Colombo, Greta Gasparini, Alberto Gramegna, Francesca Meregalli, Maddalena Oriani, Clarissa Palumbo, Flavio Pezzotti, Federica Piergiacomi, Francesca Sgariboldi, Alice Simoni
- 
+
 Original play by Dario Fo and Franca Rame. Produced by Milano Teatro Scuola Paolo Grassi, Scuola di Scenografia dell’Accademia di Belle Arti di Brera, Accademia dell’Arte di Arezzo, Milano Civica Scuola di Musica Claudio Abbado, Milano Scuola di Cinema e Televisione, Laboratorio di Circo Quattrox4.
 
 First performed on September 24th 2014 in Piccolo Teatro Studio Melato, Milan.
@@ -84,6 +84,42 @@ Costume design by Kevin Pollard, light design by Marco Filibeck, video design by
 Opening on September 29th, 2018 in [Teatro alla Scala](http://www.teatroallascala.org/it/stagione/2017-2018/opera/ernani.html), Milan.
 
 Produced by Teatro alla Scala.
+"""
+
+
+helenaCopy : String
+helenaCopy =
+    """
+**Conductor:** Franz Welser-Möst.
+
+**Director:** Sven-Eric Bechtolf.
+
+**Set designer:** Julian Crouch.
+
+Costume design by Mark Bouman, light design by Fabrice Kebour.
+
+Opening on November 6th, 2019 in [Teatro alla Scala, Milan](http://www.teatroallascala.org/en/season/2018-2019/opera/die-agyptische-helena.html).
+
+Produced by Teatro alla Scala.
+"""
+
+
+schneewittchenCopy : String
+schneewittchenCopy =
+    """
+**Music direction:** Symeon Ioannidis.
+
+**Stage direction:** Constanze Albert, Gail Skrela.
+
+**Set designer:** Claudia Noack.
+
+**Costume designer:** Ingrid Leibezeder.
+
+Light design by Simone Oestreicher, coreography by Gail Skrela, dramaturgy by Benjamin Wäntig.
+
+Opening on March 13th, 2019 in [Staatsoper Unter Der Linden, Berlin](https://www.staatsoper-berlin.de/de/veranstaltungen/schneewittchen.2763/).
+
+Produced by Staatsoper Unter Der Linden.
 """
 
 
@@ -122,7 +158,7 @@ Produced by Dutch National Opera and Ballet.
 hanselGretelCopy : String
 hanselGretelCopy =
     """
-**Conductor:** Marc Albrecht  
+**Conductor:** Marc Albrecht
 
 **Director:** Sven-Eric Bechtolf
 
@@ -230,7 +266,27 @@ groupedProjects =
       }
     , { title = "Opera"
       , projects =
-            [ { id = "barber-of-seville"
+            [ { id = "aegyptische-helena"
+              , title = "Die Ägyptische Helena"
+              , institution = ""
+              , tags = [ "set assistant" ]
+              , openedAt = ( 2019, 11, 6 )
+              , content = helenaCopy
+              , imgs =
+                    []
+              , thumbnailImg = Nothing
+              }
+            , { id = "schneewittchen"
+              , title = "Schneewittchen"
+              , institution = ""
+              , tags = [ "shadow play" ]
+              , openedAt = ( 2019, 3, 13 )
+              , content = schneewittchenCopy
+              , imgs =
+                    []
+              , thumbnailImg = Nothing
+              }
+            , { id = "barber-of-seville"
               , title = "Barber of Seville"
               , institution = ""
               , tags = [ "set assistant" ]

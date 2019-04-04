@@ -100,7 +100,6 @@ view config =
             config.data
                 |> List.drop displayIndex
                 |> List.head
-                |> Maybe.withDefault { url = "", alt = "", credit = Nothing }
     in
     (if state.isExpanded then
         overlay
@@ -135,7 +134,7 @@ view config =
 
               else
                 text ""
-            , case imageData.credit of
+            , case Maybe.andThen .credit imageData of
                 Just credit_ ->
                     credit <| "Credit: " ++ credit_
 
@@ -186,21 +185,27 @@ view config =
                 , alignItems center
                 , justifyContent center
                 , position relative
+                , overflow hidden
                 ]
             ]
           <|
-            [ img
-                [ css
-                    [ maxWidth (pct 100)
-                    , maxHeight (pct 100)
-                    , display block
-                    , margin auto
+            case imageData of
+                Just justImageData ->
+                    [ img
+                        [ css
+                            [ maxWidth (pct 100)
+                            , maxHeight (pct 100)
+                            , display block
+                            , margin auto
+                            ]
+                        , Html.Styled.Attributes.src justImageData.url
+                        , alt justImageData.alt
+                        ]
+                        []
                     ]
-                , Html.Styled.Attributes.src imageData.url
-                , alt imageData.alt
-                ]
-                []
-            ]
+
+                Nothing ->
+                    Ui.logoPattern
         ]
 
 

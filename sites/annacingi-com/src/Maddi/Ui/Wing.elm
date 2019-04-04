@@ -6,6 +6,7 @@ import Html.Styled exposing (Html, a, br, div, fromUnstyled, h2, header, p, span
 import Html.Styled.Attributes exposing (css, href)
 import Maddi.Data.Project as Project
 import Maddi.Ui as Ui
+import Maddi.Ui.Icons as Icons
 import Svg.Styled exposing (line, svg)
 import Svg.Styled.Attributes exposing (fill, stroke, viewBox, x1, x2, y1, y2)
 
@@ -110,26 +111,41 @@ wing project =
                        )
                 ]
             ]
-        , div
+        , let
+            ( styles, children ) =
+                project.imgs
+                    |> List.head
+                    |> Maybe.map
+                        (\{ url, alt, credit } ->
+                            ( Css.batch
+                                [ property "background-size" "cover"
+                                , property "background-position" "50% 50%"
+                                , property "background-image" <| "linear-gradient(45deg, rgba(255, 255, 255, 0.30), rgba(255, 255, 255, 0.15)), url(" ++ url ++ ")"
+                                ]
+                            , []
+                            )
+                        )
+                    |> Maybe.withDefault
+                        ( Css.batch
+                            [ backgroundColor (rgb 60 60 60)
+                            ]
+                        , Ui.logoPattern
+                        )
+          in
+          div
             [ css
                 [ padding (px 6)
+                , overflow hidden
                 , wingTransform
                     { skewAngle = wingSkewAngle
                     , scale = 1
                     , w = wingWidth
                     , offset = 1
                     }
-                , property "background-size" "cover"
-                , property "background-position" "50% 50%"
-                , property "background-image"
-                    (project.imgs
-                        |> List.head
-                        |> Maybe.map (\{ url, alt, credit } -> "linear-gradient(45deg, rgba(255, 255, 255, 0.30), rgba(255, 255, 255, 0.15)), url(" ++ url ++ ")")
-                        |> Maybe.withDefault ""
-                    )
+                , styles
                 ]
             ]
-            []
+            children
         ]
 
 
