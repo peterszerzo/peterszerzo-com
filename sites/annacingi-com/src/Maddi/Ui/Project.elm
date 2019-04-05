@@ -58,9 +58,13 @@ view config =
                 , Ui.static config.data.content
                 ]
         , right =
-            Carousel.view
-                { data = config.data.imgs
-                , state = state.carousel
-                , toMsg = \newState -> config.toMsg (State { state | carousel = newState })
-                }
+            let
+                carouselView =
+                    Carousel.view
+                        { data = config.data.imgs
+                        , state = state.carousel
+                        , toMsg = \newState -> config.toMsg (State { state | carousel = newState })
+                        }
+            in
+            Maybe.withDefault carouselView.content (List.head carouselView.overlay)
         }

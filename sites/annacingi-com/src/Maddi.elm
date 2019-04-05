@@ -89,8 +89,7 @@ matchers =
 
 
 type Msg
-    = Navigate String
-    | SetMobileNav Bool
+    = SetMobileNav Bool
     | UrlRequest Browser.UrlRequest
     | ChangeRoute Route
     | ChangeProjectView ProjectView.State
@@ -104,11 +103,6 @@ update msg model =
     case msg of
         SetMobileNav mobileNav ->
             ( { model | mobileNav = mobileNav }, Cmd.none )
-
-        Navigate newPath ->
-            ( model
-            , Navigation.pushUrl model.key newPath
-            )
 
         UrlRequest urlRequest ->
             case urlRequest of
@@ -172,61 +166,72 @@ update msg model =
 view : Model -> Browser.Document Msg
 view model =
     let
-        layout =
-            Ui.pageLayout model.mobileNav SetMobileNav >> List.map toUnstyled
+        layout children overlay =
+            Ui.pageLayout
+                { isMobileNavActive = model.mobileNav
+                , setMobileNavActive = SetMobileNav
+                , children = children
+                , overlay = overlay
+                }
+                |> List.map toUnstyled
     in
     case model.route of
         Home ->
             { title = "Anna Cingi | Set Designer"
             , body =
-                [ div
-                    [ css
-                        [ margin2 (px 60) (px 0)
-                        , Ui.fadeIn
+                layout
+                    [ div
+                        [ css
+                            [ margin2 (px 60) (px 0)
+                            , Ui.fadeIn
+                            ]
                         ]
-                    ]
-                  <|
-                    List.map
-                        (\{ title, projects } ->
-                            div
-                                [ css
-                                    [ textAlign center
-                                    , paddingBottom (px 35)
-                                    , paddingTop (px 100)
-                                    , firstChild
-                                        [ paddingTop (px 20)
-                                        ]
-                                    , lastChild
-                                        [ paddingBottom (px 10)
+                      <|
+                        List.map
+                            (\{ title, projects } ->
+                                div
+                                    [ css
+                                        [ textAlign center
+                                        , paddingBottom (px 35)
+                                        , paddingTop (px 100)
+                                        , firstChild
+                                            [ paddingTop (px 20)
+                                            ]
+                                        , lastChild
+                                            [ paddingBottom (px 10)
+                                            ]
                                         ]
                                     ]
-                                ]
-                                (Wing.wingHeader title
-                                    :: List.map
-                                        (\project -> Wing.wing project)
-                                        projects
-                                )
-                        )
-                        Content.groupedProjects
-                ]
-                    |> layout
+                                    (Wing.wingHeader title
+                                        :: List.map
+                                            (\project -> Wing.wing project)
+                                            projects
+                                    )
+                            )
+                            Content.groupedProjects
+                    ]
+                    []
             }
 
         About ->
             { title = "About Anna"
             , body =
-                [ Ui.simplePageContent
-                    { title = "About Anna"
-                    , left = Ui.static Content.about
-                    , right =
+                let
+                    carouselView =
                         Carousel.view
                             { data = [ { url = "/maddi/cover.jpg", alt = "Anna Cingi", credit = Nothing } ]
                             , state = model.aboutCarouselState
                             , toMsg = ChangeAboutCarousel
                             }
-                    }
-                ]
-                    |> layout
+                in
+                layout
+                    [ Ui.simplePageContent
+                        { title = "About Anna"
+                        , left = Ui.static Content.about
+                        , right = carouselView.content
+                        }
+                    ]
+                    carouselView.overlay
             }
 
         Project id ->
@@ -239,28 +244,31 @@ view model =
                     (\project_ ->
                         { title = project_.title
                         , body =
-                            [ ProjectView.view
-                                { data = project_
-                                , state = model.projectViewState
-                                , toMsg = ChangeProjectView
-                                }
-                            ]
-                                |> layout
+                            layout
+                                [ ProjectView.view
+                                    { data = project_
+                                    , state = model.projectViewState
+                                    , toMsg = ChangeProjectView
+                                    }
+                                ]
+                                []
                         }
                     )
                 |> Maybe.withDefault
                     { title = "Project not found"
                     , body =
-                        [ text "This project was not found" ]
-                            |> layout
+                        layout
+                            [ text "This project was not found" ]
+                            []
                     }
 
         NotFound ->
             { title = "Not found"
             , body =
-                [ Wing.wingHeader "It has not been found."
-                ]
-                    |> layout
+                layout
+                    [ Wing.wingHeader "It has not been found."
+                    ]
+                    []
             }
 
 

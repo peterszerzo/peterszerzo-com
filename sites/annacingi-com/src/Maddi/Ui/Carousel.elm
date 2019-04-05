@@ -83,7 +83,7 @@ overlayZIndex =
     property "z-index" "100000"
 
 
-view : Config msg -> Html msg
+view : Config msg -> { content : Html msg, overlay : List (Html msg) }
 view config =
     let
         (State state) =
@@ -101,112 +101,134 @@ view config =
                 |> List.drop displayIndex
                 |> List.head
     in
-    (if state.isExpanded then
-        overlay
+    { content = container <| viewContent config
+    , overlay =
+        if state.isExpanded then
+            [ overlay <| viewContent config ]
 
-     else
-        container
-    )
-        [ div
-            [ css
-                [ position absolute
-                , bottom (px 5)
-                , left (pct 50)
-                , width (pct 100)
-                , transform <| translate3d (pct -50) (px 0) (px 0)
-                , textAlign center
-                , menuZIndex
-                ]
+        else
+            []
+    }
+
+
+viewContent : Config msg -> List (Html msg)
+viewContent config =
+    let
+        (State state) =
+            config.state
+
+        displayIndex =
+            if List.length config.data == 0 then
+                0
+
+            else
+                modBy (List.length config.data) state.active
+
+        imageData =
+            config.data
+                |> List.drop displayIndex
+                |> List.head
+    in
+    [ div
+        [ css
+            [ position absolute
+            , bottom (px 5)
+            , left (pct 50)
+            , width (pct 100)
+            , transform <| translate3d (pct -50) (px 0) (px 0)
+            , textAlign center
+            , menuZIndex
             ]
-            [ if List.length config.data > 1 then
-                bulletMenu
-                    { count = List.length config.data
-                    , active = displayIndex
-                    , onClick =
-                        \newDisplayIndex ->
-                            config.toMsg
-                                (State
-                                    { active = newDisplayIndex
-                                    , isExpanded = state.isExpanded
-                                    }
-                                )
-                    }
-
-              else
-                text ""
-            , case Maybe.andThen .credit imageData of
-                Just credit_ ->
-                    credit <| "Credit: " ++ credit_
-
-                Nothing ->
-                    text ""
-            ]
-        , if List.length config.data > 0 then
-            buttonContainer
-                { onClick =
-                    config.toMsg
-                        (State
-                            { state
-                                | isExpanded =
-                                    not state.isExpanded
-                            }
-                        )
-                , icon =
-                    if state.isExpanded then
-                        Icons.close
-
-                    else
-                        Icons.expand
-                , css =
-                    [ menuZIndex
-                    , top (px 10)
-                    , right (px 10)
-                    ]
+        ]
+        [ if List.length config.data > 1 then
+            bulletMenu
+                { count = List.length config.data
+                , active = displayIndex
+                , onClick =
+                    \newDisplayIndex ->
+                        config.toMsg
+                            (State
+                                { active = newDisplayIndex
+                                , isExpanded = state.isExpanded
+                                }
+                            )
                 }
 
           else
             text ""
-        , div
-            [ css
-                [ width (pct 100)
-                , height (pct 100)
-                , Css.batch <|
-                    if state.isExpanded then
-                        [ maxWidth (calc (vw 100) minus (px 20))
-                        , maxHeight (calc (vh 100) minus (px 80))
-                        ]
+        , case Maybe.andThen .credit imageData of
+            Just credit_ ->
+                credit <| "Credit: " ++ credit_
 
-                    else
-                        [ maxWidth (px 600)
-                        , maxHeight (px 400)
-                        ]
-                , margin auto
-                , displayFlex
-                , alignItems center
-                , justifyContent center
-                , position relative
-                , overflow hidden
+            Nothing ->
+                text ""
+        ]
+    , if List.length config.data > 0 then
+        buttonContainer
+            { onClick =
+                config.toMsg
+                    (State
+                        { state
+                            | isExpanded =
+                                not state.isExpanded
+                        }
+                    )
+            , icon =
+                if state.isExpanded then
+                    Icons.close
+
+                else
+                    Icons.expand
+            , css =
+                [ menuZIndex
+                , top (px 10)
+                , right (px 10)
                 ]
-            ]
-          <|
-            case imageData of
-                Just justImageData ->
-                    [ img
-                        [ css
-                            [ maxWidth (pct 100)
-                            , maxHeight (pct 100)
-                            , display block
-                            , margin auto
-                            ]
-                        , Html.Styled.Attributes.src justImageData.url
-                        , alt justImageData.alt
-                        ]
-                        []
+            }
+
+      else
+        text ""
+    , div
+        [ css
+            [ width (pct 100)
+            , height (pct 100)
+            , Css.batch <|
+                if state.isExpanded then
+                    [ maxWidth (calc (vw 100) minus (px 20))
+                    , maxHeight (calc (vh 100) minus (px 80))
                     ]
 
-                Nothing ->
-                    Ui.logoPattern
+                else
+                    [ maxWidth (px 600)
+                    , maxHeight (px 400)
+                    ]
+            , margin auto
+            , displayFlex
+            , alignItems center
+            , justifyContent center
+            , position relative
+            , overflow hidden
+            ]
         ]
+      <|
+        case imageData of
+            Just justImageData ->
+                [ img
+                    [ css
+                        [ maxWidth (pct 100)
+                        , maxHeight (pct 100)
+                        , display block
+                        , margin auto
+                        ]
+                    , Html.Styled.Attributes.src justImageData.url
+                    , alt justImageData.alt
+                    ]
+                    []
+                ]
+
+            Nothing ->
+                Ui.logoPattern
+    ]
 
 
 buttonContainer : { onClick : msg, icon : Html msg, css : List Style } -> Html msg

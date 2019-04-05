@@ -7,12 +7,12 @@
     "start:site": "cd sites/peterszerzo-com && elm-app start",
     "start:overeasy": "cd sites/overeasy-sh && elm-app start",
     "start:maddi": "cd sites/annacingi-com && elm-app start",
-    "build:site": "cd sites/peterszerzo-com && elm-app build",
-    "build:overeasy": "cd sites/overeasy-sh && elm-app build",
-    "build:maddi": "cd sites/annacingi-com && elm-app build",
-    "deploy:site": "npm run build:site && surge build peterszerzo.com",
-    "deploy:overeasy": "npm run build:overeasy && surge build overeasy.sh",
-    "deploy:maddi": "npm run build:maddi && surge build annacingi.com"
+    "build:site": "cd sites/peterszerzo-com && elm-app build && cp build/index.html build/200.html",
+    "build:overeasy": "cd sites/overeasy-sh && elm-app build && cp build/index.html build/200.html",
+    "build:maddi": "cd sites/annacingi-com && elm-app build && cp build/index.html build/200.html",
+    "deploy:site": "npm run build:site && cd sites/peterszerzo-com && surge build peterszerzo.com",
+    "deploy:overeasy": "npm run build:overeasy && cd sites/overeasy-sh && surge build overeasy.sh",
+    "deploy:maddi": "npm run build:maddi && cd sites/annacingi-com && surge build annacingi.com"
   },
   "author": "Peter Szerzo <szerzo.peter@gmail.com>",
   "license": "ISC",

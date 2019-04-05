@@ -507,8 +507,14 @@ mobileNav { close } =
         ]
 
 
-pageLayout : Bool -> (Bool -> msg) -> List (Html msg) -> List (Html msg)
-pageLayout isMobileNavActive toggleMobileNav children =
+pageLayout :
+    { isMobileNavActive : Bool
+    , setMobileNavActive : Bool -> msg
+    , children : List (Html msg)
+    , overlay : List (Html msg)
+    }
+    -> List (Html msg)
+pageLayout config =
     [ Global.global
         [ Global.everything
             [ boxSizing borderBox
@@ -544,7 +550,7 @@ pageLayout isMobileNavActive toggleMobileNav children =
             ]
         ]
     , pageHeader
-        { activateMobileNav = toggleMobileNav True
+        { activateMobileNav = config.setMobileNavActive True
         }
     , div
         [ css
@@ -555,14 +561,15 @@ pageLayout isMobileNavActive toggleMobileNav children =
             , position relative
             ]
         ]
-        children
-    , if isMobileNavActive then
-        mobileNav { close = toggleMobileNav False }
+        config.children
+    , if config.isMobileNavActive then
+        mobileNav { close = config.setMobileNavActive False }
 
       else
         text ""
     , pageFooter
     ]
+        ++ config.overlay
 
 
 simplePageContent : { title : String, left : Html msg, right : Html msg } -> Html msg
