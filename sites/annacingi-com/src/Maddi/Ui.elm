@@ -333,9 +333,9 @@ iconContainer config children =
     div
         [ css
             [ cursor pointer
-            , width (px 35)
-            , height (px 35)
-            , padding (px 2)
+            , width (px 32)
+            , height (px 32)
+            , padding (px 5)
             , display inlineBlock
             , Global.descendants
                 [ Global.svg
@@ -538,11 +538,12 @@ pageLayout config =
             [ margin (px 0)
             , height (pct 100)
             ]
+        , Global.html
+            [ overflow hidden
+            ]
         , Global.body
-            [ mobile
-                [ overflow auto
-                , height auto
-                ]
+            [ overflowY auto
+            , overflowX hidden
             ]
         , Global.a
             [ textDecoration none

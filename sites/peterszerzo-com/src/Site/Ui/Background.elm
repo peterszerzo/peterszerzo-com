@@ -71,7 +71,7 @@ float gridFloor(float x) {
   return floor(n * x) / n + 0.5 / n;
 }
 
-const float pi = 3.1415926535;
+const float pi = 3.14159265;
 const float rotateAngle = 0.3 * pi;
 const mat2 rotate = mat2(cos(rotateAngle), sin(rotateAngle), -sin(rotateAngle), cos(rotateAngle));
 

@@ -1,6 +1,7 @@
 module Maddi exposing (main)
 
 import Browser
+import Browser.Dom as Dom
 import Browser.Events as Events
 import Browser.Navigation as Navigation
 import Css exposing (..)
@@ -35,6 +36,7 @@ type alias Model =
     , projectViewState : ProjectView.State
     , aboutCarouselState : Carousel.State
     , mobileNav : Bool
+    , windowSize : Maybe ( Int, Int )
     }
 
 
@@ -47,8 +49,13 @@ init _ url key =
       , projectViewState = ProjectView.init
       , aboutCarouselState = Carousel.init
       , mobileNav = False
+      , windowSize = Nothing
       }
-    , Cmd.none
+    , Dom.getViewport
+        |> Task.perform
+            (\viewport ->
+                Resize (floor viewport.viewport.width) (floor viewport.viewport.height)
+            )
     )
 
 
@@ -96,6 +103,7 @@ type Msg
     | ChangeProjectViewState ProjectView.State
     | ChangeAboutCarousel Carousel.State
     | ChangeAboutCarouselState Carousel.State
+    | Resize Int Int
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -134,6 +142,13 @@ update msg model =
             , Cmd.none
             )
 
+        Resize w h ->
+            ( { model
+                | windowSize = Just ( w, h )
+              }
+            , Cmd.none
+            )
+
         ChangeProjectView newProjectViewState ->
             ( { model
                 | projectViewState = newProjectViewState
@@ -166,6 +181,9 @@ update msg model =
 view : Model -> Browser.Document Msg
 view model =
     let
+        _ =
+            Debug.log "r" model.windowSize
+
         layout children overlay =
             Ui.pageLayout
                 { isMobileNavActive = model.mobileNav
@@ -203,8 +221,16 @@ view model =
                                         ]
                                     ]
                                     (Wing.wingHeader title
-                                        :: List.map
-                                            (\project -> Wing.wing project)
+                                        :: List.indexedMap
+                                            (\index project ->
+                                                Wing.wing
+                                                    (model.windowSize
+                                                        |> Maybe.map (\( w, _ ) -> modBy 2 index == 1 && w < 480)
+                                                        |> Maybe.withDefault False
+                                                        |> Debug.log "flip"
+                                                    )
+                                                    project
+                                            )
                                             projects
                                     )
                             )
@@ -277,4 +303,5 @@ subscriptions model =
     Sub.batch
         [ ProjectView.subscriptions model.projectViewState |> Sub.map ChangeProjectViewState
         , Carousel.subscriptions model.aboutCarouselState |> Sub.map ChangeAboutCarouselState
+        , Events.onResize Resize
         ]

@@ -11,8 +11,82 @@ import Svg.Styled exposing (line, svg)
 import Svg.Styled.Attributes exposing (fill, stroke, viewBox, x1, x2, y1, y2)
 
 
-wing : Project.Project -> Html msg
-wing project =
+wing : Bool -> Project.Project -> Html msg
+wing flip project =
+    let
+        content =
+            div
+                [ css
+                    [ height (pct 100)
+                    , padding (px 10)
+                    , flexDirection column
+                    , displayFlex
+                    , justifyContent spaceBetween
+                    , textAlign left
+                    ]
+                ]
+                [ div []
+                    [ h2
+                        [ css
+                            [ Ui.titleType
+                            , margin (px 0)
+                            ]
+                        ]
+                        [ text project.title ]
+                    , div
+                        [ css
+                            [ marginTop (px 8)
+                            ]
+                        ]
+                      <|
+                        List.map
+                            (Ui.tag False)
+                            project.tags
+                    ]
+                , p
+                    [ css
+                        [ fontSize (Css.rem 1.5)
+                        , color (hex "ADADAD")
+                        , margin (px 0)
+                        ]
+                    ]
+                    [ project.openedAt
+                        |> (\( year, month, day ) ->
+                                text (String.fromInt month ++ " / " ++ String.fromInt year)
+                           )
+                    ]
+                ]
+
+        imageContent =
+            div
+                [ css
+                    [ height (pct 100)
+                    , width (pct 100)
+                    , styles
+                    ]
+                ]
+                children
+
+        ( styles, children ) =
+            project.imgs
+                |> List.head
+                |> Maybe.map
+                    (\{ url, alt, credit } ->
+                        ( Css.batch
+                            [ property "background-size" "cover"
+                            , property "background-position" "50% 50%"
+                            , property "background-image" <| "linear-gradient(45deg, rgba(255, 255, 255, 0.30), rgba(255, 255, 255, 0.15)), url(" ++ url ++ ")"
+                            ]
+                        , []
+                        )
+                    )
+                |> Maybe.withDefault
+                    ( Css.batch
+                        [ backgroundColor (rgb 60 60 60)
+                        ]
+                    , Ui.logoPattern
+                    )
+    in
     a
         [ css
             [ display inlineBlock
@@ -71,81 +145,33 @@ wing project =
                     , scale = 1
                     , offset = 0
                     }
-                , padding (px 10)
-                , displayFlex
-                , position relative
                 , left (px 1)
-                , flexDirection column
-                , justifyContent spaceBetween
-                , textAlign left
+                , position relative
                 ]
             ]
-            [ div []
-                [ h2
-                    [ css
-                        [ Ui.titleType
-                        , margin (px 0)
-                        ]
-                    ]
-                    [ text project.title ]
-                , div
-                    [ css
-                        [ marginTop (px 8)
-                        ]
-                    ]
-                  <|
-                    List.map
-                        (Ui.tag False)
-                        project.tags
-                ]
-            , p
-                [ css
-                    [ fontSize (Css.rem 1.5)
-                    , color (hex "ADADAD")
-                    , margin (px 0)
-                    ]
-                ]
-                [ project.openedAt
-                    |> (\( year, month, day ) ->
-                            text (String.fromInt month ++ " / " ++ String.fromInt year)
-                       )
-                ]
+            [ if flip then
+                imageContent
+
+              else
+                content
             ]
-        , let
-            ( styles, children ) =
-                project.imgs
-                    |> List.head
-                    |> Maybe.map
-                        (\{ url, alt, credit } ->
-                            ( Css.batch
-                                [ property "background-size" "cover"
-                                , property "background-position" "50% 50%"
-                                , property "background-image" <| "linear-gradient(45deg, rgba(255, 255, 255, 0.30), rgba(255, 255, 255, 0.15)), url(" ++ url ++ ")"
-                                ]
-                            , []
-                            )
-                        )
-                    |> Maybe.withDefault
-                        ( Css.batch
-                            [ backgroundColor (rgb 60 60 60)
-                            ]
-                        , Ui.logoPattern
-                        )
-          in
-          div
+        , div
             [ css
-                [ padding (px 6)
-                , overflow hidden
+                [ overflow hidden
                 , wingTransform
                     { skewAngle = wingSkewAngle
                     , scale = 1
                     , w = wingWidth
                     , offset = 1
                     }
-                , styles
                 ]
             ]
-            children
+            [ if flip then
+                content
+
+              else
+                imageContent
+            ]
         ]
 
 

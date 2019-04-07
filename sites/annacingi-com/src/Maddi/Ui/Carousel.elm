@@ -14,6 +14,7 @@ import Html.Styled exposing (Html, button, div, img, text)
 import Html.Styled.Attributes exposing (alt, css)
 import Html.Styled.Events exposing (on, onClick)
 import Json.Decode as Decode
+import Maddi.CustomElements
 import Maddi.Data.Image as Image
 import Maddi.Ui as Ui
 import Maddi.Ui.Icons as Icons
@@ -124,6 +125,15 @@ viewContent config =
             else
                 modBy (List.length config.data) state.active
 
+        changeImage diff =
+            config.toMsg
+                (State
+                    { state
+                        | active =
+                            state.active + diff
+                    }
+                )
+
         imageData =
             config.data
                 |> List.drop displayIndex
@@ -188,7 +198,10 @@ viewContent config =
 
       else
         text ""
-    , div
+    , Maddi.CustomElements.swipeContainer
+        { onLeft = changeImage -1
+        , onRight = changeImage 1
+        }
         [ css
             [ width (pct 100)
             , height (pct 100)
@@ -219,6 +232,7 @@ viewContent config =
                         , maxHeight (pct 100)
                         , display block
                         , margin auto
+                        , property "pointer-events" "none"
                         ]
                     , Html.Styled.Attributes.src justImageData.url
                     , alt justImageData.alt
@@ -233,17 +247,22 @@ viewContent config =
 
 buttonContainer : { onClick : msg, icon : Html msg, css : List Style } -> Html msg
 buttonContainer config =
-    div
+    button
         [ css
             [ width (px 32)
             , height (px 32)
+            , border (px 0)
             , padding (px 5)
             , backgroundColor (rgba 0 0 0 0.2)
             , borderRadius (px 3)
+            , cursor pointer
             , color Ui.white
             , position absolute
             , hover
                 [ backgroundColor (rgba 0 0 0 0.3)
+                ]
+            , focus
+                [ outline none
                 ]
             , Global.children
                 [ Global.svg
