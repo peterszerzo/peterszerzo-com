@@ -181,9 +181,6 @@ update msg model =
 view : Model -> Browser.Document Msg
 view model =
     let
-        _ =
-            Debug.log "r" model.windowSize
-
         layout children overlay =
             Ui.pageLayout
                 { isMobileNavActive = model.mobileNav
@@ -227,7 +224,6 @@ view model =
                                                     (model.windowSize
                                                         |> Maybe.map (\( w, _ ) -> modBy 2 index == 1 && w < 480)
                                                         |> Maybe.withDefault False
-                                                        |> Debug.log "flip"
                                                     )
                                                     project
                                             )
@@ -268,16 +264,19 @@ view model =
             project
                 |> Maybe.map
                     (\project_ ->
-                        { title = project_.title
-                        , body =
-                            layout
-                                [ ProjectView.view
+                        let
+                            projectView =
+                                ProjectView.view
                                     { data = project_
                                     , state = model.projectViewState
                                     , toMsg = ChangeProjectView
                                     }
-                                ]
-                                []
+                        in
+                        { title = project_.title
+                        , body =
+                            layout
+                                [ projectView.content ]
+                                projectView.overlay
                         }
                     )
                 |> Maybe.withDefault

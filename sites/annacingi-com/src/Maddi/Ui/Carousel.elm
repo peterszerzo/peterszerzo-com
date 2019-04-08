@@ -139,41 +139,7 @@ viewContent config =
                 |> List.drop displayIndex
                 |> List.head
     in
-    [ div
-        [ css
-            [ position absolute
-            , bottom (px 5)
-            , left (pct 50)
-            , width (pct 100)
-            , transform <| translate3d (pct -50) (px 0) (px 0)
-            , textAlign center
-            , menuZIndex
-            ]
-        ]
-        [ if List.length config.data > 1 then
-            bulletMenu
-                { count = List.length config.data
-                , active = displayIndex
-                , onClick =
-                    \newDisplayIndex ->
-                        config.toMsg
-                            (State
-                                { active = newDisplayIndex
-                                , isExpanded = state.isExpanded
-                                }
-                            )
-                }
-
-          else
-            text ""
-        , case Maybe.andThen .credit imageData of
-            Just credit_ ->
-                credit <| "Credit: " ++ credit_
-
-            Nothing ->
-                text ""
-        ]
-    , if List.length config.data > 0 then
+    [ if List.length config.data > 0 then
         buttonContainer
             { onClick =
                 config.toMsg
@@ -199,8 +165,8 @@ viewContent config =
       else
         text ""
     , Maddi.CustomElements.swipeContainer
-        { onLeft = changeImage -1
-        , onRight = changeImage 1
+        { onLeft = changeImage 1
+        , onRight = changeImage -1
         }
         [ css
             [ width (pct 100)
@@ -238,6 +204,40 @@ viewContent config =
                     , alt justImageData.alt
                     ]
                     []
+                , div
+                    [ css
+                        [ position absolute
+                        , bottom (px 5)
+                        , left (pct 50)
+                        , width (pct 100)
+                        , transform <| translate3d (pct -50) (px 0) (px 0)
+                        , textAlign center
+                        , menuZIndex
+                        ]
+                    ]
+                    [ if List.length config.data > 1 then
+                        bulletMenu
+                            { count = List.length config.data
+                            , active = displayIndex
+                            , onClick =
+                                \newDisplayIndex ->
+                                    config.toMsg
+                                        (State
+                                            { active = newDisplayIndex
+                                            , isExpanded = state.isExpanded
+                                            }
+                                        )
+                            }
+
+                      else
+                        text ""
+                    , case Maybe.andThen .credit imageData of
+                        Just credit_ ->
+                            credit <| "Credit: " ++ credit_
+
+                        Nothing ->
+                            text ""
+                    ]
                 ]
 
             Nothing ->
@@ -283,18 +283,17 @@ overlay =
     div
         [ css
             [ overlayZIndex
-            , position fixed |> important
-            , displayFlex
-            , overflow visible
             , alignItems center
+            , backgroundColor (rgba 0 0 0 0.9)
+            , displayFlex
+            , height (pct 100)
             , justifyContent center
-            , top (px 0)
-            , bottom (px 0)
             , left (px 0)
+            , overflow visible
+            , position fixed
             , right (px 0)
-            , width (vw 100) |> important
-            , height (vh 100) |> important
-            , backgroundColor (rgba 0 0 0 0.7)
+            , top (px 0)
+            , width (pct 100)
             ]
         ]
 

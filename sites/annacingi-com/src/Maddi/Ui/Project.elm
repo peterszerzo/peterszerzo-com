@@ -38,33 +38,34 @@ subscriptions (State state) =
         |> Sub.map (\newCarousel -> State { state | carousel = newCarousel })
 
 
-view : Config msg -> Html msg
+view : Config msg -> { content : Html msg, overlay : List (Html msg) }
 view config =
     let
         (State state) =
             config.state
+
+        carouselView =
+            Carousel.view
+                { data = config.data.imgs
+                , state = state.carousel
+                , toMsg = \newState -> config.toMsg (State { state | carousel = newState })
+                }
     in
-    Ui.simplePageContent
-        { title = config.data.title
-        , left =
-            div []
-                [ div
-                    [ css
-                        [ marginBottom (px 20)
+    { content =
+        Ui.simplePageContent
+            { title = config.data.title
+            , left =
+                div []
+                    [ div
+                        [ css
+                            [ marginBottom (px 20)
+                            ]
                         ]
+                      <|
+                        List.map (Ui.tag True) config.data.tags
+                    , Ui.static config.data.content
                     ]
-                  <|
-                    List.map (Ui.tag True) config.data.tags
-                , Ui.static config.data.content
-                ]
-        , right =
-            let
-                carouselView =
-                    Carousel.view
-                        { data = config.data.imgs
-                        , state = state.carousel
-                        , toMsg = \newState -> config.toMsg (State { state | carousel = newState })
-                        }
-            in
-            Maybe.withDefault carouselView.content (List.head carouselView.overlay)
-        }
+            , right = carouselView.content
+            }
+    , overlay = carouselView.overlay
+    }
