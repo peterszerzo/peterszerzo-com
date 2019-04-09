@@ -2,7 +2,7 @@ module Shared.SimpleWebGL exposing (Config, Uniforms, Varyings, Vertex, view)
 
 import Html exposing (Attribute, Html)
 import Html.Attributes exposing (style)
-import Math.Vector2 as Vector2 exposing (Vec2, vec2)
+import Math.Vector2 exposing (Vec2, vec2)
 import WebGL
 
 

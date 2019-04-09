@@ -12,7 +12,7 @@ import Css exposing (..)
 import Css.Global as Global
 import Html.Styled exposing (Html, button, div, img, text)
 import Html.Styled.Attributes exposing (alt, css)
-import Html.Styled.Events exposing (on, onClick)
+import Html.Styled.Events exposing (onClick)
 import Json.Decode as Decode
 import Maddi.CustomElements
 import Maddi.Data.Image as Image
@@ -40,7 +40,7 @@ init =
 
 
 type alias Config msg =
-    { data : Data
+    { images : Data
     , state : State
     , toMsg : State -> msg
     }
@@ -89,22 +89,10 @@ view config =
     let
         (State state) =
             config.state
-
-        displayIndex =
-            if List.length config.data == 0 then
-                0
-
-            else
-                modBy (List.length config.data) state.active
-
-        imageData =
-            config.data
-                |> List.drop displayIndex
-                |> List.head
     in
     { content = container <| viewContent config
     , overlay =
-        if state.isExpanded then
+        if state.isExpanded && List.length config.images > 0 then
             [ overlay <| viewContent config ]
 
         else
@@ -119,11 +107,11 @@ viewContent config =
             config.state
 
         displayIndex =
-            if List.length config.data == 0 then
+            if List.length config.images == 0 then
                 0
 
             else
-                modBy (List.length config.data) state.active
+                modBy (List.length config.images) state.active
 
         changeImage diff =
             config.toMsg
@@ -135,11 +123,11 @@ viewContent config =
                 )
 
         imageData =
-            config.data
+            config.images
                 |> List.drop displayIndex
                 |> List.head
     in
-    [ if List.length config.data > 0 then
+    [ if List.length config.images > 0 then
         buttonContainer
             { onClick =
                 config.toMsg
@@ -215,9 +203,9 @@ viewContent config =
                         , menuZIndex
                         ]
                     ]
-                    [ if List.length config.data > 1 then
+                    [ if List.length config.images > 1 then
                         bulletMenu
-                            { count = List.length config.data
+                            { count = List.length config.images
                             , active = displayIndex
                             , onClick =
                                 \newDisplayIndex ->

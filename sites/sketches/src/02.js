@@ -40,9 +40,9 @@ const hexGrid = ({ n, m }) =>
 
 const hgrid = hexGrid({ n: 18, m: 14 });
 
-const animateAt = 0.18;
+const animateAt = 0.08;
 
-const animateFor = animateAt / 6;
+const animateFor = animateAt / 4;
 
 const computeAnimateCycle = ({ playhead, animateAt, animateFor }) => {
   const cycle = Math.floor(playhead / animateAt);

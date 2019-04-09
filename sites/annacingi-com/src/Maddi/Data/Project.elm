@@ -7,7 +7,6 @@ type alias Project =
     { id : String
     , title : String
     , tags : List String
-    , institution : String
     , openedAt : ( Int, Int, Int )
     , content : String
     , thumbnailImg : Maybe String

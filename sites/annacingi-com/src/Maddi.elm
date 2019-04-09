@@ -5,11 +5,8 @@ import Browser.Dom as Dom
 import Browser.Events as Events
 import Browser.Navigation as Navigation
 import Css exposing (..)
-import Css.Global as Global
-import Html exposing (Html)
-import Html.Styled exposing (div, h1, text, toUnstyled)
+import Html.Styled exposing (div, text, toUnstyled)
 import Html.Styled.Attributes exposing (css)
-import Json.Decode as Decode
 import Json.Encode as Encode
 import Maddi.Content as Content
 import Maddi.Data.Project as Project
@@ -17,9 +14,7 @@ import Maddi.Ui as Ui
 import Maddi.Ui.Carousel as Carousel
 import Maddi.Ui.Project as ProjectView
 import Maddi.Ui.Wing as Wing
-import Process
 import Task
-import Time
 import Url
 import Url.Parser exposing (..)
 
@@ -241,7 +236,12 @@ view model =
                 let
                     carouselView =
                         Carousel.view
-                            { data = [ { url = "/maddi/cover.jpg", alt = "Anna Cingi", credit = Nothing } ]
+                            { images =
+                                [ { url = "/maddi/cover.jpg"
+                                  , alt = "Anna Cingi"
+                                  , credit = Nothing
+                                  }
+                                ]
                             , state = model.aboutCarouselState
                             , toMsg = ChangeAboutCarousel
                             }

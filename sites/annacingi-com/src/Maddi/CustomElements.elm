@@ -1,7 +1,6 @@
 module Maddi.CustomElements exposing (swipeContainer)
 
 import Html.Styled exposing (Attribute, Html, node)
-import Html.Styled.Attributes exposing (attribute)
 import Html.Styled.Events exposing (on)
 import Json.Decode as Decode
 

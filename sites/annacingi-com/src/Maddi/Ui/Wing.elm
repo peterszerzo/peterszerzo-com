@@ -2,13 +2,10 @@ module Maddi.Ui.Wing exposing (wing, wingHeader)
 
 import Css exposing (..)
 import Css.Global as Global
-import Html.Styled exposing (Html, a, br, div, fromUnstyled, h2, header, p, span, text)
+import Html.Styled exposing (Html, a, div, h2, p, text)
 import Html.Styled.Attributes exposing (css, href)
 import Maddi.Data.Project as Project
 import Maddi.Ui as Ui
-import Maddi.Ui.Icons as Icons
-import Svg.Styled exposing (line, svg)
-import Svg.Styled.Attributes exposing (fill, stroke, viewBox, x1, x2, y1, y2)
 
 
 wing : Bool -> Project.Project -> Html msg
@@ -51,7 +48,7 @@ wing flip project =
                         ]
                     ]
                     [ project.openedAt
-                        |> (\( year, month, day ) ->
+                        |> (\( year, month, _ ) ->
                                 text (String.fromInt month ++ " / " ++ String.fromInt year)
                            )
                     ]
@@ -69,9 +66,11 @@ wing flip project =
 
         ( styles, children ) =
             project.imgs
+                |> List.map .url
+                |> (\urls -> List.filterMap identity [ project.thumbnailImg ] ++ urls)
                 |> List.head
                 |> Maybe.map
-                    (\{ url, alt, credit } ->
+                    (\url ->
                         ( Css.batch
                             [ property "background-size" "cover"
                             , property "background-position" "50% 50%"
@@ -141,9 +140,6 @@ wing flip project =
             [ css
                 [ wingTransform
                     { skewAngle = -wingSkewAngle
-                    , w = wingWidth
-                    , scale = 1
-                    , offset = 0
                     }
                 , left (px 1)
                 , position relative
@@ -160,9 +156,6 @@ wing flip project =
                 [ overflow hidden
                 , wingTransform
                     { skewAngle = wingSkewAngle
-                    , scale = 1
-                    , w = wingWidth
-                    , offset = 1
                     }
                 ]
             ]
@@ -208,27 +201,14 @@ wingHeader title =
         [ text title ]
 
 
-wingTransform : { skewAngle : Float, scale : Float, w : Float, offset : Int } -> Style
-wingTransform { skewAngle, scale, w, offset } =
-    let
-        translateString =
-            "translate3d("
-                ++ String.fromInt (floor w * offset)
-                ++ "px, "
-                ++ String.fromInt
-                    (if skewAngle > 0 then
-                        w * tan -skewAngle |> floor
-
-                     else
-                        0
-                    )
-                ++ "px, 0)"
-    in
+wingTransform : { skewAngle : Float } -> Style
+wingTransform { skewAngle } =
     Css.batch
-        [ ([ "skewY(" ++ String.fromFloat skewAngle ++ "rad)" ]
-            ++ [ "scale(1.0, 1.0)"
-               ]
-          )
+        [ [ "skewY("
+                ++ String.fromFloat skewAngle
+                ++ "rad)"
+          , "scale(1.0, 1.0)"
+          ]
             |> String.join " "
             |> property "transform"
         , property "-webkit-font-smoothing" "subpixel-antialiased"

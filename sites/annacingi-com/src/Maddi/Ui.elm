@@ -15,15 +15,12 @@ module Maddi.Ui exposing
 import Css exposing (..)
 import Css.Global as Global
 import Css.Media as Media
-import Html.Styled exposing (Html, a, br, div, footer, fromUnstyled, h1, h2, header, p, span, text)
+import Html.Styled exposing (Html, a, div, footer, fromUnstyled, h1, h2, header, p, span, text)
 import Html.Styled.Attributes exposing (css, href)
 import Html.Styled.Events exposing (onClick)
-import Json.Decode as Decode
 import Maddi.Content exposing (navLinks)
 import Maddi.Ui.Icons as Icons
 import Markdown
-import Svg.Styled exposing (line, path, svg)
-import Svg.Styled.Attributes exposing (d, stroke, strokeWidth, viewBox, x1, x2, y1, y2)
 
 
 mobile : List Style -> Style
@@ -542,8 +539,8 @@ pageLayout config =
             [ overflow hidden
             ]
         , Global.body
-            [ overflowY auto
-            , overflowX hidden
+            [ overflowX hidden
+            , property "-webkit-overflow-scrolling" "touch"
             ]
         , Global.a
             [ textDecoration none

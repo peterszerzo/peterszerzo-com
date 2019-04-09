@@ -1,7 +1,7 @@
 module Maddi.Ui.Project exposing (Data, State, init, subscriptions, view)
 
 import Css exposing (..)
-import Html.Styled as Html exposing (Html, div, h1, text)
+import Html.Styled exposing (Html, div)
 import Html.Styled.Attributes exposing (css)
 import Maddi.Data.Project as Project
 import Maddi.Ui as Ui
@@ -46,7 +46,7 @@ view config =
 
         carouselView =
             Carousel.view
-                { data = config.data.imgs
+                { images = config.data.imgs
                 , state = state.carousel
                 , toMsg = \newState -> config.toMsg (State { state | carousel = newState })
                 }

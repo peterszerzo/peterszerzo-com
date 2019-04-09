@@ -4,8 +4,9 @@
   "description": "",
   "main": "sketch-1.js",
   "scripts": {
-    "start": "canvas-sketch src/02.js",
-    "build": "canvas-sketch src/02.js --build --inline --dir dist"
+    "start": "canvas-sketch src/01.js --output=tmp/",
+    "build:gif": "canvas-sketch-gif tmp/ output.gif --fps=30",
+    "build": "canvas-sketch src/01.js --build --inline --dir dist"
   },
   "keywords": [],
   "author": "",
