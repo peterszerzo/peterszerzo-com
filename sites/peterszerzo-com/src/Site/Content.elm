@@ -25,7 +25,6 @@ type alias Project =
     { id : String
     , name : String
     , url : String
-    , image : String
     , description : String
     , size : Int
     , color : String
@@ -58,6 +57,8 @@ Care to play? Head to the [website](https://elm-gameroom-firebaseapp.com) for a 
 **Role:** Developer / Designer
 
 **Made with:** Elm / WebGL
+
+![elm-gameroom](/site/imgs/projects/elm-gameroom.png)
     """
 
 
@@ -71,6 +72,8 @@ Design interface for creating 3d bezier shapes.
 **Role:** Developer / Designer
 
 **Made with:** Elm / SVG
+
+![ripsaw](/site/imgs/projects/ripsaw.png)
       """
 
 
@@ -84,6 +87,23 @@ Immersing myself into [Alto's Adventure](http://altosadventure.com) in the past 
 **Role:** Developer / Designer
 
 **Made with:** React / WebGL / SVG
+
+![Twisty Donut Racer](/site/imgs/projects/twisty-donut-racer.png)
+      """
+
+
+annacingiCopy : String
+annacingiCopy =
+    """
+Portfolio page for Milan-based set designer Anna Cingi.
+
+**Info:** Berlin / 2018-2019 / [Website](http://annacingi.com)
+
+**Role:** Developer / Designer
+
+**Made with:** Elm / SVG
+
+![Anna Cingi website](/site/imgs/projects/annacingi.png)
       """
 
 
@@ -97,6 +117,8 @@ A drag-and-drop tree structure visualizer and editor that is agnostic about the 
 **Role:** Developer / Designer
 
 **Made with:** Elm / SVG
+
+![elm-arborist](/site/imgs/projects/elm-arborist.png)
       """
 
 
@@ -110,6 +132,8 @@ Design interface for the [SplytLight](http://www.splytlight.com) lighting system
 **Role:** Developer / UX Designer
 
 **Made with:** React / SVG / Three.js
+
+![Splytlight](/site/imgs/projects/splytlight.png)
       """
 
 
@@ -123,6 +147,8 @@ Atlas is a data visualization CMS made for the Education Policy Program at [New 
 **Role:** Full-stack Developer / UX Designer
 
 **Made with:** React / SVG / Leaflet.js / Mapbox
+
+![Atlas](/site/imgs/projects/atlas.png)
       """
 
 
@@ -134,6 +160,8 @@ A playground for my computational art experiments.
 **Info:** Berlin / 2017-2018 / [Website](http://overeasy.sh)
 
 **Made with:** Elm / WebGL
+
+![OverEasy](/site/imgs/projects/overeasy.png)
       """
 
 
@@ -141,23 +169,27 @@ projects : List Project
 projects =
     [ { id = "elm-gameroom"
       , name = "elm-gameroom"
-      , image = "/site/imgs/projects/elm-gameroom.png"
       , description = elmGameroomCopy
       , url = "https://elm-gameroom.firebaseapp.com"
-      , size = 1200
+      , size = 1000
       , color = "2D739E"
       }
     , { id = "ripsaw"
       , name = "ripsaw"
-      , image = "/site/imgs/projects/ripsaw.png"
       , description = ripsawCopy
       , url = "https://codepen.io/peterszerzo/full/Wpdxyd/"
-      , size = 400
+      , size = 300
       , color = "3c394d"
+      }
+    , { id = "annacingi"
+      , name = "Anna Cingi"
+      , description = annacingiCopy
+      , url = "http://annacingi.com"
+      , size = 1100
+      , color = "000000"
       }
     , { id = "twisty-donut-racer"
       , name = "Twisty Donut Racer"
-      , image = "/site/imgs/projects/twisty-donut-racer.png"
       , description = twistyCopy
       , url = "/"
       , size = 1600
@@ -165,31 +197,27 @@ projects =
       }
     , { id = "elm-arborist"
       , name = "elm-arborist"
-      , image = "/site/imgs/projects/elm-arborist.png"
       , description = arboristCopy
       , url = "/"
-      , size = 800
+      , size = 1200
       , color = "037C4E"
       }
     , { id = "splytlight"
       , name = "SplytLight"
-      , image = "/site/imgs/projects/splytlight.png"
       , description = splytlightCopy
       , url = "http://splytlight.surge.sh"
-      , size = 1600
+      , size = 800
       , color = "4a76b2"
       }
     , { id = "atlas"
       , name = "Atlas"
-      , image = "/site/imgs/projects/atlas.png"
       , description = atlasCopy
       , url = "http://atlas.newamerica.org"
-      , size = 400
+      , size = 300
       , color = "000000"
       }
     , { id = "overeasy"
       , name = "OverEasy"
-      , image = "/site/imgs/projects/overeasy.png"
       , description = overeasyCopy
       , url = "https://overeasy.sh"
       , size = 1200

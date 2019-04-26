@@ -1,5 +1,6 @@
 module Site.Router exposing (Route(..), parse, parser)
 
+import OverEasy
 import Url
 import Url.Parser exposing (..)
 
@@ -12,6 +13,7 @@ type Route
     | About
     | Talks
     | NotFound
+    | OverEasy OverEasy.Route
 
 
 parse : Url.Url -> Route
@@ -30,4 +32,5 @@ parser =
         , s "about" |> map About
         , s "now" |> map Now
         , s "talks" |> map Talks
+        , s "overeasy" </> OverEasy.matchers |> map OverEasy
         ]

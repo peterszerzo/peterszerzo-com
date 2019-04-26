@@ -9,13 +9,15 @@ import Html.Styled exposing (Html, a, div, fromUnstyled, iframe, li, node, text,
 import Html.Styled.Attributes exposing (attribute, css, href, src, style)
 import Json.Decode as Decode
 import Json.Encode as Encode
+import OverEasy
 import Site.Content as Content
 import Site.Data.PackBubble as PackBubble
+import Site.Page as Page
+import Site.Page.Projects
 import Site.Ports as Ports
 import Site.Router as Router exposing (Route, parse)
 import Site.Ui as Ui
 import Site.Ui.Background
-import Site.Ui.Projects
 import Task
 import Time
 import Url
@@ -49,13 +51,16 @@ init _ url key =
       , window = { width = 0, height = 0 }
       , projectPackBubbles = []
       }
-    , Dom.getViewport
-        |> Task.perform
-            (\viewport ->
-                Resize
-                    (floor viewport.viewport.width)
-                    (floor viewport.viewport.height)
-            )
+    , Cmd.batch
+        [ Dom.getViewport
+            |> Task.perform
+                (\viewport ->
+                    Resize
+                        (floor viewport.viewport.width)
+                        (floor viewport.viewport.height)
+                )
+        , Time.now |> Task.perform StartTime
+        ]
     )
 
 
@@ -79,10 +84,10 @@ main =
 
 type Msg
     = SetQuirky Bool
-    | Navigate String
     | ChangeRoute Route
     | UrlRequest Browser.UrlRequest
     | AnimationTick Time.Posix
+    | StartTime Time.Posix
     | Resize Int Int
     | PackLayoutResponse Decode.Value
 
@@ -93,11 +98,6 @@ update msg model =
         SetQuirky isQuirky ->
             ( { model | isQuirky = isQuirky }
             , Cmd.none
-            )
-
-        Navigate newPath ->
-            ( model
-            , Navigation.pushUrl model.key newPath
             )
 
         ChangeRoute newRoute ->
@@ -136,13 +136,12 @@ update msg model =
         AnimationTick time ->
             ( { model
                 | time = Just time
-                , startTime =
-                    if model.startTime == Nothing then
-                        Just time
-
-                    else
-                        model.startTime
               }
+            , Cmd.none
+            )
+
+        StartTime time ->
+            ( { model | startTime = Just time }
             , Cmd.none
             )
 
@@ -242,10 +241,9 @@ view model =
             , body =
                 [ Ui.layout
                     { content =
-                        [ Site.Ui.Projects.view
+                        [ Site.Page.Projects.view
                             { packBubbles = model.projectPackBubbles
                             , projects = Content.projects
-                            , activeProject = Nothing
                             }
                         ]
                     , breadcrumbs = [ { label = "Projects", url = Nothing } ]
@@ -267,7 +265,6 @@ view model =
                             { id = ""
                             , name = ""
                             , description = ""
-                            , image = ""
                             , size = 0
                             , url = ""
                             , color = ""
@@ -277,10 +274,9 @@ view model =
             , body =
                 [ Ui.layout
                     { content =
-                        [ Site.Ui.Projects.view
-                            { packBubbles = model.projectPackBubbles
-                            , projects = Content.projects
-                            , activeProject = Just prj
+                        [ Ui.static
+                            { markdown = Just project.description
+                            , children = []
                             }
                         ]
                     , breadcrumbs =
@@ -312,7 +308,12 @@ view model =
             { title = "About"
             , body =
                 [ Ui.layout
-                    { content = [ Ui.static { markdown = Just Content.aboutConventional, children = [] } ]
+                    { content =
+                        [ Ui.static
+                            { markdown = Just Content.aboutConventional
+                            , children = []
+                            }
+                        ]
                     , breadcrumbs = [ { label = "About", url = Nothing } ]
                     , quirkyContent = Just [ Ui.static { markdown = Just Content.aboutReal, children = [] } ]
                     , isQuirky = model.isQuirky
@@ -392,6 +393,11 @@ view model =
                     }
                 ]
                     |> layout
+            }
+
+        Router.OverEasy _ ->
+            { title = "OverEasy"
+            , body = []
             }
 
         Router.NotFound ->

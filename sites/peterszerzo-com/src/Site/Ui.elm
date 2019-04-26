@@ -21,7 +21,7 @@ module Site.Ui exposing
 import Css exposing (..)
 import Css.Global as Global
 import Css.Media as Media
-import Html.Styled exposing (Html, a, div, fromUnstyled, h1, header, nav, node, p, span, text)
+import Html.Styled exposing (Html, a, div, fromUnstyled, h1, header, nav, p, span, text)
 import Html.Styled.Attributes exposing (css, href)
 import Html.Styled.Events exposing (onClick)
 import Markdown exposing (toHtml)
@@ -50,6 +50,11 @@ serif =
 lavender : Color
 lavender =
     rgb 182 199 238
+
+
+faintLavender : Color
+faintLavender =
+    rgba 182 199 238 0.2
 
 
 mint : Color
@@ -132,19 +137,9 @@ pointerEventsNone =
     property "pointer-events" "none"
 
 
-pointerEventsAll : Style
-pointerEventsAll =
-    property "pointer-events" "all"
-
-
 regularTransition : Style
 regularTransition =
     property "transition" "all .3s"
-
-
-standardShadow : List Style
-standardShadow =
-    [ property "box-shadow" "0 0 12px rgba(20, 20, 20, .3)" ]
 
 
 titleType : Style
@@ -298,7 +293,7 @@ layout config =
             Css.batch
                 [ width (px 60)
                 , height (px 60)
-                , padding (px 15)
+                , padding (px 14)
                 , zIndex 3
                 , cursor pointer
                 , opacity (num 0.8)
@@ -360,7 +355,7 @@ layout config =
                 , width (pct 100)
                 , height (px 60)
                 , zIndex 15
-                , backgroundColor (rgba 255 255 255 0.9)
+                , backgroundColor (rgba 255 255 255 0.95)
                 , displayFlex
                 , after
                     [ property "content" "' '"
@@ -369,7 +364,12 @@ layout config =
                     , right (px 0)
                     , height (px 4)
                     , position absolute
-                    , linearGradient2 toRight (stop lavender) (stop lavender) [ stop mint ]
+                    , linearGradient2 toRight
+                        (stop lavender)
+                        (stop lavender)
+                        [ stop faintLavender
+                        , stop lavender
+                        ]
                         |> backgroundImage
                     ]
                 , padding (px 0)
@@ -598,6 +598,10 @@ static { children, markdown } =
                     ]
                 , Global.li
                     [ margin2 (px 10) (px 0)
+                    ]
+                , Global.img
+                    [ width (pct 100)
+                    , border3 (px 1) solid lightGrey
                     ]
                 , Global.a
                     [ fontFamily inherit

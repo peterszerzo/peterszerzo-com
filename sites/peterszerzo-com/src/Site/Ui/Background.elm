@@ -1,6 +1,6 @@
 module Site.Ui.Background exposing (Uniforms, Varyings, Vertex, fragmentShader, view)
 
-import Html exposing (Attribute, Html, div)
+import Html exposing (Html, div)
 import Html.Attributes exposing (style)
 import Math.Vector2 exposing (Vec2, vec2)
 import Shared.SimpleWebGL as SimpleWebGL

@@ -4,15 +4,12 @@
   "description": "Various websites",
   "main": "index.js",
   "scripts": {
-    "start:site": "cd sites/peterszerzo-com && elm-app start",
-    "start:overeasy": "cd sites/overeasy-sh && elm-app start",
-    "start:maddi": "cd sites/annacingi-com && elm-app start",
-    "build:site": "cd sites/peterszerzo-com && elm-app build && cp build/index.html build/200.html",
-    "build:overeasy": "cd sites/overeasy-sh && elm-app build && cp build/index.html build/200.html",
-    "build:maddi": "cd sites/annacingi-com && elm-app build && cp build/index.html build/200.html",
-    "deploy:site": "npm run build:site && cd sites/peterszerzo-com && surge build peterszerzo.com",
-    "deploy:overeasy": "npm run build:overeasy && cd sites/overeasy-sh && surge build overeasy.sh",
-    "deploy:maddi": "npm run build:maddi && cd sites/annacingi-com && surge build annacingi.com"
+    "start:peter": "cd sites/peterszerzo-com && elm-app start",
+    "start:anna": "cd sites/annacingi-com && elm-app start",
+    "build:peter": "cd sites/peterszerzo-com && elm-app build && cp build/index.html build/200.html && cd ../../sketches && node build.js",
+    "build:anna": "cd sites/annacingi-com && elm-app build && cp build/index.html build/200.html",
+    "deploy:peter": "npm run build:peter && surge sites/peterszerzo-com/build peterszerzo.com",
+    "deploy:anna": "npm run build:anna && surge sites/annacingi-com/build annacingi.com"
   },
   "author": "Peter Szerzo <szerzo.peter@gmail.com>",
   "license": "ISC",
