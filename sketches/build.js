@@ -55,7 +55,7 @@ const cmds = [
     ])
     .reduce((acc, curr) => [...acc, ...curr], []),
   "rm tmp/template.html",
-  "mv tmp ../sites/peterszerzo-com/build/sketches"
+  "mv tmp ../site/build/sketches"
 ];
 
 execPromise(cmds.join(" && "))

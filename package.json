@@ -4,12 +4,9 @@
   "description": "Various websites",
   "main": "index.js",
   "scripts": {
-    "start:peter": "cd sites/peterszerzo-com && elm-app start",
-    "start:anna": "cd sites/annacingi-com && elm-app start",
-    "build:peter": "cd sites/peterszerzo-com && elm-app build && cp build/index.html build/200.html && cd ../../sketches && node build.js",
-    "build:anna": "cd sites/annacingi-com && elm-app build && cp build/index.html build/200.html",
-    "deploy:peter": "npm run build:peter && surge sites/peterszerzo-com/build peterszerzo.com",
-    "deploy:anna": "npm run build:anna && surge sites/annacingi-com/build annacingi.com"
+    "start": "cd site && elm-app start",
+    "build": "cd site && elm-app build && cp build/index.html build/200.html && cd ../sketches && node build.js",
+    "deploy": "npm run build && surge site/build peterszerzo.com"
   },
   "author": "Peter Szerzo <szerzo.peter@gmail.com>",
   "license": "ISC",

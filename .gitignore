@@ -9,3 +9,4 @@ tmp
 *.gif
 public/index.html
 elm.js
+.cache
