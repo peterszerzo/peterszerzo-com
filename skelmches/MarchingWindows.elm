@@ -52,7 +52,7 @@ init : Encode.Value -> ( Model, Cmd Msg )
 init _ =
     ( { time = Nothing
       , startTime = Nothing
-      , isAnimating = True
+      , isAnimating = False
       }
     , Cmd.none
     )
@@ -60,12 +60,12 @@ init _ =
 
 w : Float
 w =
-    640
+    320
 
 
 h : Float
 h =
-    640
+    320
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )

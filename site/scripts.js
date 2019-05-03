@@ -47,19 +47,24 @@ const setNotAnimatingStyles = el => {
           isAnimating = !isAnimating;
         };
         this.addEventListener("click", this.handleClick)
-        app = e.Elm.OverEasy[name].init({
+        app = e.Elm[name].init({
           node: div
         });
       };
       switch (sketchName) {
         case "WalkWithMe":
-          import("../overeasy/OverEasy/WalkWithMe.elm").then(
+          import("../skelmches/WalkWithMe.elm").then(
             handleSketch("WalkWithMe")
           );
           break;
         case "OurBearingsAreFragile":
-          import("../overeasy/OverEasy/OurBearingsAreFragile.elm").then(
+          import("../skelmches/OurBearingsAreFragile.elm").then(
             handleSketch("OurBearingsAreFragile")
+          );
+          break;
+        case "MarchingWindows":
+          import("../skelmches/MarchingWindows.elm").then(
+            handleSketch("MarchingWindows")
           );
           break;
       }

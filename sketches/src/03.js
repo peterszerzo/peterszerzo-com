@@ -36,8 +36,8 @@ const pack = dim => {
   root.sum(d => d.size);
   const rootNode = pack(root);
   const resultNodes = rootNode.children.map(child => ({
-    x: child.x + child.r + outerPad + 30,
-    y: child.y + child.r + outerPad - 20,
+    x: child.x + child.r + outerPad,
+    y: child.y + child.r + outerPad,
     w: child.r * 8
   }));
   return {
