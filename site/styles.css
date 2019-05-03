@@ -1,0 +1,220 @@
+/* vars and custom media queries */
+
+:root {
+  --red: rgb(207, 77, 99);
+  --blue: rgb(0, 0, 255);
+  --brightPurple: rgb(102, 52, 239);
+}
+
+/* setup */
+
+html,
+body {
+  height: 100%;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: "PT Serif", serif;
+}
+
+/* lists */
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  margin: 10px 0;
+}
+
+/* container */
+
+.container {
+  width: 100%;
+  max-width: 800px;
+  margin: auto;
+  padding: 40px 15px;
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding: 80px 20px;
+  }
+}
+
+/* sketches */
+
+.sketches {
+  margin: -10px;
+  text-align: center;
+}
+
+.sketches > * {
+  display: inline-block;
+  margin: 10px;
+}
+
+@media (min-width: 640px) {
+  .sketches {
+    text-align: left;
+  }
+}
+
+/* hero */
+
+.hero {
+  padding: 40px 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+@media (min-width: 640px) {
+  .hero {
+    padding: 60px 0;
+  }
+}
+
+/* text-shadow */
+
+@keyframes text-shadow-colors {
+  0% {
+    text-shadow: 2px 2px 0px var(--red);
+  }
+
+  100% {
+    text-shadow: 2px 2px 0px var(--brightPurple);
+  }
+}
+
+.text-shadow {
+  text-shadow: 2px 2px 0px var(--red);
+  animation: text-shadow-colors 6s ease-in-out infinite alternate;
+}
+
+/* section */
+
+section {
+  padding: 40px 0;
+}
+
+@media (min-width: 640px) {
+  section {
+    padding: 30px 0;
+  }
+}
+
+/* section-title */
+
+.section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.section-title h2 {
+  margin: 0;
+}
+
+.section-title h2 span {
+  opacity: 0.2;
+  display: inline-block;
+  margin-left: 8px;
+}
+
+/* footer */
+
+footer {
+  padding: 40px 0;
+  border-top: 1px solid #dedede;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+footer p,
+footer ul {
+  margin: 0;
+}
+
+footer ul {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+footer ul a {
+  margin-left: 12px;
+  color: inherit;
+}
+
+/* button */
+
+button {
+  background: none;
+  border: 1px solid black;
+  border-radius: 3px;
+  line-height: 1;
+  padding: 6px 8px 4px 8px;
+}
+
+button:hover {
+  background-color: #efefef;
+}
+
+button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px #dedede;
+}
+
+/* typography */
+
+h1 {
+  font-size: 32px;
+  font-weight: 400;
+  margin: 0px;
+}
+
+h2 {
+  font-size: 20px;
+  font-weight: 400;
+}
+
+p,
+a,
+li,
+button {
+  font-size: 14px;
+}
+
+p,
+a,
+li {
+  line-height: 1.5;
+}
+
+a {
+  color: inherit;
+}
+
+@media (min-width: 640px) {
+  h1 {
+    font-size: 40px;
+  }
+
+  h2 {
+    font-size: 26px;
+  }
+
+  p,
+  a,
+  li,
+  button {
+    font-size: 16px;
+  }
+}

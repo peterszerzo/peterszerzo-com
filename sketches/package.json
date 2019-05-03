@@ -4,7 +4,7 @@
   "description": "",
   "main": "sketch-1.js",
   "scripts": {
-    "start": "canvas-sketch src/05.js --output=tmp/ --port=3001",
+    "start": "canvas-sketch src/01.js --output=tmp/ --port=3001",
     "build": "canvas-sketch src/01.js --build --inline --dir dist"
   },
   "keywords": [],

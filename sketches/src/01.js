@@ -1,7 +1,7 @@
 const canvasSketch = require("canvas-sketch");
 const utils = require("./utils");
 
-const dim = 1024;
+const dim = 1000;
 
 const settings = {
   dimensions: [dim, dim],
@@ -11,7 +11,7 @@ const settings = {
 };
 
 const particle = {
-  position: 100,
+  position: dim / 10,
   velocity: 0
 };
 
@@ -43,16 +43,16 @@ const sketch = () => ({ context, width, height, deltaTime }) => {
   context.fillStyle = "rgba(30, 30, 30, 1)";
   context.fillRect(0, 0, width, height);
   context.strokeStyle = "rgb(255, 255, 255)";
-  context.lineWidth = "8";
+  context.lineWidth = dim * 0.008;
   context.lineCap = "round";
   stepParticle(deltaTime);
   const { position } = particle;
   lines.forEach(k => {
     line({
-      x: position + k * 20,
-      y: position + k * 20,
+      x: position + k * dim * 0.02,
+      y: position + k * dim * 0.02,
       rot: k / 3 + position / 100,
-      len: 200
+      len: dim * 0.2
     })(context);
   });
 };

@@ -1,15 +1,6 @@
-const canvasSketch = require("canvas-sketch");
-
-const dim = 1000;
+const dim = 320;
 
 const range = n => [...Array(n).keys()];
-
-const settings = {
-  dimensions: [dim, dim],
-  animate: true,
-  duration: 30,
-  fps: 30
-};
 
 const drawPoli = ({ x, y, r, rot, vertices }) => context => {
   context.save();
@@ -41,28 +32,29 @@ const makeSpiral = ({ x, y, radius, vert }) => {
   };
 };
 
-const layoutPad = dim / 12;
+const makeSpirals = dim => {
+  const layoutPad = dim / 12;
+  const layoutUnit = (dim - 4 * layoutPad) / 3;
 
-const layoutUnit = (dim - 4 * layoutPad) / 3;
-
-let spirals = [
-  [0, 0, 4],
-  [1, 0, 5],
-  [2, 0, 6],
-  [0, 1, 7],
-  [1, 1, 8],
-  [2, 1, 9],
-  [0, 2, 10],
-  [1, 2, 11],
-  [2, 2, 12]
-]
-  .map(([i, j, vert]) => ({
-    x: layoutPad + layoutUnit / 2 + (layoutPad + layoutUnit) * i,
-    y: layoutPad + layoutUnit / 2 + (layoutPad + layoutUnit) * j,
-    radius: layoutUnit / 2,
-    vert: vert
-  }))
-  .map(makeSpiral);
+  return [
+    [0, 0, 4],
+    [1, 0, 5],
+    [2, 0, 6],
+    [0, 1, 7],
+    [1, 1, 8],
+    [2, 1, 9],
+    [0, 2, 10],
+    [1, 2, 11],
+    [2, 2, 12]
+  ]
+    .map(([i, j, vert]) => ({
+      x: layoutPad + layoutUnit / 2 + (layoutPad + layoutUnit) * i,
+      y: layoutPad + layoutUnit / 2 + (layoutPad + layoutUnit) * j,
+      radius: layoutUnit / 2,
+      vert: vert
+    }))
+    .map(makeSpiral);
+};
 
 const stepSpiral = deltaTime => spiral => ({
   ...spiral,
@@ -89,14 +81,19 @@ const drawSpiral = context => spiral => {
 const stepRotations = deltaTime => rotations =>
   rotations.map((rot, index) => rot + (deltaTime * 1.5 * (index - 9.5)) / 9.5);
 
-const sketch = () => ({ context, width, height, deltaTime }) => {
-  context.fillStyle = "rgb(255, 255, 255)";
-  context.fillRect(0, 0, width, height);
-  context.strokeStyle = "rgb(0, 0, 0)";
-  context.lineWidth = "3";
-  context.lineCap = "round";
-  spirals = spirals.map(stepSpiral(deltaTime));
-  spirals.forEach(drawSpiral(context));
-};
+const createSketch = () => {
+  let spirals = makeSpirals(dim);
+  return {
+    step: ({ context, width, height, deltaTime }) => {
+      context.fillStyle = "rgb(255, 255, 255)";
+      context.fillRect(0, 0, width, height);
+      context.strokeStyle = "rgb(0, 0, 0)";
+      context.lineWidth = dim / 400
+      context.lineCap = "round";
+      spirals = spirals.map(stepSpiral(deltaTime / 1000));
+      spirals.forEach(drawSpiral(context));
+    }
+  }
+}
 
-canvasSketch(sketch, settings);
+export default createSketch
