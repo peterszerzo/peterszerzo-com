@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "parcel site/index.html",
-    "build": "parcel build site/index.html && cp dist/index.html dist/200.html && cp dist/index.html dist/404.html",
-    "deploy": "npm run build && surge dist peterszerzo-test.surge.sh"
+    "build": "parcel build site/index.html && cp dist/index.html dist/200.html && cp dist/index.html dist/404.html && cp site/now.html dist/now.html",
+    "deploy": "npm run build && surge dist peterszerzo.com"
   },
   "author": "Peter Szerzo <szerzo.peter@gmail.com>",
   "license": "ISC",
