@@ -1,8 +1,6 @@
 const d3Hierarchy = require("d3-hierarchy");
 const utils = require("./utils");
 
-const dim = 320;
-
 const square = context => ({ x, y, w, minW, maxW, rot }) => {
   context.save();
   context.translate(x, y);
@@ -46,7 +44,7 @@ const pack = dim => {
   };
 };
 
-const createSketch = () => {
+const createSketch = dim => {
   const pk = pack(dim);
   return {
     step: ({ context, width, height, playhead }) => {

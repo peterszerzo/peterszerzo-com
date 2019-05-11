@@ -1,7 +1,7 @@
 module BureaucracyIsDistracting.Stamp exposing (gradient, toPx, view)
 
+import BureaucracyIsDistracting.Constants as Constants
 import Html exposing (Html, text)
-import OverEasy.BureaucracyIsDistracting.Constants as Constants
 import Svg exposing (defs, g, line, linearGradient, path, rect, stop, svg)
 import Svg.Attributes exposing (d, fill, height, id, offset, rx, ry, stopColor, stroke, strokeLinecap, strokeLinejoin, strokeWidth, viewBox, width, x, x1, x2, y, y1, y2)
 

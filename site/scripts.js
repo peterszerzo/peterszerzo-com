@@ -1,25 +1,17 @@
-import createSketch03 from "../sketches/src/03.js";
-import createSketch04 from "../sketches/src/04.js";
-import * as a from "../sketches/src/03.js";
+import sketches from "../sketches";
 
-const setAnimatingStyles = el => {
-  el.style.boxShadow = "0 0 2px 0 rgba(0, 0, 0, 0.5)";
+const setContainerStyles = ({ size, animating }) => el => {
+  el.style.width = size + "px";
+  el.style.height = size + "px";
   el.style.transition = "box-shadow 0.1s ease-in-out";
   el.style.borderRadius = "3px";
   el.style.cursor = "pointer";
   el.style.overflow = "hidden";
-  el.style.width = "320px";
-  el.style.height = "320px";
-};
-
-const setNotAnimatingStyles = el => {
-  el.style.boxShadow = "0 0 10px 0 rgba(0, 0, 0, 0.3)";
-  el.style.transition = "box-shadow 0.1s ease-in-out";
-  el.style.borderRadius = "3px";
-  el.style.cursor = "pointer";
-  el.style.overflow = "hidden";
-  el.style.width = "320px";
-  el.style.height = "320px";
+  if (animating) {
+    el.style.boxShadow = "0 0 2px 0 rgba(0, 0, 0, 0.5)";
+  } else {
+    el.style.boxShadow = "0 0 10px 0 rgba(0, 0, 0, 0.3)";
+  }
 };
 
 (() => {
@@ -27,47 +19,42 @@ const setNotAnimatingStyles = el => {
     return;
   }
 
+  const getSketch = sketchName => {
+    switch (sketchName) {
+      case "WalkWithMe":
+        return import("../overeasy/WalkWithMe.elm");
+      case "OurBearingsAreFragile":
+        return import("../overeasy/OurBearingsAreFragile.elm");
+      case "MarchingWindows":
+        return import("../overeasy/MarchingWindows.elm");
+    }
+  };
+
   class OverEasy extends HTMLElement {
     connectedCallback() {
       const div = document.createElement("div");
-      let isAnimating = false;
-      setNotAnimatingStyles(this);
       this.appendChild(div);
-      const sketchName = this.getAttribute("sketch");
+      let animating = Boolean(this.getAttribute("animating"));
+      const size = Number(this.getAttribute("size")) || 320;
+      setContainerStyles({ size, animating })(this);
       let app;
       const handleSketch = name => e => {
         this.handleClick = () => {
-          if (isAnimating) {
-            app.ports.animate.send(false);
-            setNotAnimatingStyles(this);
-          } else {
-            app.ports.animate.send(true);
-            setAnimatingStyles(this);
-          }
-          isAnimating = !isAnimating;
+          animating = !animating;
+          app.ports.animate.send(animating);
+          setContainerStyles({ size, animating })(this);
         };
-        this.addEventListener("click", this.handleClick)
+        this.addEventListener("click", this.handleClick);
         app = e.Elm[name].init({
-          node: div
+          node: div,
+          flags: {
+            size,
+            animating: false
+          }
         });
       };
-      switch (sketchName) {
-        case "WalkWithMe":
-          import("../skelmches/WalkWithMe.elm").then(
-            handleSketch("WalkWithMe")
-          );
-          break;
-        case "OurBearingsAreFragile":
-          import("../skelmches/OurBearingsAreFragile.elm").then(
-            handleSketch("OurBearingsAreFragile")
-          );
-          break;
-        case "MarchingWindows":
-          import("../skelmches/MarchingWindows.elm").then(
-            handleSketch("MarchingWindows")
-          );
-          break;
-      }
+      const sketchName = this.getAttribute("sketch");
+      getSketch(sketchName).then(handleSketch(sketchName));
     }
   }
 
@@ -83,7 +70,7 @@ const animate = () => {
 const createAnimation = stepper => {
   let prevTime = new Date().getTime();
   let playhead = 0;
-  let isAnimating = false;
+  let animating = false;
   stepper({ deltaTime: 0, playhead: 0 });
   const animate = () => {
     const newTime = new Date().getTime();
@@ -92,21 +79,21 @@ const createAnimation = stepper => {
     stepper({ deltaTime, playhead });
     prevTime = newTime;
     requestAnimationFrame(() => {
-      if (isAnimating) {
+      if (animating) {
         animate();
       }
     });
   };
   const start = () => {
     prevTime = new Date().getTime();
-    isAnimating = true;
+    animating = true;
     animate();
   };
   const stop = () => {
-    isAnimating = false;
+    animating = false;
   };
   const toggle = () => {
-    isAnimating ? stop() : start();
+    animating ? stop() : start();
   };
   return {
     start,
@@ -122,29 +109,21 @@ const createAnimation = stepper => {
 
   class CanvasSketch extends HTMLElement {
     connectedCallback() {
-      let isAnimating = false;
+      const size = Number(this.getAttribute("size")) || 320;
+      let animating = Boolean(this.getAttribute("animating"));
 
-      setNotAnimatingStyles(this);
+      setContainerStyles({ size, animating })(this);
 
       const canvas = document.createElement("canvas");
-      canvas.setAttribute("width", "320");
-      canvas.setAttribute("height", "320");
+      canvas.setAttribute("width", size);
+      canvas.setAttribute("height", size);
       const context = canvas.getContext("2d");
       const sketchName = this.getAttribute("sketch");
-      const sketch = (() => {
-        switch (sketchName) {
-          case "03":
-            return createSketch03();
-          case "04":
-            return createSketch04();
-          default:
-            return createSketch03();
-        }
-      })();
+      const sketch = sketches(sketchName)(size);
       const anim = createAnimation(({ deltaTime, playhead }) => {
         sketch.step({
-          width: 320,
-          height: 320,
+          width: size,
+          height: size,
           context,
           deltaTime: deltaTime,
           playhead: playhead
@@ -152,14 +131,13 @@ const createAnimation = stepper => {
       });
       this.appendChild(canvas);
       this.handleClick = () => {
-        if (isAnimating) {
-          anim.stop();
-          setNotAnimatingStyles(this);
-        } else {
+        animating = !animating;
+        setContainerStyles({ size, animating })(this);
+        if (animating) {
           anim.start();
-          setAnimatingStyles(this);
+        } else {
+          anim.stop();
         }
-        isAnimating = !isAnimating;
       };
       canvas.addEventListener("click", this.handleClick);
     }

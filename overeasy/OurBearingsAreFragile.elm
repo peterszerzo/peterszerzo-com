@@ -2,7 +2,6 @@ port module OurBearingsAreFragile exposing (Model, Msg(..), init, main, subscrip
 
 import Browser
 import Browser.Events as Events
-import Concepts.Icosahedron as Icosahedron
 import Html exposing (Attribute, Html, div)
 import Html.Attributes exposing (class, height, style, width)
 import Json.Decode as Decode
@@ -11,6 +10,7 @@ import Math.Matrix4 as Matrix4
 import Math.Vector3 as Vector3 exposing (Vec3, vec3)
 import Math.Vector4 as Vector4 exposing (Vec4, vec4)
 import Random
+import Shared.Icosahedron as Icosahedron
 import Svg exposing (path, svg)
 import Svg.Attributes exposing (d, fill, transform, viewBox)
 import Time

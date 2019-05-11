@@ -1,4 +1,4 @@
-module Concepts.Icosahedron exposing (icosahedron, subdivide)
+module Shared.Icosahedron exposing (icosahedron, subdivide)
 
 import Math.Vector3 as Vector3 exposing (Vec3, vec3)
 

@@ -81,7 +81,7 @@ const drawSpiral = context => spiral => {
 const stepRotations = deltaTime => rotations =>
   rotations.map((rot, index) => rot + (deltaTime * 1.5 * (index - 9.5)) / 9.5);
 
-const createSketch = () => {
+const createSketch = dim => {
   let spirals = makeSpirals(dim);
   return {
     step: ({ context, width, height, deltaTime }) => {

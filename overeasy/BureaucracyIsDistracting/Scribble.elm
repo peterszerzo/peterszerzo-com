@@ -1,7 +1,7 @@
 module BureaucracyIsDistracting.Scribble exposing (Scribble, generator, modifyOffset, single, view)
 
+import BureaucracyIsDistracting.Constants as Constants
 import Html exposing (Html, text)
-import OverEasy.BureaucracyIsDistracting.Constants as Constants
 import Random
 import Svg exposing (g, line, path, rect, svg)
 import Svg.Attributes

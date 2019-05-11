@@ -2,11 +2,12 @@ port module MarchingWindows exposing (Model, Msg(..), init, subscriptions, updat
 
 import Browser
 import Browser.Events as Events
-import Concepts.SimpleWebGL as SimpleWebGL
 import Html exposing (Attribute, Html, div)
 import Html.Attributes exposing (style)
 import Json.Decode as Decode
 import Json.Encode as Encode
+import Shared.Flags as Flags
+import Shared.SimpleWebGL as SimpleWebGL
 import Time
 import WebGL
 
@@ -28,6 +29,7 @@ type alias Model =
     { time : Maybe Time.Posix
     , startTime : Maybe Time.Posix
     , isAnimating : Bool
+    , size : Float
     }
 
 
@@ -49,23 +51,18 @@ timeDiff model =
 
 
 init : Encode.Value -> ( Model, Cmd Msg )
-init _ =
+init flagsValue =
+    let
+        flags =
+            Flags.unsafeDecode flagsValue
+    in
     ( { time = Nothing
       , startTime = Nothing
-      , isAnimating = False
+      , isAnimating = flags.animating
+      , size = flags.size
       }
     , Cmd.none
     )
-
-
-w : Float
-w =
-    320
-
-
-h : Float
-h =
-    320
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -111,7 +108,7 @@ view : Model -> Html Msg
 view model =
     SimpleWebGL.view
         { fragmentShader = fragmentShader
-        , window = { width = floor w, height = floor h }
+        , window = { width = floor model.size, height = floor model.size }
         , attrs = []
         , makeUniforms =
             \resolution ->

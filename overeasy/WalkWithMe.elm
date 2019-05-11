@@ -2,11 +2,11 @@ port module WalkWithMe exposing (Model, Msg(..), init, subscriptions, update, vi
 
 import Browser
 import Browser.Events as Events
-import Concepts.SimpleWebGL as SimpleWebGL
 import Html exposing (Attribute, Html, div)
 import Html.Attributes exposing (style)
 import Json.Decode as Decode
 import Json.Encode as Encode
+import Shared.SimpleWebGL as SimpleWebGL
 import Time
 import WebGL
 

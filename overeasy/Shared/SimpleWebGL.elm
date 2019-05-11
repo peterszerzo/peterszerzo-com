@@ -1,4 +1,4 @@
-module Concepts.SimpleWebGL exposing (Config, Uniforms, Varyings, Vertex, view)
+module Shared.SimpleWebGL exposing (Config, Uniforms, Varyings, Vertex, view)
 
 import Html exposing (Attribute, Html)
 import Html.Attributes exposing (style)
