@@ -50,8 +50,17 @@ const computeAnimateCycle = ({ playhead, animateAt, animateFor }) => {
   };
 };
 
+const drawFps = deltaTime => context => {
+  context.save();
+  context.fillStyle = "#000000";
+  context.font = "14px Arial";
+  context.fillText(Math.floor(1000 / deltaTime), 20, 40);
+  context.restore();
+};
+
 module.exports = {
   log,
+  drawFps,
   range,
   clamp,
   compose,
