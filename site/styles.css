@@ -183,7 +183,14 @@ button:focus {
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
+}
+
+/* static page */
+.static-page {
+  max-width: 640px;
+  padding: 10px;
+  margin: auto;
 }
 
 /* typography */
@@ -231,4 +238,10 @@ a {
   button {
     font-size: 16px;
   }
+}
+
+blockquote {
+  padding: 20px;
+  background-color: #dedede;
+  margin: 0;
 }

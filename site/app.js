@@ -24,14 +24,19 @@ const router = () => {
   const [group, sketchName] = chunks;
   switch (group) {
     case "overeasy":
-      modal.mount(`<over-easy sketch="${sketchName}" size="480"></over-easy>`);
+      modal.mount(`<elm-sketch sketch="${sketchName}" size="480"></elm-sketch>`);
       break;
     case "sketches":
       modal.mount(
-        `<canvas-sketch sketch="${sketchName}" size="540"></canvas-sketch>`
+        `<vanilla-sketch sketch="${sketchName}" size="540"></vanilla-sketch>`
+      );
+      break;
+    case "p5":
+      modal.mount(
+        `<p5-sketch sketch="${sketchName}" size="540"></p5-sketch>`
       );
       break;
   }
 };
 
-// router();
+router();
