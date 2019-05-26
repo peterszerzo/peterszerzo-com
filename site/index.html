@@ -100,13 +100,29 @@
       </div>
       <section>
         <div class="section-title">
-          <h2>featured sketches <span>click to play</span></h2>
+          <h2>featured sketches</h2>
         </div>
         <div class="sketches">
-          <vanilla-sketch sketch="pack" size="320"></vanilla-sketch>
-          <elm-sketch sketch="MarchingWindows" size="320"></elm-sketch>
-          <elm-sketch sketch="OurBearingsAreFragile" size="320"></elm-sketch>
-          <vanilla-sketch sketch="the-spin" size="320"></vanilla-sketch>
+          <my-sketch
+            sketch-type="vanilla"
+            sketch-name="cosine-beetles"
+            size="320"
+          ></my-sketch>
+          <my-sketch
+            sketch-type="p5"
+            sketch-name="cubies"
+            size="320"
+          ></my-sketch>
+          <my-sketch
+            sketch-type="vanilla"
+            sketch-name="pivot-frame"
+            size="320"
+          ></my-sketch>
+          <my-sketch
+            sketch-type="elm"
+            sketch-name="marching-windows"
+            size="320"
+          ></my-sketch>
         </div>
       </section>
       <section>
@@ -164,15 +180,15 @@
       <section>
         <div class="section-title">
           <h2>about</h2>
-          <button id="about-switcher">💊</button>
+          <button id="about-switcher">Switch!</button>
         </div>
         <div id="about-1">
           <p>
             This is Peter, programmer, designer and natural language enthusiast.
           </p>
           <p>
-            I make web apps, animations and games, spending most of my time
-            on the frontend, sprinkled with some spent designing and some on the
+            I make web apps, animations and games, spending most of my time on
+            the frontend, sprinkled with some spent designing and some on the
             backend. I enjoy deleting code, shortening variable names and
             changing my mind about tools and frameworks. When I have things to
             say, I enjoy collaborating,
@@ -261,6 +277,6 @@
         });
       })();
     </script>
-    <script src="./app.js"></script>
+    <script src="./index.js"></script>
   </body>
 </html>

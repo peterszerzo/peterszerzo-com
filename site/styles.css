@@ -1,6 +1,8 @@
 /* vars and custom media queries */
 
 :root {
+  --white: rgb(255, 255, 255);
+  --faintGray: rgb(240, 240, 240);
   --red: rgb(207, 77, 99);
   --blue: rgb(0, 0, 255);
   --brightPurple: rgb(102, 52, 239);
@@ -48,19 +50,54 @@ li {
 /* sketches */
 
 .sketches {
-  margin: -10px;
+  margin: -20px;
   text-align: center;
 }
 
 .sketches > * {
   display: inline-block;
-  margin: 10px;
+  margin: 20px;
 }
 
 @media (min-width: 640px) {
   .sketches {
     text-align: left;
   }
+}
+
+.sketch-controls {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.8);
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  padding: 10px;
+  z-index: 100;
+  text-align: center;
+  opacity: 0;
+  transform: translate3d(0, 10%, 0);
+  transition: all 0.2s ease-in-out;
+}
+
+my-sketch:hover .sketch-controls {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+@media (max-width: 640px) {
+  .sketch-controls {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.sketch-controls * {
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.sketch-controls *:first-child {
+  margin-left: 0;
 }
 
 /* hero */
@@ -156,7 +193,7 @@ footer ul a {
 /* button */
 
 button {
-  background: none;
+  background: var(--white);
   border: 1px solid black;
   border-radius: 3px;
   line-height: 1;
@@ -164,17 +201,18 @@ button {
 }
 
 button:hover {
-  background-color: #efefef;
+  background-color: var(--faintGray);
 }
 
 button:focus {
   outline: none;
-  box-shadow: 0 0 0 3px #dedede;
+  box-shadow: 0 0 0 3px var(--faintGray);
 }
 
 /* modal */
 
 .modal {
+  z-index: 101;
   position: fixed;
   display: flex;
   align-items: center;

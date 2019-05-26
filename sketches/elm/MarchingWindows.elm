@@ -145,8 +145,10 @@ void main() {
 
   const float units = 15.0;
 
-  float r = 0.5 + 0.5 * sin(st.x * units + time / 2000.0) * sin(st.y * units - time / 10000.0);
-  float b = 0.5 + 0.5 * sin(st.x * units + time / 10000.0) * sin(st.y * units - time / 2000.0);
+  float workTime = time + 1000.0;
+
+  float r = 0.5 + 0.5 * sin(st.x * units + workTime / 2000.0) * sin(st.y * units - workTime / 10000.0);
+  float b = 0.5 + 0.5 * sin(st.x * units + workTime / 10000.0) * sin(st.y * units - workTime / 2000.0);
 
   r = doubleCircleSigmoid(r, 0.5);
   b = doubleCircleSigmoid(b, 0.5);

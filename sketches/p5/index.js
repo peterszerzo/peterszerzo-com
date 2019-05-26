@@ -1,11 +1,12 @@
-import { setContainerStyles } from "../shared";
 import cubies from "./01-cubies";
-import p5 from "p5";
+import quads from "./02-quads";
 
 const sketches = sketchName => {
   switch (sketchName) {
     case "cubies":
       return cubies;
+    case "quads":
+      return quads;
     default:
       return cubies;
   }
@@ -19,9 +20,7 @@ const sketches = sketchName => {
   class P5Sketch extends HTMLElement {
     connectedCallback() {
       const size = Number(this.getAttribute("size")) || 320;
-      let animating = Boolean(this.getAttribute("animating"));
-
-      setContainerStyles({ size, animating })(this);
+      const animating = Boolean(this.getAttribute("animating"));
 
       const container = document.createElement("div");
       container.style.width = size;
@@ -30,8 +29,29 @@ const sketches = sketchName => {
 
       const sketchName = this.getAttribute("sketch");
       const sketchCreator = sketches(sketchName);
-      this.p5Sketch = new p5(sketchCreator(size), container);
+      import("p5").then(p5 => {
+        this.p5Sketch = new p5(sketchCreator(size), container);
+        this.setAnimating();
+      });
     }
+
+    static get observedAttributes() {
+      return ["animating"];
+    }
+
+    attributeChangedCallback() {
+      this.setAnimating();
+    }
+
+    setAnimating() {
+      const animating = Boolean(this.getAttribute("animating"));
+      if (animating) {
+        this.p5Sketch && this.p5Sketch.loop();
+      } else {
+        this.p5Sketch && this.p5Sketch.noLoop();
+      }
+    }
+
 
     disconnectedCallback() {
       if (this.p5Sketch) {

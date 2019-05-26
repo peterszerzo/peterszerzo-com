@@ -1,17 +1,17 @@
-import { setContainerStyles } from "../shared";
-
 (() => {
   if (!window.customElements || !window.HTMLElement) {
     return;
   }
 
+  const capitalizeFirst = word => word.slice(0, 1).toUpperCase() + word.slice(1)
+
+  const slugToKey = slug => slug.split("-").map(capitalizeFirst).join("")
+
   const getSketch = sketchName => {
     switch (sketchName) {
-      case "WalkWithMe":
-        return import("./WalkWithMe.elm");
-      case "OurBearingsAreFragile":
+      case "our-bearings-are-fragile":
         return import("./OurBearingsAreFragile.elm");
-      case "MarchingWindows":
+      case "marching-windows":
         return import("./MarchingWindows.elm");
     }
   };
@@ -20,18 +20,10 @@ import { setContainerStyles } from "../shared";
     connectedCallback() {
       const div = document.createElement("div");
       this.appendChild(div);
-      let animating = Boolean(this.getAttribute("animating"));
+      const animating = Boolean(this.getAttribute("animating"));
       const size = Number(this.getAttribute("size")) || 320;
-      setContainerStyles({ size, animating })(this);
-      let app;
       const handleSketch = name => e => {
-        this.handleClick = () => {
-          animating = !animating;
-          app.ports.animate.send(animating);
-          setContainerStyles({ size, animating })(this);
-        };
-        this.addEventListener("click", this.handleClick);
-        app = e.Elm[name].init({
+        this.app = e.Elm[slugToKey(name)].init({
           node: div,
           flags: {
             size,
@@ -39,8 +31,21 @@ import { setContainerStyles } from "../shared";
           }
         });
       };
-      const sketchName = this.getAttribute("sketch");
+      const sketchName = this.getAttribute("name");
       getSketch(sketchName).then(handleSketch(sketchName));
+    }
+
+    static get observedAttributes() {
+      return ["animating"];
+    }
+
+    attributeChangedCallback() {
+      this.setAnimating();
+    }
+
+    setAnimating() {
+      const animating = Boolean(this.getAttribute("animating"));
+      this.app && this.app.ports.animate.send(animating);
     }
   }
 

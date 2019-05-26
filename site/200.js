@@ -1,4 +1,4 @@
-import "./scripts";
+import "./webcomponents";
 
 const modal = {
   mount: innerHTML => {
@@ -15,28 +15,14 @@ const modal = {
   }
 };
 
-const router = () => {
+export const router = () => {
   let route = window.location.pathname;
   const chunks = route.split("/").filter(chunk => chunk !== "");
   if (chunks.length !== 2) {
     return;
   }
-  const [group, sketchName] = chunks;
-  switch (group) {
-    case "overeasy":
-      modal.mount(`<elm-sketch sketch="${sketchName}" size="480"></elm-sketch>`);
-      break;
-    case "sketches":
-      modal.mount(
-        `<vanilla-sketch sketch="${sketchName}" size="540"></vanilla-sketch>`
-      );
-      break;
-    case "p5":
-      modal.mount(
-        `<p5-sketch sketch="${sketchName}" size="540"></p5-sketch>`
-      );
-      break;
-  }
+  const [sketchType, sketchName] = chunks;
+  modal.mount(`<my-sketch sketch-type="${sketchType}" sketch-name="${sketchName}" size="full" animating="true"></my-sketch>`);
 };
 
 router();

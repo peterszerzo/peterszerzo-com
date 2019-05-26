@@ -5,17 +5,19 @@
   "main": "index.js",
   "scripts": {
     "start": "parcel site/index.html",
-    "build": "rm -rf dist && mkdir dist && parcel build site/index.html site/now.html && cp dist/index.html dist/200.html && cp dist/index.html dist/404.html",
+    "build": "rm -rf dist && mkdir dist && parcel build site/index.html site/now.html site/200.html",
     "deploy": "npm run build && surge dist peterszerzo.com"
   },
   "author": "Peter Szerzo <szerzo.peter@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "canvas-sketch": "^0.3.1",
     "d3-hierarchy": "^1.1.8",
     "p5": "^0.8.0"
   },
   "devDependencies": {
     "elm": "0.19.0-bugfix2",
+    "elm-hot": "^1.0.1",
     "node-elm-compiler": "^5.0.3"
   }
 }

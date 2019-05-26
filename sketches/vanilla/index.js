@@ -1,15 +1,17 @@
-import { setContainerStyles } from "../shared";
-import pack from "./03-pack";
-import theSpin from "./04-the-spin";
+import pivotFrame from "./pivot-frame";
+import cosineBeetles from "./cosine-beetles";
+import theSpin from "./the-spin";
 
 const sketches = sketchName => {
   switch (sketchName) {
-    case "pack":
-      return pack;
+    case "pivot-frame":
+      return pivotFrame;
     case "the-spin":
       return theSpin;
+    case "cosine-beetles":
+      return cosineBeetles;
     default:
-      return pack;
+      return pivotFrame;
   }
 };
 
@@ -62,17 +64,15 @@ const createAnimation = stepper => {
   class VanillaSketch extends HTMLElement {
     connectedCallback() {
       const size = Number(this.getAttribute("size")) || 320;
-      let animating = Boolean(this.getAttribute("animating"));
-
-      setContainerStyles({ size, animating })(this);
+      const animating = Boolean(this.getAttribute("animating"));
 
       const canvas = document.createElement("canvas");
       canvas.setAttribute("width", size);
       canvas.setAttribute("height", size);
       const context = canvas.getContext("2d");
-      const sketchName = this.getAttribute("sketch");
+      const sketchName = this.getAttribute("name");
       const sketch = sketches(sketchName)(size);
-      const anim = createAnimation(({ deltaTime, playhead }) => {
+      this.anim = createAnimation(({ deltaTime, playhead }) => {
         sketch.step({
           width: size,
           height: size,
@@ -81,17 +81,29 @@ const createAnimation = stepper => {
           playhead: playhead
         });
       });
+      this.setAnimating();
       this.appendChild(canvas);
-      this.handleClick = () => {
-        animating = !animating;
-        setContainerStyles({ size, animating })(this);
-        if (animating) {
-          anim.start();
-        } else {
-          anim.stop();
-        }
-      };
-      canvas.addEventListener("click", this.handleClick);
+    }
+
+    static get observedAttributes() {
+      return ["animating"];
+    }
+
+    attributeChangedCallback() {
+      this.setAnimating();
+    }
+
+    setAnimating() {
+      const animating = Boolean(this.getAttribute("animating"));
+      if (animating) {
+        this.anim && this.anim.start();
+      } else {
+        this.anim && this.anim.stop();
+      }
+    }
+
+    disconnectedCallback() {
+      this.anim && this.anim.stop();
     }
   }
 

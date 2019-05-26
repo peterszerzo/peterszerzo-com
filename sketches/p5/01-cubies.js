@@ -1,4 +1,3 @@
-import p5 from "p5";
 import * as utils from "./utils";
 
 const grid = 12;
@@ -20,7 +19,6 @@ const sketch = size => s => {
 
   s.setup = () => {
     s.createCanvas(size, size, "webgl");
-    // s.ortho(-size / 2, size / 2, size / 2, -size / 2, 0, 500);
     s.noStroke();
     positions = utils
       .range(grid)
