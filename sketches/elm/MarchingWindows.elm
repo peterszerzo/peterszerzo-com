@@ -1,18 +1,14 @@
-port module MarchingWindows exposing (Model, Msg(..), init, subscriptions, update, view)
+module MarchingWindows exposing (main)
 
 import Browser
 import Browser.Events as Events
-import Html exposing (Attribute, Html, div)
-import Html.Attributes exposing (style)
+import Html exposing (Html)
 import Json.Decode as Decode
 import Json.Encode as Encode
-import Shared.Flags as Flags
+import Shared.Setup as Setup
 import Shared.SimpleWebGL as SimpleWebGL
 import Time
 import WebGL
-
-
-port animate : (Encode.Value -> msg) -> Sub msg
 
 
 main : Program Encode.Value Model Msg
@@ -26,11 +22,7 @@ main =
 
 
 type alias Model =
-    { time : Maybe Time.Posix
-    , startTime : Maybe Time.Posix
-    , isAnimating : Bool
-    , size : Float
-    }
+    Setup.Model {}
 
 
 type Msg
@@ -38,23 +30,11 @@ type Msg
     | Animate Bool
 
 
-timeDiff : Model -> Float
-timeDiff model =
-    case ( model.time, model.startTime ) of
-        ( Just time, Just startTime ) ->
-            Time.posixToMillis time
-                - Time.posixToMillis startTime
-                |> toFloat
-
-        ( _, _ ) ->
-            0
-
-
 init : Encode.Value -> ( Model, Cmd Msg )
 init flagsValue =
     let
         flags =
-            Flags.unsafeDecode flagsValue
+            Setup.unsafeDecodeFlags flagsValue
     in
     ( { time = Nothing
       , startTime = Nothing
@@ -95,7 +75,7 @@ subscriptions model =
 
           else
             Sub.none
-        , animate
+        , Setup.animate
             (\value ->
                 Decode.decodeValue Decode.bool value
                     |> Result.withDefault False
@@ -112,7 +92,7 @@ view model =
         , attrs = []
         , makeUniforms =
             \resolution ->
-                { time = timeDiff model
+                { time = Setup.playhead model
                 , resolution = resolution
                 }
         }

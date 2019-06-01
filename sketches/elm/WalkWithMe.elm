@@ -1,9 +1,8 @@
-port module WalkWithMe exposing (Model, Msg(..), init, subscriptions, update, view)
+port module WalkWithMe exposing (main)
 
 import Browser
 import Browser.Events as Events
-import Html exposing (Attribute, Html, div)
-import Html.Attributes exposing (style)
+import Html exposing (Html)
 import Json.Decode as Decode
 import Json.Encode as Encode
 import Shared.SimpleWebGL as SimpleWebGL

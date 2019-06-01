@@ -1,9 +1,9 @@
-port module OurBearingsAreFragile exposing (Model, Msg(..), init, main, subscriptions, update, view)
+module OurBearingsAreFragile exposing (main)
 
 import Browser
 import Browser.Events as Events
-import Html exposing (Attribute, Html, div)
-import Html.Attributes exposing (class, height, style, width)
+import Html exposing (Html, div)
+import Html.Attributes exposing (class, height, width)
 import Json.Decode as Decode
 import Json.Encode as Encode
 import Math.Matrix4 as Matrix4
@@ -11,13 +11,11 @@ import Math.Vector3 as Vector3 exposing (Vec3, vec3)
 import Math.Vector4 as Vector4 exposing (Vec4, vec4)
 import Random
 import Shared.Icosahedron as Icosahedron
+import Shared.Setup as Setup
 import Svg exposing (path, svg)
 import Svg.Attributes exposing (d, fill, transform, viewBox)
 import Time
 import WebGL
-
-
-port animate : (Encode.Value -> msg) -> Sub msg
 
 
 main : Program Encode.Value Model Msg
@@ -31,10 +29,7 @@ main =
 
 
 type alias Model =
-    { time : Maybe Time.Posix
-    , startTime : Maybe Time.Posix
-    , isAnimating : Bool
-    }
+    Setup.Model {}
 
 
 type Msg
@@ -42,36 +37,19 @@ type Msg
     | Animate Bool
 
 
-timeDiff : Model -> Float
-timeDiff model =
-    case ( model.time, model.startTime ) of
-        ( Just time, Just startTime ) ->
-            Time.posixToMillis time
-                - Time.posixToMillis startTime
-                |> toFloat
-
-        ( _, _ ) ->
-            0
-
-
 init : Encode.Value -> ( Model, Cmd Msg )
-init _ =
+init flagsValue =
+    let
+        flags =
+            Setup.unsafeDecodeFlags flagsValue
+    in
     ( { time = Nothing
       , startTime = Nothing
-      , isAnimating = False
+      , isAnimating = flags.animating
+      , size = flags.size
       }
     , Cmd.none
     )
-
-
-w : Float
-w =
-    320
-
-
-h : Float
-h =
-    320
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -104,7 +82,7 @@ subscriptions model =
 
           else
             Sub.none
-        , animate
+        , Setup.animate
             (\value ->
                 Decode.decodeValue Decode.bool value
                     |> Result.withDefault False
@@ -118,33 +96,21 @@ view model =
     let
         zoom =
             12
-
-        top =
-            (w - h) / 2 |> min 0
     in
     WebGL.toHtmlWith
         [ WebGL.alpha True
         , WebGL.depth 1
         , WebGL.antialias
         ]
-        [ width (floor w)
-        , height (floor h)
+        [ width (floor model.size)
+        , height (floor model.size)
         ]
-        [ globeEntity (timeDiff model)
+        [ globeEntity (Setup.playhead model)
         ]
 
 
 
 -- Icosahedron
-
-
-type alias Vertex =
-    { normal : Vec3
-    , center : Vec3
-    , polarCenter : Vec3
-    , position : Vec3
-    , polar : Vec3
-    }
 
 
 type alias Uniforms =
@@ -204,65 +170,12 @@ globePerspective time =
         (Matrix4.makeLookAt eye (vec3 0 0 1.2) (vec3 0 0 1))
 
 
-rawTriangleToVertexTriangle : ( Vec3, Vec3, Vec3 ) -> ( Vertex, Vertex, Vertex )
-rawTriangleToVertexTriangle ( pt1, pt2, pt3 ) =
-    let
-        center =
-            List.foldl Vector3.add (vec3 0 0 0) [ pt1, pt2, pt3 ] |> Vector3.scale (1.0 / 3.0)
-
-        normal =
-            Vector3.cross (Vector3.sub pt2 pt1) (Vector3.sub pt3 pt1) |> Vector3.normalize
-    in
-    ( { normal = normal
-      , center = center
-      , polarCenter = toPolar center
-      , polar = toPolar pt1
-      , position = pt1
-      }
-    , { normal = normal
-      , center = center
-      , polarCenter = toPolar center
-      , polar = toPolar pt2
-      , position = pt2
-      }
-    , { normal = normal
-      , center = center
-      , polarCenter = toPolar center
-      , polar = toPolar pt3
-      , position = pt3
-      }
-    )
-
-
-{-| vec3 x y z -> vec3 radius theta phi
--}
-toPolar : Vec3 -> Vec3
-toPolar v =
-    let
-        r =
-            Vector3.length v
-
-        vNorm =
-            Vector3.scale (1 / r) v
-
-        theta =
-            Basics.toPolar ( Vector3.getX v, Vector3.getY v ) |> Tuple.second
-
-        phi =
-            Vector3.dot vNorm (vec3 0 0 1) |> acos |> (\angle -> pi / 2 - angle)
-    in
-    vec3 r theta phi
-
-
-mesh : WebGL.Mesh Vertex
+mesh : WebGL.Mesh Icosahedron.Vertex
 mesh =
-    List.map
-        rawTriangleToVertexTriangle
-        (List.map (Icosahedron.subdivide 5) Icosahedron.icosahedron |> List.foldl (++) [])
-        |> WebGL.triangles
+    Icosahedron.mesh 5
 
 
-vertexShader : WebGL.Shader Vertex Uniforms Varyings
+vertexShader : WebGL.Shader Icosahedron.Vertex Uniforms Varyings
 vertexShader =
     [glsl|
 precision mediump float;

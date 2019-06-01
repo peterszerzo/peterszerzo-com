@@ -1,9 +1,9 @@
 module BureaucracyIsDistracting.Scribble exposing (Scribble, generator, modifyOffset, single, view)
 
 import BureaucracyIsDistracting.Constants as Constants
-import Html exposing (Html, text)
+import Html exposing (Html)
 import Random
-import Svg exposing (g, line, path, rect, svg)
+import Svg exposing (g, path, svg)
 import Svg.Attributes
     exposing
         ( d
@@ -15,14 +15,7 @@ import Svg.Attributes
         , strokeWidth
         , viewBox
         , width
-        , x
-        , x1
-        , x2
-        , y
-        , y1
-        , y2
         )
-import Time
 
 
 type alias Scribble =

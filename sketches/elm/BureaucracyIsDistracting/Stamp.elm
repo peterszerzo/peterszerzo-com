@@ -1,8 +1,8 @@
 module BureaucracyIsDistracting.Stamp exposing (gradient, toPx, view)
 
 import BureaucracyIsDistracting.Constants as Constants
-import Html exposing (Html, text)
-import Svg exposing (defs, g, line, linearGradient, path, rect, stop, svg)
+import Html exposing (Html)
+import Svg exposing (defs, linearGradient, path, rect, stop, svg)
 import Svg.Attributes exposing (d, fill, height, id, offset, rx, ry, stopColor, stroke, strokeLinecap, strokeLinejoin, strokeWidth, viewBox, width, x, x1, x2, y, y1, y2)
 
 
@@ -17,12 +17,6 @@ gradient config =
     let
         factor =
             sin config.phase
-
-        blackStart =
-            8 - 4 * factor |> toPx
-
-        blackEnd =
-            92 + 3 * factor |> toPx
 
         redStart =
             20

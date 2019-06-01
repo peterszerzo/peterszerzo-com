@@ -1,7 +1,7 @@
 module Shared.SimpleWebGL exposing (Config, Uniforms, Varyings, Vertex, view)
 
-import Html exposing (Attribute, Html)
-import Html.Attributes exposing (style)
+import Html
+import Html.Attributes
 import Math.Vector2 exposing (Vec2, vec2)
 import WebGL
 
@@ -24,13 +24,13 @@ type alias Uniforms a =
 
 type alias Config a msg =
     { window : { width : Int, height : Int }
-    , attrs : List (Attribute msg)
+    , attrs : List (Html.Attribute msg)
     , makeUniforms : Vec2 -> Uniforms a
     , fragmentShader : WebGL.Shader {} (Uniforms a) Varyings
     }
 
 
-view : Config a msg -> Html msg
+view : Config a msg -> Html.Html msg
 view { window, makeUniforms, fragmentShader, attrs } =
     let
         size =

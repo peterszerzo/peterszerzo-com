@@ -13,6 +13,8 @@
         return import("./OurBearingsAreFragile.elm");
       case "marching-windows":
         return import("./MarchingWindows.elm");
+      case "just-hanging-out":
+        return import("./JustHangingOut.elm");
     }
   };
 
@@ -27,7 +29,7 @@
           node: div,
           flags: {
             size,
-            animating: false
+            animating
           }
         });
       };
