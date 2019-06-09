@@ -1,4 +1,4 @@
-module Shared.Icosahedron exposing (Vertex, icosahedron, mesh, subdivide)
+module Shared.Icosahedron exposing (Vertex, mesh)
 
 import Math.Vector3 as Vector3 exposing (Vec3, vec3)
 import WebGL
@@ -8,7 +8,9 @@ mesh : Int -> WebGL.Mesh Vertex
 mesh divisions =
     List.map
         rawTriangleToVertexTriangle
-        (List.map (subdivide divisions) icosahedron |> List.foldl (++) [])
+        (List.map (subdivide divisions) icosahedron
+            |> List.foldl (++) []
+        )
         |> WebGL.triangles
 
 
@@ -108,86 +110,91 @@ subdivide no ( pt1, pt2, pt3 ) =
                 |> List.foldl (++) []
 
 
+s : Float
+s =
+    (1 + sqrt 5) / 2
+
+
 icosahedron : List ( Vec3, Vec3, Vec3 )
 icosahedron =
-    [ ( vec3 -1.0 0.0 -1.618
-      , vec3 -1.618 -1.0 0.0
-      , vec3 -1.618 1.0 0.0
+    [ ( vec3 -1.0 0.0 -s
+      , vec3 -s -1.0 0.0
+      , vec3 -s 1.0 0.0
       )
-    , ( vec3 -1.0 0.0 -1.618
-      , vec3 -1.618 1.0 0.0
-      , vec3 0.0 1.618 -1.0
+    , ( vec3 -1.0 0.0 -s
+      , vec3 -s 1.0 0.0
+      , vec3 0.0 s -1.0
       )
-    , ( vec3 -1.0 0.0 -1.618
-      , vec3 0.0 1.618 -1.0
-      , vec3 1.0 0.0 -1.618
+    , ( vec3 -1.0 0.0 -s
+      , vec3 0.0 s -1.0
+      , vec3 1.0 0.0 -s
       )
-    , ( vec3 -1.0 0.0 -1.618
-      , vec3 0.0 -1.618 -1.0
-      , vec3 1.0 0.0 -1.618
+    , ( vec3 -1.0 0.0 -s
+      , vec3 0.0 -s -1.0
+      , vec3 1.0 0.0 -s
       )
-    , ( vec3 -1.0 0.0 -1.618
-      , vec3 -1.618 -1.0 0.0
-      , vec3 0.0 -1.618 -1.0
+    , ( vec3 -1.0 0.0 -s
+      , vec3 -s -1.0 0.0
+      , vec3 0.0 -s -1.0
       )
-    , ( vec3 0.0 -1.618 -1.0
-      , vec3 1.0 0.0 -1.618
-      , vec3 1.618 -1.0 0.0
+    , ( vec3 0.0 -s -1.0
+      , vec3 1.0 0.0 -s
+      , vec3 s -1.0 0.0
       )
-    , ( vec3 1.0 0.0 -1.618
-      , vec3 0.0 1.618 -1.0
-      , vec3 1.618 1.0 0.0
+    , ( vec3 1.0 0.0 -s
+      , vec3 0.0 s -1.0
+      , vec3 s 1.0 0.0
       )
-    , ( vec3 1.618 -1.0 0.0
-      , vec3 1.0 0.0 -1.618
-      , vec3 1.618 1.0 0.0
+    , ( vec3 s -1.0 0.0
+      , vec3 1.0 0.0 -s
+      , vec3 s 1.0 0.0
       )
-    , ( vec3 0.0 1.618 -1.0
-      , vec3 -1.618 1.0 0.0
-      , vec3 0.0 1.618 1.0
+    , ( vec3 0.0 s -1.0
+      , vec3 -s 1.0 0.0
+      , vec3 0.0 s 1.0
       )
-    , ( vec3 1.618 1.0 0.0
-      , vec3 0.0 1.618 -1.0
-      , vec3 0.0 1.618 1.0
+    , ( vec3 s 1.0 0.0
+      , vec3 0.0 s -1.0
+      , vec3 0.0 s 1.0
       )
-    , ( vec3 1.618 1.0 0.0
-      , vec3 0.0 1.618 1.0
-      , vec3 1.0 0.0 1.618
+    , ( vec3 s 1.0 0.0
+      , vec3 0.0 s 1.0
+      , vec3 1.0 0.0 s
       )
-    , ( vec3 1.618 -1.0 0.0
-      , vec3 1.618 1.0 0.0
-      , vec3 1.0 0.0 1.618
+    , ( vec3 s -1.0 0.0
+      , vec3 s 1.0 0.0
+      , vec3 1.0 0.0 s
       )
-    , ( vec3 0.0 -1.618 -1.0
-      , vec3 1.618 -1.0 0.0
-      , vec3 0.0 -1.618 1.0
+    , ( vec3 0.0 -s -1.0
+      , vec3 s -1.0 0.0
+      , vec3 0.0 -s 1.0
       )
-    , ( vec3 0.0 -1.618 1.0
-      , vec3 1.618 -1.0 0.0
-      , vec3 1.0 0.0 1.618
+    , ( vec3 0.0 -s 1.0
+      , vec3 s -1.0 0.0
+      , vec3 1.0 0.0 s
       )
-    , ( vec3 -1.618 -1.0 0.0
-      , vec3 0.0 -1.618 -1.0
-      , vec3 0.0 -1.618 1.0
+    , ( vec3 -s -1.0 0.0
+      , vec3 0.0 -s -1.0
+      , vec3 0.0 -s 1.0
       )
-    , ( vec3 -1.0 0.0 1.618
-      , vec3 -1.618 -1.0 0.0
-      , vec3 0.0 -1.618 1.0
+    , ( vec3 -1.0 0.0 s
+      , vec3 -s -1.0 0.0
+      , vec3 0.0 -s 1.0
       )
-    , ( vec3 -1.618 1.0 0.0
-      , vec3 -1.618 -1.0 0.0
-      , vec3 -1.0 0.0 1.618
+    , ( vec3 -s 1.0 0.0
+      , vec3 -s -1.0 0.0
+      , vec3 -1.0 0.0 s
       )
-    , ( vec3 0.0 1.618 1.0
-      , vec3 -1.618 1.0 0.0
-      , vec3 -1.0 0.0 1.618
+    , ( vec3 0.0 s 1.0
+      , vec3 -s 1.0 0.0
+      , vec3 -1.0 0.0 s
       )
-    , ( vec3 1.0 0.0 1.618
-      , vec3 0.0 1.618 1.0
-      , vec3 -1.0 0.0 1.618
+    , ( vec3 1.0 0.0 s
+      , vec3 0.0 s 1.0
+      , vec3 -1.0 0.0 s
       )
-    , ( vec3 -1.0 0.0 1.618
-      , vec3 0.0 -1.618 1.0
-      , vec3 1.0 0.0 1.618
+    , ( vec3 -1.0 0.0 s
+      , vec3 0.0 -s 1.0
+      , vec3 1.0 0.0 s
       )
     ]

@@ -1,12 +1,12 @@
 import cubies from "./01-cubies";
-import quads from "./02-quads";
+import spiralHop from "./02-spiral-hop";
 
 const sketches = sketchName => {
   switch (sketchName) {
     case "cubies":
       return cubies;
-    case "quads":
-      return quads;
+    case "spiral-hop":
+      return spiralHop;
     default:
       return cubies;
   }
@@ -27,10 +27,10 @@ const sketches = sketchName => {
       container.style.height = size;
       this.appendChild(container);
 
-      const sketchName = this.getAttribute("sketch");
+      const sketchName = this.getAttribute("name");
       const sketchCreator = sketches(sketchName);
       import("p5").then(p5 => {
-        this.p5Sketch = new p5(sketchCreator(size), container);
+        this.p5Sketch = new p5(sketchCreator(size, p5), container);
         this.setAnimating();
       });
     }

@@ -15,6 +15,12 @@
         return import("./MarchingWindows.elm");
       case "just-hanging-out":
         return import("./JustHangingOut.elm");
+      case "walk-with-me":
+        return import("./WalkWithMe.elm");
+      case "landscape":
+        return import("./Landscape.elm");
+      case "rehash":
+        return import("./Rehash.elm");
     }
   };
 
