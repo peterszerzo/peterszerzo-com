@@ -1,4 +1,4 @@
-module Landscape exposing (main)
+module Ribbons exposing (main)
 
 import Browser
 import Browser.Events as Events
@@ -109,7 +109,6 @@ view model =
             { perspective = perspective_
             , transform = Matrix4.identity
             , time = time
-            , color = Palette.get 0 palette
             , opacity = 1
             }
         ]
@@ -160,7 +159,6 @@ type alias Uniforms =
     { transform : Matrix4.Mat4
     , perspective : Matrix4.Mat4
     , time : Float
-    , color : Vector3.Vec3
     , opacity : Float
     }
 
