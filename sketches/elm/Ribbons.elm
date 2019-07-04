@@ -33,8 +33,7 @@ type alias Model =
 
 
 type Msg
-    = Tick Time.Posix
-    | Animate Bool
+    = Setup Setup.Msg
 
 
 init : Encode.Value -> ( Model, Cmd Msg )
@@ -55,23 +54,16 @@ init flagsValue =
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        Animate isAnimating ->
-            ( { model | isAnimating = isAnimating }
+        Setup setupMsg ->
+            ( Setup.update setupMsg model
             , Cmd.none
             )
 
-        Tick time ->
-            ( { model
-                | startTime =
-                    if model.startTime == Nothing then
-                        Just time
 
-                    else
-                        model.startTime
-                , time = Just time
-              }
-            , Cmd.none
-            )
+subscriptions : Model -> Sub Msg
+subscriptions model =
+    Setup.subscriptions model
+        |> Sub.map Setup
 
 
 palette : Palette.Palette
@@ -111,23 +103,6 @@ view model =
             , time = time
             , opacity = 1
             }
-        ]
-
-
-subscriptions : Model -> Sub Msg
-subscriptions model =
-    Sub.batch
-        [ if model.isAnimating then
-            Events.onAnimationFrame Tick
-
-          else
-            Sub.none
-        , Setup.animate
-            (\value ->
-                Decode.decodeValue Decode.bool value
-                    |> Result.withDefault False
-                    |> Animate
-            )
         ]
 
 

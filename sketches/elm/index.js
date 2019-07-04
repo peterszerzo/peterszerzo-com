@@ -3,20 +3,21 @@
     return;
   }
 
-  const capitalizeFirst = word => word.slice(0, 1).toUpperCase() + word.slice(1)
+  const capitalizeFirst = word =>
+    word.slice(0, 1).toUpperCase() + word.slice(1);
 
-  const slugToKey = slug => slug.split("-").map(capitalizeFirst).join("")
+  const slugToKey = slug =>
+    slug
+      .split("-")
+      .map(capitalizeFirst)
+      .join("");
 
   const getSketch = sketchName => {
     switch (sketchName) {
-      case "our-bearings-are-fragile":
-        return import("./OurBearingsAreFragile.elm");
       case "marching-windows":
         return import("./MarchingWindows.elm");
       case "just-hanging-out":
         return import("./JustHangingOut.elm");
-      case "walk-with-me":
-        return import("./WalkWithMe.elm");
       case "ribbons":
         return import("./Ribbons.elm");
       case "envo":

@@ -88,12 +88,12 @@ const createSketch = dim => {
       context.fillStyle = "rgb(255, 255, 255)";
       context.fillRect(0, 0, width, height);
       context.strokeStyle = "rgb(0, 0, 0)";
-      context.lineWidth = dim / 400
+      context.lineWidth = dim / 400;
       context.lineCap = "round";
       spirals = spirals.map(stepSpiral(deltaTime / 1000));
       spirals.forEach(drawSpiral(context));
     }
-  }
-}
+  };
+};
 
-export default createSketch
+export default createSketch;

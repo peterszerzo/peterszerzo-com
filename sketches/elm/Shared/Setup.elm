@@ -1,5 +1,15 @@
-port module Shared.Setup exposing (Flags, Model, animate, playhead, unsafeDecodeFlags)
+port module Shared.Setup exposing
+    ( Flags
+    , Model
+    , Msg
+    , animate
+    , playhead
+    , subscriptions
+    , unsafeDecodeFlags
+    , update
+    )
 
+import Browser.Events
 import Json.Decode as Decode
 import Json.Encode as Encode
 import Time
@@ -47,3 +57,43 @@ playhead model =
 
         ( _, _ ) ->
             0
+
+
+type Msg
+    = Animate Bool
+    | Tick Time.Posix
+
+
+update : Msg -> Model a -> Model a
+update msg model =
+    case msg of
+        Animate isAnimating ->
+            { model | isAnimating = isAnimating }
+
+        Tick time ->
+            { model
+                | startTime =
+                    if model.startTime == Nothing then
+                        Just time
+
+                    else
+                        model.startTime
+                , time = Just time
+            }
+
+
+subscriptions : Model a -> Sub Msg
+subscriptions model =
+    Sub.batch
+        [ if model.isAnimating then
+            Browser.Events.onAnimationFrame Tick
+
+          else
+            Sub.none
+        , animate
+            (\value ->
+                Decode.decodeValue Decode.bool value
+                    |> Result.withDefault False
+                    |> Animate
+            )
+        ]
