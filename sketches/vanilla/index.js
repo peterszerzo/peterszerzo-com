@@ -1,6 +1,7 @@
 import pivotFrame from "./pivot-frame";
 import cosineBeetles from "./cosine-beetles";
 import theSpin from "./the-spin";
+import shyCircles from "./shy-circles";
 
 const sketches = sketchName => {
   switch (sketchName) {
@@ -10,6 +11,8 @@ const sketches = sketchName => {
       return theSpin;
     case "cosine-beetles":
       return cosineBeetles;
+    case "shy-circles":
+      return shyCircles;
     default:
       return pivotFrame;
   }
