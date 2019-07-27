@@ -1,4 +1,4 @@
-module BureaucracyIsDistracting exposing (Model, Msg(..), init, main, subscriptions, update, view)
+module BureaucracyIsDistracting exposing (main)
 
 import Browser
 import Browser.Events as Events
@@ -50,12 +50,12 @@ type Msg
 
 w : Float
 w =
-    800
+    560
 
 
 h : Float
 h =
-    480
+    560
 
 
 timeDiff : Model -> Float
@@ -109,46 +109,33 @@ toPx no =
 
 ballTransform : Float -> List ( String, String )
 ballTransform rot =
-    [ ( "top", "0px" )
-    , ( "left", "0px" )
-    , ( "transform"
-      , "translate3d("
-            ++ toPx (15 + cos rot * 6 - 3)
-            ++ ","
-            ++ toPx (15 + sin rot * 6 - 3)
-            ++ ", 0px)"
-      )
-    ]
-
-
-ballTransform2 : Float -> List ( String, String )
-ballTransform2 rot =
-    [ ( "top", "15px" )
-    , ( "left", "19px" )
+    [ ( "top", "30px" )
+    , ( "left", "38px" )
     , ( "transform", "rotate(" ++ String.fromFloat rot ++ "rad)" )
-    , ( "transform-origin", "-4px 0px" )
+    , ( "transform-origin", "-8px 0px" )
     ]
 
 
 ball : Float -> Ball.Ball -> Html msg
 ball time { x, y, rot } =
     div
-        [ style "width" "30px"
-        , style "height" "30px"
+        [ style "width" "60px"
+        , style "height" "60px"
         , style "border-radius" "50%"
         , style "background-color" Constants.blue
+        , style "box-shadow" <| "0 0 0 8px " ++ Constants.faintBlue
         , style "position" "absolute"
         , style "left" (toPx (x * w - 15))
         , style "top" (toPx (y * h - 15))
         ]
         [ div
-            ([ ( "width", "6px" )
-             , ( "height", "6px" )
+            ([ ( "width", "12px" )
+             , ( "height", "12px" )
              , ( "background-color", "#FFF" )
-             , ( "border-radius", "3px" )
+             , ( "border-radius", "6px" )
              , ( "position", "absolute" )
              ]
-                ++ ballTransform2 rot
+                ++ ballTransform rot
                 |> List.map (\( prop, value ) -> style prop value)
             )
             []
@@ -157,75 +144,62 @@ ball time { x, y, rot } =
 
 view : Model -> Html Msg
 view model =
+    let
+        timeDiff_ =
+            timeDiff model
+    in
     case model.scribble of
         Nothing ->
             text ""
 
         Just scribble ->
-            let
-                makeScribble =
-                    Scribble.view (timeDiff model) scribble
-            in
             div
                 [ style "width" (String.fromFloat w ++ "px")
                 , style "height" (String.fromFloat h ++ "px")
                 , style "position" "relative"
                 , style "background-color" "#FFF"
                 , style "overflow" "hidden"
+                , style "border" "1px solid black"
                 ]
-                [ ball (timeDiff model) model.ball
+                [ ball timeDiff_ model.ball
                 , div [] <|
                     List.map2
                         (\styles red ->
                             div
-                                ([ ( "position", "absolute" )
-                                 , ( "top", "40px" )
-                                 , ( "left", "140px" )
-                                 ]
-                                    ++ styles
+                                ((( "position", "absolute" )
+                                    :: styles
+                                 )
                                     |> List.map (\( prop, value ) -> style prop value)
                                 )
-                                [ makeScribble red
+                                [ Scribble.view
+                                    { time = timeDiff_
+                                    , scribble = scribble
+                                    , redLines = red
+                                    , scale = 3
+                                    }
                                 ]
                         )
-                        [ [ ( "top", "40px" )
-                          , ( "left", "140px" )
-                          , ( "transform", "rotateZ(-30deg)" )
-                          ]
-                        , [ ( "top", "280px" )
-                          , ( "left", "420px" )
-                          , ( "transform", "rotateZ(30deg)" )
-                          ]
-                        , [ ( "top", "60px" )
-                          , ( "left", "600px" )
-                          , ( "transform", "rotateZ(-45deg)" )
+                        [ [ ( "top", "130px" )
+                          , ( "left", "-40px" )
+                          , ( "transform", "rotateZ(0)" )
                           ]
                         ]
-                        [ [ 3, 4 ]
-                        , [ 2, 6, 7 ]
-                        , [ 1, 5 ]
+                        [ [ 3, 4, 7 ]
                         ]
                 , div
-                    [ style "width" "160px"
-                    , style "height" "160px"
-                    , style "position" "absolute"
-                    , style "top" "260px"
-                    , style "left" "160px"
-                    , style "transform" "rotateZ(45deg)"
+                    [ style "position" "absolute"
+                    , style "top" "30px"
+                    , style "left" "260px"
+                    , style "transform" <| "rotateZ(" ++ String.fromFloat (timeDiff_ / 100) ++ "deg)"
                     ]
-                    [ Stamp.view { time = timeDiff model, singleSnake = True } ]
-                , div
-                    [ style "width" "160px"
-                    , style "height" "160px"
-                    , style "position" "absolute"
-                    , style "top" "80px"
-                    , style "left" "320px"
-                    , style "transform" "rotateZ(210deg)"
+                    [ Stamp.view
+                        { time = timeDiff_
+                        , scale = 1.5
+                        }
                     ]
-                    [ Stamp.view { time = timeDiff model, singleSnake = False } ]
                 ]
 
 
 subscriptions : Model -> Sub Msg
-subscriptions model =
+subscriptions _ =
     Events.onAnimationFrame Tick

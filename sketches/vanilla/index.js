@@ -2,6 +2,7 @@ import pivotFrame from "./pivot-frame";
 import cosineBeetles from "./cosine-beetles";
 import theSpin from "./the-spin";
 import shyCircles from "./shy-circles";
+import streamlines from "./streamlines";
 
 const sketches = sketchName => {
   switch (sketchName) {
@@ -13,6 +14,8 @@ const sketches = sketchName => {
       return cosineBeetles;
     case "shy-circles":
       return shyCircles;
+    case "streamlines":
+      return streamlines;
     default:
       return pivotFrame;
   }
@@ -72,20 +75,29 @@ const createAnimation = stepper => {
       const canvas = document.createElement("canvas");
       canvas.setAttribute("width", size);
       canvas.setAttribute("height", size);
+      this.appendChild(canvas);
+
       const context = canvas.getContext("2d");
       const sketchName = this.getAttribute("name");
       const sketch = sketches(sketchName)(size);
-      this.anim = createAnimation(({ deltaTime, playhead }) => {
-        sketch.step({
+      if (sketch.step) {
+        this.anim = createAnimation(({ deltaTime, playhead }) => {
+          sketch.step({
+            width: size,
+            height: size,
+            context,
+            deltaTime: deltaTime,
+            playhead: playhead
+          });
+        });
+        this.setAnimating();
+      } else {
+        sketch.still({
           width: size,
           height: size,
-          context,
-          deltaTime: deltaTime,
-          playhead: playhead
+          context
         });
-      });
-      this.setAnimating();
-      this.appendChild(canvas);
+      }
     }
 
     static get observedAttributes() {

@@ -1,4 +1,8 @@
-module BureaucracyIsDistracting.Scribble exposing (Scribble, generator, modifyOffset, single, view)
+module BureaucracyIsDistracting.Scribble exposing
+    ( Scribble
+    , generator
+    , view
+    )
 
 import BureaucracyIsDistracting.Constants as Constants
 import Html exposing (Html)
@@ -60,14 +64,10 @@ modifyOffset rowIndex columnIndex time =
 
 single : Int -> Float -> Bool -> List Float -> Html msg
 single index time isRed offsets =
-    let
-        startY =
-            toFloat index * 14 + 10
-    in
     path
         [ d <|
             "M10,"
-                ++ String.fromFloat startY
+                ++ String.fromFloat (toFloat index * 14 + 10 + modifyOffset index -1 time)
                 ++ (offsets
                         |> List.indexedMap
                             (\columnIndex offset ->
@@ -82,7 +82,7 @@ single index time isRed offsets =
                         |> String.join ""
                    )
         , fill "none"
-        , strokeWidth "2px"
+        , strokeWidth "3"
         , stroke
             (if isRed then
                 Constants.red
@@ -96,14 +96,22 @@ single index time isRed offsets =
         []
 
 
-view : Float -> Scribble -> List Int -> Html msg
-view time scribble reds =
-    svg [ width "160", height "240", viewBox "0 0 160 240" ]
-        [ g []
-            (scribble.offsets
-                |> List.indexedMap
-                    (\index offsets ->
-                        single index time (List.member index reds) offsets
-                    )
-            )
+view :
+    { time : Float
+    , scribble : Scribble
+    , redLines : List Int
+    , scale : Float
+    }
+    -> Html msg
+view config =
+    svg
+        [ (160 * config.scale) |> String.fromFloat |> width
+        , (240 * config.scale) |> String.fromFloat |> height
+        , viewBox "0 0 160 240"
         ]
+        (config.scribble.offsets
+            |> List.indexedMap
+                (\index offsets ->
+                    single index config.time (List.member index config.redLines) offsets
+                )
+        )

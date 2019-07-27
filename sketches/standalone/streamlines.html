@@ -1,0 +1,187 @@
+<head>
+  <style>
+    html,
+    body {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+    }
+
+    canvas {
+      display: block;
+      margin: auto;
+    }
+
+    button {
+      margin: 40px;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="drawing"></canvas>
+  <button id="download">Download</button>
+  <script src="https://cdn.jsdelivr.net/gh/anvaka/streamlines@v1.0.1/dist/streamlines.min.js"></script>
+  <script>
+    const config = {
+      separationDistance: 0.04, // Separation distance between new streamlines.
+      simplification: 0.1, // line simplification amount (0.1-2)
+      boundingBox: { left: -5, top: -5, width: 10, height: 10 } // This is the "zoom" level of the rendering
+    };
+
+    const size = 600;
+
+    const variants = [
+      {
+        background: "#101216",
+        stroke: "#F5CB5C"
+      },
+      {
+        background: "#FFFFFF",
+        stroke: "#71D6FF"
+      }
+    ];
+
+    const variant = variants[0];
+
+    const saveCanvas = canvasElement => {
+      const data = canvasElement.toDataURL("image/png");
+      var newWindow = window.open("about:blank", "image from canvas");
+      newWindow.document.write("<img src='" + data + "' alt='from canvas'/>");
+    };
+
+    const canvas = document.getElementById("drawing");
+    canvas.setAttribute("width", size);
+    canvas.setAttribute("height", size);
+    const canvasContext = canvas.getContext("2d");
+    canvasContext.lineWidth = size / 1500;
+    canvasContext.strokeStyle = variant.stroke;
+
+    canvasContext.fillStyle = variant.background;
+    canvasContext.fillRect(0, 0, size, size);
+
+    document.querySelector("button").addEventListener("click", () => {
+      saveCanvas(canvas);
+    });
+
+    const drawPolyline = context => polyline => {
+      let movedToFirst = false;
+      context.beginPath();
+      polyline.forEach(pt => {
+        if (movedToFirst) {
+          context.lineTo(pt[0], pt[1]);
+        } else {
+          context.moveTo(pt[0], pt[1]);
+          movedToFirst = true;
+        }
+      });
+      context.stroke();
+    };
+
+    const seedPoint = {
+      x: config.boundingBox.left + Math.random() * config.boundingBox.width,
+      y: config.boundingBox.top + Math.random() * config.boundingBox.height
+    };
+
+    let streamlinesProcess = null;
+
+    const generateStreamlines = function() {
+      streamlinesProcess = streamlines({
+        // As usual, define your vector field:
+        vectorField: p => ({
+          x: 0.5 * Math.sin(3 * (p.x + p.y)),
+          y: 0.5 * Math.sin(3 * (p.x - 1.2 * p.y))
+        }),
+        onStreamlineAdded(points) {
+          const transformedPoints = points.map((point, i) => {
+            const tx =
+              (point.x - config.boundingBox.left) / config.boundingBox.width;
+            const ty =
+              (point.y - config.boundingBox.top) / config.boundingBox.height;
+            return [
+              Math.round(tx * size * 10) / 10,
+              Math.round((1 - ty) * size * 10) / 10
+            ];
+          });
+          let simplifiedPath = simplify(
+            transformedPoints,
+            config.simplification
+          );
+          drawPolyline(canvasContext)(simplifiedPath);
+        },
+        seed: seedPoint,
+        boundingBox: config.boundingBox,
+        // Separation distance between new streamlines.
+        dSep: config.separationDistance,
+
+        // Distance between streamlines when integration should stop.
+        dTest: 0.001,
+        timeStep: 0.01
+      });
+      streamlinesProcess.run();
+    };
+
+    generateStreamlines();
+
+    // square distance from a point to a segment
+    function getSqSegDist(p, p1, p2) {
+      var x = p1[0],
+        y = p1[1],
+        dx = p2[0] - x,
+        dy = p2[1] - y;
+
+      if (dx !== 0 || dy !== 0) {
+        var t = ((p[0] - x) * dx + (p[1] - y) * dy) / (dx * dx + dy * dy);
+
+        if (t > 1) {
+          x = p2[0];
+          y = p2[1];
+        } else if (t > 0) {
+          x += dx * t;
+          y += dy * t;
+        }
+      }
+
+      dx = p[0] - x;
+      dy = p[1] - y;
+
+      return dx * dx + dy * dy;
+    }
+
+    function simplifyDPStep(points, first, last, sqTolerance, simplified) {
+      var maxSqDist = sqTolerance,
+        index;
+
+      for (var i = first + 1; i < last; i++) {
+        var sqDist = getSqSegDist(points[i], points[first], points[last]);
+
+        if (sqDist > maxSqDist) {
+          index = i;
+          maxSqDist = sqDist;
+        }
+      }
+
+      if (maxSqDist > sqTolerance) {
+        if (index - first > 1)
+          simplifyDPStep(points, first, index, sqTolerance, simplified);
+        simplified.push(points[index]);
+        if (last - index > 1)
+          simplifyDPStep(points, index, last, sqTolerance, simplified);
+      }
+    }
+
+    // simplification using Ramer-Douglas-Peucker algorithm
+    function simplify(points, tolerance) {
+      if (points.length <= 1) return points;
+      tolerance = typeof tolerance === "number" ? tolerance : 1;
+      var sqTolerance = tolerance * tolerance;
+
+      var last = points.length - 1;
+
+      var simplified = [points[0]];
+      simplifyDPStep(points, 0, last, sqTolerance, simplified);
+      simplified.push(points[last]);
+
+      return simplified;
+    }
+  </script>
+</body>

@@ -60,15 +60,15 @@ tick time ball =
 shouldReposition : Ball -> Bool
 shouldReposition ball =
     List.any identity
-        [ ball.vx > 0 && ball.x > 1.2
-        , ball.vx < 0 && ball.x < -0.2
-        , ball.vy > 0 && ball.y > 1.2
-        , ball.vy < 0 && ball.y < -0.2
+        [ ball.vx > 0 && ball.x > 1.05
+        , ball.vx < 0 && ball.x < -0.05
+        , ball.vy > 0 && ball.y > 1.05
+        , ball.vy < 0 && ball.y < -0.05
         ]
 
 
 reposition : (Ball -> msg) -> Ball -> Cmd msg
-reposition toMsg ball =
+reposition toMsg _ =
     Random.generate
         toMsg
         (Random.map3
