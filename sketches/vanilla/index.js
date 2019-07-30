@@ -2,7 +2,7 @@ import pivotFrame from "./pivot-frame";
 import cosineBeetles from "./cosine-beetles";
 import theSpin from "./the-spin";
 import shyCircles from "./shy-circles";
-import streamlines from "./streamlines";
+import wildyThings from "./wildy-things";
 
 const sketches = sketchName => {
   switch (sketchName) {
@@ -14,8 +14,8 @@ const sketches = sketchName => {
       return cosineBeetles;
     case "shy-circles":
       return shyCircles;
-    case "streamlines":
-      return streamlines;
+    case "wildy-things":
+      return wildyThings;
     default:
       return pivotFrame;
   }

@@ -159,7 +159,7 @@ view model =
                 , style "position" "relative"
                 , style "background-color" "#FFF"
                 , style "overflow" "hidden"
-                , style "border" "1px solid black"
+                , style "border" "1px solid #EFEFEF"
                 ]
                 [ ball timeDiff_ model.ball
                 , div [] <|
@@ -189,7 +189,7 @@ view model =
                 , div
                     [ style "position" "absolute"
                     , style "top" "30px"
-                    , style "left" "260px"
+                    , style "right" "30px"
                     , style "transform" <| "rotateZ(" ++ String.fromFloat (timeDiff_ / 100) ++ "deg)"
                     ]
                     [ Stamp.view

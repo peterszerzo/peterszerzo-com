@@ -68,7 +68,7 @@ view config =
         , path
             ([ stroke Constants.black
              , d <|
-                "M144,18 "
+                "M142,28 "
                     ++ String.repeat 4 "l0,6 t4,4 l6,0 t4,4 l0,6 t-4,4 l-6,0 t-4,4"
              ]
                 ++ strokeAttrs
@@ -77,7 +77,7 @@ view config =
         , path
             ([ stroke Constants.black
              , d <|
-                "M4,24 "
+                "M4,34 "
                     ++ String.repeat 3 "l0,6 t4,4 l6,0 t4,4 l0,6 t-4,4 l-6,0 t-4,4"
              ]
                 ++ strokeAttrs
@@ -86,7 +86,7 @@ view config =
         , path
             ([ stroke Constants.red
              , d <|
-                "M20,144 "
+                "M40,142 "
                     ++ String.repeat 3 "l6,0 t4,4 l0,6 t4,4 l6,0 t4,-4 l0,-6 t4,-4"
              ]
                 ++ strokeAttrs
@@ -95,7 +95,7 @@ view config =
         , path
             ([ stroke Constants.red
              , d <|
-                "M14,6 "
+                "M20,4 "
                     ++ String.repeat 4 "l6,0 t4,4 l0,6 t4,4 l6,0 t4,-4 l0,-6 t4,-4"
              ]
                 ++ strokeAttrs
