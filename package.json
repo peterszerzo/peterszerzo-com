@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "parcel site/index.html",
-    "build": "rm -rf dist && mkdir dist && parcel build site/index.html site/now.html site/200.html",
+    "build": "rm -rf dist && mkdir dist && parcel build site/index.html",
     "deploy": "npm run build && surge dist peterszerzo.com"
   },
   "author": "Peter Szerzo <szerzo.peter@gmail.com>",

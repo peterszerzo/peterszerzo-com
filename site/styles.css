@@ -3,9 +3,11 @@
 :root {
   --white: rgb(255, 255, 255);
   --faintGray: rgb(240, 240, 240);
-  --red: rgb(207, 77, 99);
-  --blue: rgb(0, 0, 255);
   --brightPurple: rgb(102, 52, 239);
+  --faintBrightPurple: rgba(102, 52, 239, 0.1);
+  --brighterPurple: rgb(116, 62, 254);
+  --sage: rgb(0, 170, 136);
+  --faintSage: rgba(0, 170, 136, 0.1);
 }
 
 /* setup */
@@ -38,25 +40,41 @@ li {
   width: 100%;
   max-width: 800px;
   margin: auto;
-  padding: 40px 15px;
+  padding: 60px 15px;
+}
+
+.container > * {
+  margin-bottom: 60px;
+}
+
+.container > *:last-child {
+  margin-bottom: 0;
 }
 
 @media (min-width: 640px) {
   .container {
-    padding: 80px 20px;
+    padding: 100px 20px;
+  }
+
+  .container > * {
+    margin-bottom: 100px;
+  }
+
+  .container > *:last-child {
+    margin-bottom: 0;
   }
 }
 
 /* sketches */
 
 .sketches {
-  margin: -20px;
+  margin: -10px;
   text-align: center;
 }
 
 .sketches > * {
   display: inline-block;
-  margin: 20px;
+  margin: 10px;
 }
 
 @media (min-width: 640px) {
@@ -67,28 +85,14 @@ li {
 
 .sketch-controls {
   position: absolute;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.4);
   bottom: 0px;
-  left: 0px;
   right: 0px;
   padding: 10px;
   z-index: 100;
-  text-align: center;
-  opacity: 0;
-  transform: translate3d(0, 10%, 0);
-  transition: all 0.2s ease-in-out;
-}
-
-my-sketch:hover .sketch-controls {
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
-}
-
-@media (max-width: 640px) {
-  .sketch-controls {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .sketch-controls * {
@@ -103,44 +107,53 @@ my-sketch:hover .sketch-controls {
 /* hero */
 
 .hero {
-  padding: 40px 0;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+}
+
+.hero > * {
+  text-align: center;
+  margin: 0;
 }
 
 @media (min-width: 640px) {
   .hero {
-    padding: 60px 0;
   }
 }
 
-/* text-shadow */
+/* animated-text-shadow */
 
-@keyframes text-shadow-colors {
+@keyframes animated-text-shadow-keyframes {
   0% {
-    text-shadow: 2px 2px 0px var(--red);
+    text-shadow: 2px 2px 0px var(--brightPurple);
   }
 
   100% {
-    text-shadow: 2px 2px 0px var(--brightPurple);
+    text-shadow: 2px 2px 0px var(--sage);
   }
 }
 
-.text-shadow {
-  text-shadow: 2px 2px 0px var(--red);
-  animation: text-shadow-colors 6s ease-in-out infinite alternate;
+.animated-text-shadow {
+  text-shadow: 2px 2px 0px var(--brightPurple);
+  animation: animated-text-shadow-keyframes 6s ease-in-out infinite alternate;
+}
+
+/* divider */
+
+.divider {
+  height: 2px;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  border-bottom-color: var(--faintGray);
 }
 
 /* section */
 
 section {
-  padding: 40px 0;
+  text-align: center;
 }
 
 @media (min-width: 640px) {
   section {
-    padding: 30px 0;
+    text-align: left;
   }
 }
 
@@ -149,7 +162,7 @@ section {
 .section-title {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   margin-bottom: 20px;
 }
 
@@ -163,14 +176,20 @@ section {
   margin-left: 8px;
 }
 
+.section-title > *:not(:first-child) {
+  margin-left: 10px;
+}
+
+@media (min-width: 640px) {
+  .section-title {
+    justify-content: space-between;
+  }
+}
+
 /* footer */
 
 footer {
-  padding: 40px 0;
-  border-top: 1px solid #dedede;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  text-align: center;
 }
 
 footer p,
@@ -187,21 +206,24 @@ footer ul {
 
 footer ul a {
   margin-left: 12px;
-  color: inherit;
+}
+
+footer svg {
+  fill: var(--sage);
 }
 
 /* button */
 
 button {
   background: var(--white);
-  border: 1px solid black;
+  border: 2px solid var(--sage);
   border-radius: 3px;
   line-height: 1;
   padding: 6px 8px 4px 8px;
 }
 
 button:hover {
-  background-color: var(--faintGray);
+  background-color: var(--faintSage);
 }
 
 button:focus {
@@ -259,6 +281,12 @@ li {
 
 a {
   color: inherit;
+  text-decoration: none;
+  border-bottom: 2px solid var(--sage);
+}
+
+a:hover {
+  background-color: var(--faintSage);
 }
 
 @media (min-width: 640px) {
@@ -280,6 +308,6 @@ a {
 
 blockquote {
   padding: 20px;
-  background-color: #dedede;
+  background-color: var(--faintGray);
   margin: 0;
 }

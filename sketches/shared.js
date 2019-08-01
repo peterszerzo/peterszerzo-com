@@ -1,6 +1,6 @@
-import "../sketches/elm"
-import "../sketches/vanilla"
-import "../sketches/p5"
+import "../sketches/elm";
+import "../sketches/vanilla";
+import "../sketches/p5";
 
 const setContainerStyles = ({ size, animating }) => el => {
   el.style.width = size + "px";
@@ -21,6 +21,43 @@ const setContainerStyles = ({ size, animating }) => el => {
     return;
   }
 
+  const playButtonTemplate = isPlaying => `
+<svg width="30" height="30" viewBox="0 0 50 50">
+  <circle cx="25" cy="25" r="25">
+  </circle>
+  ${!isPlaying ? `<polygon points="20,15 20,35 35,25" fill="white" />` : ""}
+  ${
+    isPlaying
+      ? `
+  <g fill="white">
+    <rect x="18" y="15" width="4" height="20"></rect>
+    <rect x="28" y="15" width="4" height="20"></rect>
+  </g>
+  `
+      : ""
+  }
+</svg>
+`;
+
+  class PlayButton extends HTMLElement {
+    connectedCallback() {
+      const isPlaying = Boolean(this.getAttribute("playing"));
+      this.innerHTML = playButtonTemplate(isPlaying);
+    }
+
+    static get observedAttributes() {
+      return ["playing"];
+    }
+
+    attributeChangedCallback() {
+      console.log("changed");
+      const isPlaying = Boolean(this.getAttribute("playing"));
+      this.innerHTML = playButtonTemplate(isPlaying);
+    }
+  }
+
+  customElements.define("play-button", PlayButton);
+
   class Sketch extends HTMLElement {
     connectedCallback() {
       this.style.position = "relative";
@@ -38,26 +75,37 @@ const setContainerStyles = ({ size, animating }) => el => {
         animating = !animating;
         setContainerStyles({ size, animating })(this);
         if (animating) {
-          this.playButton.innerText = "Pause";
+          this.playButton.setAttribute("playing", "true");
           this.sketchElement.setAttribute("animating", "true");
         } else {
-          this.playButton.innerText = "Play";
+          this.playButton.removeAttribute("playing");
           this.sketchElement.removeAttribute("animating");
         }
       };
 
-      this.playButton = document.createElement("button");
-      this.playButton.innerText = animating ? "Pause" : "Play";
+      this.playButton = document.createElement("play-button");
+      if (animating) {
+        this.playButton.setAttribute("playing", "true");
+      } else {
+        this.playButton.removeAttribute("playing");
+      }
       this.playButton.addEventListener("click", this.handlePlayPause);
 
-
       this.fullscreenLink = document.createElement("a");
+      this.fullscreenLink.style.border = "0";
+      this.fullscreenLink.style.display = "block";
+      this.fullscreenLink.innerHTML = `
+        <svg viewBox="0 0 1000 1000" width="30" height="30">
+          <use xlink:href="#expand"></use>
+        </svg>
+      `;
       if (this.getAttribute("size") === "full") {
         this.fullscreenLink.setAttribute("href", "/");
-        this.fullscreenLink.innerText = "Close";
       } else {
-        this.fullscreenLink.setAttribute("href", `/${sketchType}/${sketchName}`);
-        this.fullscreenLink.innerText = "Fullscreen";
+        this.fullscreenLink.setAttribute(
+          "href",
+          `/${sketchType}/${sketchName}`
+        );
       }
 
       const controlsContainer = document.createElement("div");
@@ -76,11 +124,11 @@ const setContainerStyles = ({ size, animating }) => el => {
     }
 
     getSize() {
-      const rawSize = this.getAttribute("size")
+      const rawSize = this.getAttribute("size");
       if (rawSize === "full") {
-        return Math.min(window.innerWidth, window.innerHeight) * 0.8
+        return Math.min(window.innerWidth, window.innerHeight) * 0.8;
       }
-      return Number(rawSize) || 320
+      return Number(rawSize) || 320;
     }
 
     disconnectedCallback() {

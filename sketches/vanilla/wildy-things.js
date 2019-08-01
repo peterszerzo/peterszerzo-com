@@ -80,7 +80,7 @@ const createSketch = dim => {
       context.fillStyle = "rgb(255, 255, 255)";
       context.fillRect(0, 0, width, height);
       context.strokeStyle = "rgb(0, 0, 0)";
-      context.lineWidth = dim / 150;
+      context.lineWidth = dim / 140;
       context.lineCap = "round";
 
       const factor1 = Math.sin(playhead / 800);
@@ -107,7 +107,7 @@ const createSketch = dim => {
           [dim * (0.7 + 0.02 * factor + 0.2), dim * (0.7 - 0.02 * factor - 0.2)]
         ],
         baseArmLength: width * 0.1,
-        harmonics: [1, -0.05, -0.05, -0.05, -0.05, -0.05],
+        harmonics: [1, -0.05, -0.15, -0.05, -0.05, -0.05],
         divideInto: 24,
         factor
       });
@@ -124,7 +124,7 @@ const createSketch = dim => {
           [dim * (0.75 + 0.02 * factor), dim * (0.75 - 0.02 * factor)]
         ],
         baseArmLength: width * 0.2,
-        harmonics: [0.8, 0.001, 0, 0.01, 0, -0.03],
+        harmonics: [0.7, 0.08, 0.1, 0.01, 0, -0.05],
         divideInto: 30,
         factor
       });
@@ -150,7 +150,7 @@ const createSketch = dim => {
           ]
         ],
         baseArmLength: width * 0.08,
-        harmonics: [1.5, 0.3, 0.2],
+        harmonics: [1.5, 0.3, 0.1],
         divideInto: 18,
         factor
       });
