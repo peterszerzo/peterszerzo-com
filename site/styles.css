@@ -119,13 +119,13 @@ my-sketch:hover .sketch-controls {
 
 .sketch-control-button {
   border: 0;
-  fill: #232323;
+  color: #232323;
   width: 30px;
   height: 30px;
 }
 
 .sketch-control-button:hover {
-  fill: var(--sage);
+  color: var(--sage);
   background: none;
 }
 
@@ -150,7 +150,17 @@ my-sketch:hover .sketch-controls {
 
 /* animated-text-shadow */
 
-@keyframes animated-text-shadow-keyframes {
+@keyframes animated-text-shadow-keyframes-small {
+  0% {
+    text-shadow: 1px 1px 0px var(--brightPurple);
+  }
+
+  100% {
+    text-shadow: 1px 1px 0px var(--sage);
+  }
+}
+
+@keyframes animated-text-shadow-keyframes-large {
   0% {
     text-shadow: 2px 2px 0px var(--brightPurple);
   }
@@ -161,8 +171,17 @@ my-sketch:hover .sketch-controls {
 }
 
 .animated-text-shadow {
-  text-shadow: 2px 2px 0px var(--brightPurple);
-  animation: animated-text-shadow-keyframes 6s ease-in-out infinite alternate;
+  text-shadow: 1px 1px 0px var(--brightPurple);
+  animation: animated-text-shadow-keyframes-small 6s ease-in-out infinite
+    alternate;
+}
+
+@media (min-width: 640px) {
+  .animated-text-shadow {
+    text-shadow: 2px 2px 0px var(--brightPurple);
+    animation: animated-text-shadow-keyframes-large 6s ease-in-out infinite
+      alternate;
+  }
 }
 
 /* divider */
@@ -238,7 +257,7 @@ footer ul a {
 }
 
 footer svg {
-  fill: var(--sage);
+  color: var(--sage);
 }
 
 /* button */

@@ -22,8 +22,23 @@ const setContainerStyles = ({ size, animating }) => el => {
   }
 
   const playButtonTemplate = isPlaying => `
-<svg width="30" height="30" viewBox="0 0 1000 1000">
-  <use xlink:href="#${isPlaying ? "pause" : "play"}"></use>
+<svg width="30" height="30" viewBox="0 0 1000 1000" fill="currentColor">
+  ${
+    !isPlaying
+      ? `
+    <circle cx="500" cy="500" r="500">
+    </circle>
+    <polygon points="400,300 400,700 700,500" fill="#FFFFFF" />
+  `
+      : `
+    <circle cx="500" cy="500" r="500">
+    </circle>
+    <g fill="white">
+      <rect x="360" y="300" width="80" height="400" fill="#FFFFFF"></rect>
+      <rect x="560" y="300" width="80" height="400" fill="#FFFFFF"></rect>
+    </g>
+  `
+  }
 </svg>
 `;
 
@@ -84,8 +99,16 @@ const setContainerStyles = ({ size, animating }) => el => {
       this.fullscreenLink.style.border = "0";
       this.fullscreenLink.style.display = "block";
       this.fullscreenLink.innerHTML = `
-        <svg viewBox="0 0 1000 1000" width="30" height="30">
-          <use xlink:href="#expand"></use>
+        <svg width="30" height="30" viewBox="0 0 1000 1000" fill="currentColor">
+          <!-- <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#expand"></use> -->
+          <rect x="100" y="100" width="300" height="100"></rect>
+          <rect x="100" y="100" width="100" height="300"></rect>
+          <rect x="600" y="100" width="300" height="100"></rect>
+          <rect x="800" y="100" width="100" height="300"></rect>
+          <rect x="100" y="600" width="100" height="300"></rect>
+          <rect x="100" y="800" width="300" height="100"></rect>
+          <rect x="600" y="800" width="300" height="100"></rect>
+          <rect x="800" y="600" width="100" height="300"></rect>
         </svg>
       `;
       if (this.getAttribute("size") === "full") {
