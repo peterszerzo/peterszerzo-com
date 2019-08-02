@@ -85,19 +85,48 @@ li {
 
 .sketch-controls {
   position: absolute;
-  background-color: rgba(255, 255, 255, 0.4);
-  bottom: 0px;
-  right: 0px;
-  padding: 10px;
+  bottom: 5px;
+  right: 5px;
+  padding: 5px;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.6);
   z-index: 100;
-  display: flex;
   align-items: center;
   justify-content: center;
+  display: flex;
+  transition: opacity 0.1s ease-in-out;
+  /* state styles */
+  opacity: 1;
+  pointer-events: all;
+}
+
+my-sketch:hover .sketch-controls {
+  opacity: 1;
+  pointer-events: all;
+}
+
+@media (min-width: 640px) {
+  .sketch-controls {
+    opacity: 0;
+    pointer-events: none;
+  }
 }
 
 .sketch-controls * {
   display: inline-block;
   margin-left: 10px;
+}
+
+.sketch-control-button {
+  border: 0;
+  fill: #232323;
+  width: 30px;
+  height: 30px;
+}
+
+.sketch-control-button:hover {
+  fill: var(--sage);
+  background: none;
 }
 
 .sketch-controls *:first-child {

@@ -22,26 +22,15 @@ const setContainerStyles = ({ size, animating }) => el => {
   }
 
   const playButtonTemplate = isPlaying => `
-<svg width="30" height="30" viewBox="0 0 50 50">
-  <circle cx="25" cy="25" r="25">
-  </circle>
-  ${!isPlaying ? `<polygon points="20,15 20,35 35,25" fill="white" />` : ""}
-  ${
-    isPlaying
-      ? `
-  <g fill="white">
-    <rect x="18" y="15" width="4" height="20"></rect>
-    <rect x="28" y="15" width="4" height="20"></rect>
-  </g>
-  `
-      : ""
-  }
+<svg width="30" height="30" viewBox="0 0 1000 1000">
+  <use xlink:href="#${isPlaying ? "pause" : "play"}"></use>
 </svg>
 `;
 
   class PlayButton extends HTMLElement {
     connectedCallback() {
       const isPlaying = Boolean(this.getAttribute("playing"));
+      this.className = "sketch-control-button";
       this.innerHTML = playButtonTemplate(isPlaying);
     }
 
@@ -50,7 +39,6 @@ const setContainerStyles = ({ size, animating }) => el => {
     }
 
     attributeChangedCallback() {
-      console.log("changed");
       const isPlaying = Boolean(this.getAttribute("playing"));
       this.innerHTML = playButtonTemplate(isPlaying);
     }
@@ -92,6 +80,7 @@ const setContainerStyles = ({ size, animating }) => el => {
       this.playButton.addEventListener("click", this.handlePlayPause);
 
       this.fullscreenLink = document.createElement("a");
+      this.fullscreenLink.className = "sketch-control-button";
       this.fullscreenLink.style.border = "0";
       this.fullscreenLink.style.display = "block";
       this.fullscreenLink.innerHTML = `
