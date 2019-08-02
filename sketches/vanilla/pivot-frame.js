@@ -3,30 +3,36 @@ const utils = require("./utils");
 
 const colorScheme = ["#33658a", "#86bbd8", "#2f4858", "#f6ae2d", "#f26419"];
 
-const square = context => ({ x, y, w, colorIndex, minW, maxW, rot }) => {
+const square = context => ({ x, y, w, size, colorIndex, minW, maxW, rot }) => {
   context.save();
-  context.translate(x, y);
+  context.translate(x * size, y * size);
   context.rotate(rot + Math.PI / 2 * (colorIndex % 4));
   context.fillStyle = colorScheme[colorIndex];
   context.beginPath();
-  context.moveTo(-w / 2, -w / 2);
-  context.lineTo(-w / 2, +w / 2);
-  context.lineTo(+w / 2, +w / 2);
-  context.arcTo(+w / 2, -w / 2, -w / 2, -w / 2, w);
+  context.moveTo(-w / 2 * size, -w / 2 * size);
+  context.lineTo(-w / 2 * size, +w / 2 * size);
+  context.lineTo(+w / 2 * size, +w / 2 * size);
+  context.arcTo(
+    +w / 2 * size,
+    -w / 2 * size,
+    -w / 2 * size,
+    -w / 2 * size,
+    w * size
+  );
   context.fill();
   context.restore();
 };
 
-const pack = dim => {
-  const outerPad = dim / 12;
+const pack = () => {
+  const outerPad = 1 / 12;
   const pack = d3Hierarchy
     .pack()
-    .size([dim - outerPad * 2, dim - outerPad * 2])
-    .padding(dim / 33);
+    .size([1 - outerPad * 2, 1 - outerPad * 2])
+    .padding(1 / 33);
   const nodes = {
     children: utils.range(150).map(() => ({
       name: "name",
-      size: (Math.random() + 0.1) / 1.2 * dim
+      size: (Math.random() + 0.1) / 1.2
     })),
     name: "name"
   };
@@ -45,8 +51,8 @@ const pack = dim => {
   };
 };
 
-const createSketch = dim => {
-  const pk = pack(dim);
+const createSketch = () => {
+  const pk = pack();
   let body = {
     angle: Math.PI / 4 - Math.PI / 8,
     velocity: 0
@@ -80,9 +86,10 @@ const createSketch = dim => {
       pk.nodes.map(
         utils.compose(
           sq => ({
-            x: sq.x + (sq.x - size / 2) * spreadFactor,
-            y: sq.y + (sq.y - size / 2) * spreadFactor,
+            x: sq.x + (sq.x - 1 / 2) * spreadFactor,
+            y: sq.y + (sq.y - 1 / 2) * spreadFactor,
             w: sq.w,
+            size,
             colorIndex: sq.colorIndex,
             rot: -body.angle,
             minW: pk.minmaxW.min,
