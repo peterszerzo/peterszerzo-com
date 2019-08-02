@@ -2,7 +2,7 @@ import pivotFrame from "./pivot-frame";
 import cosineBeetles from "./cosine-beetles";
 import theSpin from "./the-spin";
 import shyCircles from "./shy-circles";
-import wildyThings from "./wildy-things";
+import tickle from "./tickle";
 
 const sketches = sketchName => {
   switch (sketchName) {
@@ -14,8 +14,8 @@ const sketches = sketchName => {
       return cosineBeetles;
     case "shy-circles":
       return shyCircles;
-    case "wildy-things":
-      return wildyThings;
+    case "tickle":
+      return tickle;
     default:
       return pivotFrame;
   }
@@ -83,8 +83,7 @@ const createAnimation = stepper => {
       if (sketch.step) {
         this.anim = createAnimation(({ deltaTime, playhead }) => {
           sketch.step({
-            width: size,
-            height: size,
+            size,
             context,
             deltaTime: deltaTime,
             playhead: playhead
@@ -93,6 +92,7 @@ const createAnimation = stepper => {
         this.setAnimating();
       } else {
         sketch.still({
+          size,
           width: size,
           height: size,
           context

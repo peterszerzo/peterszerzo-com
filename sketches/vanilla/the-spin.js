@@ -10,8 +10,8 @@ const drawPoli = ({ x, y, r, rot, vertices }) => context => {
   context.moveTo(r, 0);
   range(vertices + 1).forEach(index => {
     context.lineTo(
-      r * Math.cos((index * Math.PI * 2) / vertices),
-      r * Math.sin((index * Math.PI * 2) / vertices)
+      r * Math.cos(index * Math.PI * 2 / vertices),
+      r * Math.sin(index * Math.PI * 2 / vertices)
     );
   });
   context.stroke();
@@ -26,7 +26,7 @@ const makeSpiral = ({ x, y, radius, vert }) => {
     y,
     vert,
     objs: range(20).map(num => ({
-      radius: (radius * k ** num) / kmax,
+      radius: radius * k ** num / kmax,
       rotation: 0
     }))
   };
@@ -61,8 +61,7 @@ const stepSpiral = deltaTime => spiral => ({
   objs: spiral.objs.map((obj, index) => ({
     ...obj,
     rotation:
-      obj.rotation +
-      (((deltaTime * 4) / spiral.vert) * 1.5 * (index - 9.5)) / 9.5
+      obj.rotation + deltaTime * 4 / spiral.vert * 1.5 * (index - 9.5) / 9.5
   }))
 });
 
@@ -79,16 +78,16 @@ const drawSpiral = context => spiral => {
 };
 
 const stepRotations = deltaTime => rotations =>
-  rotations.map((rot, index) => rot + (deltaTime * 1.5 * (index - 9.5)) / 9.5);
+  rotations.map((rot, index) => rot + deltaTime * 1.5 * (index - 9.5) / 9.5);
 
 const createSketch = dim => {
   let spirals = makeSpirals(dim);
   return {
-    step: ({ context, width, height, deltaTime }) => {
+    step: ({ context, size, deltaTime }) => {
       context.fillStyle = "rgb(255, 255, 255)";
-      context.fillRect(0, 0, width, height);
+      context.fillRect(0, 0, size, size);
       context.strokeStyle = "rgb(0, 0, 0)";
-      context.lineWidth = dim / 400;
+      context.lineWidth = size / 400;
       context.lineCap = "round";
       spirals = spirals.map(stepSpiral(deltaTime / 1000));
       spirals.forEach(drawSpiral(context));

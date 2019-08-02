@@ -36,9 +36,9 @@ const createSketch = dim => {
   const lines = utils.range(30).map(k => k - 15);
   const beetles = generateBeetles();
   return {
-    step: ({ context, width, height, deltaTime }) => {
+    step: ({ context, size, deltaTime }) => {
       context.fillStyle = "rgba(255, 255, 255, 1)";
-      context.fillRect(0, 0, width, height);
+      context.fillRect(0, 0, size, size);
       context.lineCap = "round";
       beetles.forEach(stepBeetle(deltaTime));
       beetles.forEach((beetle, index) => {

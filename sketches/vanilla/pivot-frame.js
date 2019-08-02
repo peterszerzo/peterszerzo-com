@@ -6,7 +6,7 @@ const colorScheme = ["#33658a", "#86bbd8", "#2f4858", "#f6ae2d", "#f26419"];
 const square = context => ({ x, y, w, colorIndex, minW, maxW, rot }) => {
   context.save();
   context.translate(x, y);
-  context.rotate(rot + (Math.PI / 2) * (colorIndex % 4));
+  context.rotate(rot + Math.PI / 2 * (colorIndex % 4));
   context.fillStyle = colorScheme[colorIndex];
   context.beginPath();
   context.moveTo(-w / 2, -w / 2);
@@ -26,7 +26,7 @@ const pack = dim => {
   const nodes = {
     children: utils.range(150).map(() => ({
       name: "name",
-      size: ((Math.random() + 0.1) / 1.2) * dim
+      size: (Math.random() + 0.1) / 1.2 * dim
     })),
     name: "name"
   };
@@ -52,13 +52,13 @@ const createSketch = dim => {
     velocity: 0
   };
   return {
-    step: ({ context, width, height, playhead, deltaTime }) => {
+    step: ({ context, size, playhead, deltaTime }) => {
       body.angle += body.velocity * 0.02;
       body.velocity += (Math.PI / 4 - body.angle) * 0.01;
 
       context.translate(0, 0);
       context.fillStyle = "rgba(255, 255, 255, 1)";
-      context.fillRect(0, 0, width, height);
+      context.fillRect(0, 0, size, size);
       context.strokeStyle = "rgb(55, 55, 55)";
       context.lineCap = "round";
       context.strokeStyle = "rgb(255, 255, 255)";
@@ -70,9 +70,9 @@ const createSketch = dim => {
 
       context.save();
 
-      context.translate(dim / 2, dim / 2);
+      context.translate(size / 2, size / 2);
       context.rotate(body.angle);
-      context.translate(-dim / 2, -dim / 2);
+      context.translate(-size / 2, -size / 2);
 
       context.shadowBlur = 3;
       context.shadowColor = "rgba(0, 0, 0, 0.4)";
@@ -80,8 +80,8 @@ const createSketch = dim => {
       pk.nodes.map(
         utils.compose(
           sq => ({
-            x: sq.x + (sq.x - dim / 2) * spreadFactor,
-            y: sq.y + (sq.y - dim / 2) * spreadFactor,
+            x: sq.x + (sq.x - size / 2) * spreadFactor,
+            y: sq.y + (sq.y - size / 2) * spreadFactor,
             w: sq.w,
             colorIndex: sq.colorIndex,
             rot: -body.angle,

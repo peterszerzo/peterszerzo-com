@@ -27,11 +27,12 @@ const normalize = ([x, y]) => {
   return [x / d, y / d];
 };
 
-const drawLeaf = context => ({
-  dim,
+const drawFeather = context => ({
+  size,
   quadratic,
   baseArmLength,
   divideInto,
+  color,
   harmonics
 }) => {
   const rg = utils.range(divideInto).map(i => i / (divideInto - 1));
@@ -49,9 +50,9 @@ const drawLeaf = context => ({
         0
       ) * baseArmLength;
 
-    const colorFactor = (x + y) / dim / 2;
+    const colorFactor = (x + y) / size / 2;
 
-    context.strokeStyle = chroma.mix("#131B2B", "#D257E0", colorFactor, "lch");
+    context.strokeStyle = chroma.mix("#131B2B", color, colorFactor, "lch");
 
     context.beginPath();
     context.moveTo(x + 0.3 * nx1 * armLength, y + 0.3 * ny1 * armLength);
@@ -74,13 +75,13 @@ const normalOnQuadratic = ([[x1, y1], [x2, y2], [x3, y3]]) => t =>
     -2 * (1 - t) * x1 + 2 * (1 - 2 * t) * x2 + 2 * t * x3
   ]);
 
-const createSketch = dim => {
+const createSketch = () => {
   return {
-    step: ({ context, width, height, playhead }) => {
+    step: ({ context, size, playhead }) => {
       context.fillStyle = "rgb(255, 255, 255)";
-      context.fillRect(0, 0, width, height);
+      context.fillRect(0, 0, size, size);
       context.strokeStyle = "rgb(0, 0, 0)";
-      context.lineWidth = dim / 140;
+      context.lineWidth = size / 140;
       context.lineCap = "round";
 
       const factor1 = Math.sin(playhead / 800);
@@ -89,69 +90,75 @@ const createSketch = dim => {
 
       let factor;
 
-      // Leaf 1
+      // Feather 1
 
       factor = factor1;
 
-      drawLeaf(context)({
-        dim,
+      drawFeather(context)({
+        size,
         quadratic: [
           [
-            dim * (0.3 + 0.02 * factor + 0.2),
-            dim * (0.3 - 0.02 * factor - 0.2)
+            size * (0.3 + 0.02 * factor + 0.2),
+            size * (0.3 - 0.02 * factor - 0.2)
           ],
           [
-            dim * (0.5 - 0.04 * factor + 0.2),
-            dim * (0.5 + 0.04 * factor - 0.2)
+            size * (0.5 - 0.04 * factor + 0.2),
+            size * (0.5 + 0.04 * factor - 0.2)
           ],
-          [dim * (0.7 + 0.02 * factor + 0.2), dim * (0.7 - 0.02 * factor - 0.2)]
+          [
+            size * (0.7 + 0.02 * factor + 0.2),
+            size * (0.7 - 0.02 * factor - 0.2)
+          ]
         ],
-        baseArmLength: width * 0.1,
+        baseArmLength: size * 0.1,
         harmonics: [1, -0.05, -0.15, -0.05, -0.05, -0.05],
+        color: "#6D85F2",
         divideInto: 24,
         factor
       });
 
-      // Leaf 2
+      // Feather 2
 
       factor = factor2;
 
-      drawLeaf(context)({
-        dim,
+      drawFeather(context)({
+        size,
         quadratic: [
-          [dim * (0.25 + 0.01 * factor), dim * (0.25 - 0.01 * factor)],
-          [dim * (0.5 - 0.03 * factor), dim * (0.5 + 0.03 * factor)],
-          [dim * (0.75 + 0.02 * factor), dim * (0.75 - 0.02 * factor)]
+          [size * (0.25 + 0.015 * factor), size * (0.25 - 0.014 * factor)],
+          [size * (0.5 - 0.04 * factor), size * (0.5 + 0.045 * factor)],
+          [size * (0.75 + 0.03 * factor), size * (0.75 - 0.03 * factor)]
         ],
-        baseArmLength: width * 0.2,
+        baseArmLength: size * 0.2,
         harmonics: [0.7, 0.08, 0.1, 0.01, 0, -0.05],
         divideInto: 30,
+        color: "#404775",
         factor
       });
 
-      // Leaf 3
+      // Feather 3
 
       factor = factor3;
 
-      drawLeaf(context)({
-        dim,
+      drawFeather(context)({
+        size,
         quadratic: [
           [
-            dim * (0.35 + 0.02 * factor - 0.2),
-            dim * (0.35 - 0.02 * factor + 0.2)
+            size * (0.35 + 0.02 * factor - 0.2),
+            size * (0.35 - 0.02 * factor + 0.2)
           ],
           [
-            dim * (0.5 - 0.04 * factor - 0.2),
-            dim * (0.5 + 0.04 * factor + 0.2)
+            size * (0.5 - 0.04 * factor - 0.2),
+            size * (0.5 + 0.04 * factor + 0.2)
           ],
           [
-            dim * (0.65 + 0.02 * factor - 0.2),
-            dim * (0.65 - 0.02 * factor + 0.2)
+            size * (0.65 + 0.02 * factor - 0.2),
+            size * (0.65 - 0.02 * factor + 0.2)
           ]
         ],
-        baseArmLength: width * 0.08,
+        baseArmLength: size * 0.08,
         harmonics: [1.5, 0.3, 0.1],
         divideInto: 18,
+        color: "#F76C16",
         factor
       });
     }
