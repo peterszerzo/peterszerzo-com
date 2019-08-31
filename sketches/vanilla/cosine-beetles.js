@@ -1,5 +1,4 @@
-const canvasSketch = require("canvas-sketch");
-const utils = require("./utils");
+const utils = require("./utils/index");
 
 const colorScheme = ["#020202", "#0d324d", "#7f5a83", "#a188a6", "#9da2ab"];
 
@@ -32,7 +31,7 @@ const generateBeetles = () =>
     k: 1 / 2000000
   }));
 
-const createSketch = dim => {
+const createSketch = () => {
   const lines = utils.range(30).map(k => k - 15);
   const beetles = generateBeetles();
   return {
@@ -42,7 +41,7 @@ const createSketch = dim => {
       context.lineCap = "round";
       beetles.forEach(stepBeetle(deltaTime));
       beetles.forEach((beetle, index) => {
-        context.lineWidth = dim * 0.012 * beetle.size;
+        context.lineWidth = size * 0.012 * beetle.size;
         context.strokeStyle = colorScheme[index % colorScheme.length];
         lines.forEach(k => {
           line({
@@ -50,14 +49,14 @@ const createSketch = dim => {
               (beetle.offset[0] +
                 beetle.x * beetle.size +
                 k * 0.02 * beetle.size) *
-              dim,
+              size,
             y:
               (beetle.offset[1] +
                 beetle.x * beetle.size +
                 k * 0.02 * beetle.size) *
-              dim,
+              size,
             rot: k * 0.33 + beetle.x * 10,
-            len: dim * 0.2 * beetle.size
+            len: size * 0.2 * beetle.size
           })(context);
         });
       });

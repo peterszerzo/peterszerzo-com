@@ -1,17 +1,15 @@
-const dim = 320;
-
 const range = n => [...Array(n).keys()];
 
-const drawPoli = ({ x, y, r, rot, vertices }) => context => {
+const drawPoli = ({ size, x, y, r, rot, vertices }) => context => {
   context.save();
-  context.translate(x, y);
+  context.translate(x * size, y * size);
   context.rotate(rot);
   context.beginPath();
-  context.moveTo(r, 0);
+  context.moveTo(r * size, 0);
   range(vertices + 1).forEach(index => {
     context.lineTo(
-      r * Math.cos(index * Math.PI * 2 / vertices),
-      r * Math.sin(index * Math.PI * 2 / vertices)
+      r * size * Math.cos(index * Math.PI * 2 / vertices),
+      r * size * Math.sin(index * Math.PI * 2 / vertices)
     );
   });
   context.stroke();
@@ -32,9 +30,9 @@ const makeSpiral = ({ x, y, radius, vert }) => {
   };
 };
 
-const makeSpirals = dim => {
-  const layoutPad = dim / 12;
-  const layoutUnit = (dim - 4 * layoutPad) / 3;
+const makeSpirals = () => {
+  const layoutPad = 1 / 12;
+  const layoutUnit = (1 - 4 * layoutPad) / 3;
 
   return [
     [0, 0, 4],
@@ -65,13 +63,15 @@ const stepSpiral = deltaTime => spiral => ({
   }))
 });
 
-const drawSpiral = context => spiral => {
+const drawSpiral = context => size => spiral => {
   spiral.objs.forEach((poli, index) => {
     drawPoli({
+      size,
       x: spiral.x,
       y: spiral.y,
       r: poli.radius,
       rot: poli.rotation,
+
       vertices: spiral.vert
     })(context);
   });
@@ -80,17 +80,17 @@ const drawSpiral = context => spiral => {
 const stepRotations = deltaTime => rotations =>
   rotations.map((rot, index) => rot + deltaTime * 1.5 * (index - 9.5) / 9.5);
 
-const createSketch = dim => {
-  let spirals = makeSpirals(dim);
+const createSketch = () => {
+  let spirals = makeSpirals();
   return {
     step: ({ context, size, deltaTime }) => {
       context.fillStyle = "rgb(255, 255, 255)";
       context.fillRect(0, 0, size, size);
       context.strokeStyle = "rgb(0, 0, 0)";
-      context.lineWidth = size / 400;
+      context.lineWidth = size / 300;
       context.lineCap = "round";
       spirals = spirals.map(stepSpiral(deltaTime / 1000));
-      spirals.forEach(drawSpiral(context));
+      spirals.forEach(drawSpiral(context)(size));
     }
   };
 };

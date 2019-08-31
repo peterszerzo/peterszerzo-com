@@ -1,4 +1,4 @@
-const utils = require("./utils");
+const utils = require("./utils/index");
 
 const circle = ({ x, y, r, gapAt }) => context => {
   context.beginPath();

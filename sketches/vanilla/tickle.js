@@ -1,4 +1,4 @@
-import * as utils from "./utils";
+import * as utils from "./utils/index";
 
 import chroma from "chroma-js";
 
@@ -15,6 +15,12 @@ const ptOnQuadratic = ([[x1, y1], [x2, y2], [x3, y3]]) => t => [
   (1 - t) * (1 - t) * x1 + 2 * (1 - t) * t * x2 + t * t * x3,
   (1 - t) * (1 - t) * y1 + 2 * (1 - t) * t * y2 + t * t * y3
 ];
+
+const normalOnQuadratic = ([[x1, y1], [x2, y2], [x3, y3]]) => t =>
+  normalize([
+    -(-2 * (1 - t) * y1 + 2 * (1 - 2 * t) * y2 + 2 * t * y3),
+    -2 * (1 - t) * x1 + 2 * (1 - 2 * t) * x2 + 2 * t * x3
+  ]);
 
 const rotate = angle => ([x, y]) => {
   const sinAngle = Math.sin(angle);
@@ -68,12 +74,6 @@ const drawFeather = context => ({
   context.strokeStyle = "#131B2B";
   drawQuadratic(context)(quadratic);
 };
-
-const normalOnQuadratic = ([[x1, y1], [x2, y2], [x3, y3]]) => t =>
-  normalize([
-    -(-2 * (1 - t) * y1 + 2 * (1 - 2 * t) * y2 + 2 * t * y3),
-    -2 * (1 - t) * x1 + 2 * (1 - 2 * t) * x2 + 2 * t * x3
-  ]);
 
 const createSketch = () => {
   return {

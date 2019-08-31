@@ -1,5 +1,5 @@
 const d3Hierarchy = require("d3-hierarchy");
-const utils = require("./utils");
+const utils = require("./utils/index");
 
 const colorScheme = ["#33658a", "#86bbd8", "#2f4858", "#f6ae2d", "#f26419"];
 

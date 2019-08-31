@@ -3,6 +3,8 @@ import cosineBeetles from "./cosine-beetles";
 import theSpin from "./the-spin";
 import shyCircles from "./shy-circles";
 import tickle from "./tickle";
+import bills from "./bills";
+import bezierRail from "./bezier-rail";
 
 const sketches = sketchName => {
   switch (sketchName) {
@@ -16,6 +18,10 @@ const sketches = sketchName => {
       return shyCircles;
     case "tickle":
       return tickle;
+    case "bills":
+      return bills;
+    case "bezier-rail":
+      return bezierRail;
     default:
       return pivotFrame;
   }
