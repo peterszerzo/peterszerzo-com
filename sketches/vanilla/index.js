@@ -3,28 +3,21 @@ import cosineBeetles from "./cosine-beetles";
 import theSpin from "./the-spin";
 import shyCircles from "./shy-circles";
 import tickle from "./tickle";
-import bills from "./bills";
+import honestCash from "./honest-cash";
 import bezierRail from "./bezier-rail";
 
+export const sketchByName = {
+  ["pivot-frame"]: pivotFrame,
+  ["the-spin"]: theSpin,
+  ["cosine-beetles"]: cosineBeetles,
+  ["shy-circles"]: shyCircles,
+  ["tickle"]: tickle,
+  ["honest-cash"]: honestCash,
+  ["bezier-rail"]: bezierRail
+};
+
 const sketches = sketchName => {
-  switch (sketchName) {
-    case "pivot-frame":
-      return pivotFrame;
-    case "the-spin":
-      return theSpin;
-    case "cosine-beetles":
-      return cosineBeetles;
-    case "shy-circles":
-      return shyCircles;
-    case "tickle":
-      return tickle;
-    case "bills":
-      return bills;
-    case "bezier-rail":
-      return bezierRail;
-    default:
-      return pivotFrame;
-  }
+  return sketchByName[sketchName] || pivotFrame;
 };
 
 const animate = () => {

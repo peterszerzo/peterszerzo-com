@@ -100,8 +100,8 @@ view model =
             perspective time
 
         currentFragmentShader =
-            [ fragmentShader
-            , fragmentShader2
+            [ fragmentShader2
+            , fragmentShader
             , fragmentShader3
             ]
                 |> (\lst -> List.drop (modBy (List.length lst) model.shader) lst)

@@ -1,6 +1,6 @@
-import "../sketches/elm";
-import "../sketches/vanilla";
-import "../sketches/p5";
+import * as elmSketches from "../sketches/elm";
+import * as vanillaSketches from "../sketches/vanilla";
+import * as p5Sketches from "../sketches/p5";
 
 const setContainerStyles = ({ size, animating }) => el => {
   el.style.width = size + "px";
@@ -69,8 +69,13 @@ const setContainerStyles = ({ size, animating }) => el => {
 
       let animating = Boolean(this.getAttribute("animating"));
 
-      const sketchType = this.getAttribute("sketch-type");
       const sketchName = this.getAttribute("sketch-name");
+
+      const sketchType = elmSketches.sketchByName[sketchName]
+        ? "elm"
+        : vanillaSketches.sketchByName[sketchName]
+          ? "vanilla"
+          : "p5";
 
       setContainerStyles({ size, animating })(this);
 
@@ -94,13 +99,15 @@ const setContainerStyles = ({ size, animating }) => el => {
       }
       this.playButton.addEventListener("click", this.handlePlayPause);
 
-      this.fullscreenLink = document.createElement("a");
-      this.fullscreenLink.className = "sketch-control-button";
-      this.fullscreenLink.style.border = "0";
-      this.fullscreenLink.style.display = "block";
-      this.fullscreenLink.innerHTML = `
+      const url = this.getAttribute("url");
+      if (url) {
+        this.fullscreenLink = document.createElement("a");
+        this.fullscreenLink.className = "sketch-control-button";
+        this.fullscreenLink.style.border = "0";
+        this.fullscreenLink.style.display = "block";
+        this.fullscreenLink.setAttribute("href", url);
+        this.fullscreenLink.innerHTML = `
         <svg width="30" height="30" viewBox="0 0 1000 1000" fill="currentColor">
-          <!-- <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#expand"></use> -->
           <rect x="100" y="100" width="300" height="100"></rect>
           <rect x="100" y="100" width="100" height="300"></rect>
           <rect x="600" y="100" width="300" height="100"></rect>
@@ -111,13 +118,8 @@ const setContainerStyles = ({ size, animating }) => el => {
           <rect x="800" y="600" width="100" height="300"></rect>
         </svg>
       `;
-      if (this.getAttribute("size") === "full") {
-        this.fullscreenLink.setAttribute("href", "/");
       } else {
-        this.fullscreenLink.setAttribute(
-          "href",
-          `/${sketchType}/${sketchName}`
-        );
+        this.fullscreenLink = document.createElement("span");
       }
 
       const controlsContainer = document.createElement("div");

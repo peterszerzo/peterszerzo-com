@@ -1,15 +1,13 @@
 import cubies from "./01-cubies";
 import spiralHop from "./02-spiral-hop";
 
+export const sketchByName = {
+  ["cubies"]: cubies,
+  ["spiral-hop"]: spiralHop
+};
+
 const sketches = sketchName => {
-  switch (sketchName) {
-    case "cubies":
-      return cubies;
-    case "spiral-hop":
-      return spiralHop;
-    default:
-      return cubies;
-  }
+  return sketchByName[sketchName] || cubies;
 };
 
 (() => {
@@ -51,7 +49,6 @@ const sketches = sketchName => {
         this.p5Sketch && this.p5Sketch.noLoop();
       }
     }
-
 
     disconnectedCallback() {
       if (this.p5Sketch) {

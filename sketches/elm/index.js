@@ -1,29 +1,36 @@
+const capitalizeFirst = word => word.slice(0, 1).toUpperCase() + word.slice(1);
+
+const slugToKey = slug =>
+  slug
+    .split("-")
+    .map(capitalizeFirst)
+    .join("");
+
+const defaultSketch = () => {
+  return import("./Envo.elm");
+};
+
+export const sketchByName = {
+  ["marching-windows"]: () => {
+    return import("./MarchingWindows.elm");
+  },
+  ["just-hanging-out"]: () => {
+    return import("./JustHangingOut.elm");
+  },
+  ["ribbons"]: () => {
+    return import("./Ribbons.elm");
+  },
+  ["envo"]: defaultSketch
+};
+
+const getSketch = sketchName => {
+  return (sketchByName[sketchName] || defaultSketch)();
+};
+
 (() => {
   if (!window.customElements || !window.HTMLElement) {
     return;
   }
-
-  const capitalizeFirst = word =>
-    word.slice(0, 1).toUpperCase() + word.slice(1);
-
-  const slugToKey = slug =>
-    slug
-      .split("-")
-      .map(capitalizeFirst)
-      .join("");
-
-  const getSketch = sketchName => {
-    switch (sketchName) {
-      case "marching-windows":
-        return import("./MarchingWindows.elm");
-      case "just-hanging-out":
-        return import("./JustHangingOut.elm");
-      case "ribbons":
-        return import("./Ribbons.elm");
-      case "envo":
-        return import("./Envo.elm");
-    }
-  };
 
   class ElmSketch extends HTMLElement {
     connectedCallback() {
