@@ -17,7 +17,7 @@ const grid = utils
   )
   .reduce((accumulator, current) => [...accumulator, ...current], []);
 
-const drawText = ({ context, size, color, value, index, serial }) => {
+const drawText = ({ context, size, color, value, no, serial }) => {
   context.fillStyle = color;
 
   context.textAlign = "start";
@@ -31,7 +31,7 @@ const drawText = ({ context, size, color, value, index, serial }) => {
   context.textAlign = "end";
   context.font = `${size * 0.0375}px '${font}'`;
   context.fillText(
-    `${index}th ${serial}`,
+    `${no}th // ${serial}`,
     size * (1 - 0.05),
     size * (0.05 + 0.0375)
   );
@@ -60,6 +60,16 @@ const bgBase = ({ context, size, backgroundColor }) => {
   context.shadowBlur = 0;
 };
 
+const bgHole = ({ context, size, backgroundColor }) => {
+  context.fillStyle = chroma(backgroundColor)
+    .brighten(1.5)
+    .alpha(0.4)
+    .hex();
+  context.beginPath();
+  context.arc(size * (1 - 0.3), size * 0.2, size * 0.06, 0, 2 * Math.PI);
+  context.fill();
+};
+
 const bg1 = ({
   context,
   size,
@@ -68,14 +78,19 @@ const bg1 = ({
   backgroundPatternColor
 }) => {
   bgBase({ context, size, backgroundColor });
-  context.fillStyle = backgroundPatternColor;
-  grid.forEach(([i, j]) => {
+  grid.forEach(([i, j], index) => {
     if (i === 0 || j === 0 || i === 1 || j === 1) {
       return;
     }
     const [startAngle, endAngle] = (() => {
       return [0, 2 * Math.PI];
     })();
+    context.fillStyle =
+      [15 * 8 + 12, 15 * 8 + 13, 16 * 8 + 13, 16 * 8 + 14].indexOf(index) > -1
+        ? chroma(backgroundPatternColor)
+            .darken(3.5)
+            .hex()
+        : backgroundPatternColor;
     context.beginPath();
     context.arc(
       i * size,
@@ -86,6 +101,7 @@ const bg1 = ({
     );
     context.fill();
   });
+  bgHole({ context, size, backgroundColor });
 };
 
 const grid2 = utils.range2(6)(4);
@@ -121,18 +137,12 @@ const bg2 = ({
       t
     });
   });
+  bgHole({ context, size, backgroundColor });
 };
 
-const bill = ({
-  context,
-  size,
-  playhead,
-  type,
-  color,
-  value,
-  index,
-  serial
-}) => {
+const bgs = [bg1, bg2];
+
+const bill = ({ context, size, playhead, type, color, value, no, serial }) => {
   const backgroundColor = chroma(color).hex();
   const backgroundPatternColor = chroma(color)
     .darken(0.25)
@@ -141,7 +151,7 @@ const bill = ({
   const textColor = chroma(color)
     .darken(3.5)
     .hex();
-  (type === "1" ? bg1 : bg2)({
+  bgs[type]({
     context,
     size,
     playhead,
@@ -150,8 +160,37 @@ const bill = ({
     backgroundPatternColor
   });
 
-  drawText({ context, size, value, index, color: textColor, serial });
+  drawText({ context, size, value, no, color: textColor, serial });
 };
+
+const colorScheme1 = ["#D2DFF4", "#FBC6A8", "#BFABCB"];
+
+const colorScheme2 = ["#AAC0AA", "#BFABCB", "#E2D58B"];
+
+const colorScheme = colorScheme2;
+
+const compositions = [
+  [
+    { x: 0.4, y: 0.3, z: 0, scale: 0.6 },
+    { x: 0.6, y: 0.5, z: 1, scale: 0.6 },
+    { x: 0.4, y: 0.7, z: 0, scale: 0.6 }
+  ],
+  [
+    { x: 0.0, y: 0.3, z: 0.0, scale: 1.2 },
+    { x: 0.5, y: 0.25, z: 0.0, scale: 0.8 },
+    { x: 0.6, y: 0.8, z: 1.0, scale: 0.5 }
+  ],
+  [
+    { x: 0.5, y: 0.5, z: 1, scale: 0 },
+    { x: 0.5, y: 0.5, z: 2, scale: 0.5 },
+    { x: 0.5, y: 0.5, z: 1, scale: 2 }
+  ],
+  [
+    { scale: 0 },
+    { scale: 0 },
+    { x: 0.75 - 0.025, y: 0.875 - 0.025, z: 1, scale: 0.5 }
+  ]
+];
 
 const createSketch = () => {
   return {
@@ -159,53 +198,53 @@ const createSketch = () => {
       context.fillStyle = "#FFF";
       context.fillRect(0, 0, size, size);
 
+      const animIndex = Math.floor(playhead * 0.00075) % 15;
+
       [
         {
-          type: "2",
-          x: 0.1,
-          y: 0.15,
-          sizeFactor: 0.8,
-          color: "#D2DFF4",
           serial: "B41FGH",
           value: 10,
-          index: 1723
+          no: 1723
         },
         {
-          type: "2",
-          x: 0.1,
-          y: 0.55,
-          sizeFactor: 0.8,
-          color: "#FBC6A8",
           value: 20,
           serial: "AT231S",
-          index: 14721
+          no: 14721
         },
         {
-          type: "2",
-          x: 0.3,
-          y: 0.35,
-          sizeFactor: 0.8,
-          color: "#BFABCB",
           value: 50,
           serial: "AT231S",
-          index: 14721
+          no: 14721
         }
-      ].forEach(info => {
-        context.save();
-        context.translate(size * info.x, size * info.y);
-        // context.rotate(Math.PI / 6);
-        bill({
-          context,
-          size: size * 0.6,
-          playhead,
-          type: info.type,
-          color: info.color,
-          serial: info.serial,
-          value: info.value,
-          index: info.index
+      ]
+        .map((bill, index) => ({
+          ...bill,
+          ...compositions[animIndex % compositions.length][index],
+          // Keep track of index here to have access to it after sorting
+          index
+        }))
+        .sort((a, b) => a.z - b.z)
+        .forEach(info => {
+          if (info.scale === 0) {
+            return;
+          }
+          context.save();
+          context.translate(
+            size * (info.x - info.scale * 0.5),
+            size * (info.y - info.scale * 0.25)
+          );
+          bill({
+            context,
+            size: size * info.scale,
+            playhead,
+            type: (info.index ** 2 + info.index * animIndex + animIndex) % 2,
+            color: colorScheme[info.index],
+            serial: info.serial,
+            value: info.value,
+            no: info.no
+          });
+          context.restore();
         });
-        context.restore();
-      });
     }
   };
 };
