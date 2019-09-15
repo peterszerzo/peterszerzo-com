@@ -76,6 +76,19 @@ const createAnimation = stepper => {
       canvas.setAttribute("height", size);
       this.appendChild(canvas);
 
+      this.canvas = canvas;
+
+      this.handleSave = ev => {
+        if (ev.key === "s" && ev.ctrlKey) {
+          const image = this.canvas
+            .toDataURL("image/png")
+            .replace("image/png", "image/octet-stream");
+          window.location.href = image;
+        }
+      };
+
+      document.addEventListener("keydown", this.handleSave);
+
       const context = canvas.getContext("2d");
       const sketchName = this.getAttribute("name");
       const sketch = sketches(sketchName)(size);
@@ -118,6 +131,7 @@ const createAnimation = stepper => {
 
     disconnectedCallback() {
       this.anim && this.anim.stop();
+      document.removeEventListener("keydown", this.handleSave);
     }
   }
 

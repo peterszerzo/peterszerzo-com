@@ -118,14 +118,12 @@ const setContainerStyles = ({ size, animating }) => el => {
           <rect x="800" y="600" width="100" height="300"></rect>
         </svg>
       `;
-      } else {
-        this.fullscreenLink = document.createElement("span");
       }
 
       const controlsContainer = document.createElement("div");
       controlsContainer.setAttribute("class", "sketch-controls");
       controlsContainer.appendChild(this.playButton);
-      controlsContainer.appendChild(this.fullscreenLink);
+      this.fullscreenLink && controlsContainer.appendChild(this.fullscreenLink);
       this.appendChild(controlsContainer);
 
       this.sketchElement = document.createElement(`${sketchType}-sketch`);
@@ -140,7 +138,10 @@ const setContainerStyles = ({ size, animating }) => el => {
     getSize() {
       const rawSize = this.getAttribute("size");
       if (rawSize === "full") {
-        return Math.min(window.innerWidth, window.innerHeight) * 0.8;
+        return Math.min(
+          Math.min(window.innerWidth, window.innerHeight) * 0.8,
+          524
+        );
       }
       return Number(rawSize) || 320;
     }

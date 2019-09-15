@@ -163,11 +163,7 @@ const bill = ({ context, size, playhead, type, color, value, no, serial }) => {
   drawText({ context, size, value, no, color: textColor, serial });
 };
 
-const colorScheme1 = ["#D2DFF4", "#FBC6A8", "#BFABCB"];
-
-const colorScheme2 = ["#AAC0AA", "#BFABCB", "#E2D58B"];
-
-const colorScheme = colorScheme2;
+const colorScheme = ["#AAC0AA", "#BFABCB", "#E2D58B"];
 
 const compositions = [
   [
@@ -181,6 +177,11 @@ const compositions = [
     { x: 0.6, y: 0.8, z: 1.0, scale: 0.5 }
   ],
   [
+    { scale: 0 },
+    { scale: 0 },
+    { x: 0.25 + 0.025, y: 0.875 - 0.025, z: 1, scale: 0.5 }
+  ],
+  [
     { x: 0.5, y: 0.5, z: 1, scale: 0 },
     { x: 0.5, y: 0.5, z: 2, scale: 0.5 },
     { x: 0.5, y: 0.5, z: 1, scale: 2 }
@@ -189,6 +190,11 @@ const compositions = [
     { scale: 0 },
     { scale: 0 },
     { x: 0.75 - 0.025, y: 0.875 - 0.025, z: 1, scale: 0.5 }
+  ],
+  [
+    { x: 0.75 - 0.025, y: 0.5, z: 1, scale: 0.5 },
+    { x: 0.25 + 0.025, y: 0.125 + 0.025, z: 1, scale: 0.5 },
+    { x: 0.25 + 0.025, y: 0.875 - 0.025, z: 1, scale: 0.5 }
   ]
 ];
 
@@ -230,9 +236,10 @@ const createSketch = () => {
           }
           context.save();
           context.translate(
-            size * (info.x - info.scale * 0.5),
-            size * (info.y - info.scale * 0.25)
+            size * (-info.scale * 0.5),
+            size * (-info.scale * 0.25)
           );
+          context.translate(size * info.x, size * info.y);
           bill({
             context,
             size: size * info.scale,

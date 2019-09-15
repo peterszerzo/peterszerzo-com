@@ -118,6 +118,10 @@ my-sketch:hover .sketch-controls {
   margin-left: 10px;
 }
 
+.sketch-controls *:first-child {
+  margin-left: 0;
+}
+
 .sketch-control-button {
   border: 0;
   color: var(--sage);
@@ -128,10 +132,6 @@ my-sketch:hover .sketch-controls {
 .sketch-control-button:hover {
   color: var(--lighterSage);
   background: none;
-}
-
-.sketch-controls *:first-child {
-  margin-left: 0;
 }
 
 /* hero */
