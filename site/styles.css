@@ -4,7 +4,7 @@
   --white: rgb(255, 255, 255);
   --black: rgb(0, 0, 0);
   --darkGray: rgb(60, 60, 60);
-  --faintGray: rgb(240, 240, 240);
+  --faintGray: rgb(230, 230, 230);
   --brightPurple: rgb(102, 52, 239);
   --faintBrightPurple: rgba(102, 52, 239, 0.1);
   --brighterPurple: rgb(116, 62, 254);
@@ -191,7 +191,7 @@ my-sketch:hover .sketch-controls {
 
 .divider {
   height: 2px;
-  border-bottom-width: 2px;
+  border-bottom-width: 1px;
   border-bottom-style: solid;
   border-bottom-color: var(--faintGray);
 }
@@ -219,12 +219,13 @@ section {
 
 .section-title h2 {
   margin: 0;
+  position: relative;
 }
 
-.section-title h2 span {
-  opacity: 0.2;
-  display: inline-block;
-  margin-left: 8px;
+.section-title h2::before {
+  content: "## ";
+  color: var(--sage);
+  font-weight: bold;
 }
 
 .section-title > *:not(:first-child) {
@@ -234,6 +235,14 @@ section {
 @media (min-width: 640px) {
   .section-title {
     justify-content: space-between;
+  }
+
+  .section-title h2::before {
+    position: absolute;
+    left: -38px;
+    top: 0;
+    content: "##";
+    color: var(--sage);
   }
 }
 
@@ -378,7 +387,7 @@ footer a:hover {
   a,
   li,
   button {
-    font-size: 16px;
+    font-size: 18px;
   }
 }
 
