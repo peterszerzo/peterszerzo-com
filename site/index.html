@@ -63,18 +63,18 @@
       <div class="hero">
         <div>
           <h1><span class="animated-text-shadow">Peter Szerzo</span></h1>
-          <p>neighborhood creative programmer</p>
+          <p>Neighborhood Creative Programmer</p>
         </div>
       </div>
       <div class="divider"></div>
       <section>
         <div class="section-title">
-          <h2>sketches</h2>
+          <h2>Sketches</h2>
         </div>
         <div class="sketches">
           <my-sketch
-            sketch-name="cosine-beetles"
-            url="/sketches/cosine-beetles"
+            sketch-name="shy-circles"
+            url="/sketches/shy-circles"
             size="235"
           ></my-sketch>
           <my-sketch
@@ -99,15 +99,15 @@
             size="235"
           ></my-sketch>
           <my-sketch
-            sketch-name="ribbons"
-            url="/sketches/ribbons"
+            sketch-name="the-spin"
+            url="/sketches/the-spin"
             size="235"
           ></my-sketch>
         </div>
       </section>
       <section>
         <div class="section-title">
-          <h2>open source</h2>
+          <h2>Open Source</h2>
         </div>
         <ul>
           <li>
@@ -123,12 +123,20 @@
       </section>
       <section>
         <div class="section-title">
-          <h2>blog</h2>
+          <h2>Blog</h2>
+          <!--
           <a href="https://dev.to/peterszerzo" style="display: inline-block; width: 30px; height: 30px;">
             <img src="https://d2fltix0v2e0sb.cloudfront.net/dev-badge.svg" alt="Peter Szerzo's DEV Profile" height="30" width="30">
           </a>
+          -->
         </div>
         <ul>
+          <li>
+            <a href="https://dev.to/peterszerzo/introducing-arborist-the-tree-editor-for-elm-49po">Introducing Arborist, the Tree Editor for Elm</a>
+          </li>
+          <li>
+            <a href="https://dev.to/peterszerzo/rich-interactive-notebooks-with-elm-markup-part-1-50kb">Rich Interactive Notebooks with elm-markup</a>
+          </li>
           <li>
             <a href="https://dev.to/peterszerzo/safe-functional-io-in-typescript-an-introduction-1kmi">Safe Functional IO in TypeScript</a>
           </li>
@@ -136,7 +144,7 @@
       </section>
       <section>
         <div class="section-title">
-          <h2>talks</h2>
+          <h2>Talks</h2>
         </div>
         <ul>
           <li>
@@ -169,8 +177,8 @@
       </section>
       <section>
         <div class="section-title">
-          <h2>about</h2>
-        <button id="about-switcher">Switch!</button>
+          <h2>About</h2>
+          <button class="button--mono" id="about-switcher">>></button>
         </div>
         <div id="about-1">
           <p>
@@ -192,9 +200,7 @@
             strategies in architecture, I love poking around across disciplines,
             and use code for
             <a href="http://splytlight.surge.sh">product design</a
-            >,
-            <a href="https://www.youtube.com/watch?v=mwExBCCFdZw">animation</a>
-            and generative art. Sometimes, I do none of that and stare out
+            >, animation and generative art. Sometimes, I do none of that and stare out
             the window.
           </p>
           <p>
@@ -266,9 +272,11 @@
           if (isAboutV1) {
             aboutV1.style.display = "none";
             aboutV2.style.display = "block";
+            button.innerText = "<<";
           } else {
             aboutV1.style.display = "block";
             aboutV2.style.display = "none";
+            button.innerText = ">>";
           }
 
           isAboutV1 = !isAboutV1;

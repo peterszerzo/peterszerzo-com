@@ -9,11 +9,7 @@ const setContainerStyles = ({ size, animating }) => el => {
   el.style.borderRadius = "3px";
   el.style.cursor = "pointer";
   el.style.overflow = "hidden";
-  if (animating) {
-    el.style.boxShadow = "0 0 2px 0 rgba(0, 0, 0, 0.5)";
-  } else {
-    el.style.boxShadow = "0 0 10px 0 rgba(0, 0, 0, 0.3)";
-  }
+  el.style.boxShadow = "0 0 6px 0 rgba(0, 0, 0, 0.15)";
 };
 
 (() => {
@@ -22,7 +18,7 @@ const setContainerStyles = ({ size, animating }) => el => {
   }
 
   const playButtonTemplate = isPlaying => `
-<svg width="30" height="30" viewBox="0 0 1000 1000" fill="currentColor">
+<svg width="24" height="24" viewBox="0 0 1000 1000" fill="currentColor">
   ${
     !isPlaying
       ? `
@@ -107,7 +103,7 @@ const setContainerStyles = ({ size, animating }) => el => {
         this.fullscreenLink.style.display = "block";
         this.fullscreenLink.setAttribute("href", url);
         this.fullscreenLink.innerHTML = `
-        <svg width="30" height="30" viewBox="0 0 1000 1000" fill="currentColor">
+        <svg width="24" height="24" viewBox="0 0 1000 1000" fill="currentColor">
           <rect x="100" y="100" width="300" height="100"></rect>
           <rect x="100" y="100" width="100" height="300"></rect>
           <rect x="600" y="100" width="300" height="100"></rect>
