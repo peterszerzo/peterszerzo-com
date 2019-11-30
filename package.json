@@ -11,16 +11,11 @@
   "author": "Peter Szerzo <szerzo.peter@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "@anvaka/streamlines": "^1.1.0",
-    "canvas-sketch": "^0.3.1",
     "chroma-js": "^2.0.4",
     "d3-hierarchy": "^1.1.8",
     "p5": "^0.9.0"
   },
   "devDependencies": {
-    "elm": "0.19.1",
-    "elm-hot": "^1.1.0",
-    "node-elm-compiler": "^5.0.3",
     "parcel-bundler": "^1.12.3"
   }
 }
