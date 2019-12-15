@@ -10,3 +10,4 @@ tmp
 public/index.html
 elm.js
 .cache
+__sapper__
