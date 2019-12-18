@@ -37,37 +37,6 @@ li {
   margin: 10px 0;
 }
 
-/* container */
-
-.container {
-  width: 100%;
-  max-width: 800px;
-  margin: auto;
-  padding: 60px 15px;
-}
-
-.container > * {
-  margin-bottom: 60px;
-}
-
-.container > *:last-child {
-  margin-bottom: 0;
-}
-
-@media (min-width: 640px) {
-  .container {
-    padding: 140px 20px;
-  }
-
-  .container > * {
-    margin-bottom: 100px;
-  }
-
-  .container > *:last-child {
-    margin-bottom: 0;
-  }
-}
-
 /* sketches */
 
 .sketches {
@@ -151,38 +120,14 @@ my-sketch:hover .sketch-controls {
   }
 }
 
-/* animated-text-shadow */
-
-@keyframes animated-text-shadow-keyframes-small {
-  0% {
-    text-shadow: 1px 1px 0px var(--brightPurple);
-  }
-
-  100% {
-    text-shadow: 1px 1px 0px var(--sage);
-  }
-}
-
-@keyframes animated-text-shadow-keyframes-large {
-  0% {
-    text-shadow: 2px 2px 0px var(--brightPurple);
-  }
-
-  100% {
-    text-shadow: 2px 2px 0px var(--sage);
-  }
-}
-
 .animated-text-shadow {
-  text-shadow: 1px 1px 0px var(--brightPurple);
-  animation: animated-text-shadow-keyframes-small 6s ease-in-out infinite
+  text-shadow: 1.5px 1.5px 0px var(--sage);
     alternate;
 }
 
 @media (min-width: 640px) {
   .animated-text-shadow {
-    text-shadow: 2px 2px 0px var(--brightPurple);
-    animation: animated-text-shadow-keyframes-large 6s ease-in-out infinite
+    text-shadow: 2px 2px 0px var(--sage);
       alternate;
   }
 }
@@ -246,72 +191,10 @@ section {
   }
 }
 
-/* button */
-
-button {
-  background: var(--sage);
-  color: var(--white);
-  border: 0;
-  border-radius: 3px;
-  line-height: 1;
-  padding: 6px 8px 4px 8px;
-}
-
-.button--mono {
-  font-family: monospace;
-  font-weight: bold;
-}
-
-button:hover {
-  background-color: var(--lighterSage);
-}
-
-button:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px var(--faintSage);
-}
-
-/* modal */
-
-.modal {
-  z-index: 101;
-  position: fixed;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: #ffffff;
-}
-
-/* home-link */
-
-.home-link {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  color: var(--sage);
-  border: 0;
-}
-
-.home-link:hover {
-  background: none;
-  color: var(--lighterSage);
-}
-
-/* static page */
-.static-page {
-  max-width: 640px;
-  padding: 10px;
-  margin: auto;
-}
-
 /* typography */
 
 h1 {
-  font-size: 32px;
+  font-size: 36px;
   font-weight: 400;
   margin: 0px;
 }

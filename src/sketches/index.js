@@ -58,8 +58,12 @@ const setContainerStyles = ({ size, animating }) => el => {
   class Sketch extends HTMLElement {
     connectedCallback() {
       this.style.position = "relative";
+      this.style.display = "inline-block";
 
       const size = this.getSize();
+
+      this.style.width = `${size}px`;
+      this.style.height = `${size}px`;
 
       let animating = Boolean(this.getAttribute("animating"));
 
@@ -123,6 +127,15 @@ const setContainerStyles = ({ size, animating }) => el => {
         this.sketchElement.setAttribute("animating", "true");
       }
       this.appendChild(this.sketchElement);
+    }
+
+    attributeChangedCallback() {
+      const size = this.getSize();
+      this.sketchElement && this.sketchElement.setAttribute("size", size);
+    }
+
+    static get observedAttributes() {
+      return ["animating", "size"];
     }
 
     getSize() {

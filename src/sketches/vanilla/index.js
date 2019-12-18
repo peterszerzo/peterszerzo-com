@@ -68,15 +68,13 @@ const createAnimation = stepper => {
 
   class VanillaSketch extends HTMLElement {
     connectedCallback() {
-      const size = Number(this.getAttribute("size")) || 320;
+      this.size = Number(this.getAttribute("size")) || 320;
       const animating = Boolean(this.getAttribute("animating"));
 
-      const canvas = document.createElement("canvas");
-      canvas.setAttribute("width", size);
-      canvas.setAttribute("height", size);
-      this.appendChild(canvas);
-
-      this.canvas = canvas;
+      this.canvas = document.createElement("canvas");
+      this.canvas.setAttribute("width", this.size);
+      this.canvas.setAttribute("height", this.size);
+      this.appendChild(this.canvas);
 
       this.handleSave = ev => {
         if (ev.key === "s" && ev.ctrlKey) {
@@ -89,13 +87,13 @@ const createAnimation = stepper => {
 
       document.addEventListener("keydown", this.handleSave);
 
-      const context = canvas.getContext("2d");
+      const context = this.canvas.getContext("2d");
       const sketchName = this.getAttribute("name");
-      const sketch = sketches(sketchName)(size);
-      if (sketch.step) {
+      this.sketch = sketches(sketchName)(this.size);
+      if (this.sketch.step) {
         this.anim = createAnimation(({ deltaTime, playhead }) => {
-          sketch.step({
-            size,
+          this.sketch.step({
+            size: this.size,
             context,
             deltaTime: deltaTime,
             playhead: playhead
@@ -103,20 +101,26 @@ const createAnimation = stepper => {
         });
         this.setAnimating();
       } else {
-        sketch.still({
-          size,
-          width: size,
-          height: size,
+        this.sketch.still({
+          size: this.size,
+          width: this.size,
+          height: this.size,
           context
         });
       }
     }
 
     static get observedAttributes() {
-      return ["animating"];
+      return ["animating", "size"];
     }
 
     attributeChangedCallback() {
+      const newSize = Number(this.getAttribute("size")) || 320;
+      if (newSize !== this.size) {
+        this.size = newSize;
+        this.canvas.setAttribute("width", this.size);
+        this.canvas.setAttribute("height", this.size);
+      }
       this.setAnimating();
     }
 

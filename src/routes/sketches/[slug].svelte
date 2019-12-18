@@ -13,6 +13,10 @@
 
 <script>
   export let sketch;
+
+  export let width;
+  export let height;
+
   import { onMount } from "svelte";
 
   onMount(async () => {
@@ -34,9 +38,14 @@
 <my-sketch
   sketch-name={sketch.slug}
   url="/sketches/cosine-beetles"
-  size="600"
+  size={width / 2}
+  animating="true"
 ></my-sketch>
 
-<div class="content">
-  {@html sketch.html}
-</div>
+{#if sketch.html}
+  <div class="content">
+    {@html sketch.html}
+  </div>
+{/if}
+
+<svelte:window bind:innerWidth={width} bind:innerHeight={height} />
