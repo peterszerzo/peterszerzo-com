@@ -13,6 +13,10 @@
 
 <script>
   import Logo from "../components/Logo.svelte";
+  import Switch from "../components/Switch.svelte";
+  import Sketch from "../components/Sketch.svelte";
+  import SectionTitle from "../components/SectionTitle.svelte";
+  import Hero from "../components/Hero.svelte";
   import Button from "../components/Button.svelte";
   import { onMount } from "svelte";
 
@@ -20,9 +24,48 @@
 
   export let aboutVersion = "serious";
 
-  const handleAboutSwitcher = () => {
+  const handleAboutSwitcher = detail => {
     aboutVersion = aboutVersion === "serious" ? "nonserious" : "serious";
   }
+
+  const tech = [
+    {
+      image: "/imgs/logos/elm-logo.png",
+      url: "https://github.com/peterszerzo/elm-arborist"
+    },
+    {
+      image: "/imgs/logos/typescript-logo.png",
+      url: "https://dev.to/peterszerzo/safe-functional-io-in-typescript-an-introduction-1kmi"
+    },
+    {
+      image: "/imgs/logos/rxjs-logo.png",
+      url: "https://github.com/peterszerzo/splytlight/blob/master/src/index.js"
+    },
+    {
+      image: "/imgs/logos/react-logo.png",
+      url: "https://operational-ui.netlify.com"
+    },
+    {
+      image: "/imgs/logos/html-logo.png"
+    },
+    {
+      image: "/imgs/logos/css-logo.png"
+    },
+    {
+      image: "/imgs/logos/haskell-logo.png",
+      url: "https://gitlab.com/peterszerzo/ensemble-of-flesh-chat"
+    },
+    {
+      image: "/imgs/logos/processing-logo.png"
+    },
+    {
+      image: "/imgs/logos/clojure-logo.png"
+    },
+    {
+      image: "/imgs/logos/vim-logo.png",
+      url: "https://github.com/peterszerzo/dotfiles/blob/master/.vimrc"
+    },
+  ]
 
   onMount(async () => {
     await import("../sketches/index.js");
@@ -30,37 +73,50 @@
 </script>
 
 <style>
+  section {
+    margin-top: 80px;
+  }
+
+  .tech {
+    display: inline-block;
+    background-repeat: no-repeat;
+    width: 36px;
+    height: 36px;
+    margin: 0 12px 12px 0;
+    background-size: contain !important;
+    background-position: 50% 50%;
+    filter: brightness(100%);
+  }
+
+  .tech:hover {
+    filter: brightness(110%);
+  }
+
+  .tech span {
+    display: none;
+  }
 </style>
 
 <svelte:head>
   <title>Peter Szerzo</title>
 </svelte:head>
 
-<div class="hero">
-  <div>
-    <h1><span class="animated-text-shadow">Peter Szerzo</span></h1>
-    <p>Neighborhood Creative Programmer</p>
-  </div>
-</div>
-<div class="divider"></div>
+<Hero />
 <section>
-  <div class="section-title">
-    <h2>Sketches</h2>
-  </div>
+  <SectionTitle title="Sketches" />
   <div class="sketches">
     {#each sketches as sketch}
-    <my-sketch
-      sketch-name="{sketch.slug}"
+    <Sketch
+      sketchName="{sketch.slug}"
       url="/sketches/{sketch.slug}"
-      size="235"
-    ></my-sketch>
+      size="160"
+      initiallyPlaying={false}
+    ></Sketch>
     {/each}
   </div>
 </section>
 <section>
-  <div class="section-title">
-    <h2>Open Source</h2>
-  </div>
+  <SectionTitle title="Open Source" />
   <ul>
     <li>
       <a href="https://peterszerzo.github.io/elm-arborist">elm-arborist</a>
@@ -74,14 +130,11 @@
   </ul>
 </section>
 <section>
-  <div class="section-title">
-    <h2>Blog</h2>
-    <!--
-    <a href="https://dev.to/peterszerzo" style="display: inline-block; width: 30px; height: 30px;">
+  <SectionTitle title="Blog">
+    <a href="https://dev.to/peterszerzo" style="display: inline-block; width: 30px; height: 30px;" slot="controls">
       <img src="https://d2fltix0v2e0sb.cloudfront.net/dev-badge.svg" alt="Peter Szerzo's DEV Profile" height="30" width="30">
     </a>
-    -->
-  </div>
+  </SectionTitle>
   <ul>
     <li>
       <a href="https://dev.to/peterszerzo/introducing-arborist-the-tree-editor-for-elm-49po">Introducing Arborist, the Tree Editor for Elm</a>
@@ -95,9 +148,7 @@
   </ul>
 </section>
 <section>
-  <div class="section-title">
-    <h2>Talks</h2>
-  </div>
+  <SectionTitle title="Talks" />
   <ul>
     <li>
       <a href="https://www.youtube.com/embed/0ASvEzfuH7g">Take your Framework Dancing</a> // Berlin, February 2018
@@ -115,10 +166,19 @@
   </ul>
 </section>
 <section>
-  <div class="section-title">
-    <h2>About</h2>
-    <Button on:click={handleAboutSwitcher} label="Magic switch" />
-  </div>
+  <SectionTitle title="The logo salad" subtitle="Languages and tools I love" />
+  {#each tech as techItem}
+    <a href={techItem.url} class="tech" style={`background-image: url(${techItem.image});`}>
+      <span>a</span>
+    </a>
+  {/each}
+</section>
+<section>
+  <SectionTitle title="About">
+    <div slot="controls">
+      <Switch on:change={handleAboutSwitcher} active={aboutVersion !== 'serious'} />
+    </div>
+  </SectionTitle>
   {#if aboutVersion === 'serious'}
     <div>
       <p>

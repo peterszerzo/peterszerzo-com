@@ -3,13 +3,11 @@
 </svelte:head>
 
 <div class="static-page">
-  <a href="/">Home</a>
-
   <h1>Peter’s Now Page</h1>
 
   <blockquote>
     The /now page is Derek Sivers’
-    <a href="https://sivers.org/nowff">brilliant idea]</a>. Thank you, Derek!
+    <a href="https://sivers.org/nowff">brilliant idea</a>. Thank you, Derek!
   </blockquote>
 
   <p>

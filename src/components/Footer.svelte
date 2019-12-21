@@ -3,44 +3,60 @@
 </script>
 
 <footer>
-  <div>
-    <Logo />
+  <div class="footer-content">
+    <div class="footer-logo">
+      <p>2019 Peter Szerzo</p>
+    </div>
+    <ul>
+      <li><a href="https://represent.io/peterszerzo.pdf">Resume</a></li>
+      <li><a href="https://twitter.com/peterszerzo">Twitter</a></li>
+      <li>
+        <a href="https://www.instagram.com/peterszerzo_/">Instagram</a>
+      </li>
+      <li><a href="https://github.com/peterszerzo">GitHub</a></li>
+      <li><a href="https://dev.to/peterszerzo">Blog</a></li>
+      <li><a href="./now">Now</a></li>
+    </ul>
   </div>
-  <ul>
-    <li><a href="https://represent.io/peterszerzo.pdf">Resume</a></li>
-    <li><a href="https://twitter.com/peterszerzo">Twitter</a></li>
-    <li>
-      <a href="https://www.instagram.com/peterszerzo_/">Instagram</a>
-    </li>
-    <li><a href="https://github.com/peterszerzo">GitHub</a></li>
-    <li><a href="https://dev.to/peterszerzo">Blog</a></li>
-    <li><a href="./now">Now</a></li>
-  </ul>
 </footer>
 
 <style>
 footer {
-  text-align: center;
+  border-top: 4px dotted var(--sage);
+  padding: 60px 0;
 }
 
-footer ul {
+.footer-content {
+  max-width: 800px;
+  padding: 0 15px;
+  margin: auto;
+}
+
+p {
+  margin: 0 0 10px 0;
+}
+
+ul {
   margin: 0;
 }
 
-footer ul {
+li {
+  margin: 0;
+}
+
+ul {
   list-style: none;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: flex-start;
 }
 
-footer ul a {
-  margin-left: 18px;
+ul a {
+  margin-right: 18px;
 }
 
-footer :global(svg) {
-  width: 36px;
+.footer-logo {
   height: 36px;
-  color: var(--sage);
+  margin: auto;
 }
 </style>

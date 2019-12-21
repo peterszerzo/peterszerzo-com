@@ -12,40 +12,46 @@
 </script>
 
 <script>
+  import Sketch from "../../components/Sketch.svelte";
+  import marked from "marked";
+
   export let sketch;
 
   export let width;
   export let height;
 
-  import { onMount } from "svelte";
-
-  onMount(async () => {
-    await import("../../sketches/index.js");
-  });
+  $ : content = sketch.content && marked(sketch.content);
 </script>
-
-<style>
-</style>
 
 <svelte:head>
   <title>{sketch.title}</title>
 </svelte:head>
 
-<a href="/">Home</a>
+<div class="sketch-page">
+  <h1>{sketch.title}</h1>
 
-<h1>{sketch.title}</h1>
+  <Sketch
+    sketchName={sketch.slug}
+    size={480}
+    animating="true"
+    initiallyPlaying={true}
+  ></Sketch>
 
-<my-sketch
-  sketch-name={sketch.slug}
-  url="/sketches/cosine-beetles"
-  size={width / 2}
-  animating="true"
-></my-sketch>
-
-{#if sketch.html}
-  <div class="content">
-    {@html sketch.html}
-  </div>
-{/if}
+  {#if sketch.content}
+    <div class="content">
+      {@html content}
+    </div>
+  {/if}
+</div>
 
 <svelte:window bind:innerWidth={width} bind:innerHeight={height} />
+
+<style>
+  .sketch-page > :global(*) {
+    margin-bottom: 30px;
+  }
+
+  .sketch-page > :global(*:last-child) {
+    margin-bottom: 0;
+  }
+</style>

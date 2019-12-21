@@ -5,5 +5,12 @@ export const get = (req, res, next) => {
     "Content-Type": "application/json"
   });
 
-  res.end(JSON.stringify(sketches));
+  res.end(
+    JSON.stringify(
+      sketches.map(sketch => ({
+        slug: sketch.slug,
+        title: sketch.title
+      }))
+    )
+  );
 };

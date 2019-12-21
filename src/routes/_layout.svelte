@@ -1,5 +1,8 @@
 <script>
   import Footer from "../components/Footer.svelte";
+  import Header from "../components/Header.svelte";
+
+  export let segment;
 </script>
 
 <style>
@@ -7,34 +10,19 @@
   width: 100%;
   max-width: 800px;
   margin: auto;
-  padding: 60px 15px;
-}
-
-.container > :global(*) {
-  margin-bottom: 60px;
-}
-
-.container > :global(*:last-child) {
-  margin-bottom: 0;
+  padding: 80px 15px;
 }
 
 @media (min-width: 640px) {
   .container {
-    padding: 140px 20px;
-  }
-
-  .container > :global(*) {
-    margin-bottom: 100px;
-  }
-
-  .container > :global(*:last-child) {
-    margin-bottom: 0;
+    padding: 120px 20px;
   }
 }
 </style>
 
 <div class="container">
+  <Header />
   <slot></slot>
-  <div class="divider"></div>
-  <Footer />
 </div>
+
+<Footer />

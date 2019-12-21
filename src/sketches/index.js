@@ -1,13 +1,64 @@
-import * as vanillaSketches from "../sketches/vanilla";
+import pivotFrame from "./pivot-frame";
+import cosineBeetles from "./cosine-beetles";
+import theSpin from "./the-spin";
+import shyCircles from "./shy-circles";
+import tickle from "./tickle";
+import honestCash from "./honest-cash";
+import bezierRail from "./bezier-rail";
 
-const setContainerStyles = ({ size, animating }) => el => {
-  el.style.width = size + "px";
-  el.style.height = size + "px";
-  el.style.transition = "box-shadow 0.1s ease-in-out";
-  el.style.borderRadius = "3px";
-  el.style.cursor = "pointer";
-  el.style.overflow = "hidden";
-  el.style.boxShadow = "0 0 6px 0 rgba(0, 0, 0, 0.15)";
+export const sketchByName = {
+  ["pivot-frame"]: pivotFrame,
+  ["the-spin"]: theSpin,
+  ["cosine-beetles"]: cosineBeetles,
+  ["shy-circles"]: shyCircles,
+  ["tickle"]: tickle,
+  ["honest-cash"]: honestCash,
+  ["bezier-rail"]: bezierRail
+};
+
+const sketches = sketchName => {
+  return sketchByName[sketchName] || pivotFrame;
+};
+
+const animate = () => {
+  requestAnimationFrame(() => {
+    animate();
+  });
+};
+
+const createAnimation = stepper => {
+  let prevTime = new Date().getTime();
+  let playhead = 0;
+  let animating = false;
+  stepper({ deltaTime: 0, playhead: 0 });
+  const animate = () => {
+    const newTime = new Date().getTime();
+    const deltaTime = newTime - prevTime;
+    playhead += deltaTime;
+    stepper({ deltaTime, playhead });
+    prevTime = newTime;
+    requestAnimationFrame(() => {
+      if (animating) {
+        animate();
+      }
+    });
+  };
+  const start = () => {
+    prevTime = new Date().getTime();
+    animating = true;
+    animate();
+  };
+  const stop = () => {
+    animating = false;
+  };
+  const toggle = () => {
+    animating ? stop() : start();
+  };
+  return {
+    start,
+    stop,
+    toggle
+  };
 };
 
 (() => {
@@ -15,144 +66,80 @@ const setContainerStyles = ({ size, animating }) => el => {
     return;
   }
 
-  const playButtonTemplate = isPlaying => `
-<svg width="24" height="24" viewBox="0 0 1000 1000" fill="currentColor">
-  ${
-    !isPlaying
-      ? `
-    <circle cx="500" cy="500" r="500">
-    </circle>
-    <polygon points="400,300 400,700 700,500" fill="#FFFFFF" />
-  `
-      : `
-    <circle cx="500" cy="500" r="500">
-    </circle>
-    <g fill="white">
-      <rect x="360" y="300" width="80" height="400" fill="#FFFFFF"></rect>
-      <rect x="560" y="300" width="80" height="400" fill="#FFFFFF"></rect>
-    </g>
-  `
-  }
-</svg>
-`;
-
-  class PlayButton extends HTMLElement {
+  class VanillaSketch extends HTMLElement {
     connectedCallback() {
-      const isPlaying = Boolean(this.getAttribute("playing"));
-      this.className = "sketch-control-button";
-      this.innerHTML = playButtonTemplate(isPlaying);
-    }
+      this.size = Number(this.getAttribute("size")) || 320;
+      const animating = JSON.parse(this.getAttribute("animating"));
 
-    static get observedAttributes() {
-      return ["playing"];
-    }
+      this.canvas = document.createElement("canvas");
+      this.canvas.setAttribute("width", this.size);
+      this.canvas.setAttribute("height", this.size);
+      this.appendChild(this.canvas);
 
-    attributeChangedCallback() {
-      const isPlaying = Boolean(this.getAttribute("playing"));
-      this.innerHTML = playButtonTemplate(isPlaying);
-    }
-  }
-
-  customElements.define("play-button", PlayButton);
-
-  class Sketch extends HTMLElement {
-    connectedCallback() {
-      this.style.position = "relative";
-      this.style.display = "inline-block";
-
-      const size = this.getSize();
-
-      this.style.width = `${size}px`;
-      this.style.height = `${size}px`;
-
-      let animating = Boolean(this.getAttribute("animating"));
-
-      const sketchName = this.getAttribute("sketch-name");
-
-      const sketchType = "vanilla";
-
-      setContainerStyles({ size, animating })(this);
-
-      this.handlePlayPause = () => {
-        animating = !animating;
-        setContainerStyles({ size, animating })(this);
-        if (animating) {
-          this.playButton.setAttribute("playing", "true");
-          this.sketchElement.setAttribute("animating", "true");
-        } else {
-          this.playButton.removeAttribute("playing");
-          this.sketchElement.removeAttribute("animating");
+      this.handleSave = ev => {
+        if (ev.key === "s" && ev.ctrlKey) {
+          const image = this.canvas
+            .toDataURL("image/png")
+            .replace("image/png", "image/octet-stream");
+          window.location.href = image;
         }
       };
 
-      this.playButton = document.createElement("play-button");
-      if (animating) {
-        this.playButton.setAttribute("playing", "true");
+      document.addEventListener("keydown", this.handleSave);
+
+      const context = this.canvas.getContext("2d");
+      const sketchName = this.getAttribute("name");
+      this.sketch = sketches(sketchName)(this.size);
+      if (this.sketch.step) {
+        this.anim = createAnimation(({ deltaTime, playhead }) => {
+          this.sketch.step({
+            size: this.size,
+            context,
+            deltaTime: deltaTime,
+            playhead: playhead
+          });
+        });
+        this.setAnimating();
       } else {
-        this.playButton.removeAttribute("playing");
+        this.sketch.still({
+          size: this.size,
+          width: this.size,
+          height: this.size,
+          context
+        });
       }
-      this.playButton.addEventListener("click", this.handlePlayPause);
-
-      const url = this.getAttribute("url");
-      if (url) {
-        this.fullscreenLink = document.createElement("a");
-        this.fullscreenLink.className = "sketch-control-button";
-        this.fullscreenLink.style.border = "0";
-        this.fullscreenLink.style.display = "block";
-        this.fullscreenLink.setAttribute("href", url);
-        this.fullscreenLink.innerHTML = `
-        <svg width="24" height="24" viewBox="0 0 1000 1000" fill="currentColor">
-          <rect x="100" y="100" width="300" height="100"></rect>
-          <rect x="100" y="100" width="100" height="300"></rect>
-          <rect x="600" y="100" width="300" height="100"></rect>
-          <rect x="800" y="100" width="100" height="300"></rect>
-          <rect x="100" y="600" width="100" height="300"></rect>
-          <rect x="100" y="800" width="300" height="100"></rect>
-          <rect x="600" y="800" width="300" height="100"></rect>
-          <rect x="800" y="600" width="100" height="300"></rect>
-        </svg>
-      `;
-      }
-
-      const controlsContainer = document.createElement("div");
-      controlsContainer.setAttribute("class", "sketch-controls");
-      controlsContainer.appendChild(this.playButton);
-      this.fullscreenLink && controlsContainer.appendChild(this.fullscreenLink);
-      this.appendChild(controlsContainer);
-
-      this.sketchElement = document.createElement(`${sketchType}-sketch`);
-      this.sketchElement.setAttribute("name", sketchName);
-      this.sketchElement.setAttribute("size", size);
-      if (animating) {
-        this.sketchElement.setAttribute("animating", "true");
-      }
-      this.appendChild(this.sketchElement);
-    }
-
-    attributeChangedCallback() {
-      const size = this.getSize();
-      this.sketchElement && this.sketchElement.setAttribute("size", size);
     }
 
     static get observedAttributes() {
       return ["animating", "size"];
     }
 
-    getSize() {
-      const rawSize = this.getAttribute("size");
-      if (rawSize === "full") {
-        return Math.min(
-          Math.min(window.innerWidth, window.innerHeight) * 0.8,
-          524
-        );
+    attributeChangedCallback() {
+      const newSize = Number(this.getAttribute("size")) || 320;
+      if (newSize !== this.size) {
+        this.size = newSize;
+        if (this.canvas) {
+          this.canvas.setAttribute("width", this.size);
+          this.canvas.setAttribute("height", this.size);
+        }
       }
-      return Number(rawSize) || 320;
+      this.setAnimating();
+    }
+
+    setAnimating() {
+      const animating = JSON.parse(this.getAttribute("animating"));
+      if (animating) {
+        this.anim && this.anim.start();
+      } else {
+        this.anim && this.anim.stop();
+      }
     }
 
     disconnectedCallback() {
-      this.playButton.removeEventListener("click", this.handlePlayPause);
+      this.anim && this.anim.stop();
+      document.removeEventListener("keydown", this.handleSave);
     }
   }
 
-  customElements.define("my-sketch", Sketch);
+  customElements.define("vanilla-sketch", VanillaSketch);
 })();
