@@ -6,7 +6,8 @@
     "dev": "sapper dev",
     "build": "sapper build --legacy",
     "export": "sapper export --legacy",
-    "start": "node __sapper__/build"
+    "start": "node __sapper__/build",
+    "deploy": "npm run export && surge __sapper__/export peterszerzo.com"
   },
   "dependencies": {
     "chroma-js": "^2.1.0",

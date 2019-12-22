@@ -31,9 +31,9 @@
   <h1>{sketch.title}</h1>
 
   <Sketch
-    sketchName={sketch.slug}
-    size={480}
-    animating="true"
+    name={sketch.slug}
+    animating={true}
+    allowSave={true}
     initiallyPlaying={true}
   ></Sketch>
 

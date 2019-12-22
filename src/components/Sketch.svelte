@@ -2,11 +2,13 @@
   import PauseIcon from "../components/PauseIcon.svelte";
   import PlayIcon from "../components/PlayIcon.svelte";
   import LinkIcon from "../components/LinkIcon.svelte";
-  import { onMount } from "svelte";
+  import SaveIcon from "../components/SaveIcon.svelte";
+  import { onMount, onDestroy, tick } from "svelte";
 
   export let size;
   export let url;
-  export let sketchName;
+  export let name;
+  export let allowSave;
   export let initiallyPlaying;
 
   let isPlaying = false;
@@ -15,16 +17,73 @@
     isPlaying = !isPlaying;
   }
 
+  let canvas;
+  let container;
+  let containerSize;
+  let sketch;
+  let animation;
+
+  $ : (() => {
+    if (animation) {
+      if (isPlaying) {
+        animation.start();
+      } else {
+        animation.stop();
+      }
+    }
+  })();
+
+  const handleSave = () => {
+    if (canvas) {
+      const image = canvas
+        .toDataURL("image/png")
+        .replace("image/png", "image/octet-stream");
+      window.location.href = image;
+    }
+  }
+
+  $ : canvasContext = canvas && canvas.getContext("2d");
+
+  $ : finalSize = size || containerSize;
+
   onMount(async () => {
     isPlaying = initiallyPlaying;
-    await import("../sketches/index.js");
+    const sk = await import("../sketches/index.js");
+
+    sketch = sk.sketches(name)();
+
+    await tick();
+    await tick();
+    await tick();
+
+    if (sketch.step) {
+      animation = sk.createAnimation(({ deltaTime, playhead }) => {
+        if (canvasContext) {
+          sketch.step({
+            size: finalSize,
+            context: canvasContext,
+            deltaTime: deltaTime,
+            playhead: playhead
+          });
+        }
+      });
+    }
+
+    const w = container && container.parentElement && Math.min(480, container.parentElement.clientWidth);
+    containerSize = w || 300;
+  });
+
+  onDestroy(() => {
+    if (sketch && sketch.stop) {
+      sketch.stop();
+    }
   });
 </script>
 
-<div class="sketch" style={`width: ${size}px; height: ${size}px;`}>
-  <vanilla-sketch size={size} name={sketchName} animating={isPlaying}></vanilla-sketch>
+<div class="sketch" style={`width: ${finalSize}px; height: ${finalSize}px;`} bind:this={container}>
+  <canvas width={finalSize} height={finalSize} bind:this={canvas} />
   <div class="sketch-controls">
-    <button class="sketch-control-button" on:click={handlePlayPause}>
+    <button class="sketch-control-button" on:click={handlePlayPause} title={isPlaying ? "Pause" : "Play"}>
       {#if isPlaying}
         <PauseIcon />
       {:else}
@@ -32,9 +91,14 @@
       {/if}
     </button>
     {#if url}
-      <a class="sketch-control-button" href={url}>
+      <a title="View sketch page" class="sketch-control-button" href={url}>
         <LinkIcon />
       </a>
+    {/if}
+    {#if allowSave}
+      <button class="sketch-control-button" on:click={handleSave} title="Save sketch">
+        <SaveIcon />
+      </button>
     {/if}
   </div>
 </div>

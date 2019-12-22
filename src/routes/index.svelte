@@ -30,38 +30,52 @@
 
   const tech = [
     {
+      label: "Elm",
       image: "/imgs/logos/elm-logo.png",
       url: "https://github.com/peterszerzo/elm-arborist"
     },
     {
+      label: "TypeScript",
       image: "/imgs/logos/typescript-logo.png",
       url: "https://dev.to/peterszerzo/safe-functional-io-in-typescript-an-introduction-1kmi"
     },
     {
+      label: "RxJS",
       image: "/imgs/logos/rxjs-logo.png",
       url: "https://github.com/peterszerzo/splytlight/blob/master/src/index.js"
     },
     {
+      label: "React",
       image: "/imgs/logos/react-logo.png",
       url: "https://operational-ui.netlify.com"
     },
     {
-      image: "/imgs/logos/html-logo.png"
+      label: "HTML",
+      image: "/imgs/logos/html-logo.png",
+      url: "https://html.spec.whatwg.org/multipage/"
     },
     {
-      image: "/imgs/logos/css-logo.png"
+      label: "CSS",
+      image: "/imgs/logos/css-logo.png",
+      url: "https://css-tricks.com/"
     },
     {
+      label: "Haskell",
       image: "/imgs/logos/haskell-logo.png",
       url: "https://gitlab.com/peterszerzo/ensemble-of-flesh-chat"
     },
     {
-      image: "/imgs/logos/processing-logo.png"
+      label: "Processing",
+      image: "/imgs/logos/processing-logo.png",
+      url: "https://processing.org/"
     },
     {
-      image: "/imgs/logos/clojure-logo.png"
+      label: "Clojure",
+      image: "/imgs/logos/clojure-logo.png",
+      url: "https://gist.github.com/peterszerzo/4e35067a015b410d8021e70c03d2def0"
     },
     {
+      label: "Vim",
       image: "/imgs/logos/vim-logo.png",
       url: "https://github.com/peterszerzo/dotfiles/blob/master/.vimrc"
     },
@@ -105,13 +119,14 @@
 <section>
   <SectionTitle title="Sketches" />
   <div class="sketches">
-    {#each sketches as sketch}
-    <Sketch
-      sketchName="{sketch.slug}"
-      url="/sketches/{sketch.slug}"
-      size="160"
-      initiallyPlaying={false}
-    ></Sketch>
+    {#each sketches as sketch, index (index)}
+      <Sketch
+        name="{sketch.slug}"
+        url="/sketches/{sketch.slug}"
+        size="160"
+        allowSave={false}
+        initiallyPlaying={false}
+      ></Sketch>
     {/each}
   </div>
 </section>
@@ -168,8 +183,8 @@
 <section>
   <SectionTitle title="The logo salad" subtitle="Languages and tools I love" />
   {#each tech as techItem}
-    <a href={techItem.url} class="tech" style={`background-image: url(${techItem.image});`}>
-      <span>a</span>
+    <a title={techItem.label} href={techItem.url} class="tech" style={`background-image: url(${techItem.image});`}>
+      <span>{techItem.label}</span>
     </a>
   {/each}
 </section>

@@ -5,6 +5,7 @@
   --black: rgb(0, 0, 0);
   --darkGray: rgb(60, 60, 60);
   --faintGray: rgb(240, 240, 240);
+  --lighterGray: #565656;
   --brightPurple: rgb(102, 52, 239);
   --faintBrightPurple: rgba(102, 52, 239, 0.1);
   --brighterPurple: rgb(116, 62, 254);
@@ -45,18 +46,6 @@ li {
 .sketches > * {
   display: inline-block;
   vertical-align: top;
-}
-
-.animated-text-shadow {
-  text-shadow: 1.5px 1.5px 0px var(--sage);
-    alternate;
-}
-
-@media (min-width: 640px) {
-  .animated-text-shadow {
-    text-shadow: 2px 2px 0px var(--sage);
-      alternate;
-  }
 }
 
 /* typography */

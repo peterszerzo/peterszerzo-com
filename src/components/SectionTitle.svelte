@@ -47,7 +47,7 @@ h2::after {
 }
 
 p {
-  color: #898989;
+  color: var(--darkGray);
   line-height: 1;
 }
 

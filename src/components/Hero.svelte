@@ -12,11 +12,12 @@
 
 h1 {
   margin: 0;
+  text-shadow: 2px 2px 0px var(--sage);
 }
 
 p {
   margin: 0;
-  color: #898989;
+  color: var(--darkGray);
 }
 
 .hero > * {

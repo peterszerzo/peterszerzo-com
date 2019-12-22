@@ -22,8 +22,14 @@
 
 <style>
 footer {
-  border-top: 4px dotted var(--sage);
+  border-top: 3px dotted var(--sage);
   padding: 60px 0;
+}
+
+@media (min-width: 640px) {
+  footer {
+    border-top: 4px dotted var(--sage);
+  }
 }
 
 .footer-content {
@@ -41,18 +47,12 @@ ul {
 }
 
 li {
-  margin: 0;
+  display: inline-block;
+  margin: 0 18px 6px 0;
 }
 
 ul {
   list-style: none;
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-}
-
-ul a {
-  margin-right: 18px;
 }
 
 .footer-logo {
