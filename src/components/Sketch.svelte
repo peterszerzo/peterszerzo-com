@@ -3,6 +3,7 @@
   import PlayIcon from "../components/PlayIcon.svelte";
   import LinkIcon from "../components/LinkIcon.svelte";
   import SaveIcon from "../components/SaveIcon.svelte";
+  import * as sk from "../sketches/index.js";
   import { onMount, onDestroy, tick } from "svelte";
 
   export let size;
@@ -48,7 +49,6 @@
 
   onMount(async () => {
     isPlaying = initiallyPlaying;
-    const sk = await import("../sketches/index.js");
 
     sketch = sk.sketches(name)();
 

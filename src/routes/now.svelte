@@ -2,6 +2,21 @@
   <title>Now | Peter Szerzo</title>
 </svelte:head>
 
+<script>
+  import marked from "marked";
+
+  const content = `
+Focusing on these three right now:
+* Design and UI engineering for [NLX](https://nlx.ai).
+* More or less weekly drawings on [Instagram](https://www.instagram.com/peterszerzo_/).
+* Prepping to go back to [school](https://filmuniversitaet.de/studium/studienangebot/masterstudiengaenge/creative-technologies/). As a shorter-term goal, passing a hairy German language test.
+
+Enjoying podcasts like [Brought to you by](https://podcasts.apple.com/us/podcast/brought-to-you-by/id1413374332) and [Oh No Ross and Carrie](http://ohnopodcast.com/). Reading [Who's afraid of Virginia Woolf](https://en.wikipedia.org/wiki/Who%27s_Afraid_of_Virginia_Woolf%3F).
+`
+
+  $ : htmlContent = marked(content);
+</script>
+
 <div class="static-page">
   <h1>Peter’s Now Page</h1>
 
@@ -10,25 +25,22 @@
     <a href="https://sivers.org/nowff">brilliant idea</a>. Thank you, Derek!
   </blockquote>
 
-  <p>
-    Data visualizations/frontend for [data science](https://contiamo.com).
-    Started really warming up to the idea of going back to school for some
-    added creative edge. CIID in good old Copenhagen especially.
-  </p>
-
-  <p>
-    I have also been on a long, steady streak of New Yorker articles, and
-    wonderful books like Extremely Loud and Incredibly Close and 1Q84.
-  </p>
-
-  <p>
-    Still taking ever more frequent and longer walks, and eating more
-    pastries.
-  </p>
-
-  <p>Also, a quote:</p>
-
-  <blockquote>
-    Levi, your life is your story. <a href="https://www.shortoftheweek.com/2014/12/10/the-moped-diaries/">Make it a good one</a>
-  </blockquote>
+  <div class="static">
+    {@html htmlContent}
+  </div>
 </div>
+
+<style>
+  .static-page > :global(*) {
+    margin-bottom: 40px;
+  }
+
+  .static-page > :global(:last-child) {
+    margin-bottom: 0;
+  }
+
+  .static :global(ul) {
+    list-style: initial;
+    padding-left: 20px;
+  }
+</style>

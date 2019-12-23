@@ -42,7 +42,7 @@
     {
       label: "RxJS",
       image: "/imgs/logos/rxjs-logo.png",
-      url: "https://github.com/peterszerzo/splytlight/blob/master/src/index.js"
+      url: "https://github.com/peterszerzo/splytlight/blob/master/src/state.ts"
     },
     {
       label: "React",
