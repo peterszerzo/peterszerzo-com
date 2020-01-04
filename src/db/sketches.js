@@ -1,19 +1,7 @@
 export default [
   {
-    slug: "cosine-beetles",
-    title: "Cosine Beetles"
-  },
-  {
-    slug: "pivot-frame",
-    title: "Pivot Frame"
-  },
-  {
     slug: "bezier-rail",
     title: "Bezier Rail"
-  },
-  {
-    slug: "shy-circles",
-    title: "Shy Circles"
   },
   {
     slug: "honest-cash",
@@ -61,6 +49,18 @@ And they are animated, too! Even if they ought to be printed static, there is
 something about living-breathing money that should speak to our preconceptions.
 And besides, how long would paper cash last anyway.
 `
+  },
+  {
+    slug: "shy-circles",
+    title: "Shy Circles"
+  },
+  {
+    slug: "cosine-beetles",
+    title: "Cosine Beetles"
+  },
+  {
+    slug: "pivot-frame",
+    title: "Pivot Frame"
   },
   {
     slug: "the-spin",

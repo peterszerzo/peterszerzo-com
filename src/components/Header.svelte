@@ -11,10 +11,10 @@
 <style>
   header {
     position: fixed;
-    top: 0;
+    top: 40px;
     left: 0;
     right: 0;
-    height: 60px;
+    height: 0;
     display: flex;
     align-items: center;
     justify-content: center;

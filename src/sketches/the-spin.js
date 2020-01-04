@@ -84,9 +84,9 @@ const createSketch = () => {
   let spirals = makeSpirals();
   return {
     step: ({ context, size, deltaTime }) => {
-      context.fillStyle = "rgb(255, 255, 255)";
+      context.fillStyle = "#FFF";
       context.fillRect(0, 0, size, size);
-      context.strokeStyle = "rgb(0, 0, 0)";
+      context.strokeStyle = "#000";
       context.lineWidth = size / 300;
       context.lineCap = "round";
       spirals = spirals.map(stepSpiral(deltaTime / 1000));

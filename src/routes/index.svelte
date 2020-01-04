@@ -13,6 +13,7 @@
 
 <script>
   import Logo from "../components/Logo.svelte";
+  import Project from "../components/Project.svelte";
   import Switch from "../components/Switch.svelte";
   import Sketch from "../components/Sketch.svelte";
   import SectionTitle from "../components/SectionTitle.svelte";
@@ -131,18 +132,13 @@
   </div>
 </section>
 <section>
-  <SectionTitle title="Open Source" />
-  <ul>
-    <li>
-      <a href="https://peterszerzo.github.io/elm-arborist">elm-arborist</a>
-    </li>
-    <li>
-      <a href="https://elm-gameroom.firebaseapp.com">elm-gameroom</a>
-    </li>
-    <li>
-      <a href="https://github.com/contiamo/tucson">tucson</a>
-    </li>
-  </ul>
+  <SectionTitle title="Projects" />
+  <div>
+    <Project title="elm-arborist" subtitle="Tree Editor" url="https://peterszerzo.github.io/elm-arborist/" logo="ElmArborist" />
+    <Project title="SplytLight" subtitle="3d Drawing" url="https://splytlight.surge.sh/" logo="SplytLight" />
+    <Project title="annacingi.com" subtitle="Artist Portfolio" url="http://annacingi.com" logo="AnnaCingi" />
+    <Project title="elm-gameroom" subtitle="Game Framework" url="https://elm-gameroom.firebaseapp.com" logo="ElmGameroom" />
+  </div>
 </section>
 <section>
   <SectionTitle title="Blog">
