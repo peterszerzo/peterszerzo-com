@@ -3,7 +3,7 @@
     <svelte:component this={logoComponent} />
   </div>
   <p class="title">{title}</p>
-  <p class="subtitle">{subtitle}</p>
+  <small class="subtitle">{subtitle}</small>
 </a>
 
 <script>
@@ -35,13 +35,17 @@
 
 <style>
   a {
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
     text-decoration: none;
     position: relative;
     color: inherit;
     width: 160px;
     height: 160px;
-    padding: 10px;
+    padding: 20px 10px;
     display: inline-block;
+    margin-right: 20px;
+    margin-bottom: 20px;
   }
 
   a:hover {
@@ -60,7 +64,8 @@
   }
 
   .subtitle {
-    font-size: 13px;
     color: var(--lighterGray);
+    text-align: center;
+    display: block;
   }
 </style>

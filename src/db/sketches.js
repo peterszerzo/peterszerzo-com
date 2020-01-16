@@ -1,7 +1,8 @@
 export default [
   {
     slug: "bezier-rail",
-    title: "Bezier Rail"
+    title: "Bezier Rail",
+    public: true
   },
   {
     slug: "honest-cash",
@@ -48,22 +49,32 @@ and redistribution of wealth.
 And they are animated, too! Even if they ought to be printed static, there is
 something about living-breathing money that should speak to our preconceptions.
 And besides, how long would paper cash last anyway.
-`
+`,
+    public: true
   },
   {
     slug: "shy-circles",
-    title: "Shy Circles"
+    title: "Shy Circles",
+    public: true
   },
   {
     slug: "cosine-beetles",
-    title: "Cosine Beetles"
+    title: "Cosine Beetles",
+    public: true
   },
   {
     slug: "pivot-frame",
-    title: "Pivot Frame"
+    title: "Pivot Frame",
+    public: true
   },
   {
     slug: "the-spin",
-    title: "The Spin"
+    title: "The Spin",
+    public: true
+  },
+  {
+    slug: "misfit-planets",
+    title: "Misfit Planets",
+    public: false
   }
 ];

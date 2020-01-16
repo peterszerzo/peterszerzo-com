@@ -46,6 +46,8 @@ li {
 .sketches > * {
   display: inline-block;
   vertical-align: top;
+  margin-right: 20px;
+  margin-bottom: 20px;
 }
 
 /* typography */
@@ -67,6 +69,10 @@ li,
 blockquote,
 button {
   font-size: 14px;
+}
+
+small {
+  font-size: 11px;
 }
 
 p,
@@ -104,6 +110,10 @@ footer a:hover {
   blockquote,
   button {
     font-size: 18px;
+  }
+
+  small {
+    font-size: 12px;
   }
 }
 

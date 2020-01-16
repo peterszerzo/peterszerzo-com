@@ -54,7 +54,6 @@
 
     await tick();
     await tick();
-    await tick();
 
     if (sketch.step) {
       animation = sk.createAnimation(({ deltaTime, playhead }) => {
@@ -80,38 +79,46 @@
   });
 </script>
 
-<div class="sketch" style={`width: ${finalSize}px; height: ${finalSize}px;`} bind:this={container}>
-  <canvas width={finalSize} height={finalSize} bind:this={canvas} />
-  <div class="sketch-controls">
-    <button class="sketch-control-button" on:click={handlePlayPause} title={isPlaying ? "Pause" : "Play"}>
-      {#if isPlaying}
-        <PauseIcon />
-      {:else}
-        <PlayIcon />
-      {/if}
-    </button>
-    {#if url}
-      <a title="View sketch page" class="sketch-control-button" href={url}>
-        <LinkIcon />
-      </a>
-    {/if}
-    {#if allowSave}
-      <button class="sketch-control-button" on:click={handleSave} title="Save sketch">
-        <SaveIcon />
+{#if url}
+  <a class="sketch" href={url} style={`width: ${finalSize}px; height: ${finalSize}px;`} bind:this={container}>
+    <canvas width={finalSize} height={finalSize} bind:this={canvas} />
+  </a>
+{:else}
+  <div class="sketch" style={`width: ${finalSize}px; height: ${finalSize}px;`} bind:this={container}>
+    <canvas width={finalSize} height={finalSize} bind:this={canvas} />
+    <div class="sketch-controls">
+      <button class="sketch-control-button" on:click={handlePlayPause} title={isPlaying ? "Pause" : "Play"}>
+        {#if isPlaying}
+          <PauseIcon />
+        {:else}
+          <PlayIcon />
+        {/if}
       </button>
-    {/if}
+      {#if allowSave}
+        <button class="sketch-control-button" on:click={handleSave} title="Save sketch">
+          <SaveIcon />
+        </button>
+      {/if}
+    </div>
   </div>
-</div>
+{/if}
 
 <style>
 .sketch {
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  overflow: hidden;
   position: relative;
+}
+
+a.sketch:hover {
+  filter: brightness(96%);
 }
 
 .sketch-controls {
   position: absolute;
-  bottom: 5px;
-  right: 5px;
+  bottom: 10px;
+  right: 10px;
   border-radius: 4px;
   z-index: 100;
   align-items: center;
@@ -151,17 +158,17 @@
   padding: 0;
   margin: 0;
   color: var(--black);
-  width: 24px;
-  height: 24px;
+  width: 34px;
+  height: 34px;
   cursor: pointer;
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: 50%;
-  padding: 4px;
+  padding: 5px;
 }
 
 .sketch-control-button :global(svg) {
-  width: 16px;
-  height: 16px;
+  width: 24px;
+  height: 24px;
   vertical-align: top;
 }
 

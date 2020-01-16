@@ -7,10 +7,12 @@ export const get = (req, res, next) => {
 
   res.end(
     JSON.stringify(
-      sketches.map(sketch => ({
-        slug: sketch.slug,
-        title: sketch.title
-      }))
+      sketches
+        .filter(sketch => sketch.public)
+        .map(sketch => ({
+          slug: sketch.slug,
+          title: sketch.title
+        }))
     )
   );
 };
