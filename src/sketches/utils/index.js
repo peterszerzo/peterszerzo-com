@@ -13,6 +13,8 @@ export const compose = (...fns) => x => {
 
 export const range = n => [...Array(n).keys()];
 
+export const unitRange = n => [...Array(n).keys()].map(val => val / (n - 1));
+
 export const range2 = n => m =>
   range(n)
     .map(i => range(m).map(j => [i, j]))

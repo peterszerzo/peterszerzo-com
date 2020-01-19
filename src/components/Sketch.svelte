@@ -68,7 +68,7 @@
       });
     }
 
-    const w = container && container.parentElement && Math.min(480, container.parentElement.clientWidth);
+    const w = container && container.parentElement && Math.min(524, container.parentElement.clientWidth);
     containerSize = w || 300;
   });
 

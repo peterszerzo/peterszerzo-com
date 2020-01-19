@@ -1,0 +1,14 @@
+backend:
+  name: git-gateway
+  branch: master
+media_folder: static/cms/img
+public_folder: static/cms
+collections:
+  - name: "now"
+    label: "Now"
+    files:
+      - label: "Now"
+        name: "now"
+        file: "content/now.md"
+        fields:
+          - { label: "Body", name: "body", widget: "markdown"}

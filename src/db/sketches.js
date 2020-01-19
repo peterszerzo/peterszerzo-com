@@ -75,6 +75,6 @@ And besides, how long would paper cash last anyway.
   {
     slug: "misfit-planets",
     title: "Misfit Planets",
-    public: false
+    public: true
   }
 ];
