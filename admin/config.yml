@@ -29,6 +29,7 @@ collections:
       - {label: "Name", name: "name", widget: "string"}
       - {label: "Image", name: "image", widget: "image"}
       - {label: "URL", name: "url", widget: "string"}
+      - {label: "Order", name: "order", widget: "number"}
   - name: "sections"
     label: "Sections"
     files:
