@@ -9,6 +9,6 @@ collections:
     files:
       - label: "Now"
         name: "now"
-        file: "content/now.md"
+        file: "src/cms/now.md"
         fields:
           - { label: "Body", name: "body", widget: "markdown"}
