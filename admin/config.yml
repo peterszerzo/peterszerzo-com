@@ -8,6 +8,7 @@ collections:
     label: "Talks"
     folder: "static/cms/talks"
     create: true
+    fields:
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Location", name: "location", widget: "string"}
       - {label: "Date", name: "date", widget: "datetime"}
@@ -16,6 +17,7 @@ collections:
     label: "Blog Posts"
     folder: "static/cms/blog-posts"
     create: true
+    fields:
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Date", name: "date", widget: "datetime"}
       - {label: "URL", name: "url", widget: "string"}
@@ -23,6 +25,7 @@ collections:
     label: "Logo Salad"
     folder: "static/cms/logo-salad"
     create: true
+    fields:
       - {label: "Name", name: "name", widget: "string"}
       - {label: "Image", name: "image", widget: "image"}
       - {label: "URL", name: "url", widget: "string"}
