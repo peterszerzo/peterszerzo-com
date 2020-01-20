@@ -65,6 +65,7 @@ export const get = async (req, res, next) => {
     JSON.stringify({
       sketches,
       projects,
+      talks,
       aboutSerious,
       aboutAlternative
     })
