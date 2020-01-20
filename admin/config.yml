@@ -14,6 +14,18 @@ collections:
       - {label: "Location", name: "location", widget: "string"}
       - {label: "Date", name: "date", widget: "datetime"}
       - {label: "URL", name: "url", widget: "string"}
+  - name: "projects"
+    label: "Projects"
+    folder: "static/cms/projects"
+    create: true
+    identifier_field: "slug"
+    fields:
+      - {label: "Slug", name: "slug", widget: "string"}
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Logo", name: "logo", widget: "image"}
+      - {label: "Tags", name: "tags", widget: "string"}
+      - {label: "Image", name: "image", widget: "image"}
+      - {label: "URL", name: "url", widget: "string"}
   - name: "blog-posts"
     label: "Blog Posts"
     folder: "static/cms/blog-posts"
