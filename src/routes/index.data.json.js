@@ -18,7 +18,7 @@ export const get = async (req, res, next) => {
 
   // Projects
 
-  const projects = await new Promise((resolve, reject) => {
+  const projectsFiles = await new Promise((resolve, reject) => {
     glob("static/cms/projects/*.md", (err, files) => {
       if (err) {
         reject(err);
@@ -28,9 +28,28 @@ export const get = async (req, res, next) => {
     });
   });
 
-  const projectContents = await Promise.all(
-    projects.map(async project => {
-      const content = (await fs.readFile(project)).toString();
+  const projects = await Promise.all(
+    projectsFiles.map(async file => {
+      const content = (await fs.readFile(file)).toString();
+      return { ...frontMatter(content).attributes };
+    })
+  );
+
+  // Talks
+
+  const talksFiles = await new Promise((resolve, reject) => {
+    glob("static/cms/talks/*.md", (err, files) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(files);
+      }
+    });
+  });
+
+  const talks = await Promise.all(
+    talksFiles.map(async file => {
+      const content = (await fs.readFile(file)).toString();
       return { ...frontMatter(content).attributes };
     })
   );

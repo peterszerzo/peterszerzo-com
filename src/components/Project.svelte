@@ -49,7 +49,7 @@
   }
 
   a:hover {
-    background-color: var(--faintGray);
+    filter: brightness(96%);
   }
 
   .logo-container {

@@ -49,7 +49,7 @@ collections:
             widget: "image"
           - label: "Caption"
             name: "caption"
-            widget: "text"
+            widget: "string"
       - label: "URL"
         name: "url"
         widget: "string"

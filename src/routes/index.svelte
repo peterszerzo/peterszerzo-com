@@ -254,3 +254,7 @@
     </div>
   {/if}
 </section>
+
+<div style="display:none" aria-hidden>
+  <a href="/admin">Admin</a>
+</div>

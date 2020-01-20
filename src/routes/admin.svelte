@@ -9,3 +9,10 @@
 <div class="static-page">
   <p>Redirecting...</p>
 </div>
+
+<svelte:head>
+  <title>Admin</title>
+</svelte:head>
+
+<style>
+</style>
