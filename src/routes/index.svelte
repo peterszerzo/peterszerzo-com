@@ -4,7 +4,7 @@
     const data = await res.json();
 
     if (res.status === 200) {
-      return { sketches: data };
+      return { data };
     } else {
       this.error(res.status, data.message);
     }
@@ -21,7 +21,7 @@
   import Button from "../components/Button.svelte";
   import { onMount } from "svelte";
 
-  export let sketches;
+  export let data;
 
   export let aboutVersion = "serious";
 
@@ -120,7 +120,7 @@
 <section>
   <SectionTitle title="Sketches" />
   <div class="sketches">
-    {#each sketches as sketch, index (index)}
+    {#each data.sketches as sketch, index (index)}
       <Sketch
         name="{sketch.slug}"
         url="/sketches/{sketch.slug}"
