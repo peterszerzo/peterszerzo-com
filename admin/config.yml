@@ -10,41 +10,79 @@ collections:
     create: true
     identifier_field: "title"
     fields:
-      - {label: "Title", name: "title", widget: "string"}
-      - {label: "Location", name: "location", widget: "string"}
-      - {label: "Date", name: "date", widget: "datetime"}
-      - {label: "URL", name: "url", widget: "string"}
+      - label: "Title"
+        name: "title"
+        widget: "string"
+      - label: "Location"
+        name: "location"
+        widget: "string"
+      - label: "Date"
+        name: "date"
+        widget: "datetime"
+      - label: "URL"
+        name: "url"
+        widget: "string"
   - name: "projects"
     label: "Projects"
     folder: "static/cms/projects"
     create: true
     identifier_field: "slug"
     fields:
-      - {label: "Slug", name: "slug", widget: "string"}
-      - {label: "Title", name: "title", widget: "string"}
-      - {label: "Logo", name: "logo", widget: "image"}
-      - {label: "Tags", name: "tags", widget: "string"}
-      - {label: "Image", name: "image", widget: "image"}
-      - {label: "URL", name: "url", widget: "string"}
+      - label: "Slug"
+        name: "slug"
+        widget: "string"
+      - label: "Title"
+        name: "title"
+        widget: "string"
+      - label: "Logo"
+        name: "logo"
+        widget: "image"
+      - label: "Tags"
+        name: "tags"
+        widget: "string"
+      - label: "Images"
+        name: "images"
+        widget: "list"
+        field:
+          label: "Image"
+          name: "image"
+          widget: "image"
+      - label: "URL"
+        name: "url"
+        widget: "string"
   - name: "blog-posts"
     label: "Blog Posts"
     folder: "static/cms/blog-posts"
     identifier_field: "title"
     create: true
     fields:
-      - {label: "Title", name: "title", widget: "string"}
-      - {label: "Date", name: "date", widget: "datetime"}
-      - {label: "URL", name: "url", widget: "string"}
+      - label: "Title"
+        name: "title"
+        widget: "string"
+      - label: "Date"
+        name: "date"
+        widget: "datetime"
+      - label: "URL"
+        name: "url"
+        widget: "string"
   - name: "logo-salad"
     label: "Logo Salad"
     folder: "static/cms/logo-salad"
     create: true
     identifier_field: "name"
     fields:
-      - {label: "Name", name: "name", widget: "string"}
-      - {label: "Image", name: "image", widget: "image"}
-      - {label: "URL", name: "url", widget: "string"}
-      - {label: "Order", name: "order", widget: "number"}
+      - label: "Name"
+        name: "name"
+        widget: "string"
+      - label: "Image"
+        name: "image"
+        widget: "image"
+      - label: "URL"
+        name: "url"
+        widget: "string"
+      - label: "Order"
+        name: "order"
+        widget: "number"
   - name: "sections"
     label: "Sections"
     files:
@@ -52,14 +90,20 @@ collections:
         name: "now"
         file: "static/cms/now.md"
         fields:
-          - { label: "Body", name: "body", widget: "markdown" }
+          - label: "Body"
+            name: "body"
+            widget: "markdown"
       - label: "About Serious"
         name: "about-serious"
         file: "static/cms/about-serious.md"
         fields:
-          - { label: "Body", name: "body", widget: "markdown" }
+          - label: "Body"
+            name: "body"
+            widget: "markdown"
       - label: "About Alternative"
         name: "about-alternative"
         file: "static/cms/about-alternative.md"
         fields:
-          - { label: "Body", name: "body", widget: "markdown" }
+          - label: "Body"
+            name: "body"
+            widget: "markdown"
