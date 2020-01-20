@@ -43,10 +43,13 @@ collections:
       - label: "Images"
         name: "images"
         widget: "list"
-        field:
-          label: "Image"
-          name: "image"
-          widget: "image"
+        fields:
+          - label: "Image"
+            name: "image"
+            widget: "image"
+          - label: "Caption"
+            name: "caption"
+            widget: "text"
       - label: "URL"
         name: "url"
         widget: "string"

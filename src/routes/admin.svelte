@@ -6,4 +6,6 @@
   });
 </script>
 
-<p>Redirecting...</p>
+<div class="static-page">
+  <p>Redirecting...</p>
+</div>
