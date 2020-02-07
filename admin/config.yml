@@ -2,6 +2,7 @@ backend:
   name: git-gateway
   branch: master
 media_folder: static/cms/images
+site_url: http://peterszerzo.com
 public_folder: cms/images
 collections:
   - name: "talks"

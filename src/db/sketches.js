@@ -76,5 +76,10 @@ And besides, how long would paper cash last anyway.
     slug: "misfit-planets",
     title: "Misfit Planets",
     public: true
+  },
+  {
+    slug: "blooming-spirals",
+    title: "Blooming Spirals",
+    public: true
   }
 ];

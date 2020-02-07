@@ -6,6 +6,7 @@ import tickle from "./tickle";
 import honestCash from "./honest-cash";
 import bezierRail from "./bezier-rail";
 import misfitPlanets from "./misfit-planets";
+import bloomingSpirals from "./blooming-spirals";
 
 export const sketchByName = {
   ["pivot-frame"]: pivotFrame,
@@ -15,7 +16,8 @@ export const sketchByName = {
   ["tickle"]: tickle,
   ["honest-cash"]: honestCash,
   ["misfit-planets"]: misfitPlanets,
-  ["bezier-rail"]: bezierRail
+  ["bezier-rail"]: bezierRail,
+  ["blooming-spirals"]: bloomingSpirals
 };
 
 export const sketches = sketchName => {
