@@ -7,6 +7,7 @@ import honestCash from "./honest-cash";
 import bezierRail from "./bezier-rail";
 import misfitPlanets from "./misfit-planets";
 import bloomingSpirals from "./blooming-spirals";
+import brianIsSick from "./brian-is-sick";
 
 export const sketchByName = {
   ["pivot-frame"]: pivotFrame,
@@ -17,6 +18,7 @@ export const sketchByName = {
   ["honest-cash"]: honestCash,
   ["misfit-planets"]: misfitPlanets,
   ["bezier-rail"]: bezierRail,
+  ["brian-is-sick"]: brianIsSick,
   ["blooming-spirals"]: bloomingSpirals
 };
 

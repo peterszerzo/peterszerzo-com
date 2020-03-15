@@ -81,5 +81,10 @@ And besides, how long would paper cash last anyway.
     slug: "blooming-spirals",
     title: "Blooming Spirals",
     public: true
+  },
+  {
+    slug: "brian-is-sick",
+    title: "Brian is Sick",
+    public: false
   }
 ];
