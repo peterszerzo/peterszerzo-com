@@ -65,7 +65,19 @@ const step = cells => {
   return newCells;
 };
 
-const period = 400;
+const ons = cells =>
+  Object.values(cells).filter(cell => cell.state === "on").length;
+
+const setOns = cells => {
+  const newCells = clone(cells);
+  Object.entries(newCells).forEach(([key, cell]) => {
+    newCells[key].state =
+      distanceSq([cell.i, cell.j]) < 0.15 && Math.random() < 0.6 ? "on" : "off";
+  });
+  return newCells;
+};
+
+const period = 150;
 
 const createSketch = () => {
   let cells = {};
@@ -75,9 +87,10 @@ const createSketch = () => {
       cells[toHash([i, j])] = {
         i,
         j,
-        state: distanceSq([i, j]) < 0.35 && (i + 3 * j) % 3 === 2 ? "on" : "off"
+        state: "off"
       };
     });
+  cells = setOns(cells);
   const kFont = 0.6;
   const drawControlCircles = false;
   return {
@@ -87,6 +100,9 @@ const createSketch = () => {
         Math.floor((playhead + deltaTime) / period);
       if (isTick) {
         cells = step(cells);
+        if (ons(cells) === 0) {
+          cells = setOns(cells);
+        }
       }
       context.fillStyle = "#FFFFFF";
       context.fillRect(0, 0, size, size);
