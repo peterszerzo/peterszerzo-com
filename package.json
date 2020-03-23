@@ -6,7 +6,7 @@
     "start": "sapper dev",
     "build": "sapper build --legacy",
     "export": "sapper export --legacy",
-    "deploy": "npm run export && surge __sapper__/export peterszerzo.com"
+    "deploy": "npm run export && aws s3 sync __sapper__/export s3://peterszerzo.com --acl public-read"
   },
   "dependencies": {
     "chroma-js": "^2.1.0",
