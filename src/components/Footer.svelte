@@ -5,7 +5,7 @@
 <footer>
   <div class="footer-content">
     <div class="footer-logo">
-      <p>2019 Peter Szerzo</p>
+      <p>2020 Peter Szerzo</p>
     </div>
     <ul>
       <li><a href="https://represent.io/peterszerzo.pdf">Resume</a></li>
