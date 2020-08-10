@@ -11,6 +11,7 @@
 </svelte:head>
 
 <script>
+  import Static from "../components/Static.svelte";
   import marked from "marked";
 
   export let md;
@@ -26,9 +27,7 @@
     <a href="https://sivers.org/nowff">brilliant idea</a>. Thank you, Derek!
   </blockquote>
 
-  <div class="static">
-    {@html htmlContent}
-  </div>
+  <Static md={md} />
 </div>
 
 <style>
@@ -38,10 +37,5 @@
 
   .static-page > :global(:last-child) {
     margin-bottom: 0;
-  }
-
-  .static :global(ul) {
-    list-style: initial;
-    padding-left: 20px;
   }
 </style>

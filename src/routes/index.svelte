@@ -18,6 +18,7 @@
   import Project from "../components/Project.svelte";
   import Switch from "../components/Switch.svelte";
   import Sketch from "../components/Sketch.svelte";
+  import Section from "../components/Section.svelte";
   import SectionTitle from "../components/SectionTitle.svelte";
   import Hero from "../components/Hero.svelte";
   import Button from "../components/Button.svelte";
@@ -93,10 +94,6 @@
 </script>
 
 <style>
-  section {
-    margin-top: 80px;
-  }
-
   .tech {
     display: inline-block;
     background-repeat: no-repeat;
@@ -121,8 +118,8 @@
   <title>Peter Szerzo</title>
 </svelte:head>
 
-<Hero />
-<section>
+<Hero title="Peter Szerzo" after="Neighborhood Creative Programmer" />
+<Section>
   <SectionTitle title="Sketches" />
   <div class="sketches">
     {#each data.sketches as sketch, index (index)}
@@ -135,8 +132,8 @@
       ></Sketch>
     {/each}
   </div>
-</section>
-<section>
+</Section>
+<Section>
   <SectionTitle title="Projects" />
   <div>
     <Project title="elm-arborist" subtitle="Tree Editor" url="https://peterszerzo.github.io/elm-arborist/" logo="ElmArborist" />
@@ -144,11 +141,11 @@
     <Project title="annacingi.com" subtitle="Artist Portfolio" url="http://annacingi.com" logo="AnnaCingi" />
     <Project title="elm-gameroom" subtitle="Game Framework" url="https://elm-gameroom.firebaseapp.com" logo="ElmGameroom" />
   </div>
-</section>
-<section>
+</Section>
+<Section>
   <SectionTitle title="Blog">
     <a href="https://dev.to/peterszerzo" style="display: inline-block; width: 30px; height: 30px;" slot="controls">
-      <img src="https://d2fltix0v2e0sb.cloudfront.net/dev-badge.svg" alt="Peter Szerzo's DEV Profile" height="30" width="30">
+      <img src="https://d2fltix0v2e0sb.cloudfront.net/dev-badge.svg" alt="Peter Szerzo’s DEV Profile" height="30" width="30">
     </a>
   </SectionTitle>
   <ul>
@@ -162,8 +159,8 @@
       <a href="https://dev.to/peterszerzo/safe-functional-io-in-typescript-an-introduction-1kmi">Safe Functional IO in TypeScript</a>
     </li>
   </ul>
-</section>
-<section>
+</Section>
+<Section>
   <SectionTitle title="Talks" />
   <ul>
     <li>
@@ -180,16 +177,16 @@
       <a href="https://peterszerzo.github.io/css-by-the-fireplace/">CSS by the Fireplace</a> // Copenhagen, April 2016
     </li>
   </ul>
-</section>
-<section>
+</Section>
+<Section>
   <SectionTitle title="The logo salad" subtitle="Languages and tools I love" />
   {#each tech as techItem}
     <a title={techItem.label} href={techItem.url} class="tech" style={`background-image: url(${techItem.image});`}>
       <span>{techItem.label}</span>
     </a>
   {/each}
-</section>
-<section>
+</Section>
+<Section>
   <SectionTitle title="About">
     <div slot="controls">
       <Switch on:change={handleAboutSwitcher} active={aboutVersion !== 'serious'} />
@@ -204,7 +201,7 @@
       {@html aboutAlternativeHtml}
     </div>
   {/if}
-</section>
+</Section>
 
 <div style="display:none" aria-hidden>
   <a href="/admin">Admin</a>

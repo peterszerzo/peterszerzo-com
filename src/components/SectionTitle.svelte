@@ -8,7 +8,6 @@
   {/if}
 </div>
 
-
 <script>
   export let title;
   export let subtitle;
@@ -50,5 +49,4 @@ p {
   color: var(--darkGray);
   line-height: 1;
 }
-
 </style>

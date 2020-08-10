@@ -1,9 +1,22 @@
 <div class="hero">
   <div>
-    <h1><span class="animated-text-shadow">Peter Szerzo</span></h1>
-    <p>Neighborhood creative programmer</p>
+    {#if before}
+      <p>{before}</p>
+    {/if}
+    {#if title}
+      <h1><span class="animated-text-shadow">{title}</span></h1>
+    {/if}
+    {#if after}
+      <p>{after}</p>
+    {/if}
   </div>
 </div>
+
+<script>
+  export let before;
+  export let title;
+  export let after;
+</script>
 
 <style>
 .hero {
@@ -16,8 +29,7 @@ h1 {
 }
 
 p {
-  margin: 0;
-  color: var(--darkGray);
+  margin: 6px 0;
 }
 
 .hero > * {
