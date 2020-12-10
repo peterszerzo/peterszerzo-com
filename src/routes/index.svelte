@@ -127,6 +127,7 @@
       ></Sketch>
     {/each}
   </div>
+  <p><small>(I am starting a <a href="http://sketches.peterszerzo.com">new sketch page</a>)</small></p>
 </Section>
 <Section>
   <SectionTitle title="Projects" />
