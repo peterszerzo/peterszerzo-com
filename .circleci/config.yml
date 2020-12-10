@@ -35,13 +35,15 @@ jobs:
       - run:
           name: export
           command: npm run export
-      - store_artifacts:
-          path: ./__sapper__/export
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
   deploy:
     executor: aws-cli/default
     steps:
       - aws-cli/setup:
-          profile-name: example
+          profile-name: default
       - run:
           name: sync-with-s3
-          command: aws s3 sync __sapper__/export s3://peterszerzo.com/test --acl public-read
+          command: aws s3 sync ./__sapper__/export s3://peterszerzo.com/test --acl public-read
