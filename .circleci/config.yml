@@ -35,6 +35,8 @@ jobs:
       - run:
           name: export
           command: npm run export
+      - store_artifacts:
+          path: ./__sapper__/export
   deploy:
     executor: aws-cli/default
     steps:
