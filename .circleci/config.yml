@@ -9,6 +9,8 @@ workflows:
     jobs:
       - build
       - deploy:
+          requires: 
+            - build
           context: aws-context-1
 
 jobs:
