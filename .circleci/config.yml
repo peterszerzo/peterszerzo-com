@@ -44,4 +44,4 @@ jobs:
           profile-name: example
       - run:
           name: sync-with-s3
-          command: aws s3 sync ~/peterszerzo/__sapper__/export s3://peterszerzo.com/test --acl public-read
+          command: aws s3 sync __sapper__/export s3://peterszerzo.com/test --acl public-read
