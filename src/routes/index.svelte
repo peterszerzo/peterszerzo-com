@@ -116,6 +116,7 @@
 <Hero title="Peter Szerzo" after="Neighborhood Creative Programmer" />
 <Section>
   <SectionTitle title="Sketches" />
+  <p>(I am starting a <a href="http://sketches.peterszerzo.com">brand new sketch page</a>)</p>
   <div class="sketches">
     {#each data.sketches as sketch, index (index)}
       <Sketch
@@ -127,7 +128,6 @@
       ></Sketch>
     {/each}
   </div>
-  <p><small>(I am starting a <a href="http://sketches.peterszerzo.com">new sketch page</a>)</small></p>
 </Section>
 <Section>
   <SectionTitle title="Projects" />
