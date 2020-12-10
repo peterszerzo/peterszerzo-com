@@ -1,6 +1,6 @@
 <Hero title="Hire Me" after="for #webdev, #ux, #dataviz, #3d and more" />
 
-{#if true}
+{#if false}
   <svg width="400" height="400" viewBox="0 0 500 500">
     <path id="curve1" d="M50,100c120,0,240,160,360,160" fill="none" />
     <text width="500" font-size="50" letter-spacing="4">
@@ -58,9 +58,9 @@
 `;
 
   let workEthicMd = `
-* End results should be: secure, correct, intuitive, fast and beautiful.
+* Absolutely no overengineering or speculation.
 * Excellent communication, follow-through and initiative where appropriate.
-* No overengineering, no speculation.
+* Secure, correct, intuitive, fast and beautiful end results, in roughly that order.
 `;
 
   let contactMd = `

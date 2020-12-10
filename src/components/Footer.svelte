@@ -11,14 +11,27 @@
       <p>2020 Peter Szerzo</p>
     </div>
     <ul>
-      <li><a href="https://represent.io/peterszerzo.pdf"><small>Resume</small></a></li>
-          <li><a href="https://twitter.com/peterszerzo"><small>Twitter</small></a></li>
+      <li>
+        <a href="https://represent.io/peterszerzo.pdf"><small>Resume</small></a>
+      </li>
+      <li>
+        <a href="https://twitter.com/peterszerzo"><small>Twitter</small></a>
+      </li>
       <li>
         <a href="https://www.instagram.com/peterszerzo_/"><small>Instagram</small></a>
       </li>
-      <li><a href="https://github.com/peterszerzo"><small>GitHub</small></a></li>
-          <li><a href="https://dev.to/peterszerzo"><small>Blog</small></a></li>
-              <li><a href="./now"><small>Now</small></a></li>
+      <li>
+        <a href="https://github.com/peterszerzo"><small>GitHub</small></a>
+      </li>
+      <li>
+        <a href="https://dev.to/peterszerzo"><small>Blog</small></a>
+      </li>
+      <li>
+        <a href="/hire-me"><small>Hire me✨</small></a>
+      </li>
+      <li>
+        <a href="/now"><small>Now</small></a>
+      </li>
     </ul>
   </div>
 </footer>
