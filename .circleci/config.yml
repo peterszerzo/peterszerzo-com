@@ -34,7 +34,6 @@ jobs:
           name: export
           command: npm run export
   deploy:
-    requires: build
     executor: aws-cli/default
     steps:
       - run:
