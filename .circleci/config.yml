@@ -15,7 +15,7 @@ workflows:
 
 jobs:
   build:
-    working_directory: ~/peterszerzo
+    working_directory: ~/project
     docker:
       - image: circleci/node:10.16.3
     steps:
@@ -36,7 +36,7 @@ jobs:
           name: export
           command: npm run export
       - persist_to_workspace:
-          root: .
+          root: ~/project
           paths:
             - .
   deploy:
@@ -44,6 +44,8 @@ jobs:
     steps:
       - aws-cli/setup:
           profile-name: default
+      - attach_workspace:
+          at: ~/project
       - run:
           name: sync-with-s3
-          command: aws s3 sync ./__sapper__/export s3://peterszerzo.com/test --acl public-read
+          command: aws s3 sync ~/project/__sapper__/export s3://peterszerzo.com/test --acl public-read
