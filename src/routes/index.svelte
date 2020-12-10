@@ -69,17 +69,12 @@
     {
       label: "Haskell",
       image: "/imgs/logos/haskell-logo.png",
-      url: "https://gitlab.com/peterszerzo/ensemble-of-flesh-chat"
+      url: "https://gist.github.com/peterszerzo/22b063ba5b155bb0ca4baec648d4679a"
     },
     {
       label: "Processing",
       image: "/imgs/logos/processing-logo.png",
       url: "https://processing.org/"
-    },
-    {
-      label: "Clojure",
-      image: "/imgs/logos/clojure-logo.png",
-      url: "https://gist.github.com/peterszerzo/4e35067a015b410d8021e70c03d2def0"
     },
     {
       label: "Vim",

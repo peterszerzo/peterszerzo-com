@@ -1,8 +1,8 @@
 <Hero title="Hire Me" after="for #webdev, #ux, #dataviz, #3d and more" />
 
-{#if false}
+{#if true}
   <svg width="400" height="400" viewBox="0 0 500 500">
-    <path id="curve1" d="M50,100c120,0,240,160,360,160" fill="none" stroke="rgba(0, 255, 0, 0.4)" stroke-width="8" />
+    <path id="curve1" d="M50,100c120,0,240,160,360,160" fill="none" />
     <text width="500" font-size="50" letter-spacing="4">
       <textPath alignment-baseline="top" xlink:href="#curve1">
         Peter’s Famous
@@ -39,6 +39,7 @@
   import Hero from "../components/Hero.svelte";
   import Section from "../components/Section.svelte";
   import SectionTitle from "../components/SectionTitle.svelte";
+  import HireMeAnimation from "../components/HireMeAnimation.svelte";
   import Static from "../components/Static.svelte";
 
   let servicesMd = `
@@ -57,7 +58,7 @@
 `;
 
   let workEthicMd = `
-* Commitment to producing websites and apps that are secure, correct, intuitive, fast and beautiful.
+* End results should be: secure, correct, intuitive, fast and beautiful.
 * Excellent communication, follow-through and initiative where appropriate.
 * No overengineering, no speculation.
 `;

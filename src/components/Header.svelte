@@ -23,8 +23,8 @@
 
   a {
     color: var(--sage);
-    width: 40px;
-    height: 40px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
     display: block;
     box-shadow: 0 0 12px 0 rgba(255, 255, 255, 0.6);
