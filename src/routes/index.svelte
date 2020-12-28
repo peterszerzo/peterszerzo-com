@@ -146,6 +146,12 @@
   </SectionTitle>
   <ul>
     <li>
+      <a href="https://dev.to/peterszerzo/my-year-on-the-frontend-2020-edition-1fpk">My year on the frontend, 2020 edition</a>
+    </li>
+    <li>
+      <a href="https://dev.to/peterszerzo/generics-for-user-interfaces-hak">Generics for user interfaces</a>
+    </li>
+    <li>
       <a href="https://dev.to/peterszerzo/introducing-arborist-the-tree-editor-for-elm-49po">Introducing Arborist, the Tree Editor for Elm</a>
     </li>
     <li>
