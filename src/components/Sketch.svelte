@@ -1,7 +1,6 @@
 <script>
   import PauseIcon from "../components/PauseIcon.svelte";
   import PlayIcon from "../components/PlayIcon.svelte";
-  import LinkIcon from "../components/LinkIcon.svelte";
   import SaveIcon from "../components/SaveIcon.svelte";
   import * as sk from "../sketches/index.js";
   import { onMount, onDestroy, tick } from "svelte";
@@ -16,7 +15,7 @@
 
   const handlePlayPause = () => {
     isPlaying = !isPlaying;
-  }
+  };
 
   let canvas;
   let container;
@@ -24,7 +23,7 @@
   let sketch;
   let animation;
 
-  $ : (() => {
+  $: (() => {
     if (animation) {
       if (isPlaying) {
         animation.start();
@@ -41,11 +40,11 @@
         .replace("image/png", "image/octet-stream");
       window.location.href = image;
     }
-  }
+  };
 
-  $ : canvasContext = canvas && canvas.getContext("2d");
+  $: canvasContext = canvas && canvas.getContext("2d");
 
-  $ : finalSize = size || containerSize;
+  $: finalSize = size || containerSize;
 
   onMount(async () => {
     isPlaying = initiallyPlaying;
@@ -62,13 +61,16 @@
             size: finalSize,
             context: canvasContext,
             deltaTime: deltaTime,
-            playhead: playhead
+            playhead: playhead,
           });
         }
       });
     }
 
-    const w = container && container.parentElement && Math.min(524, container.parentElement.clientWidth);
+    const w =
+      container &&
+      container.parentElement &&
+      Math.min(524, container.parentElement.clientWidth);
     containerSize = w || 300;
   });
 
@@ -79,15 +81,104 @@
   });
 </script>
 
+<style>
+  .sketch {
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  a.sketch:hover {
+    filter: brightness(96%);
+  }
+
+  .sketch-controls {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    border-radius: 4px;
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    transition: opacity 0.1s ease-in-out;
+    /* state styles */
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .sketch:hover .sketch-controls {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  @media (min-width: 640px) {
+    .sketch-controls {
+      opacity: 0;
+      pointer-events: none;
+    }
+  }
+
+  .sketch-controls * {
+    display: inline-block;
+    margin-left: 5px;
+  }
+
+  .sketch-controls *:first-child {
+    margin-left: 0;
+  }
+
+  .sketch-control-button {
+    display: block;
+    background: none;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    color: var(--black);
+    width: 34px;
+    height: 34px;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    padding: 5px;
+  }
+
+  .sketch-control-button :global(svg) {
+    width: 24px;
+    height: 24px;
+    vertical-align: top;
+  }
+
+  .sketch-control-button:hover {
+    background-color: rgba(255, 255, 255, 1);
+    color: var(--sage);
+  }
+
+  .sketch-control-button:focus {
+    outline: none;
+  }
+</style>
+
 {#if url}
-  <a class="sketch" href={url} style={`width: ${finalSize}px; height: ${finalSize}px;`} bind:this={container}>
+  <a
+    class="sketch"
+    href={url}
+    style={`width: ${finalSize}px; height: ${finalSize}px;`}
+    bind:this={container}>
     <canvas width={finalSize} height={finalSize} bind:this={canvas} />
   </a>
 {:else}
-  <div class="sketch" style={`width: ${finalSize}px; height: ${finalSize}px;`} bind:this={container}>
+  <div
+    class="sketch"
+    style={`width: ${finalSize}px; height: ${finalSize}px;`}
+    bind:this={container}>
     <canvas width={finalSize} height={finalSize} bind:this={canvas} />
     <div class="sketch-controls">
-      <button class="sketch-control-button" on:click={handlePlayPause} title={isPlaying ? "Pause" : "Play"}>
+      <button
+        class="sketch-control-button"
+        on:click={handlePlayPause}
+        title={isPlaying ? 'Pause' : 'Play'}>
         {#if isPlaying}
           <PauseIcon />
         {:else}
@@ -95,89 +186,13 @@
         {/if}
       </button>
       {#if allowSave}
-        <button class="sketch-control-button" on:click={handleSave} title="Save sketch">
+        <button
+          class="sketch-control-button"
+          on:click={handleSave}
+          title="Save sketch">
           <SaveIcon />
         </button>
       {/if}
     </div>
   </div>
 {/if}
-
-<style>
-.sketch {
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
-  border-radius: 4px;
-  overflow: hidden;
-  position: relative;
-}
-
-a.sketch:hover {
-  filter: brightness(96%);
-}
-
-.sketch-controls {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  border-radius: 4px;
-  z-index: 100;
-  align-items: center;
-  justify-content: center;
-  display: flex;
-  transition: opacity 0.1s ease-in-out;
-  /* state styles */
-  opacity: 1;
-  pointer-events: all;
-}
-
-.sketch:hover .sketch-controls {
-  opacity: 1;
-  pointer-events: all;
-}
-
-@media (min-width: 640px) {
-  .sketch-controls {
-    opacity: 0;
-    pointer-events: none;
-  }
-}
-
-.sketch-controls * {
-  display: inline-block;
-  margin-left: 5px;
-}
-
-.sketch-controls *:first-child {
-  margin-left: 0;
-}
-
-.sketch-control-button {
-  display: block;
-  background: none;
-  border: 0;
-  padding: 0;
-  margin: 0;
-  color: var(--black);
-  width: 34px;
-  height: 34px;
-  cursor: pointer;
-  background-color: rgba(255, 255, 255, 0.8);
-  border-radius: 50%;
-  padding: 5px;
-}
-
-.sketch-control-button :global(svg) {
-  width: 24px;
-  height: 24px;
-  vertical-align: top;
-}
-
-.sketch-control-button:hover {
-  background-color: rgba(255, 255, 255, 1);
-  color: var(--sage);
-}
-
-.sketch-control-button:focus {
-  outline: none;
-}
-</style>
