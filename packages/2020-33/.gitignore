@@ -1,0 +1,4 @@
+.cache
+dist
+dist-ssr
+node_modules

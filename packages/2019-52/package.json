@@ -1,0 +1,12 @@
+{
+  "name": "2019-52",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "elm reactor",
+    "build": "mkdir -p ../core/s/2019-52 && elm make src/Main.elm --output=../core/s/2019-52/index.html"
+  },
+  "author": "",
+  "license": "ISC"
+}

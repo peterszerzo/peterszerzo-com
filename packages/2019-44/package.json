@@ -1,0 +1,12 @@
+{
+  "name": "2019-44",
+  "version": "1.0.0",
+  "description": "[Ellie link](https://ellie-app.com/5Hv3pMK6yG8a1)",
+  "main": "index.js",
+  "scripts": {
+    "dev": "elm reactor",
+    "build": "mkdir -p ../core/s/2019-44 && elm make src/Main.elm --output=../core/s/2019-44/index.html"
+  },
+  "author": "",
+  "license": "ISC"
+}
