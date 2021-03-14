@@ -34,7 +34,7 @@ jobs:
             - ./node_modules
       - run:
           name: export
-          command: npm run export
+          command: yarn build
       - persist_to_workspace:
           root: ~/project
           paths:
