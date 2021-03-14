@@ -1,14 +1,7 @@
-import honestCash from "./honest-cash";
-import misfitPlanets from "./misfit-planets";
-
-export const sketchByName = {
-  ["honest-cash"]: honestCash,
-  ["misfit-planets"]: misfitPlanets,
-};
-
-export const sketches = (sketchName) => {
-  return sketchByName[sketchName] || honestCash;
-};
+interface Config {
+  playing: boolean;
+  sketch: any;
+}
 
 const animate = () => {
   requestAnimationFrame(() => {
@@ -50,3 +43,36 @@ export const createAnimation = (stepper) => {
     toggle,
   };
 };
+
+const useCanvasSketch = (node: HTMLCanvasElement, config: Config) => {
+  const canvasContext = node.getContext("2d");
+  const size = node.clientWidth;
+  node.width = size;
+  node.height = size;
+  const s = config.sketch();
+  let animation = createAnimation(({ deltaTime, playhead }) => {
+    s.step({
+      size,
+      context: canvasContext,
+      deltaTime: deltaTime,
+      playhead: playhead,
+    });
+  });
+  if (config.playing) {
+    animation.start();
+  }
+  return {
+    update: (newConfig) => {
+      if (newConfig.playing) {
+        animation.start();
+      } else {
+        animation.stop();
+      }
+    },
+    destroy: () => {
+      animation.stop();
+    },
+  };
+};
+
+export default useCanvasSketch;

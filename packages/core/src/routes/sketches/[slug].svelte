@@ -1,52 +1,37 @@
 <script context="module">
-  export async function preload({ params, query }) {
-    const res = await this.fetch(`sketches/${params.slug}.data.json`);
-    const data = await res.json();
-
-    if (res.status === 200) {
-      return { sketch: data };
-    } else {
-      this.error(res.status, data.message);
-    }
+  export async function preload({ params }) {
+    return { slug: params.slug };
   }
 </script>
 
-<script>
-  import Sketch from "../../components/Sketch.svelte";
+<script lang="ts">
+  import drawings from "../../components/Drawings/index";
+  import Container from "../../components/Drawings/Container.svelte";
   import marked from "marked";
 
-  export let sketch;
+  export let slug: string;
 
-  export let width;
-  export let height;
+  $: drawing = drawings[slug];
 
-  $: content = sketch.content && marked(sketch.content);
+  $: content = drawing?.content ? marked(drawing?.content) : undefined;
 </script>
 
-<style>
-  .sketch-page > :global(*) {
-    margin-bottom: 30px;
-  }
-
-  .sketch-page > :global(*:last-child) {
-    margin-bottom: 0;
-  }
-</style>
-
 <svelte:head>
-  <title>{sketch.title}</title>
+  <title>{drawing?.title}</title>
 </svelte:head>
 
-<div class="sketch-page">
-  <h1>{sketch.title}</h1>
-
-  <Sketch name={sketch.slug} animating={true} playing={true} />
-
-  {#if sketch.content}
-    <div class="content">
-      {@html content}
-    </div>
-  {/if}
-</div>
-
-<svelte:window bind:innerWidth={width} bind:innerHeight={height} />
+{#if drawing}
+  <div class="sketch-page">
+    {#if drawing.title}
+      <h1>{drawing.title}</h1>
+    {/if}
+    <Container>
+      <svelte:component this={drawing.Component} playing />
+    </Container>
+    {#if content}
+      <div class="content">
+        {@html content}
+      </div>
+    {/if}
+  </div>
+{/if}

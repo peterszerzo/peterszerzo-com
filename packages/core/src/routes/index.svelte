@@ -17,12 +17,9 @@
 
   import Project from "../components/Project.svelte";
   import Switch from "../components/Switch.svelte";
-  import Sketch from "../components/Sketch.svelte";
   import Section from "../components/Section.svelte";
   import SectionTitle from "../components/SectionTitle.svelte";
   import Hero from "../components/Hero.svelte";
-
-  const drawings = ["001", "002", "003", "005", "006", "007"];
 
   let activeDrawing: string | null = null;
 
@@ -115,9 +112,21 @@
     display: none;
   }
 
-  .new-sketch-container {
-    width: 160px;
-    height: 160px;
+  .sketch-container {
+    display: inline-block;
+    width: 120px;
+    height: 120px;
+    transition: filter 0.2s ease-in-out;
+  }
+
+  .sketch-container:hover {
+    filter: brightness(110%);
+  }
+
+  .sketch-container > :global(canvas),
+  .sketch-container > :global(img) {
+    width: 100%;
+    height: 100%;
   }
 </style>
 
@@ -130,27 +139,26 @@
 <Section>
   <SectionTitle title="Sketches" />
   <div class="sketches">
-    {#each drawings as drawing}
-      <a
-        class="new-sketch-container"
-        href={`/s2/${drawing}`}
-        on:mouseover={() => {
-          activeDrawing = drawing;
-        }}
-        on:mouseout={() => {
-          activeDrawing = null;
-        }}>
-        <svelte:component
-          this={drawingComponents[drawing]}
-          playing={activeDrawing === drawing} />
-      </a>
-    {/each}
-    {#each data.sketches as sketch, index (index)}
-      <Sketch
-        name={sketch.slug}
-        url="/sketches/{sketch.slug}"
-        size="160"
-        playing={false} />
+    {#each Object.entries(drawingComponents) as [key, drawing]}
+      {#if drawing.thumbnail}
+        <a class="sketch-container" href={drawing.url}>
+          <img src={drawing.thumbnail} alt="Thumbnail" />
+        </a>
+      {:else}
+        <a
+          class="sketch-container"
+          href={`/sketches/${key}`}
+          on:mouseover={() => {
+            activeDrawing = key;
+          }}
+          on:mouseout={() => {
+            activeDrawing = null;
+          }}>
+          <svelte:component
+            this={drawing.Component}
+            playing={activeDrawing === key} />
+        </a>
+      {/if}
     {/each}
   </div>
 </Section>

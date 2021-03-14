@@ -4,6 +4,11 @@
     padding: 10px;
   }
 
+  .sketch > :global(canvas) {
+    width: 100%;
+    height: 100%;
+  }
+
   .sketch {
     width: fit-content;
     margin: auto;

@@ -1,4 +1,3 @@
-import sketchesRaw from "../db/sketches";
 import frontMatter from "front-matter";
 import glob from "glob";
 import { fs } from "mz";
@@ -56,16 +55,8 @@ export const get = async (req, res, next) => {
 
   // Sketches
 
-  const sketches = sketchesRaw
-    .filter((sketch) => sketch.public)
-    .map((sketch) => ({
-      slug: sketch.slug,
-      title: sketch.title,
-    }));
-
   res.end(
     JSON.stringify({
-      sketches,
       projects,
       talks,
       aboutSerious,
