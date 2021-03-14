@@ -100,6 +100,13 @@
     filter: brightness(100%);
   }
 
+  .sketches > * {
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 0px;
+    margin-bottom: 0px;
+  }
+
   .tech:hover {
     filter: brightness(110%);
   }
@@ -143,8 +150,7 @@
         name={sketch.slug}
         url="/sketches/{sketch.slug}"
         size="160"
-        allowSave={false}
-        initiallyPlaying={false} />
+        playing={false} />
     {/each}
   </div>
 </Section>

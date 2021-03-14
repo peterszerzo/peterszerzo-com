@@ -1,21 +1,11 @@
-<script>
-  import PauseIcon from "../components/PauseIcon.svelte";
-  import PlayIcon from "../components/PlayIcon.svelte";
-  import SaveIcon from "../components/SaveIcon.svelte";
-  import * as sk from "../sketches/index.js";
+<script lang="ts">
+  import * as sk from "../sketches/index";
   import { onMount, onDestroy, tick } from "svelte";
 
   export let size;
   export let url;
   export let name;
-  export let allowSave;
-  export let initiallyPlaying;
-
-  let isPlaying = false;
-
-  const handlePlayPause = () => {
-    isPlaying = !isPlaying;
-  };
+  export let playing: boolean = false;
 
   let canvas;
   let container;
@@ -25,7 +15,7 @@
 
   $: (() => {
     if (animation) {
-      if (isPlaying) {
+      if (playing) {
         animation.start();
       } else {
         animation.stop();
@@ -33,22 +23,11 @@
     }
   })();
 
-  const handleSave = () => {
-    if (canvas) {
-      const image = canvas
-        .toDataURL("image/png")
-        .replace("image/png", "image/octet-stream");
-      window.location.href = image;
-    }
-  };
-
   $: canvasContext = canvas && canvas.getContext("2d");
 
   $: finalSize = size || containerSize;
 
   onMount(async () => {
-    isPlaying = initiallyPlaying;
-
     sketch = sk.sketches(name)();
 
     await tick();
@@ -61,7 +40,7 @@
             size: finalSize,
             context: canvasContext,
             deltaTime: deltaTime,
-            playhead: playhead,
+            playhead: playhead
           });
         }
       });
@@ -83,80 +62,13 @@
 
 <style>
   .sketch {
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
-    border-radius: 4px;
+    display: inline-block;
     overflow: hidden;
     position: relative;
   }
 
   a.sketch:hover {
     filter: brightness(96%);
-  }
-
-  .sketch-controls {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    border-radius: 4px;
-    z-index: 100;
-    align-items: center;
-    justify-content: center;
-    display: flex;
-    transition: opacity 0.1s ease-in-out;
-    /* state styles */
-    opacity: 1;
-    pointer-events: all;
-  }
-
-  .sketch:hover .sketch-controls {
-    opacity: 1;
-    pointer-events: all;
-  }
-
-  @media (min-width: 640px) {
-    .sketch-controls {
-      opacity: 0;
-      pointer-events: none;
-    }
-  }
-
-  .sketch-controls * {
-    display: inline-block;
-    margin-left: 5px;
-  }
-
-  .sketch-controls *:first-child {
-    margin-left: 0;
-  }
-
-  .sketch-control-button {
-    display: block;
-    background: none;
-    border: 0;
-    padding: 0;
-    margin: 0;
-    color: var(--black);
-    width: 34px;
-    height: 34px;
-    cursor: pointer;
-    background-color: rgba(255, 255, 255, 0.8);
-    border-radius: 50%;
-    padding: 5px;
-  }
-
-  .sketch-control-button :global(svg) {
-    width: 24px;
-    height: 24px;
-    vertical-align: top;
-  }
-
-  .sketch-control-button:hover {
-    background-color: rgba(255, 255, 255, 1);
-    color: var(--sage);
-  }
-
-  .sketch-control-button:focus {
-    outline: none;
   }
 </style>
 
@@ -174,25 +86,5 @@
     style={`width: ${finalSize}px; height: ${finalSize}px;`}
     bind:this={container}>
     <canvas width={finalSize} height={finalSize} bind:this={canvas} />
-    <div class="sketch-controls">
-      <button
-        class="sketch-control-button"
-        on:click={handlePlayPause}
-        title={isPlaying ? 'Pause' : 'Play'}>
-        {#if isPlaying}
-          <PauseIcon />
-        {:else}
-          <PlayIcon />
-        {/if}
-      </button>
-      {#if allowSave}
-        <button
-          class="sketch-control-button"
-          on:click={handleSave}
-          title="Save sketch">
-          <SaveIcon />
-        </button>
-      {/if}
-    </div>
   </div>
 {/if}

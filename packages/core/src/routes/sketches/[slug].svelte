@@ -20,31 +20,8 @@
   export let width;
   export let height;
 
-  $ : content = sketch.content && marked(sketch.content);
+  $: content = sketch.content && marked(sketch.content);
 </script>
-
-<svelte:head>
-  <title>{sketch.title}</title>
-</svelte:head>
-
-<div class="sketch-page">
-  <h1>{sketch.title}</h1>
-
-  <Sketch
-    name={sketch.slug}
-    animating={true}
-    allowSave={true}
-    initiallyPlaying={true}
-  ></Sketch>
-
-  {#if sketch.content}
-    <div class="content">
-      {@html content}
-    </div>
-  {/if}
-</div>
-
-<svelte:window bind:innerWidth={width} bind:innerHeight={height} />
 
 <style>
   .sketch-page > :global(*) {
@@ -55,3 +32,21 @@
     margin-bottom: 0;
   }
 </style>
+
+<svelte:head>
+  <title>{sketch.title}</title>
+</svelte:head>
+
+<div class="sketch-page">
+  <h1>{sketch.title}</h1>
+
+  <Sketch name={sketch.slug} animating={true} playing={true} />
+
+  {#if sketch.content}
+    <div class="content">
+      {@html content}
+    </div>
+  {/if}
+</div>
+
+<svelte:window bind:innerWidth={width} bind:innerHeight={height} />

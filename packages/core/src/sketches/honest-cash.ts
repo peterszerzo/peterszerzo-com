@@ -136,7 +136,10 @@ const bgBase = ({ context, size, backgroundColor }) => {
 };
 
 const bgHole = ({ context, size, backgroundColor }) => {
-  context.fillStyle = chroma(backgroundColor).brighten(1.5).alpha(0.4).hex();
+  context.fillStyle = chroma(backgroundColor)
+    .brighten(1.5)
+    .alpha(0.4)
+    .hex();
   context.beginPath();
   context.arc(size * (1 - 0.3), size * 0.2, size * 0.06, 0, 2 * Math.PI);
   context.fill();
@@ -159,7 +162,9 @@ const bg1 = ({
     })();
     context.fillStyle =
       [15 * 8 + 12, 15 * 8 + 13, 16 * 8 + 13, 16 * 8 + 14].indexOf(index) > -1
-        ? chroma(backgroundPatternColor).darken(3.5).hex()
+        ? chroma(backgroundPatternColor)
+            .darken(3.5)
+            .hex()
         : backgroundPatternColor;
     context.beginPath();
     context.arc(
@@ -190,7 +195,9 @@ const bg2 = ({
     drawCurves2({
       color:
         i === 5 && j === 3
-          ? chroma(backgroundPatternColor).darken(3.5).hex()
+          ? chroma(backgroundPatternColor)
+              .darken(3.5)
+              .hex()
           : backgroundPatternColor,
       curves: shortTermDebtCycleCurves,
       transform: ([x, y]) => [
@@ -212,8 +219,13 @@ const bgs = [bg1, bg2];
 
 const bill = ({ context, size, playhead, type, color, value, no, serial }) => {
   const backgroundColor = chroma(color).hex();
-  const backgroundPatternColor = chroma(color).darken(0.25).saturate(0.3).hex();
-  const textColor = chroma(color).darken(3.5).hex();
+  const backgroundPatternColor = chroma(color)
+    .darken(0.25)
+    .saturate(0.3)
+    .hex();
+  const textColor = chroma(color)
+    .darken(3.5)
+    .hex();
   bgs[type]({
     context,
     size,
