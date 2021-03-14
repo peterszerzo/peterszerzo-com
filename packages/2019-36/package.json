@@ -8,5 +8,8 @@
     "build": "mkdir -p ../core/s/2019-36 && elm make src/Main.elm --output=../core/s/2019-36/index.html"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "elm": "^0.19.1-5"
+  }
 }
