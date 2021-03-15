@@ -3,8 +3,8 @@ import { render } from "react-dom";
 import * as three from "three";
 import range from "ramda/src/range";
 import { Canvas, useThree, useFrame } from "react-three-fiber";
-import Effects from "./Effects";
 import * as noise from "noisejs";
+import { EffectComposer, SSAO } from "react-postprocessing";
 
 const palette = ["#a31621", "#fcf7f8", "#ced3dc", "#4e8098", "#90c2e7"];
 
@@ -202,9 +202,15 @@ const Container: React.FunctionComponent<{}> = () => {
       <directionalLight position={[0, 3, 0]} intensity={0.4} />
       <directionalLight position={[5, 0, 0]} intensity={0.8} />
       <Scene noise={n} />
-      <React.Suspense fallback={null}>
-        <Effects />
-      </React.Suspense>
+      <EffectComposer multisampling={0}>
+        <SSAO
+          samples={31}
+          radius={30}
+          intensity={60}
+          luminanceInfluence={0.8}
+          color="black"
+        />
+      </EffectComposer>
     </Canvas>
   );
 };

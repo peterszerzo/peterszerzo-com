@@ -11,10 +11,11 @@
   "license": "ISC",
   "dependencies": {
     "noisejs": "^2.1.0",
-    "postprocessing": "^6.13.3",
+    "postprocessing": "^6.18.0",
     "ramda": "^0.27.0",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
+    "react-postprocessing": "^1.4.0",
     "react-three-fiber": "^5.3.19",
     "simplex-noise": "^2.4.0",
     "three": "^0.126.0"

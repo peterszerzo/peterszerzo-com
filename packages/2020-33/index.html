@@ -7,12 +7,16 @@
     }
 
     #root {
-      width: 600px;
-      height: 600px;
       position: relative;
-      box-shadow: 0 0 12px 1px #dedede;
-      border-radius: 6px;
-      overflow: hidden;
+      width: 320px;
+      height: 320px;
+    }
+
+    @media screen and (min-width: 600px) {
+      #root {
+        width: 600px;
+        height: 600px;
+      }
     }
   </style>
 </head>

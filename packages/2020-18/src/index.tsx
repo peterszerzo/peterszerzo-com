@@ -3,8 +3,8 @@ import { render } from "react-dom";
 import * as three from "three";
 import { range } from "ramda";
 import { Canvas, useThree } from "react-three-fiber";
-import Effects from "./Effects";
 import * as noisePackage from "noisejs";
+import { EffectComposer, SSAO } from "react-postprocessing";
 
 const sphereMaterial = (uniforms: { color: three.Vector3 }) =>
   new three.ShaderMaterial({
@@ -246,7 +246,7 @@ const range2 = (n: number): Array<[number, number]> =>
       []
     );
 
-const Container: React.FunctionComponent<{ size: number }> = props => {
+const Container: React.FunctionComponent<{}> = props => {
   const [seed, setSeed] = React.useState(0);
 
   const noise = React.useMemo(() => {
@@ -277,37 +277,45 @@ const Container: React.FunctionComponent<{ size: number }> = props => {
   }, []);
 
   return (
-    <div style={{ width: props.size, height: props.size }}>
-      <Canvas
-        gl={{
-          antialias: true,
-          alpha: true,
-          logarithmicDepthBuffer: true,
-          preserveDrawingBuffer: true
-        }}
-        camera={{
-          near: 2,
-          far: 120,
-          zoom: (70 * props.size) / 600
-        }}
-        orthographic
-      >
-        <ambientLight intensity={0.5} />
-        <pointLight position={[19, 10, 10]} intensity={0.5} />
-        <directionalLight position={[0, 0, 10]} intensity={0.6} />
-        <directionalLight position={[5, 0, 0]} intensity={0.4} />
-        <Scene noise={noise} />
-        <React.Suspense fallback={null}>
-          <Effects />
-        </React.Suspense>
-      </Canvas>
-    </div>
+    <Canvas
+      gl={{
+        antialias: true,
+        alpha: true,
+        logarithmicDepthBuffer: true,
+        preserveDrawingBuffer: true
+      }}
+      onCreated={({ size, camera }) => {
+        camera.zoom = (70 * size.width) / 600;
+        camera.updateProjectionMatrix();
+      }}
+      camera={{
+        near: 2,
+        far: 120,
+        zoom: (70 * 600) / 600
+      }}
+      orthographic
+    >
+      <ambientLight intensity={0.5} />
+      <pointLight position={[19, 10, 10]} intensity={0.5} />
+      <directionalLight position={[0, 0, 10]} intensity={0.6} />
+      <directionalLight position={[5, 0, 0]} intensity={0.4} />
+      <Scene noise={noise} />
+      <EffectComposer multisampling={0}>
+        <SSAO
+          samples={31}
+          radius={20}
+          intensity={40}
+          luminanceInfluence={0.1}
+          color="black"
+        />
+      </EffectComposer>
+    </Canvas>
   );
 };
 
 const start = () => {
   const rootNode = document.querySelector("#root");
-  render(<Container size={600} />, rootNode);
+  render(<Container />, rootNode);
 };
 
 start();

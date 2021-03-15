@@ -7,6 +7,7 @@ import { getOpen, BoxTree } from "./BoxTree";
 import { useAnimationFrame } from "./utils";
 import { generateTree } from "./geometry";
 import { Loop, Transport, Synth, PolySynth, Gain } from "tone";
+import { EffectComposer, SSAO } from "react-postprocessing";
 
 const range2d = (n: number): Array<[number, number]> =>
   range(0)(n)
@@ -24,13 +25,13 @@ const range2d = (n: number): Array<[number, number]> =>
       []
     );
 
-const grid = range2d(4).map(([x, y], index) => ({
+const grid = range2d(3).map(([x, y], index) => ({
   x,
   y,
   trees: [
-    generateTree(0.8 + 0.2 * Math.cos(index * 101), index * 0.3),
-    generateTree(0.8 + 0.2 * Math.cos(index * 31), index * 0.4),
-    generateTree(0.8 + 0.2 * Math.cos(index * 71), index * 0.5),
+    generateTree(0.75 + 0.2 * Math.cos(index * 101), index * 0.3),
+    generateTree(0.75 + 0.2 * Math.cos(index * 31), index * 0.4),
+    generateTree(0.75 + 0.2 * Math.cos(index * 71), index * 0.5),
   ],
 }));
 
@@ -54,10 +55,11 @@ const App: React.FunctionComponent<{ time: number }> = (props) => {
           trees={trees}
           position={
             new three.Vector3(
-              (x - 0.5) * 75 + 0.3 * Math.sin(props.time * 0.001 + index * 0.3),
-              (y - 0.5) * 75 +
+              (x - 0.5) * 55 + 0.3 * Math.sin(props.time * 0.001 + index * 0.3),
+              (y - 0.5) * 55 +
                 0.3 * Math.sin(2 * props.time * 0.001 + index * 0.6),
-              3.5 * Math.sin(35 * x ** 2 + 35 * y ** 2) +
+              -5 +
+                3.5 * Math.sin(35 * x ** 2 + 35 * y ** 2) +
                 0.2 * Math.sin(1.5 * props.time * 0.001 + index * 0.6)
             )
           }
@@ -188,6 +190,7 @@ const Container: React.FunctionComponent<ContainerProps> = () => {
       <div
         style={{
           opacity,
+          background: "linear-gradient(45deg, #343445, #121223)",
         }}
         className="container"
       >
@@ -200,11 +203,20 @@ const Container: React.FunctionComponent<ContainerProps> = () => {
           }}
           orthographic
         >
-          <ambientLight intensity={0.3} />
-          <pointLight position={[3, 4, 10]} intensity={0.3} />
-          <directionalLight position={[0, 0, 10]} intensity={0.6} />
+          <ambientLight intensity={0.1} />
+          <directionalLight position={[0, 0, 10]} intensity={0.4} />
           <directionalLight position={[5, 0, 0]} intensity={0.2} />
+          <directionalLight position={[0, -5, 0]} intensity={0.1} />
           <App time={time} />
+          <EffectComposer multisampling={0}>
+            <SSAO
+              samples={31}
+              radius={20}
+              intensity={280}
+              luminanceInfluence={0.1}
+              color="black"
+            />
+          </EffectComposer>
         </Canvas>
       </div>
     </>

@@ -50,12 +50,12 @@ type Msg
 
 w : Float
 w =
-    560
+    480
 
 
 h : Float
 h =
-    560
+    480
 
 
 timeDiff : Model -> Float

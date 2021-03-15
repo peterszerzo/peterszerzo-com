@@ -10,7 +10,7 @@ interface LeafProps {
   material: three.Material;
 }
 
-const globalScale = 4;
+const globalScale = 8;
 
 const globalCube = new three.BoxBufferGeometry().scale(
   globalScale,
@@ -18,7 +18,7 @@ const globalCube = new three.BoxBufferGeometry().scale(
   globalScale
 );
 
-const Leaf: React.FunctionComponent<LeafProps> = props => {
+const Leaf: React.FunctionComponent<LeafProps> = (props) => {
   return <mesh {...props} geometry={globalCube} />;
 };
 
@@ -42,7 +42,7 @@ export const treeStepYEuler = (open: number) =>
     new three.Matrix4().makeRotationY((open * -Math.PI) / 2)
   );
 
-const TreeStep: React.FunctionComponent<TreeStepProps> = props => {
+const TreeStep: React.FunctionComponent<TreeStepProps> = (props) => {
   if (props.tree === null) {
     return null;
   }
@@ -114,7 +114,7 @@ const expandFactor = (time: number): number =>
 const passThreshold = ({
   prev,
   current,
-  thresholds
+  thresholds,
 }: {
   prev: number;
   current: number;
@@ -132,27 +132,28 @@ const passThreshold = ({
   if (prev < firstThreshold && current >= firstThreshold) {
     return {
       threshold: firstThreshold,
-      ascending: true
+      ascending: true,
     };
   }
   if (prev >= firstThreshold && current < firstThreshold) {
     return {
       threshold: firstThreshold,
-      ascending: false
+      ascending: false,
     };
   }
   return passThreshold({
     prev,
     current,
-    thresholds: remainingThresholds
+    thresholds: remainingThresholds,
   });
 };
 
-export const getOpen = (time: number) => expoInOut(expandFactor(time * animSpeed));
+export const getOpen = (time: number) =>
+  expoInOut(expandFactor(time * animSpeed));
 
 export const getIndex = (time: number) => treeIndex(time * animSpeed);
 
-export const BoxTree: React.FunctionComponent<BoxTreeProps> = props => {
+export const BoxTree: React.FunctionComponent<BoxTreeProps> = (props) => {
   const index = getIndex(props.time);
   const open = getOpen(props.time);
 
@@ -161,7 +162,7 @@ export const BoxTree: React.FunctionComponent<BoxTreeProps> = props => {
   const material = React.useMemo(
     () =>
       new three.MeshPhongMaterial({
-        color: props.color
+        color: props.color,
       }),
     [props.color]
   );

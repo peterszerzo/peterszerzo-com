@@ -3,8 +3,8 @@ import { render } from "react-dom";
 import * as three from "three";
 import range from "ramda/src/range";
 import { Canvas } from "react-three-fiber";
-import Effects from "./Effects";
 import SimplexNoise from "simplex-noise";
+import { EffectComposer, SSAO } from "react-postprocessing";
 
 const createGrid = (spreadSeed: number) => {
   const n = 300;
@@ -95,14 +95,20 @@ const Container: React.FunctionComponent<{ size: number }> = (props) => {
           zoom: 3.2,
         }}
       >
-        <ambientLight intensity={0.2} />
+        <ambientLight intensity={0.4} />
         <pointLight position={[19, 10, 10]} intensity={0.4} />
         <directionalLight position={[0, 0, 10]} intensity={0.3} />
         <directionalLight position={[5, 0, 0]} intensity={0.4} />
         <SphereCloud spreadSeed={spreadSeed} material={sphereMaterial} />
-        <React.Suspense fallback={null}>
-          <Effects checksum={colorIndex * 1000 + spreadSeed} />
-        </React.Suspense>
+        <EffectComposer multisampling={0}>
+          <SSAO
+            samples={31}
+            radius={20}
+            intensity={40}
+            luminanceInfluence={0.1}
+            color="black"
+          />
+        </EffectComposer>
       </Canvas>
     </div>
   );
