@@ -41,7 +41,7 @@
     strokeShadow: "#E8FFFF"
   };
 
-  const colorScheme = colorScheme2;
+  const colorScheme = colorScheme1;
 
   const hexGrid = ({ n, m }) =>
     range(n)

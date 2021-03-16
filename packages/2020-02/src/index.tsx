@@ -1,10 +1,10 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import { render } from "react-dom";
 import range from "ramda/src/range";
 import * as three from "three";
 import { Canvas, useThree } from "react-three-fiber";
 import { getOpen, BoxTree } from "./BoxTree";
-import { useAnimationFrame } from "./utils";
+import { useAnimationFrame, useWindowSize } from "./utils";
 import { generateTree } from "./geometry";
 import { Loop, Transport, Synth, PolySynth, Gain } from "tone";
 import { EffectComposer, SSAO } from "react-postprocessing";
@@ -40,7 +40,7 @@ const App: React.FunctionComponent<{ time: number }> = (props) => {
 
   const scale = 2.6;
 
-  React.useEffect(() => {
+  useEffect(() => {
     threeContext.camera.position.set(6 * scale, -8 * scale, 20 * scale);
     threeContext.camera.lookAt(0, 4, 0);
     threeContext.camera.updateProjectionMatrix();
@@ -114,23 +114,29 @@ interface ContainerProps {
 }
 
 const Container: React.FunctionComponent<ContainerProps> = () => {
-  const [time, setTime] = React.useState(0);
+  const [time, setTime] = useState(0);
 
   useAnimationFrame((diff) => {
     setTime((prevTime) => prevTime + diff);
   });
 
-  const [playing, setPlaying] = React.useState(false);
+  const windowSize = useWindowSize();
 
-  const [opacity, setOpacity] = React.useState(0);
+  const size = windowSize
+    ? Math.min(windowSize.width, windowSize.height) * 0.8
+    : 300;
 
-  React.useEffect(() => {
+  const [playing, setPlaying] = useState(false);
+
+  const [opacity, setOpacity] = useState(0);
+
+  useEffect(() => {
     requestAnimationFrame(() => {
       setOpacity(1);
     });
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (playing) {
       const mainSynth = new PolySynth(Synth, {
         oscillator: {
@@ -190,6 +196,8 @@ const Container: React.FunctionComponent<ContainerProps> = () => {
       <div
         style={{
           opacity,
+          width: size,
+          height: size,
           background: "linear-gradient(45deg, #343445, #121223)",
         }}
         className="container"
@@ -199,7 +207,7 @@ const Container: React.FunctionComponent<ContainerProps> = () => {
           camera={{
             near: 2,
             far: 120,
-            zoom: 5,
+            zoom: (5 * size) / 500,
           }}
           orthographic
         >

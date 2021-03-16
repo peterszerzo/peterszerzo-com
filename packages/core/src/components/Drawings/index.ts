@@ -10,6 +10,14 @@ import d009 from "./009/index.svelte";
 import d010 from "./010/index.svelte";
 
 export default {
+  one: {
+    url: "/s/2020-02",
+    thumbnail: "/thumbnails/folding-cubes.jpg",
+  },
+  two: {
+    url: "https://cables.gl/p/mL8pSt",
+    thumbnail: "/thumbnails/cables-01.jpg",
+  },
   "001": { Component: d001 },
   "002": { Component: d002 },
   "003": { Component: d003 },
@@ -65,9 +73,5 @@ And they are animated, too! Even if they ought to be printed static, there is
 something about living-breathing money that should speak to our preconceptions.
 And besides, how long would paper cash last anyway.
 `,
-  },
-  "011": {
-    url: "https://cables.gl/p/mL8pSt",
-    thumbnail: "/thumbnails/cables-01.jpg",
   },
 };

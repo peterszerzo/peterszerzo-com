@@ -1,10 +1,10 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import { useFrame } from "react-three-fiber";
 
 export const usePrevious = <T>(value: T): T | undefined => {
   const ref = React.useRef<T>();
 
-  React.useEffect(() => {
+  useEffect(() => {
     ref.current = value;
   }, [value]);
 
@@ -12,15 +12,40 @@ export const usePrevious = <T>(value: T): T | undefined => {
 };
 
 export const useDiff = () => {
-  const [startTime] = React.useState(new Date().getTime());
+  const [startTime] = useState(new Date().getTime());
 
-  const [currentTime, setCurrentTime] = React.useState(new Date().getTime());
+  const [currentTime, setCurrentTime] = useState(new Date().getTime());
 
   useFrame(() => {
     setCurrentTime(new Date().getTime());
   });
 
   return currentTime - startTime;
+};
+
+export const useWindowSize = () => {
+  const [windowSize, setWindowSize] = useState<null | {
+    width: number;
+    height: number;
+  }>(null);
+
+  useEffect(() => {
+    // Handler to call on window resize
+    function handleResize() {
+      // Set window width/height to state
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    }
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  return windowSize;
 };
 
 export const useAnimationFrame = (callback: (diff: number) => void) => {
@@ -38,7 +63,7 @@ export const useAnimationFrame = (callback: (diff: number) => void) => {
     requestRef.current = requestAnimationFrame(animate);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     requestRef.current = requestAnimationFrame(animate);
     return () => {
       if (requestRef.current) cancelAnimationFrame(requestRef.current);
