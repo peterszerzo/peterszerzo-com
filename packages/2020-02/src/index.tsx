@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { render } from "react-dom";
 import range from "ramda/src/range";
 import * as three from "three";
@@ -113,6 +113,8 @@ interface ContainerProps {
   sound?: boolean;
 }
 
+const zoomFactor = 0.009;
+
 const Container: React.FunctionComponent<ContainerProps> = () => {
   const [time, setTime] = useState(0);
 
@@ -121,6 +123,8 @@ const Container: React.FunctionComponent<ContainerProps> = () => {
   });
 
   const windowSize = useWindowSize();
+
+  const cameraRef = useRef<three.OrthographicCamera | null>(null);
 
   const size = windowSize
     ? Math.min(windowSize.width, windowSize.height) * 0.8
@@ -135,6 +139,13 @@ const Container: React.FunctionComponent<ContainerProps> = () => {
       setOpacity(1);
     });
   }, []);
+
+  useEffect(() => {
+    if (cameraRef.current) {
+      cameraRef.current.zoom = size * zoomFactor;
+      cameraRef.current.updateProjectionMatrix();
+    }
+  }, [size]);
 
   useEffect(() => {
     if (playing) {
@@ -207,7 +218,10 @@ const Container: React.FunctionComponent<ContainerProps> = () => {
           camera={{
             near: 2,
             far: 120,
-            zoom: (5 * size) / 500,
+            zoom: size * zoomFactor,
+          }}
+          onCreated={({ camera }) => {
+            cameraRef.current = camera as three.OrthographicCamera;
           }}
           orthographic
         >
@@ -220,7 +234,7 @@ const Container: React.FunctionComponent<ContainerProps> = () => {
             <SSAO
               samples={31}
               radius={20}
-              intensity={280}
+              intensity={180}
               luminanceInfluence={0.1}
               color="black"
             />
