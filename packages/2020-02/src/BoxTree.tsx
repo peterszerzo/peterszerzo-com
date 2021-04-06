@@ -111,43 +111,6 @@ const expoInOut = (t: number) =>
 const expandFactor = (time: number): number =>
   0.5 + 0.5 * Math.sin(0.001 * time);
 
-const passThreshold = ({
-  prev,
-  current,
-  thresholds,
-}: {
-  prev: number;
-  current: number;
-  thresholds: number[];
-}):
-  | {
-      threshold: number;
-      ascending: boolean;
-    }
-  | undefined => {
-  if (thresholds.length === 0) {
-    return undefined;
-  }
-  const [firstThreshold, ...remainingThresholds] = thresholds;
-  if (prev < firstThreshold && current >= firstThreshold) {
-    return {
-      threshold: firstThreshold,
-      ascending: true,
-    };
-  }
-  if (prev >= firstThreshold && current < firstThreshold) {
-    return {
-      threshold: firstThreshold,
-      ascending: false,
-    };
-  }
-  return passThreshold({
-    prev,
-    current,
-    thresholds: remainingThresholds,
-  });
-};
-
 export const getOpen = (time: number) =>
   expoInOut(expandFactor(time * animSpeed));
 
