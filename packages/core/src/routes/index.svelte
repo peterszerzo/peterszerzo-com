@@ -202,6 +202,10 @@
   </SectionTitle>
   <ul>
     <li>
+      <a href="https://www.kicommunity.de/">Building Conversational Applications with AI</a>
+      // Berlin, May 2021
+    </li>
+    <li>
       <a
         href="https://dev.to/peterszerzo/my-year-on-the-frontend-2020-edition-1fpk">My
         year on the frontend, 2020 edition</a>
