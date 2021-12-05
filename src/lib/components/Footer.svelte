@@ -1,6 +1,36 @@
-<script>
+<script lang="ts">
   import Logo from "../components/Logo.svelte";
 </script>
+
+<footer>
+  <div class="footer-content">
+    <div class="footer-logo">
+      <Logo />
+    </div>
+    <div>
+      <p>2021 Peter Szerzo</p>
+    </div>
+    <ul>
+      <li>
+        <a href="https://represent.io/peterszerzo.pdf"><small>Resume</small></a>
+      </li>
+      <li>
+        <a href="https://twitter.com/peterszerzo"><small>Twitter</small></a>
+      </li>
+      <li>
+        <a href="https://www.instagram.com/peterszerzo_/"
+          ><small>Instagram</small></a
+        >
+      </li>
+      <li>
+        <a href="https://github.com/peterszerzo"><small>GitHub</small></a>
+      </li>
+      <li><a href="https://dev.to/peterszerzo"><small>Blog</small></a></li>
+      <li><a href="/hire-me"><small>Hire me✨</small></a></li>
+      <li><a href="/now"><small>Now</small></a></li>
+    </ul>
+  </div>
+</footer>
 
 <style>
   footer {
@@ -57,32 +87,3 @@
     margin: auto;
   }
 </style>
-
-<footer>
-  <div class="footer-content">
-    <div class="footer-logo">
-      <Logo />
-    </div>
-    <div>
-      <p>2021 Peter Szerzo</p>
-    </div>
-    <ul>
-      <li>
-        <a href="https://represent.io/peterszerzo.pdf"><small>Resume</small></a>
-      </li>
-      <li>
-        <a href="https://twitter.com/peterszerzo"><small>Twitter</small></a>
-      </li>
-      <li>
-        <a
-          href="https://www.instagram.com/peterszerzo_/"><small>Instagram</small></a>
-      </li>
-      <li>
-        <a href="https://github.com/peterszerzo"><small>GitHub</small></a>
-      </li>
-      <li><a href="https://dev.to/peterszerzo"><small>Blog</small></a></li>
-      <li><a href="/hire-me"><small>Hire me✨</small></a></li>
-      <li><a href="/now"><small>Now</small></a></li>
-    </ul>
-  </div>
-</footer>

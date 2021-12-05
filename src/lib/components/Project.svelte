@@ -1,13 +1,13 @@
-<script>
+<script lang="ts">
   import ElmArborist from "./logos/ElmArborist.svelte";
   import SplytLight from "./logos/SplytLight.svelte";
   import AnnaCingi from "./logos/AnnaCingi.svelte";
   import ElmGameroom from "./logos/ElmGameroom.svelte";
 
-  export let url;
-  export let title;
-  export let subtitle;
-  export let logo;
+  export let url: string;
+  export let title: string;
+  export let subtitle: string;
+  export let logo: string;
 
   $: logoComponent = (() => {
     switch (logo) {

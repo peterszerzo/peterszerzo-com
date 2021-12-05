@@ -34,34 +34,40 @@ You can find me on my bike on the streets of Berlin and New York, at various fro
 
   export let aboutVersion = "serious";
 
-  const handleAboutSwitcher = (detail) => {
+  const handleAboutSwitcher = () => {
     aboutVersion = aboutVersion === "serious" ? "nonserious" : "serious";
   };
 
   const sketches = [
     {
-      image: "/thumbnails/eerie-sunset.png",
-      url: "https://hic.af/o/287273",
+      title: "my brain is a mush",
+      image: "/thumbnails/my-brain-is-a-mush.png",
+      url: "https://hic.af/o/567569",
     },
     {
+      title: "shatter",
       image: "/thumbnails/shatter.png",
       url: "https://hic.af/o/363652",
     },
     {
+      title: "folding cubes",
       image: "/thumbnails/folding-cubes.png",
       url: "https://hic.af/o/305858",
     },
     {
-      image: "/thumbnails/marching-windows.png",
-      url: "https://hic.af/o/283006",
-    },
-    {
+      title: "misfit planets",
       image: "/thumbnails/misfit-planets.png",
       url: "https://hic.af/o/338824",
     },
     {
-      image: "/thumbnails/my-brain-is-a-mush.png",
-      url: "https://hic.af/o/567569",
+      title: "eerie sunset",
+      image: "/thumbnails/eerie-sunset.png",
+      url: "https://hic.af/o/287273",
+    },
+    {
+      title: "marching windows",
+      image: "/thumbnails/marching-windows.png",
+      url: "https://hic.af/o/283006",
     },
   ];
 
@@ -127,6 +133,7 @@ You can find me on my bike on the streets of Berlin and New York, at various fro
       <a
         href={sketch.url}
         class="sketch"
+        title={sketch.title}
         style="background-image: url({sketch.image})"
       />
     {/each}

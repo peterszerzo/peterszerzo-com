@@ -1,5 +1,17 @@
+<script lang="ts">
+  import { createEventDispatcher } from "svelte";
+
+  const dispatch = createEventDispatcher<{ change: boolean }>();
+
+  export let active: boolean;
+
+  const handleChange = () => {
+    dispatch("change", !active);
+  };
+</script>
+
 <div class="switch" on:click={handleChange}>
-  <div class="switch-thumb" class:switch-thumb-active={active}></div>
+  <div class="switch-thumb" class:switch-thumb-active={active} />
 </div>
 
 <style>
@@ -32,15 +44,3 @@
     transform: translate3d(18px, 0, 0);
   }
 </style>
-
-<script>
-  import { createEventDispatcher } from "svelte";
-
-  const dispatch = createEventDispatcher();
-
-  export let active;
-
-  const handleChange = () => {
-    dispatch("change", !active);
-  }
-</script>

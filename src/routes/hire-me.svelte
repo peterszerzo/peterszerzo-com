@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import Hero from "../lib/components/Hero.svelte";
   import Section from "../lib/components/Section.svelte";
   import SectionTitle from "../lib/components/SectionTitle.svelte";

@@ -1,12 +1,12 @@
+<script lang="ts">
+  import Logo from "./Logo.svelte";
+</script>
+
 <header>
   <a href="/">
     <Logo />
   </a>
 </header>
-
-<script>
-  import Logo from "./Logo.svelte";
-</script>
 
 <style>
   header {
