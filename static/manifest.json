@@ -1,0 +1,9 @@
+{
+  "background_color": "#ffffff",
+  "theme_color": "#333333",
+  "name": "peterszerzo.com",
+  "short_name": "peterszerzo",
+  "display": "minimal-ui",
+  "start_url": "/",
+  "icons": []
+}
