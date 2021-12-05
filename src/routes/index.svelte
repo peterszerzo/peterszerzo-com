@@ -127,21 +127,14 @@ You can find me on my bike on the streets of Berlin and New York, at various fro
 <Hero title="Peter Szerzo" after="Neighborhood Creative Programmer" />
 
 <Section>
-  <SectionTitle title="Sketches" />
-  <div class="sketches">
-    {#each sketches as sketch}
-      <a
-        href={sketch.url}
-        class="sketch"
-        title={sketch.title}
-        style="background-image: url({sketch.image})"
-      />
-    {/each}
-  </div>
-</Section>
-<Section>
   <SectionTitle title="Projects" />
   <div>
+    <Project
+      title="Browser DJ App"
+      subtitle="for @hicetnunc"
+      url="https://hen-dj.vercel.app"
+      logo="HenDj"
+    />
     <Project
       title="elm-arborist"
       subtitle="Tree Editor"
@@ -283,6 +276,19 @@ You can find me on my bike on the streets of Berlin and New York, at various fro
     </div>
   {/if}
 </Section>
+<Section>
+  <SectionTitle title="Sketches" subtitle="Recent creative coding drops:" />
+  <div class="sketches">
+    {#each sketches as sketch}
+      <a
+        href={sketch.url}
+        class="sketch"
+        title={sketch.title}
+        style="background-image: url({sketch.image})"
+      />
+    {/each}
+  </div>
+</Section>
 
 <style>
   .tech {
@@ -313,8 +319,8 @@ You can find me on my bike on the streets of Berlin and New York, at various fro
 
   .sketch {
     display: inline-block;
-    width: 150px;
-    height: 150px;
+    width: 160px;
+    height: 160px;
     transition: filter 0.2s ease-in-out;
     background-size: cover;
   }

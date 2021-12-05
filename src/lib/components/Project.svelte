@@ -3,6 +3,7 @@
   import SplytLight from "./logos/SplytLight.svelte";
   import AnnaCingi from "./logos/AnnaCingi.svelte";
   import ElmGameroom from "./logos/ElmGameroom.svelte";
+  import HenDj from "./logos/HenDj.svelte";
 
   export let url: string;
   export let title: string;
@@ -19,6 +20,8 @@
         return AnnaCingi;
       case "ElmGameroom":
         return ElmGameroom;
+      case "HenDj":
+        return HenDj;
       default:
         return SplytLight;
     }
@@ -67,6 +70,7 @@
 
   .subtitle {
     color: var(--lighterGray);
+    font-size: 0.75rem;
     text-align: center;
     display: block;
   }
