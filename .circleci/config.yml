@@ -21,17 +21,17 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: dependency-cache-{{ checksum "yarn.lock" }}
+          key: dependency-cache-{{ checksum "package-lock.json" }}
       - run:
           name: install-npm-wee
-          command: yarn install
+          command: npm install
       - save_cache:
-          key: dependency-cache-{{ checksum "yarn.lock" }}
+          key: dependency-cache-{{ checksum "package-lock.json" }}
           paths:
             - ./node_modules
       - run:
           name: export
-          command: yarn build
+          command: npm run build
       - persist_to_workspace:
           root: ~/project
           paths:
@@ -45,7 +45,7 @@ jobs:
           at: ~/project
       - run:
           name: sync-with-s3
-          command: aws s3 sync ~/project/packages/core/__sapper__/export s3://peterszerzo.com --acl public-read
+          command: aws s3 sync ~/project/build s3://peterszerzo.com --acl public-read
       - run:
           name: invalidate-cloudfront
           command: "aws cloudfront create-invalidation --distribution-id $AWS_CLOUDFRONT_DISTRIBUTION_ID --paths '/'"
