@@ -2,22 +2,9 @@
   import { marked } from "marked";
 
   import Project from "$lib/components/Project.svelte";
-  import Switch from "$lib/components/Switch.svelte";
   import Section from "$lib/components/Section.svelte";
   import SectionTitle from "$lib/components/SectionTitle.svelte";
   import Hero from "$lib/components/Hero.svelte";
-
-  const aboutAlternative = `
-Oh, good, you hit the magic switch. Let me balance out the somewhat conformist professionalism on the other page with some real Peter Szerzo.
-
-I’m caring, fun and passionate, but that said, when I’m wrapped up in anxiety or self-judgement (often!), then I can be a bit too much. Ramble ramble ramble.
-
-I overly scrutinize my spending decisions and I am worried about gaining weight. I also have a fear that one day, due to say world politics, I will have to return to live in Romania - a place I grew up in but no longer care for too much. Speaking of growing up: when I was 6, I hit my brother on his back with my fist so hard I felt his entire ribcage resonate through mine. I regret it to this day for the simple fact that while my adult brother can forgive me, his child version is just not around.
-
-Let’s see what else.. I often find myself in a reflective mood. When I am having a hard time, I have a habit of asking myself: ‘What is wrong with this moment?’ Eventually, the answer is always ‘nothing’, and the moment of realizing that is genuine happiness to me. I read that in a book, and wonder sometimes if I truly believe it or if I’m just cluelessly parroting it back.
-
-It means a lot to me that you’ve read this.
-  `;
 
   const aboutSerious = `
 This is Peter, programmer, designer and natural language enthusiast.
@@ -30,13 +17,6 @@ You can find me on my bike on the streets of Berlin and New York, at various fro
   `;
 
   $: aboutSeriousHtml = marked(aboutSerious);
-  $: aboutAlternativeHtml = marked(aboutAlternative);
-
-  export let aboutVersion = "serious";
-
-  const handleAboutSwitcher = () => {
-    aboutVersion = aboutVersion === "serious" ? "nonserious" : "serious";
-  };
 
   const sketches = [
     {
@@ -258,26 +238,13 @@ You can find me on my bike on the streets of Berlin and New York, at various fro
   {/each}
 </Section>
 <Section>
-  <SectionTitle title="About">
-    <div slot="controls">
-      <Switch
-        on:change={handleAboutSwitcher}
-        active={aboutVersion !== "serious"}
-      />
-    </div>
-  </SectionTitle>
-  {#if aboutVersion === "serious"}
-    <div>
-      {@html aboutSeriousHtml}
-    </div>
-  {:else}
-    <div>
-      {@html aboutAlternativeHtml}
-    </div>
-  {/if}
+  <SectionTitle title="About" />
+  <div>
+    {@html aboutSeriousHtml}
+  </div>
 </Section>
 <Section>
-  <SectionTitle title="Sketches" subtitle="Recent creative coding drops:" />
+  <SectionTitle title="Sketches" />
   <div class="sketches">
     {#each sketches as sketch}
       <a
