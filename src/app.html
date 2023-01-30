@@ -23,5 +23,15 @@
   </head>
   <body>
     <div id="svelte">%svelte.body%</div>
+    <script src="https://unpkg.com/@nlx-voice-compass/standalone@2.0.0-alpha.2/lib/index.js"></script>
+    <script>
+      window.voiceCompass.create({
+        dev: true,
+        apiKey: "IsUOusWQbe5xVFbUIqcVu1PeuzGFX9NsIjbu11i3",
+        contactId: "",
+        journeyId: "PeterTestJourney",
+        journeyAssistantId: "88cd8153-dc63-4421-a04c-994ec1b54cdc",
+      });
+    </script>
   </body>
 </html>
